@@ -1,0 +1,57 @@
+{{ use('yii/web/JqueryAsset') }}
+
+{% set networkData   = _Network.getNetworkData() %}
+
+{{ this.beginPage() }}
+<!DOCTYPE html>
+<html lang="en-AU" prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta http-equiv="Accept-CH" content="DPR, Viewport-Width, Width">
+
+    <meta name="google-site-verification" content="LLgWSPAesUa9X77EPVG9LjdUZuZ89ba7BxxBWumHKOo" />
+
+    <link rel="profile" href="https://gmpg.org/xfn/11">
+    <title>{{ this.title }}</title>
+    {{ Html.csrfMetaTags | raw }}
+
+    {% set favicon = '' %}
+    {% if networkData.favMedia | length > 0 %}
+        {% set favicon = _Media.getMediaUrl(networkData.favMedia, 80, 80)%}
+        <link rel="shortcut icon" href="{{favicon}}" />
+        <link rel="icon" href="{{favicon}}" sizes="any" type="image/svg+xml" />
+    {% endif %}
+
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,700" rel="stylesheet"> 
+
+
+    {% if primaryFont != "" %}
+        <link href='https://fonts.googleapis.com/css?family={{primaryFont}}' rel='stylesheet' type='text/css'>
+    {% endif %}
+    {% if secFont != "" %}
+        <link href='https://fonts.googleapis.com/css?family={{secFont}}' rel='stylesheet' type='text/css'>
+    {% endif %}
+    
+    <link rel="alternate" type="application/rss+xml" title="{{_Network.getNetworkTitle()}} -  RSS Feeds" href="http://{{networkData.defaultDomain['domain']}}/feed/rss"/>
+
+    {{ this.head() }}
+
+</head>
+
+
+<body>
+
+    {{ this.beginBody() }}
+      
+    {{ content | raw }}
+
+    {{ this.endBody() }}
+
+</body>
+
+{{ this.endPage() }}
+
+</html>

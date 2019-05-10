@@ -1,0 +1,9 @@
+{{ set(this, 'title', _Blog.getBlogTitle()) }}
+
+{% set networkData  = _Network.getNetworkData() %}
+
+<main id="photo-sales"></main>
+
+
+<link rel="stylesheet" href="{{networkData.templatePath}}/build/static/css/main.42a78346.chunk.css" type="text/css" media="all">
+{{ this.registerJsFile( networkData.templatePath ~ "/build/static/js/main.f43b7ff7.chunk.js") }}
