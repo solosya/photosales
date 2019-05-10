@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import styles from './App.module.css';
+import logo                 from './logo.svg';
+import styles               from './App.module.css';
+import Section              from './containers/section/section';
+import axios                from 'axios';
 
+// _appJsConfig
+
+axios.defaults.baseURL = window.location.href;
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 class App extends Component {
   render() {
     return (
@@ -13,6 +19,7 @@ class App extends Component {
         <p className={styles["App-intro"]}>
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
+        <Section />
       </div>
     );
   }
