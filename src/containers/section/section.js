@@ -1,6 +1,8 @@
 import React, {Component}   from 'react';
 import axios                from 'axios';
-
+import Row from '../../components/layout/row';
+import Col from '../../components/layout/col';
+import Container from '../../components/layout/container';
 class Section extends Component {
 
     
@@ -22,9 +24,15 @@ class Section extends Component {
 
     render() {
         return (
-            <p>section</p>
+            <Container>
+                <Row>
+                    <Col classes={["col-12", "col-md-4"]}>
+                        <p style={{"background-color":"green"}}>section</p>
+                    </Col>
+                </Row>
+            </Container>
         )
     }
 }
-
+// docker run -p 80:80 -v $(pwd):/var/www/html php:7.2-apache
 export default Section;

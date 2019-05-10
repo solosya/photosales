@@ -1,0 +1,55 @@
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+) !default;
+$grid-gutter-width:           30px !default;
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1300px
+) !default;
+
+  @mixin media-breakpoint-up($name, $breakpoints: $grid-breakpoints) {
+    $min: breakpoint-min($name, $breakpoints);
+    @if $min {
+      @media (min-width: $min) {
+        @content;
+      }
+    } @else {
+      @content;
+    }
+  }
+
+
+@mixin make-container() {
+    width: 100%;
+    padding-right: ($grid-gutter-width / 2);
+    padding-left: ($grid-gutter-width / 2);
+    margin-right: auto;
+    margin-left: auto;
+  }
+  
+  
+  // For each breakpoint, define the maximum width of the container in a media query
+  @mixin make-container-max-widths($max-widths: $container-max-widths, $breakpoints: $grid-breakpoints) {
+    @each $breakpoint, $container-max-width in $max-widths {
+      @include media-breakpoint-up($breakpoint, $breakpoints) {
+        max-width: $container-max-width;
+      }
+    }
+  }
+  
+
+
+  .container {
+    @include make-container();
+    @include make-container-max-widths();
+  }
+
+  .container-fluid {
+    @include make-container();
+  }
