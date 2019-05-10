@@ -99,6 +99,7 @@ $grid-breakpoints: (
     min-height: 1px; // Prevent collapsing
     padding-right: ($grid-gutter-width / 2);
     padding-left: ($grid-gutter-width / 2);
+
   }
   
   @mixin make-col($size, $columns: $grid-columns) {
@@ -107,6 +108,7 @@ $grid-breakpoints: (
     // the width of the column. Applies to IE10+ and Firefox. Chrome and Safari
     // do not appear to require this.
     max-width: percentage($size / $columns);
+
   }
   
   @mixin make-col-offset($size, $columns: $grid-columns) {
@@ -123,6 +125,8 @@ $grid-breakpoints: (
         min-height: 1px; // Prevent columns from collapsing when empty
         padding-right: ($gutter / 2);
         padding-left: ($gutter / 2);
+        box-sizing: border-box;
+
     }
 
     @each $breakpoint in map-keys($breakpoints) {

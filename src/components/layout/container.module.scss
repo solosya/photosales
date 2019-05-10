@@ -13,6 +13,11 @@ $container-max-widths: (
   xl: 1300px
 ) !default;
 
+@function breakpoint-min($name, $breakpoints: $grid-breakpoints) {
+    $min: map-get($breakpoints, $name);
+    @return if($min != 0, $min, null);
+  }
+
   @mixin media-breakpoint-up($name, $breakpoints: $grid-breakpoints) {
     $min: breakpoint-min($name, $breakpoints);
     @if $min {
@@ -31,6 +36,7 @@ $container-max-widths: (
     padding-left: ($grid-gutter-width / 2);
     margin-right: auto;
     margin-left: auto;
+    background-color:purple;
   }
   
   
