@@ -5,7 +5,7 @@ import './index.css';
 
 
 const elem = document.getElementById('photo-sales');
-console.log(elem);
+
 ReactDOM.render(
   <App />,
   elem

@@ -8,6 +8,8 @@ import axios                from 'axios';
 
 axios.defaults.baseURL = window.location.href;
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+
 class App extends Component {
   render() {
     return (
