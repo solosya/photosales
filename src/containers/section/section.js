@@ -31,7 +31,7 @@ class Section extends Component {
     }
 
     componentDidMount () {
-        this.fetchStuff();
+        // this.fetchStuff();
     }
 
 
@@ -49,6 +49,10 @@ class Section extends Component {
                     <Col classes={["col-12", "col-md-4"]}>
                         <p style={{"background-color":"cyan"}}><h1>Ahoy there!</h1></p>
                     </Col>
+                    <Col classes={["col-12", "col-md-4"]}>
+                        <p onClick={this.fetchStuff} style={{"background-color":"cyan"}}><h1>Fetch stuff!</h1></p>
+                    </Col>
+
                 </Row>
 
             </Container>

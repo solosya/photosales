@@ -1,5 +1,6 @@
 
 import axios from  'axios';
+import qs from  'qs';
 
 export class Feed {
     fetch = () => {
@@ -46,14 +47,15 @@ export class Feed {
             requestType = 'get';
         }
         console.log(url, this.options);
-        return axios[requestType](url, this.options)
+        return axios[requestType](url, qs.stringify( this.options ) )
         // return axios.get('/api/search?s=this')
             .then( response => {
                 console.log(response);
                 var data = response.data;
             }).catch( error => {
                 console.log(error.response);
-            });    }
+            });    
+    }
 }
 
 
@@ -74,107 +76,3 @@ export class ArticleFeed extends Feed {
         };
     }
 }
-
-// Acme.View.articleFeed = function(options)
-// {
-//     this.feedModel  = options.model;
-//     this.limit      = options.limit      || 10;
-//     this.offset     = options.offset     || 0;
-//     this.infinite   = options.infinite   || false;
-//     this.failText   = options.failText   || null;
-//     this.container  = $('#' + options.container);
-//     this.template   = options.cardTemplate;
-//     this.cardClass  = options.card_class;
-//     this.renderType = options.renderType || 'append';
-//     this.before     = options.before || false;
-//     this.after      = options.after || false;
-    
-//     this.options    = {
-//         'nonPinnedOffset'   :   options.non_pinned || -1,
-//         'loadtype'          :   options.loadtype || "home",
-//         'offset'            :   options.offset || 0,
-//         'blogid'            :   options.blogid,
-//         'search'            :   options.searchterm    || null,
-//         'limit'             :   options.limit,
-//         // 'page'              :   self.elem.data('page') || 1, // page is used for user articles
-//     };
-
-//     this.waypoint  = false;
-//     this.elem      = $('#' + options.name);
-//     this.failText  = options.failText || null;
-//     this.events();
-// };
-
-// Acme.View.articleFeed.prototype = new Acme.Feed();
-// Acme.View.articleFeed.constructor = Acme.View.articleFeed;
-// Acme.View.articleFeed.prototype.render = function(data) 
-// {
-//     var self = this;
-//     var articles = [];
-//     if (data.articles) {
-//         articles = data.articles;
-//     }
-//     if (data.userArticles) {
-//         articles = data.userArticles;
-//     }
-//     if (data.users) {
-//         articles = data.users.users;
-//     }
-
-//     var label      =   self.button_label  || "Load more",
-//         ads_on     =   self.ads           || null;
-
-//     self.elem.html(label);
-
-//     // add counts to the dom for next request
-//     self.options.offset += self.options.limit;
-//     self.options.nonPinnedOffset = data.existingNonPinnedCount;
-
-//     var html = [];
-//     if (ads_on == "yes") {
-//         html.push( window.templates.ads_infinite );
-//     }
-
-//     if (articles.length === 0 && self.failText) {
-//         html = ["<p>" + self.failText + "</p>"];
-//     } else {
-//         for (var i in articles) {
-//             articles[i].imageOptions = {'width': self.imgWidth, 'height': self.imgHeight};
-//             html.push( self.feedModel.renderCard(articles[i], {
-//                 cardClass: self.cardClass,
-//                 template: self.template,
-//                 type: "acme-"
-//             }));
-//         }
-//         if (self.before ) {
-//             html = [self.before].concat(html);
-//         }
-//         if (self.after) {
-//             html = html.concat([self.after]);
-//         }
-    
-//     }
-
-//     (self.renderType === "write")
-//         ? self.container.empty().append( html.join('') )
-//         : self.container.append( html.join('') );
-    
-
-//     // show or hide the load more button depending on article count
-//     (articles.length < self.options.limit) 
-//         ? self.elem.css('display', 'none')
-//         : self.elem.show();
-
-//     // reset infinite load depending on article count
-//     if (self.waypoint) {
-//         (articles.length < self.options.limit)
-//             ? self.waypoint.disable()
-//             : self.waypoint.enable();
-//     }
-
-//     // $(".card .content > p, .card h2, .card .content .author > p").dotdotdot();     
-//     // $('.video-player').videoPlayer();
-//     // self.elem.data('rendertype', '');
-
-//     this.feedModel.events();
-// };
