@@ -1,0 +1,47 @@
+@import '../../styles/global.scss';
+
+
+.c-section-head {
+    margin-bottom: 25px;
+
+    &__title-container {
+        display: flex;
+    }
+
+
+    &__link {
+        flex-grow:2;
+
+        color:inherit;
+        text-decoration:none;
+    }
+
+
+    &__title {
+        margin:0;
+        @include font-size(32);
+        color: $blue;
+        font-weight: $weightBold;
+        padding-bottom: 8px;
+
+        &--40 {
+            @include font-size(40);
+        }
+
+        &--light {
+            font-weight: $weightLight;
+        }
+
+    }
+
+    &__rule {
+        border-top: 1px solid $darkergrey;
+        height:1px;
+    }
+
+    &__button {
+        position:absolute;
+        right:0;
+        top: -4px;
+    }
+}

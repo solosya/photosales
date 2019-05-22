@@ -9,7 +9,7 @@ export class Feed {
         }
 
         let requestType = 'post';
-        let url = window._appJsConfig.appHostName + '/home/load-articles';
+        let url = '/home/load-articles';
     
         const requestData = { 
             offset      : this.options.offset, 
@@ -24,7 +24,7 @@ export class Feed {
         }
     
         if (this.options.loadtype === 'user') {
-            url = window._appJsConfig.appHostName + '/api/'+ this.options.loadtype+'/load-more-managed';
+            url = '/api/'+ this.options.loadtype+'/load-more-managed';
             requestType = 'get';
         }
         
@@ -43,17 +43,14 @@ export class Feed {
             } else{
                 requestData['s'] = refinedSearch;
             }
-            url = window._appJsConfig.appHostName + '/'+ this.options.loadtype;
+            url = '/'+ this.options.loadtype;
             requestType = 'get';
         }
-        console.log(url, this.options);
         return axios[requestType](url, qs.stringify( this.options ) )
         // return axios.get('/api/search?s=this')
             .then( response => {
-                console.log(response);
                 var data = response.data;
             }).catch( error => {
-                console.log(error.response);
             });    
     }
 }
