@@ -1,7 +1,7 @@
+@import '../../styles/global.scss';
+
 .search {
-    // height: 43px;
-    background:red;
-   
+    margin-bottom: 80px;
    
     &__icon {
         position: absolute;
@@ -17,7 +17,35 @@
 
     &__calander-container {
         position:absolute;
+        // left:-50%;
+    }
+    &__dates {
+        display:flex;
+        margin-top: 15px;
+    }
+    &__datecontainer {
+        flex-grow:1;
+        min-width:200px;
+        position:relative;
+        padding-left: 15px;
+        border: 1px solid $offwhite;
+        height: 43px;
+        line-height:43px;
+        margin-right:7px;
+
+        &:last-child {
+            margin-right:0;
+        }
+
+    }
+    &__label {
+        flex-grow:1;
+        margin:0;
+        line-height:43px;
     }
 
+    &__button {
+        margin-top:40px;
+    }
 
 }

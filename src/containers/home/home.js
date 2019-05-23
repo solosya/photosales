@@ -5,9 +5,10 @@ import Container            from '../../components/layout/container';
 import Search               from '../../components/search/search';
 import Header               from '../../components/partials/section_header.js';
 import {ArticleFeed}        from '../../sdk/feed';
+import PanelOne             from '../../components/panels/panel1';
+import Modal                from '../../components/modals/modal';
 
-
-class Section extends Component {
+class Home extends Component {
 
     state = {
         networkData: null,
@@ -30,11 +31,19 @@ class Section extends Component {
                 title: "All photos",
                 url: "galleryurl"
             },
-        ]
+        ],
+        showModal: false
             
         
     }
     
+
+    componentDidMount () {
+        this.getFeed();
+    }
+
+
+
     getFeed = () => {
         const options = {
             offset          : 0,
@@ -45,56 +54,68 @@ class Section extends Component {
         };
         const Feed = new ArticleFeed(options);
         const photos = Feed.fetch();
+
         this.setState({photos: photos});
     }
 
-    getNetworkData = () => {
-        return [];
-    }
-    getBlogData = () => {
-        return [];
-    }
 
-    componentDidMount () {
-        this.getFeed();
-        this.getNetworkData();
-        this.getBlogData();
+
+
+    showModal = () => {
+        console.log('in the card handler');
+        this.setState({showModal: true});
+    }
+    closeModal = () => {
+        console.log('in the card handler');
+        this.setState({showModal: false});
     }
 
 
     render() {
 
+
+
+        const modal = <Modal closeHandler={this.closeModal}><div>Hey look, i'm in the modal!!</div></Modal>
+
         return (
-            <Container>
+            <React.Fragment>
+                
+                {this.state.showModal ? modal : null}
 
-                <Row>
-                    <Col classes={["col-12"]}>
-                        <Header blogData={this.state.blogData} larger cart/>
-                    </Col>
-                </Row>
+                <Container>
+    
+                    <Row>
+                        <Col classes={["col-12"]}>
+                            <Header title={this.state.blogData.title} url={this.state.blogData.url} larger cart/>
+                        </Col>
+                    </Row>
+    
+                    <Row>
+                        <Col classes={["col-12", "col-md-9"]}>
+                            <Search />
+                        </Col>
+                    </Row>
+    
+                </Container>
 
-                <Row>
-                    <Col classes={["col-12", "col-md-9"]}>
-                        <Search />
-                    </Col>
-                </Row>
-
-
-                {this.state.panels.map( (panel) => {
+                {this.state.panels.map( (panel, i) => {
                     return (
-                        <Row key={panel.title}>
-                            <Col classes={["col-12"]}>
-                                <Header blogData={panel} />
-                            </Col>
-                        </Row>
+                        <Container key={i}>
+                            <PanelOne cardHandler={this.showModal} title={panel.title} cards={this.state.cards}></PanelOne>
+                        </Container>
                     )
-
+    
                 })}
 
 
-            </Container>
+
+
+
+            </React.Fragment>
+
+
         )
     }
 }
 // docker run -p 80:80 -v $(pwd):/var/www/html php:7.2-apache
-export default Section;
+export default Home;

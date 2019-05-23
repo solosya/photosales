@@ -16,11 +16,10 @@ const sectionHeader = (props) => {
 
     if (props.cart) {
         cart = 
-        <React.Fragment>
-            <div>Favourites</div>
-            <div>Cart</div>
-        </React.Fragment>
-        ;
+            <React.Fragment>
+                <div>Favourites</div>
+                <div>Cart</div>
+            </React.Fragment>;
     }
 
 
@@ -28,8 +27,8 @@ const sectionHeader = (props) => {
         <div className={styles['c-section-head']}>
 
             <div className={styles['c-section-head__title-container']}>
-                <a className={styles['c-section-head__link']} href={props.blogData.url}>
-                    <h1 className={titleStyles}>{props.blogData.title}</h1>
+                <a className={styles['c-section-head__link']} href={props.url}>
+                    <h1 className={titleStyles}>{props.title}</h1>
                 </a>
                 { cart } 
             </div>

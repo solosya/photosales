@@ -4,6 +4,7 @@ import qs from  'qs';
 
 export class Feed {
     fetch = () => {
+        console.log(this.options);
         if (this.options.search != null) {
             this.options.blogid = this.options.blogid; // search takes an id instead of a guid
         }
@@ -14,9 +15,8 @@ export class Feed {
         const requestData = { 
             offset      : this.options.offset, 
             limit       : this.options.limit, 
-            // _csrf       : $('meta[name="csrf-token"]').attr("content"), 
             dateFormat  : 'SHORT',
-            existingNonPinnedCount: this.options.nonPinnedOffset
+            existingNonPinnedCount: this.options.nonPinnedOffset,
         };
     
         if (this.options.blogid) {
@@ -36,20 +36,17 @@ export class Feed {
         }
     
         if (this.options.search) {
+            console.log('THIS IS A SEARCH')
             let refinedSearch = this.options.search;
-            if (refinedSearch.indexOf(",listingquery") >= 0) {
-                refinedSearch = refinedSearch.replace(",listingquery","");
-                requestData['meta_info'] = refinedSearch;
-            } else{
-                requestData['s'] = refinedSearch;
-            }
-            url = '/'+ this.options.loadtype;
+            requestData['s'] = refinedSearch;
+            url = '/api/search';
             requestType = 'get';
         }
+        console.log(url, qs.stringify(requestData));
         return axios[requestType](url, qs.stringify( this.options ) )
         // return axios.get('/api/search?s=this')
             .then( response => {
-                var data = response.data;
+                // var data = response.data;
             }).catch( error => {
             });    
     }
@@ -69,7 +66,6 @@ export class ArticleFeed extends Feed {
             'blogid'            :   options.blogid,
             'search'            :   options.searchterm    || null,
             'limit'             :   options.limit,
-            // 'page'              :   self.elem.data('page') || 1, // page is used for user articles
         };
     }
 }

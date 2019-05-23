@@ -12,6 +12,18 @@
 	-ms-transition: $transition;
 }
 
+@mixin transform($transforms) {
+	-webkit-transform: $transforms;
+	/* Chrome, Safari, Opera */
+	-moz-transform: $transforms;
+	/* Mozilla Firefox */
+	-o-transform: $transforms;
+	-ms-transform: $transforms;
+	/* IE 9 */
+	transform: $transforms;
+}
+
+
 @mixin flexbox {
 	display:-webkit-box;
 	display:-webkit-flex;
@@ -104,3 +116,21 @@
 	line-height: ($line / 16) + rem;
 }
 
+@mixin box-shadow($shadow) {
+	-webkit-box-shadow: $shadow;
+	-moz-box-shadow: $shadow;
+	-ms-box-shadow: $shadow;
+	box-shadow: $shadow;
+}
+
+
+@mixin flex-height($int) { 
+	height: $int;
+	min-height: $int;
+	max-height: $int;
+}
+@mixin flex-width($int) { 
+	width: $int;
+	min-width: $int;
+	max-width: $int;
+}

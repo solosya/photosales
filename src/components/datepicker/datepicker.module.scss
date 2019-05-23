@@ -1,0 +1,24 @@
+@import '../../styles/global.scss';
+
+
+.datepicker {
+    cursor:pointer;
+    flex-grow:1;
+    min-width:200px;
+    position:relative;
+    padding-left: 15px;
+    border: 1px solid $offwhite;
+    height: 43px;
+    line-height:43px;
+    margin-right:7px;
+
+    &:last-child {
+        margin-right:0;
+    }
+
+
+    &__calander_container {
+        position:absolute;
+    }
+
+}
