@@ -6,6 +6,7 @@ import Header               from '../../components/partials/section_header.js';
 
 const panel_1 = (props) => {
 
+    let cardCount = 0;
     return (
 
         <Row key={props.title}>
@@ -14,15 +15,15 @@ const panel_1 = (props) => {
             </Col>
 
             <Col classes={["col-12", "col-md-4"]}>
-                <Card cardHandler={props.cardHandler} data={props.card}></Card>
+                <Card cardHandler={props.cardHandler} data={props.cards[cardCount]} count={cardCount++} panel={props.title}></Card>
             </Col>
 
             <Col classes={["col-12", "col-md-4"]}>
-                <Card cardHandler={props.cardHandler}  data={props.card}></Card>
+                <Card cardHandler={props.cardHandler}  data={props.cards[cardCount]} count={cardCount++} panel={props.title}></Card>
             </Col>
 
             <Col classes={["col-12", "col-md-4"]}>
-                <Card cardHandler={props.cardHandler}  data={props.card}></Card>
+                <Card cardHandler={props.cardHandler}  data={props.cards[cardCount]} count={cardCount++} panel={props.title}></Card>
             </Col>
 
         </Row>

@@ -17,21 +17,8 @@ class Home extends Component {
             url: "www.picturebooth.com",
             guid: "b6d174e5-70d2-4274-900a-46632b9b3e56",
         },
+        panels: [],
         photos: null,
-        panels : [
-            {
-                title: "Galleries",
-                url: "galleryurl"
-            },
-            {
-                title: "Archive photos",
-                url: "galleryurl"
-            },
-            {
-                title: "All photos",
-                url: "galleryurl"
-            },
-        ],
         showModal: false
             
         
@@ -40,9 +27,59 @@ class Home extends Component {
 
     componentDidMount () {
         this.getFeed();
+        this.getPanels();
     }
 
+    getPanels = () => {
+        const panels =  [
+            {
+                title: "Galleries",
+                url: "galleryurl",
+                blog: "Galleries",
+            },
+            {
+                title: "Archive photos",
+                url: "galleryurl",
+                blog: "Australia",
+            },
+            {
+                title: "All photos",
+                url: "galleryurl",
+                blog: "Business",
+            },
+        ];
 
+
+        panels.forEach((panel) => {
+            panel.feed = [
+                {
+                    title: "hwllo world",
+                    content: "This is the body content which is very long as i want it to dot dot dot with an eillpsesssese so that i can see it's wokring and then celebrate a job well done",
+                    publishDate: "23rd may 2000",
+                    hasMedia: true,
+                    image: "https://i.ytimg.com/vi/EuvTORWs244/maxresdefault.jpg"
+                },
+                {
+                    title: "Goodby world",
+                    content: "Less writing for the second card",
+                    publishDate: "24rd may 2000",
+                    hasMedia: true,
+                    image: "https://weburbanist.com/wp-content/uploads/2008/10/lego_art_1.jpg"
+                },
+                {
+                    title: "Good News!",
+                    content: "Less writing for the second card",
+                    publishDate: "24rd may 2000",
+                    hasMedia: true,
+                    image: "https://www.geekalerts.com/u/lego-guitar.jpg"
+                }
+
+            ]
+        });
+        console.log(panels);
+        this.setState({panels: panels});
+
+    }
 
     getFeed = () => {
         const options = {
@@ -61,9 +98,22 @@ class Home extends Component {
 
 
 
-    showModal = () => {
-        console.log('in the card handler');
-        this.setState({showModal: true});
+    showModal = (card, panelName) => {
+        console.log(panel);
+        console.log('in the card handler', card);
+        let selected = null;
+        const panel = this.state.panels.find((panel) => {
+            return panel.title === panelName;
+        });
+        if (panel) {
+            selected = panel.feed[card];
+        }
+        console.log(panel);
+
+        this.setState({
+            selectedCard: selected,
+            showModal: true
+        });
     }
     closeModal = () => {
         console.log('in the card handler');
@@ -74,8 +124,8 @@ class Home extends Component {
     render() {
 
 
-
-        const modal = <Modal closeHandler={this.closeModal}><div>Hey look, i'm in the modal!!</div></Modal>
+        console.log(this.state.selected);
+        const modal = <Modal closeHandler={this.closeModal}><div>{this.state.selectedCard ? this.state.selectedCard.title : null}</div></Modal>
 
         return (
             <React.Fragment>
@@ -101,7 +151,12 @@ class Home extends Component {
                 {this.state.panels.map( (panel, i) => {
                     return (
                         <Container key={i}>
-                            <PanelOne cardHandler={this.showModal} title={panel.title} cards={this.state.cards}></PanelOne>
+                            <PanelOne 
+                                cardHandler={this.showModal} 
+                                title={panel.title} 
+                                cards={panel.feed}>
+
+                            </PanelOne>
                         </Container>
                     )
     
