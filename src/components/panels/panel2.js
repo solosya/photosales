@@ -17,25 +17,25 @@ const panel_1 = (props) => {
 
             { props.cards[cardCount] ?
                 <Col classes={["col-12", "col-md-3"]}>
-                    <Card cardHandler={props.cardHandler} data={props.cards[cardCount][0]} count={cardCount++} panel={props.title}></Card>
+                    <Card cardHandler={props.cardHandler} data={props.cards[cardCount]} count={cardCount++} panel={props.title}></Card>
                 </Col> : null
             }
 
             { props.cards[cardCount] ?
                 <Col classes={["col-12", "col-md-3"]}>
-                    <Card cardHandler={props.cardHandler}  data={props.cards[cardCount][0]} count={cardCount++} panel={props.title}></Card>
+                    <Card cardHandler={props.cardHandler}  data={props.cards[cardCount]} count={cardCount++} panel={props.title}></Card>
                 </Col> : null
             }
 
             { props.cards[cardCount] ?
                 <Col classes={["col-12", "col-md-3"]}>
-                    <Card cardHandler={props.cardHandler}  data={props.cards[cardCount][0]} count={cardCount++} panel={props.title}></Card>
+                    <Card cardHandler={props.cardHandler}  data={props.cards[cardCount]} count={cardCount++} panel={props.title}></Card>
                 </Col> : null
             }
 
             { props.cards[cardCount] ?
                 <Col classes={["col-12", "col-md-3"]}>
-                    <Card cardHandler={props.cardHandler}  data={props.cards[cardCount][0]} count={cardCount++} panel={props.title}></Card>
+                    <Card cardHandler={props.cardHandler}  data={props.cards[cardCount]} count={cardCount++} panel={props.title}></Card>
                 </Col> : null
             }
 

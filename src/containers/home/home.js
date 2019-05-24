@@ -233,13 +233,13 @@ class Home extends Component {
                                     cards={panel.feed}>
                                 </PanelOne> :null}
 
-                            {/* {panel.template === "panel2" ?
+                            {panel.template === "panel2" ?
                                 <PanelTwo 
                                     cardHandler={this.showModal} 
                                     title={panel.title} 
                                     cards={panel.feed}>
                                 </PanelTwo> :null}
- */}
+
 
                         </Container>
                     )
