@@ -16,12 +16,12 @@ class Card extends Component {
 
 
     render() {
-        // console.log(this.props.data);
+        console.log(this.props.data);
 
         const cardClass = cn( card["card-1-mobile"], card["card-1-tablet"], card["card-1-desktop"] );
         const count = this.props.count;
         const panel = this.props.panel;
-
+        console.log(this.props.data.images[0].image);
         return (
             <div onClick={() => this.props.cardHandler(count, panel)} className={cardClass}>
                 <a  href                = {this.props.data.url} 
@@ -36,15 +36,15 @@ class Card extends Component {
 
                     <article className={card["c-cards-view"]}>
 
-                        { (this.props.data.hasMedia) ? 
+                        { (this.props.data.images[0].hasMedia) ? 
                             <figure className={card['c-cards-view__media']}>
                                 <picture>
                                     <source media="(max-width: 767px) and (min-width: 501px)" srcSet={this.props.data.imageMedium} />
                                     <source media="(max-width: 500px)" srcSet={this.props.data.imageSmall} />
 
                                     { this.props.data.lazyload === false
-                                     ?  <img width={this.props.data.imgWidth} height={this.props.data.imgHeight} className="img-fluid" src={this.props.data.image} alt="" />
-                                     :  <img width={this.props.data.imgWidth} height={this.props.data.imgHeight} className="img-fluid" src={this.props.data.image} data-original={this.props.data.articleImg} alt="" />
+                                     ?  <img width={this.props.data.imgWidth} height={this.props.data.imgHeight} className="img-fluid" src={this.props.data.images[0].image} alt="" />
+                                     :  <img width={this.props.data.imgWidth} height={this.props.data.imgHeight} className="img-fluid" src={this.props.data.images[0].image} data-original={this.props.data.articleImg} alt="" />
                                     }
 
                                     <div className={card["video-icon"]}></div>

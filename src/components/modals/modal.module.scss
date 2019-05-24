@@ -14,9 +14,10 @@
 
     &__window {
         margin: auto auto;
-        width:468px;
+        width:880px;
+        height: 518px;
         background:white;
-        padding:25px 20px;
+        padding:30px 35px;
         border-radius:3px;
         @media #{$media-ipadSmall} {
             width:auto;
@@ -26,6 +27,7 @@
     &__container {
         position:relative;
         margin:auto;
+        height:100%;
     }
 
     &__header {
@@ -37,6 +39,7 @@
         text-align:center;
         font-weight: $weightBold;
         margin-bottom:20px;
+        position:absolute;
     }
     &__message {
         @include font-size(13);
@@ -49,11 +52,12 @@
 		background: url('/images/cross-black.svg');
         background-repeat:no-repeat;
         position: absolute;
-        top: 0;
+        top: 54px;
         right: 0;
     }
 
     &__content-window {
+        height:100%;
     }
 
 }

@@ -4,7 +4,7 @@ import qs from  'qs';
 
 export class Feed {
     fetch = () => {
-        console.log(this.options);
+
         if (this.options.search != null) {
             this.options.blogid = this.options.blogid; // search takes an id instead of a guid
         }
@@ -42,7 +42,7 @@ export class Feed {
             url = '/api/search';
             requestType = 'get';
         }
-        console.log(url, qs.stringify(requestData));
+        // console.log(url, qs.stringify(requestData));
         return axios[requestType](url, qs.stringify( this.options ) )
         // return axios.get('/api/search?s=this')
             .then( response => {

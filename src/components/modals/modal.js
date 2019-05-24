@@ -13,7 +13,7 @@ const modal = (props) => {
                         <a className={styles.modal__close} href="javascript:;" onClick={props.closeHandler}></a> 
                     </div> 
                     <div id="dialogContent" className={styles['modal__content-window']}>
-                        {props.children}
+                        {props.children()}
                     </div> 
                 </div> 
             </div> 

@@ -4,7 +4,7 @@ import InfiniteCalendar from 'react-infinite-calendar';
 import 'react-infinite-calendar/styles.css'; 
 
 const datepicker = (props) => {
-    console.log("datepicker updating");
+
     return (
         <div className={styles.datepicker}>
             <div onClick={(e) => props.toggle(e, props.index)}>{props.date ?  props.date.format('Do MMM YY') : props.label}</div>
@@ -14,7 +14,7 @@ const datepicker = (props) => {
                     <InfiniteCalendar
                         width={350}
                         height={400}
-                        selected={props.today}
+                        selected={props.date || props.today}
                         disabledDays={[0,6]}
                         minDate={props.lastWeek}
                         onSelect={(res) => props.handler(res, props.index)}

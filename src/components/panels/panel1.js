@@ -7,25 +7,31 @@ import Header               from '../../components/partials/section_header.js';
 const panel_1 = (props) => {
 
     let cardCount = 0;
-    return (
 
+    // console.log(props.cards[1]);
+    return (
         <Row key={props.title}>
             <Col classes={["col-12"]}>
                 <Header title={props.title} />
             </Col>
 
-            <Col classes={["col-12", "col-md-4"]}>
-                <Card cardHandler={props.cardHandler} data={props.cards[cardCount]} count={cardCount++} panel={props.title}></Card>
-            </Col>
+            { props.cards[cardCount] ?
+                <Col classes={["col-12", "col-md-4"]}>
+                    <Card cardHandler={props.cardHandler} data={props.cards[cardCount]} count={cardCount++} panel={props.title}></Card>
+                </Col> : null
+            }
 
-            <Col classes={["col-12", "col-md-4"]}>
-                <Card cardHandler={props.cardHandler}  data={props.cards[cardCount]} count={cardCount++} panel={props.title}></Card>
-            </Col>
+            { props.cards[cardCount] ?
+                <Col classes={["col-12", "col-md-4"]}>
+                    <Card cardHandler={props.cardHandler}  data={props.cards[cardCount]} count={cardCount++} panel={props.title}></Card>
+                </Col> : null
+            }
 
-            <Col classes={["col-12", "col-md-4"]}>
-                <Card cardHandler={props.cardHandler}  data={props.cards[cardCount]} count={cardCount++} panel={props.title}></Card>
-            </Col>
-
+            { props.cards[cardCount] ?
+                <Col classes={["col-12", "col-md-4"]}>
+                    <Card cardHandler={props.cardHandler}  data={props.cards[cardCount]} count={cardCount++} panel={props.title}></Card>
+                </Col> : null
+            }
         </Row>
     )
 }

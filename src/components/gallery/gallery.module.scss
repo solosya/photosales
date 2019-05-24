@@ -1,0 +1,66 @@
+@import '../../styles/global.scss';
+
+
+.gallery {
+    // background-color:green;
+    height: 100%;
+    @include flexbox();
+    @include flex-direction(column, vertical);
+
+
+    &__img {
+        height:383px;
+    }
+    &__title {
+        margin:0;
+        margin-bottom:20px;
+        @include font-size(28);
+    }
+    &__container {
+        @include flexbox();
+        flex-grow: 1;
+    }
+    &__left {
+
+    }
+    &__imagecontainer {
+        height: 384px;
+        width:580px;
+    }
+    &__right {
+        margin-left: 20px;
+        padding: 0 20px;
+        border-left: 1px solid $offwhite;
+    }
+    &__info {
+        margin-top: 40px;
+        border-bottom: 1px solid $offwhite;
+        padding-bottom: 30px;
+    }
+    &__phototitle {
+        @include font-size(26);
+        font-weight: $weightLight;
+        color: $greyish;
+        @include flex-height(38px);
+    }
+    &__photocaption {
+        @include font-size(13);
+        font-weight: $weightRegular;
+        color: $greyish;
+        line-height: 1.46;
+        @include flex-height(81px);
+
+    }
+
+    &__leftNav {
+        position:absolute;
+        top: 50%;
+        left:0;
+        transform: translateY(-50%);
+        height:20px;
+        width:20px;
+        background-color:pink;
+        z-index:4;
+    }
+
+}

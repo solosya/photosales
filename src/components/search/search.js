@@ -9,14 +9,14 @@ import {ArticleFeed}        from '../../sdk/feed';
 
 class Search extends Component {
     
-    today = new Date();
+    today = moment();
 
     state = {
         search: null,
         calanders : [0,0,0,0],
         calanderDates: {
             today: this.today,
-            lastWeek: new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate() - 7)
+            lastWeek: moment().subtract(7, 'days')
         },
         dates: {
             published: null,
