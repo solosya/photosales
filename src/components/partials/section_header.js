@@ -17,7 +17,7 @@ const sectionHeader = (props) => {
     if (props.cart) {
         cart = 
             <React.Fragment>
-                <div>Favourites</div>
+                <div onClick={props.favouritesHandler}>Favourites</div>
                 <div>Cart</div>
             </React.Fragment>;
     }

@@ -9,6 +9,11 @@ import PanelOne             from '../../components/panels/panel1';
 import PanelTwo             from '../../components/panels/panel2';
 import Modal                from '../../components/modals/modal';
 import Gallery              from '../../components/gallery/gallery';
+import Favourites           from '../../components/favourites/favourites';
+
+// NOTE:
+//     Toggle favourite from card works,
+//     need to add toggle off from favourites list
 
 
 class Home extends Component {
@@ -22,10 +27,26 @@ class Home extends Component {
         },
         panels: [],
         photos: null,
-        showModal: false,
+        showGallery: false,
         selectedGallery: null,
-            
-        
+        favourites: [
+            {
+                title: "Bowie One",
+                content: "This is the body content which is very long as i want it to dot dot dot with an eillpsesssese so that i can see it's wokring and then celebrate a job well done",
+                publishDate: "23rd may 2000",
+                hasMedia: true,
+                image: "https://www.simpleminds.com/wp-content/uploads/2016/02/bowie.jpg"
+            },
+            {
+                title: "Lego",
+                content: "Less writing for the second card",
+                publishDate: "24rd may 2000",
+                hasMedia: true,
+                image: "https://weburbanist.com/wp-content/uploads/2008/10/lego_art_1.jpg"
+            }
+
+        ],
+        cart: [],
     }
     
 
@@ -89,7 +110,7 @@ class Home extends Component {
                     ]
                 },
                 {
-                    title: "David Bowie",
+                    title: "Prince",
                     date: "25th April 2010",
                     images: [
                         {
@@ -164,13 +185,24 @@ class Home extends Component {
         this.setState({photos: photos});
     }
 
-    getFavourites = () => {
-    
+    toggleFavourite = (image) => {
+        console.log(image);
+        const favs = [...this.state.favourites];
+        favs.push(image);
+        this.setState({favourites: favs});
     }
 
 
+    showFavourites = () => {
+        this.setState({
+            showFavourites : true,
+            showGallery: false,
+        });
+    }
 
-    showModal = (card, panelName) => {
+
+    showGallery = (card, panelName) => {
+        console.log(card, panel);
         let selected = null;
         const panel = this.state.panels.find((panel) => {
             return panel.title === panelName;
@@ -181,36 +213,60 @@ class Home extends Component {
 
         this.setState({
             selectedGallery: selected,
-            showModal: true
+            showGallery: true,
+            showFavourites : false
         });
     }
-    closeModal = () => {
-        this.setState({showModal: false});
+    closeGallery = () => {
+        this.setState({
+            showGallery: false
+        });
+    }
+    closeFavourites = () => {
+        this.setState({
+            showFavourites: false
+        });
     }
 
 
     render() {
 
 
-        const modal = <Modal closeHandler={this.closeModal} children={gallery => (
-                <Gallery panel={this.state.selectedGallery} />
-            )} >
+        const gallery = 
+            <Modal closeHandler={this.closeGallery} children={gallery => (
+                <Gallery 
+                    panel     = {this.state.selectedGallery} 
+                    favourite = {this.toggleFavourite}/>
+            )} >   
+            </Modal>
 
-            
-        </Modal>
+        const favourites = 
+            <Modal closeHandler={this.closeFavourites} children={favourites => (
+                <Favourites 
+                    favourites  = {this.state.favourites}
+                    favHandler  = {this.toggleFavourite}
+                    cartHandler = {this.toggleCart}
+                />
+            )} >   
+            </Modal>
 
-        const panel = "PanelOne"
 
         return (
             <React.Fragment>
                 
-                {this.state.showModal ? modal : null}
+                {this.state.showGallery     ? gallery : null}
+                {this.state.showFavourites  ? favourites : null}
 
                 <Container>
     
                     <Row>
                         <Col classes={["col-12"]}>
-                            <Header title={this.state.blogData.title} url={this.state.blogData.url} larger cart/>
+                            <Header 
+                                title = {this.state.blogData.title} 
+                                url   = {this.state.blogData.url}
+                                favouritesHandler = {this.showFavourites}
+                                larger 
+                                cart/>
                         </Col>
                     </Row>
     
@@ -228,14 +284,14 @@ class Home extends Component {
 
                             {panel.template === "panel1" ?
                                 <PanelOne 
-                                    cardHandler={this.showModal} 
+                                    cardHandler={this.showGallery} 
                                     title={panel.title} 
                                     cards={panel.feed}>
                                 </PanelOne> :null}
 
                             {panel.template === "panel2" ?
                                 <PanelTwo 
-                                    cardHandler={this.showModal} 
+                                    cardHandler={this.showGallery} 
                                     title={panel.title} 
                                     cards={panel.feed}>
                                 </PanelTwo> :null}

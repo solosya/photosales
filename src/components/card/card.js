@@ -1,29 +1,35 @@
 import React, {Component}   from 'react';
-import card                 from './card-1.module.scss';
+import card_1               from './card-1.scss';
+import card_2               from './card-2.scss';
 import cn                   from 'classnames';
 import Dotdotdot            from 'react-dotdotdot';
 
 
 class Card extends Component {
-    // state = {
-    //     title: "hwllo world",
-    //     content: "This is the body content which is very long as i want it to dot dot dot with an eillpsesssese so that i can see it's wokring and then celebrate a job well done",
-    //     author: "Lee Newman",
-    //     publishDate: "23rd may 2000",
-    //     hasMedia: true,
-    //     image: "https://i.ytimg.com/vi/EuvTORWs244/maxresdefault.jpg"
-    // }
 
+    
 
     render() {
-        console.log(this.props.data);
+        // const cardClass = cn( card_1["card-mobile"], card_1["card-tablet"], card_1["card-desktop"] );
 
-        const cardClass = cn( card["card-1-mobile"], card["card-1-tablet"], card["card-1-desktop"] );
-        const count = this.props.count;
-        const panel = this.props.panel;
-        console.log(this.props.data.images[0].image);
+        const count = this.props.count || 0;
+        const panel = this.props.panel || null;
+        const image = this.props.data.images && this.props.data.images.length > 0 ? this.props.data.images[0] : this.props.data;
+        const type = this.props.type || null;
+        let favourite = null;
+        
+        if ( this.props.favourite ) {
+            favourite = <div className="c-cards-view__buttons">
+                <div onClick={this.props.favHandler} className="c-cards-view__favourite"></div>
+                <div onClick={this.props.cartHandler} className="c-cards-view__cart">C</div>
+            </div>
+        }
+
+
+
+
         return (
-            <div onClick={() => this.props.cardHandler(count, panel)} className={cardClass}>
+            <div onClick={() => this.props.cardHandler(count, panel)} className={this.props.styles}>
                 <a  href                = {this.props.data.url} 
                     className           = ""
                     data-id             = {this.props.data.id} 
@@ -34,20 +40,20 @@ class Card extends Component {
                     data-article-text   = {this.props.data.title}
                     >
 
-                    <article className={card["c-cards-view"]}>
+                    <article className="c-cards-view">
 
-                        { (this.props.data.images[0].hasMedia) ? 
-                            <figure className={card['c-cards-view__media']}>
+                        { (image.hasMedia) ? 
+                            <figure className='c-cards-view__media'>
                                 <picture>
                                     <source media="(max-width: 767px) and (min-width: 501px)" srcSet={this.props.data.imageMedium} />
                                     <source media="(max-width: 500px)" srcSet={this.props.data.imageSmall} />
 
                                     { this.props.data.lazyload === false
-                                     ?  <img width={this.props.data.imgWidth} height={this.props.data.imgHeight} className="img-fluid" src={this.props.data.images[0].image} alt="" />
-                                     :  <img width={this.props.data.imgWidth} height={this.props.data.imgHeight} className="img-fluid" src={this.props.data.images[0].image} data-original={this.props.data.articleImg} alt="" />
+                                        ?  <img width={this.props.data.imgWidth} height={this.props.data.imgHeight} className="img-fluid" src={image.image} alt="" />
+                                        :  <img width={this.props.data.imgWidth} height={this.props.data.imgHeight} className="img-fluid" src={image.image} data-original={this.props.data.articleImg} alt="" />
                                     }
 
-                                    <div className={card["video-icon"]}></div>
+                                    <div className="video-icon"></div>
 
                                 </picture>
 
@@ -55,16 +61,18 @@ class Card extends Component {
                             : null
                         }
                         
-                        <div className={card["c-cards-view__container"]}>
+                        <div className="c-cards-view__container">
 
-                            <div className={card["c-cards-view__category"]}>{ this.props.data.category }</div>
+                            <div className="c-cards-view__category">{ this.props.data.category }</div>
                                                         
-                            <h2 className={card["c-cards-view__heading"]}><Dotdotdot clamp={2}>{ this.props.data.title}</Dotdotdot></h2>
-                                                    
-                            <div className={card["c-cards-view__description"]}><Dotdotdot clamp={3}>{this.props.data.content}</Dotdotdot></div>
+                            <h2 className="c-cards-view__heading"><Dotdotdot clamp={2}>{ this.props.data.title}</Dotdotdot></h2>
+
+                            {favourite ? favourite : null}
+
+                            <div className="c-cards-view__description"><Dotdotdot clamp={3}>{this.props.data.content}</Dotdotdot></div>
                         
-                            <div className={card["c-cards-view__author"]}>
-                                <div className={card["c-cards-view_time"]}>{this.props.data.publishDate}</div>
+                            <div className="c-cards-view__author">
+                                <div className="c-cards-view_time">{this.props.data.publishDate}</div>
                             </div>
                         </div>
 

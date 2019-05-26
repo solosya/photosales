@@ -11,7 +11,7 @@ axios.defaults.headers.post['Content-Type']       = 'application/x-www-form-urle
 delete window.vigblat;
 
 class App extends Component {
-  
+
     pageClicked = () => {
         console.log('page clicked');
     }

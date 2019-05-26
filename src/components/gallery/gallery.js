@@ -3,7 +3,6 @@ import styles from './gallery.module.scss';
 import "react-image-gallery/styles/css/image-gallery.css";
 import ImageGallery from 'react-image-gallery';
 import Button from '../../components/button/button';
-// import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
 import cloudinary from 'cloudinary-core';
 
 class Gallery extends Component {
@@ -15,7 +14,6 @@ class Gallery extends Component {
     };
 
     gallerySelect= (data) => {
-        console.log('GALERY SELECTED');
         this.setState({current: data});
     }
 
@@ -36,8 +34,7 @@ class Gallery extends Component {
                 originalClass: styles.gallery__img,
             };
         });
-        console.log("HAHAAHAHHA");
-        console.log(this.props.panel);
+
         this.setState({
             gallery: this.props.panel,
             items: this.props.panel.images,
@@ -48,22 +45,21 @@ class Gallery extends Component {
     renderLeftNav(onClick, disabled) {
 
         return (
-          <button
-            className={styles.gallery__leftNav}
-            disabled={disabled}
-            onClick={onClick}/>
+            <button
+                className={styles.gallery__leftNav}
+                disabled={disabled}
+                onClick={onClick}/>
         )
     }
     
     renderRightNav(onClick, disabled) {
         return (
-          <button
-            className={styles.gallery__rightNav}
-            disabled={disabled}
-            onClick={onClick}/>
+            <button
+                className={styles.gallery__rightNav}
+                disabled={disabled}
+                onClick={onClick}/>
         )
     }
-
 
 
     addToCart = () => {
@@ -71,7 +67,7 @@ class Gallery extends Component {
     }
 
     render() {
-        console.log(this.state);
+        console.log("rendering Gallery");
         if (this.state.items.length === 0) return null;
 
         return (
@@ -97,7 +93,7 @@ class Gallery extends Component {
 
 
                     <div className={styles.gallery__right}>
-                        <div className={styles.gallery__}>Favourite</div>
+                        <div onClick={() => this.props.favourite(this.state.items[this.state.current])} className={styles.gallery__}>Favourite</div>
 
                         <div className={styles.gallery__info}>
                             { this.state.items[this.state.current] ? 

@@ -1,0 +1,145 @@
+@import "./card";
+
+@mixin card-2-base() {
+    margin-left: -20px;
+    margin-right: -20px;
+
+    .c-cards-view {
+        @include flex-direction(row, horizontal);
+        box-shadow:none;
+        background: $white;
+
+
+        &__container {
+            padding: 0;
+        }
+
+        &__category {
+        }
+
+        &__heading {
+            margin:0;
+            @include flex-height(25px);
+            @include font-size(18);
+            margin-bottom:10px;
+            font-weight: $weightMedium;
+        }
+        &__description {
+            @include font-size(13);
+            line-height: 1.54;
+            @include flex-height(62px);
+            color: $greyish;
+        }
+
+        &__time {
+            margin-top: 13px;
+        }
+
+        &.video {
+            .c-cards-view__media .video-icon {
+                @include size(40px);
+            }
+        }
+
+        &.without-image {
+            .c-cards-view__container {
+                width: 100%;
+                margin-left: 0px;
+                padding: 0px 20px 0;
+            }
+
+            .c-cards-view__description {
+                margin-bottom: 15px;
+                display: block;
+                max-height: 90px;
+                overflow: hidden;
+            }
+        }
+    }
+}
+
+.card-2-mobile {
+    @media #{$mobile} {
+        @include card-2-base();
+
+    }
+}
+
+
+@mixin card-2-tablet-base {
+    @include card-2-base();
+    margin-left: 0;
+    margin-right: 0;
+    
+    .c-cards-view {
+        height: 160px;
+
+        &__media {
+            @include flex-height(160px);
+            @include flex-width(240px);
+            margin-right: 36px;
+
+            img {
+                height: 100%;
+            }
+
+        }
+
+        &__category {
+        }
+
+        &__heading {
+        }
+        &__description {
+            @include flex-height(60px);
+        }
+
+
+        &.without-image {
+
+            .c-cards-view {
+                &__container {
+                    padding: 30px;
+                }
+                &__category {
+                }
+        
+                &__heading {
+                    margin-bottom: 10px;
+                }
+                &__description {
+                    margin-top: 5px;
+                    // @include flex-height(225px);
+                    @include font-size(15);
+                    line-height: 1.9;
+                }
+        
+                &__author {
+                    margin-top:35px;
+                }
+
+
+            }
+        }
+
+    }
+
+}
+
+.card-2-tablet {
+    @media #{$tablet} {
+        @include card-2-tablet-base();
+    }
+
+}
+.card-2-desktop {
+
+    @media #{$desktop-up} {
+
+        @include card-2-tablet-base();
+    }
+}
+
+
+
+

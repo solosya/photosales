@@ -94,6 +94,25 @@
         overflow: hidden;
     }
 
+    &__buttons {
+        position:absolute;
+        right:0;
+        top:0;
+        @include flexbox();
+    }
+
+    &__favourite {
+        @include flex-width(20px);
+        @include flex-height(16px);
+		background-image: url('/images/favourite_on.svg');
+        background-repeat:no-repeat;
+        background-size:'cover';
+        margin-right:7px;
+
+    }
+    &__cart {
+    }
+
 
 
     &__time {

@@ -17,25 +17,53 @@ const panel_1 = (props) => {
 
             { props.cards[cardCount] ?
                 <Col classes={["col-12", "col-md-3"]}>
-                    <Card cardHandler={props.cardHandler} data={props.cards[cardCount]} count={cardCount++} panel={props.title}></Card>
+                    <Card 
+                        cardHandler={props.cardHandler} 
+                        data={props.cards[cardCount]} 
+                        count={cardCount++} 
+                        panel={props.title}
+                        styles="card-1-mobile card-1-tablet card-1-desktop"
+                        >
+                    </Card>
                 </Col> : null
             }
 
             { props.cards[cardCount] ?
                 <Col classes={["col-12", "col-md-3"]}>
-                    <Card cardHandler={props.cardHandler}  data={props.cards[cardCount]} count={cardCount++} panel={props.title}></Card>
+                    <Card 
+                        cardHandler={props.cardHandler}  
+                        data={props.cards[cardCount]} 
+                        count={cardCount++} 
+                        panel={props.title}
+                        styles="card-1-mobile card-1-tablet card-1-desktop"
+                        >
+                    </Card>
                 </Col> : null
             }
 
             { props.cards[cardCount] ?
                 <Col classes={["col-12", "col-md-3"]}>
-                    <Card cardHandler={props.cardHandler}  data={props.cards[cardCount]} count={cardCount++} panel={props.title}></Card>
+                    <Card 
+                        cardHandler={props.cardHandler}  
+                        data={props.cards[cardCount]} 
+                        count={cardCount++} 
+                        panel={props.title}
+                        styles="card-1-mobile card-1-tablet card-1-desktop"
+                        >
+                    </Card>
                 </Col> : null
             }
 
             { props.cards[cardCount] ?
                 <Col classes={["col-12", "col-md-3"]}>
-                    <Card cardHandler={props.cardHandler}  data={props.cards[cardCount]} count={cardCount++} panel={props.title}></Card>
+                    <Card 
+                        cardHandler={props.cardHandler}  
+                        data={props.cards[cardCount]} 
+                        count={cardCount++} 
+                        panel={props.title}
+                        styles="card-1-mobile card-1-tablet card-1-desktop"
+                        >
+                    </Card>
                 </Col> : null
             }
 

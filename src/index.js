@@ -7,6 +7,6 @@ import './index.css';
 const elem = document.getElementById('photo-sales');
 
 ReactDOM.render(
-  <App />,
-  elem
+    <App />,
+    elem
 );
