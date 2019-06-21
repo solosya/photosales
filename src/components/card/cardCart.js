@@ -7,6 +7,8 @@ import cn                   from 'classnames';
 // Components
 import Checkbox from '../form/checkbox';
 import Flexrow from '../layout/flexrow';
+import LineItem from './lineItem';
+
 // Styles
 import './card-3.scss';
 import close from '../../styles/close.module.scss';
@@ -17,18 +19,24 @@ import close from '../../styles/close.module.scss';
 class CardCart extends Component {
 
     state = {
-        print: false,
-        digital: false,
-        quantity: null
+        productStatus: {
+            print: false,
+            digital: false,
+        },
+        products: this.props.products,
+        lineItems: [{
+            quantity: 0
+        }],
+        cart: [],
     }
 
 
     handleCheckbox = e => {
-        // console.log('handling checkbox');
-        // console.log(e.target.name);
-        const data = {};
-        data[e.target.name] = e.target.checked;
-        this.setState(data, () => {
+        const status = {...this.state.productStatus};
+        const lineItems = [...this.state.lineItems];
+        status[e.target.name] = e.target.checked;
+
+        this.setState({productStatus: status}, () => {
             console.log(this.state);
         });
     }
@@ -36,21 +44,33 @@ class CardCart extends Component {
     handleQuantity = e => {
         console.log('handling select');
         const data = {};
-        // data[e.target.name] = e.target.checked;
-        // this.setState(data, () => {
-        //     console.log(this.state);
-        // });
+        this.setState({quantity: e.target.value}, () => {
+            console.log(this.state);
+        });
     }
 
 
     handleSelect = e => {
-        console.log('handling select');
-        const data = {};
-        // data[e.target.name] = e.target.checked;
+        // console.log('handling select');
+        // console.log(e);
+        let {value, category, label, index} = e;
+        console.log(value, category, label);
+        const product = this.state.products[category][index];
+        product.quantity = 1;
+        const cart = [...this.state.cart];
+        cart.push(product)
+        // const data = {};
+        // data[e.target.name] = e.target.value;
+        // console.log(data);
         // this.setState(data, () => {
         //     console.log(this.state);
         // });
     }
+
+    calculate = () => {
+        this.setState()
+    }
+
 
     render() {
         const count = this.props.count || 0;
@@ -66,32 +86,32 @@ class CardCart extends Component {
             </div>
         }
 
-
-        const printOptions = this.props.plans.print.map((plan) => {
-            return {value: plan.label, label: plan.label}
+        const printOptions = this.state.products.print.map((plan, i) => {
+            return {value: plan.id, label: plan.label, category: "print", index: i}
         });
-
-        const digitalOptions = this.props.plans.digital.map((plan) => {
-            return {value: plan.label, label: plan.label}
+    
+        const digitalOptions = this.state.products.digital.map((plan, i) => {
+            return {value: plan.id, label: plan.label, category: "digitial", index: i}
         });
-
-
-        const customStyles = {
-            option: (provided, state) => ({
-                ...provided,
-            }),
-            control: (provided) => ({
-                ...provided,
-                borderRadius: 0
-            }),
-        }
+    
         // singleValue: (provided, state) => {
         // },
         // input: (provided, state) => ({
         //     background: 'red'
         // })
 
-        
+        const lineItems = this.state.lineItems.map((item) => {
+            return (
+                <LineItem 
+                    active          = {!this.state.productStatus.print}
+                    options         = {printOptions}
+                    quantity        = {item.quantity}
+                    handleSelect    = {this.handleSelect}
+                    handleQuantity  = {this.handleQuantity}
+                />
+            )
+
+        });
         return (
             <div onClick={() => this.props.cardHandler(count, panel)} className={this.props.styles}>
                 <a  href                = {this.props.data.url} 
@@ -133,21 +153,22 @@ class CardCart extends Component {
 
 
                             <Flexrow>
-                                <Checkbox label="Print" checked={this.state.print} name="print" onChange={this.handleCheckbox} />
-
-                                <div style={{width: 200}}>
-                                    <Select styles={customStyles} isDisabled={!this.state.print} onChange={this.handleSelect} options={printOptions} />
+                                <Checkbox label="Print" checked={this.state.productStatus.print} name="print" onChange={this.handleCheckbox} />
+                                {lineItems}
+                                
+                                {/* <div style={{width: 200}}>
+                                    <Select styles={customStyles} isDisabled={!this.state.productStatus.print} onChange={this.handleSelect} options={printOptions} />
                                 </div>
                                 <input type="text" value={this.state.quantity} placeholder="Qty" onChange={this.handleQuantity} />
-                                <p>$0.00 AUD</p>
+                                <p>$0.00 AUD</p> */}
                             </Flexrow>
                             
                             <Flexrow>
-                                <Checkbox label="Digital" checked={this.state.digital} name="digital" onChange={this.handleCheckbox} />
-                                <div style={{width: 200}}>
-                                    <Select styles={customStyles} isDisabled={!this.state.digital} onChange={this.handleSelect} options={digitalOptions} />
+                                <Checkbox label="Digital" checked={this.state.productStatus.digital} name="digital" onChange={this.handleCheckbox} />
+                                {/* <div style={{width: 200}}>
+                                    <Select styles={customStyles} isDisabled={!this.state.productStatus.digital} onChange={this.handleSelect} options={digitalOptions} />
                                 </div>
-                                <p>$0.00 AUD</p>
+                                <p>$0.00 AUD</p> */}
                             </Flexrow>
 
 

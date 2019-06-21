@@ -24,25 +24,24 @@ class Checkout extends Component {
         photos: null,
         cart: [],
         total: 0,
-        plans: {
-            discounts: {
-                digital: {
-                    commercial: {
-                        prices : {
-                            "1": 50,
-                            "2": 30,
-                            "6": 20
-                        }
-                    },
-                    personal: {
-                        prices : {
-                            "1": 20,
-                            "2": 15,
-                            "6": 10
-                        }
-                    }
+        products: {
+            print: [
+                {
+                    label: '6" x 4" ($5, additional copies $2)',
+                    price : 5,
+                    id: 3
+                },
+                {
+                    label: '7" x 5" ($7, additional copies $2)',
+                    price : 6,
+                    id: 4
+                },
+                {
+                    label: '8" x 6" ($7, additional copies $2)',
+                    price : 7,
+                    id: 5
                 }
-            },
+            ],
             digital: [
                 {
                     label: 'Personal or single use',
@@ -52,30 +51,10 @@ class Checkout extends Component {
                     label: 'Commercial use',
                     prices : 50
                 },
-            ],
-            print: [
-                {
-                    label: '6" x 4" ($5, additional copies $2)',
-                    prices :{
-                        "1": 5,
-                        "2": 2,
-                    }
-                },
-                {
-                    label: '7" x 5" ($7, additional copies $2)',
-                    prices :{
-                        "1": 7,
-                        "2": 2,
-                    }
-                },
-                {
-                    label: '8" x 6" ($7, additional copies $2)',
-                    prices :{
-                        "1": 7,
-                        "2": 2,
-                    }
-                }
             ]
+
+        },
+        discounts: {
 
         }
     }
@@ -106,7 +85,7 @@ class Checkout extends Component {
                     styles="card-3-mobile card-3-tablet card-3-desktop"
                     cardHandler={() => { return false;}}
                     favHandler={this.props.favHandler}
-                    plans={this.state.plans}
+                    products={this.state.products}
                     cartHandler={null}
                     favourite
                 ></CardCart>];
