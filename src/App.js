@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import {Route, Switch}             from 'react-router-dom';
 import Home                 from './containers/home/home';
+import Checkout             from './containers/checkout/checkout';
 import axios                from 'axios';
 
 // _appJsConfig
@@ -19,7 +21,10 @@ class App extends Component {
     render() {
         return (
             <div onClick={this.pageClicked}>
-                <Home />
+                <Switch>
+                    <Route path="/checkout" component={Checkout} />
+                    <Route path="/" component={Home} />
+                </Switch>
             </div>
         );
     }

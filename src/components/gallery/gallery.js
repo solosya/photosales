@@ -1,9 +1,15 @@
 import React, {Component} from 'react'
 import styles from './gallery.module.scss';
+import favStyle from '../../styles/favourite.module.scss';
 import "react-image-gallery/styles/css/image-gallery.css";
 import ImageGallery from 'react-image-gallery';
 import Button from '../../components/button/button';
 import cloudinary from 'cloudinary-core';
+import cn         from 'classnames';
+
+    
+
+
 
 class Gallery extends Component {
     state = {
@@ -23,8 +29,7 @@ class Gallery extends Component {
             const url = cloudinaryCore.url(item.image, {
                 width: "580",
                 height: "384",
-                crop: "fit",
-                overlay:"text:arial_60:SUNRASYIA" 
+                crop: "fit" 
 
             });
 
@@ -40,35 +45,55 @@ class Gallery extends Component {
             items: this.props.panel.images,
             images: images
         });
-
     }
-    renderLeftNav(onClick, disabled) {
 
+    toggleFavourite =() => {
+        const items = [...this.state.items];
+        const currentItem = items[this.state.current];
+        currentItem.favourite = !currentItem.favourite;
+        this.setState({items}); 
+        this.props.favouriteHandler(items[this.state.current]);
+    }
+
+    toggleCart =() => {
+        const items = [...this.state.items];
+        const currentItem = items[this.state.current];
+        currentItem.cart = !currentItem.cart;
+        this.setState({items}); 
+        this.props.cartHandler(items[this.state.current]);
+    }
+
+
+
+    renderLeftNav(onClick, disabled) {
+        const navStyles = cn( styles.gallery__nav, styles.gallery__nav_left );
         return (
             <button
-                className={styles.gallery__leftNav}
+                className={navStyles}
                 disabled={disabled}
                 onClick={onClick}/>
         )
     }
     
     renderRightNav(onClick, disabled) {
+        const navStyles = cn( styles.gallery__nav, styles.gallery__nav_right );
+
         return (
             <button
-                className={styles.gallery__rightNav}
+                className={navStyles}
                 disabled={disabled}
                 onClick={onClick}/>
         )
     }
 
 
-    addToCart = () => {
-        console.log('added photo to cart!');
-    }
-
     render() {
-        console.log("rendering Gallery");
         if (this.state.items.length === 0) return null;
+        const currentItem = this.state.items[this.state.current];
+        const favourited = currentItem.favourite ? favStyle.favouriteOn : '';
+        const favouriteStyles = cn(favStyle.favourite, favourited);
+        const cartButtonText = currentItem.cart ? "REMOVE FROM CART": "ADD TO CART" ;
+
 
         return (
             <div className={styles.gallery}>
@@ -79,10 +104,9 @@ class Gallery extends Component {
                         <div className={styles.gallery__imagecontainer}>
                             <ImageGallery 
                                 items={this.state.images} 
-                                onClick={this.gallerySelect} 
                                 onSlide={this.gallerySelect}
-                                useTranslate3D={false}
                                 renderLeftNav = {this.renderLeftNav}
+                                renderRightNav = {this.renderRightNav}
                                 showThumbnails ={false}
                             />
                         </div>
@@ -91,26 +115,25 @@ class Gallery extends Component {
 
 
 
-
                     <div className={styles.gallery__right}>
-                        <div onClick={() => this.props.favourite(this.state.items[this.state.current])} className={styles.gallery__}>Favourite</div>
+                        <div onClick={ this.toggleFavourite}  className={favouriteStyles}></div>
 
                         <div className={styles.gallery__info}>
-                            { this.state.items[this.state.current] ? 
+                            { currentItem ? 
                                 <>
-                                <h2 className={styles.gallery__phototitle}>{this.state.items[this.state.current].title}</h2>
-                                <p className={styles.gallery__photocaption}>{this.state.items[this.state.current].content}</p>
+                                <h2 className={styles.gallery__phototitle}>{currentItem.title}</h2>
+                                <p className={styles.gallery__photocaption}>{currentItem.content}</p>
                                 </>
                                 : null
                             }
 
-                            <Button handler={this.addToCart} classes={["button", "button--red", "button--top-30"]}>ADD TO CART</Button>
+                            <Button handler={this.toggleCart} classes={["button", "button--red", "button--top-30"]}>{cartButtonText}</Button>
  
                         </div>
 
 
                         <div className={styles.gallery__meta}>
-                        { this.state.items[this.state.current] ? 
+                        { currentItem ? 
                             <>
                             <p><span>Size</span> 1598 x 832 pixels at 300 dpi</p>
                             <p><span>Photographer</span> Eliot Smithington</p>
@@ -139,4 +162,4 @@ class Gallery extends Component {
 
 
 
-export default Gallery;;
+export default Gallery;

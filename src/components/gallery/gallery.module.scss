@@ -52,15 +52,55 @@
 
     }
 
-    &__leftNav {
+    &__nav {
+        background:$greyish;
         position:absolute;
         top: 50%;
         left:0;
         transform: translateY(-50%);
-        height:20px;
-        width:20px;
-        background-color:pink;
+        border:none;
+        height:64px;
+        width:35px;
         z-index:4;
+        padding:0;
+        margin:0;
+        &:focus {
+            outline: 0;
+            -moz-outline-style: none;
+        }
+
+        &:before {
+            content:'';
+            display:block;
+            transform: rotate(-45deg);
+            height:23px;
+            width:23px;
+            border: 2px solid;
+        }
+
+        &_left {
+            &:before {
+                margin-left:10px;
+                border-top-color:white;
+                border-left-color:white;
+                border-right-color:transparent;
+                border-bottom-color:transparent;
+            }
+        }
+        &_right {
+            right:0;
+            left:auto;
+            &:before {
+                position:relative;
+                right:3px;
+                margin-right:10px;
+                border-top-color:transparent;
+                border-left-color:transparent;
+                border-right-color:white;
+                border-bottom-color:white;
+            }
+        }
+
     }
 
 }

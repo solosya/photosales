@@ -1,0 +1,15 @@
+@import '../../styles/global.scss';
+
+
+.favourites {
+    
+    &__title {
+        @include font-size(30);
+        color:$greyish;
+        font-weight: $weightLight;
+        border-bottom: 1px solid $greyish;
+        padding-bottom:20px;
+        margin-bottom:20px;
+    
+    }
+}

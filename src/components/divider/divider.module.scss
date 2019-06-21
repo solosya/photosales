@@ -1,0 +1,9 @@
+@import '../../styles/global.scss';
+
+
+.divider {
+    height:1px;
+    width:100%;
+    background-color: rgba($greyish, 0.8);
+    margin: 20px 0;
+}

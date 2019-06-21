@@ -1,0 +1,16 @@
+.favourite {
+    background-image: url('/images/heart.svg');
+    background-repeat: no-repeat;
+    background-size:contain;
+    height:20px;
+    width:20px;
+    cursor:pointer;
+
+    &On {
+        background-image: url('/images/heart-red.svg');
+    }
+    &--grey {
+        opacity:0.6;
+    }
+}
+

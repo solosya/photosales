@@ -1,0 +1,14 @@
+.cart {
+    background-image: url('/images/cart.svg');
+    background-repeat: no-repeat;
+    background-size:contain;
+    height:20px;
+    width:20px;
+    opacity:0.6;
+    cursor:pointer;
+
+    &On {
+        background-image: url('/images/cart-red.svg');
+    }
+}
+

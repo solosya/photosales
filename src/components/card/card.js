@@ -1,8 +1,8 @@
 import React, {Component}   from 'react';
-import card_1               from './card-1.scss';
-import card_2               from './card-2.scss';
-import cn                   from 'classnames';
+// import cn                   from 'classnames';
 import Dotdotdot            from 'react-dotdotdot';
+import './card-1.scss';
+import './card-2.scss';
 
 
 class Card extends Component {
@@ -11,7 +11,6 @@ class Card extends Component {
 
     render() {
         // const cardClass = cn( card_1["card-mobile"], card_1["card-tablet"], card_1["card-desktop"] );
-
         const count = this.props.count || 0;
         const panel = this.props.panel || null;
         const image = this.props.data.images && this.props.data.images.length > 0 ? this.props.data.images[0] : this.props.data;
@@ -20,8 +19,8 @@ class Card extends Component {
         
         if ( this.props.favourite ) {
             favourite = <div className="c-cards-view__buttons">
-                <div onClick={this.props.favHandler} className="c-cards-view__favourite"></div>
-                <div onClick={this.props.cartHandler} className="c-cards-view__cart">C</div>
+                <div onClick={() => this.props.favHandler(this.props.data)} className="c-cards-view__favourite"></div>
+                <div onClick={() => this.props.cartHandler(this.props.data)} className="c-cards-view__cart"></div>
             </div>
         }
 
