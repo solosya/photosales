@@ -2,7 +2,6 @@
 // Libraries
 import React, {Component}   from 'react';
 import Dotdotdot            from 'react-dotdotdot';
-import Select               from 'react-select';
 import cn                   from 'classnames';
 // Components
 import Checkbox from '../form/checkbox';
@@ -23,17 +22,15 @@ class CardCart extends Component {
             print: false,
             digital: false,
         },
-        products: this.props.products,
-        lineItems: [{
-            quantity: 0
-        }],
-        cart: [],
+        products: {...this.props.products},
+        productMenu: {...this.props.products},
+        lineItems: [],
+        lineItemCount: 1
     }
 
 
     handleCheckbox = e => {
         const status = {...this.state.productStatus};
-        const lineItems = [...this.state.lineItems];
         status[e.target.name] = e.target.checked;
 
         this.setState({productStatus: status}, () => {
@@ -41,30 +38,79 @@ class CardCart extends Component {
         });
     }
 
-    handleQuantity = e => {
-        console.log('handling select');
-        const data = {};
-        this.setState({quantity: e.target.value}, () => {
-            console.log(this.state);
+    rev =(n) => {
+        var mid = (this.state.lineItems.length -1)/2;
+        if (n>mid) {
+            return n - (((n-mid)*2)-1) -1;
+        }
+        return n + (((mid-n)*2)+1) -1;
+    }
+        
+    handleQuantity = (e, i) => {
+        // console.log(this.state.lineItems);
+        const quantity = e.target.value;
+        const product = {...this.state.lineItems[i]};
+
+        product.quantity = +quantity;
+        const items = [...this.state.lineItems];
+        items[i] = product;
+
+        this.setState({lineItems: items}, () => {
+
+            this.props.handlePurchaseCart(product);
+
         });
     }
 
 
     handleSelect = e => {
-        // console.log('handling select');
-        // console.log(e);
+
         let {value, category, label, index} = e;
         console.log(value, category, label);
-        const product = this.state.products[category][index];
+        const product = {...this.state.products[category][index]};
         product.quantity = 1;
-        const cart = [...this.state.cart];
-        cart.push(product)
-        // const data = {};
-        // data[e.target.name] = e.target.value;
-        // console.log(data);
-        // this.setState(data, () => {
-        //     console.log(this.state);
-        // });
+        product.photoId = this.props.data.id;
+        product.productId = index;
+        
+        // disable the item in the menu
+        const menu = {...this.state.productMenu};
+        const selectMenu = menu[category];
+        selectMenu[index].disabled = true;
+
+        // add the product to the lineItems
+        const newLine = [...this.state.lineItems];
+        newLine.push(product);
+
+        this.setState({
+            lineItems: newLine,
+            productMenu: menu
+        }, () => {
+            // console.log(this.state);
+            this.props.handlePurchaseCart(product);
+        });
+    }
+
+
+    removeItem = (e, index, category ) => {
+
+        const lineItems = [...this.state.lineItems];
+        const item = lineItems[index];
+        const productId = item.productId;
+        lineItems.splice(index, 1);
+
+
+        // disable the item in the menu
+        const productMenu = {...this.state.productMenu};
+        const selectMenu = productMenu[category];
+        selectMenu[productId].disabled = false;
+
+        this.setState({
+            lineItems,
+            productMenu
+            }, () => {
+                console.log(this.state.productMenu);
+            }
+        );
     }
 
     calculate = () => {
@@ -86,32 +132,42 @@ class CardCart extends Component {
             </div>
         }
 
-        const printOptions = this.state.products.print.map((plan, i) => {
-            return {value: plan.id, label: plan.label, category: "print", index: i}
+        console.log(this.props.data);
+        const printOptions = this.state.productMenu.print.map((plan, i) => {
+            return {value: plan.id, label: plan.label, category: "print", index: i, disabled: plan.disabled}
         });
-    
-        const digitalOptions = this.state.products.digital.map((plan, i) => {
-            return {value: plan.id, label: plan.label, category: "digitial", index: i}
-        });
-    
-        // singleValue: (provided, state) => {
-        // },
-        // input: (provided, state) => ({
-        //     background: 'red'
-        // })
+        console.log(printOptions);
 
-        const lineItems = this.state.lineItems.map((item) => {
+        // const digitalOptions = this.state.products.digital.map((plan, i) => {
+        //     return {value: plan.id, label: plan.label, category: "digitial", index: i}
+        // });
+    
+        const newItem = <LineItem
+            key             = {93939393939}
+            active          = {!this.state.productStatus.print}
+            options         = {printOptions}
+            selectValue     = {null}
+            handleSelect    = {this.handleSelect}
+        /> 
+
+        const lineItems = this.state.lineItems.map((item, i) => {
             return (
-                <LineItem 
+                <LineItem
+                    key             = {i} 
+                    index           = {i+1}
                     active          = {!this.state.productStatus.print}
                     options         = {printOptions}
+                    selectValue     = {printOptions[item.productId]}
                     quantity        = {item.quantity}
                     handleSelect    = {this.handleSelect}
                     handleQuantity  = {this.handleQuantity}
+                    handleRemove    = {this.removeItem}
                 />
             )
-
         });
+ 
+ 
+ 
         return (
             <div onClick={() => this.props.cardHandler(count, panel)} className={this.props.styles}>
                 <a  href                = {this.props.data.url} 
@@ -154,8 +210,14 @@ class CardCart extends Component {
 
                             <Flexrow>
                                 <Checkbox label="Print" checked={this.state.productStatus.print} name="print" onChange={this.handleCheckbox} />
-                                {lineItems}
                                 
+                                <div className="c-cards-view__lineItems">
+                                    
+                                    {lineItems}
+                                    {this.state.lineItems.length < this.state.productMenu.print.length ? newItem : null}
+
+                                </div>
+
                                 {/* <div style={{width: 200}}>
                                     <Select styles={customStyles} isDisabled={!this.state.productStatus.print} onChange={this.handleSelect} options={printOptions} />
                                 </div>
@@ -163,7 +225,12 @@ class CardCart extends Component {
                                 <p>$0.00 AUD</p> */}
                             </Flexrow>
                             
+
+
+
+
                             <Flexrow>
+                                
                                 <Checkbox label="Digital" checked={this.state.productStatus.digital} name="digital" onChange={this.handleCheckbox} />
                                 {/* <div style={{width: 200}}>
                                     <Select styles={customStyles} isDisabled={!this.state.productStatus.digital} onChange={this.handleSelect} options={digitalOptions} />

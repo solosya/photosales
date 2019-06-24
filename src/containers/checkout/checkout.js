@@ -23,6 +23,7 @@ class Checkout extends Component {
         },
         photos: null,
         cart: [],
+        purchaseCart: [],
         total: 0,
         products: {
             print: [
@@ -64,7 +65,24 @@ class Checkout extends Component {
 
     }
 
+    handlePurchaseCart = (product) => {
+        const cart = [...this.state.purchaseCart];
 
+        const update = cart.findIndex((element) => {
+            // console.log(element.photoId, element.productId);
+            // console.log(product.photoId, product.productId);
+            return element.photoId === product.photoId && element.productId === product.productId;
+        });
+
+        if (update === -1) {
+            cart.push(product);
+        } else {
+            cart[update] = product;
+        }
+        this.setState({purchaseCart: cart}, () => {
+            console.log(this.state);
+        });
+    }
 
     homeLinkHandler = () => {
         this.props.history.push('/');
@@ -74,19 +92,20 @@ class Checkout extends Component {
 
 
     render() {
-        console.log(this.props);
+        // console.log(this.props);
 
-
+        console.log(this.props.cart);
         const cards = this.props.cart.map( (fav, i) => {
             const card =
                 [<CardCart 
-                    key={i}
-                    data={fav}
-                    styles="card-3-mobile card-3-tablet card-3-desktop"
-                    cardHandler={() => { return false;}}
-                    favHandler={this.props.favHandler}
-                    products={this.state.products}
-                    cartHandler={null}
+                    key                 = {i}
+                    data                = {fav}
+                    styles              = "card-3-mobile card-3-tablet card-3-desktop"
+                    cardHandler         = {() => { return false;}}
+                    favHandler          = {this.props.favHandler}
+                    products            = {this.state.products}
+                    cartHandler         = {null}
+                    handlePurchaseCart  = {this.handlePurchaseCart}
                     favourite
                 ></CardCart>];
             
@@ -98,7 +117,13 @@ class Checkout extends Component {
             return card;
         });
 
-
+        const purchases = this.state.purchaseCart.map((item, i) => {
+            return (
+                <div key={i}>
+                    <p>{item.label} - {item.quantity}</p>
+                </div>
+            )
+        });
 
 
 
@@ -151,9 +176,14 @@ class Checkout extends Component {
                                     </Flexrow>
                                 </Col>
                             </Row>
-
-
                         </Col>
+
+
+                        <Col classes={["col-12", "col-lg-4"]}>
+                            {purchases}
+                        </Col>
+
+
                     </Row>
 
 

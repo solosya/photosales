@@ -13,7 +13,6 @@ const flexrow = ({children}) => {
 
 const Brow = styled.div`
     position:relative;
-    background-color:red;
     display: flex;
     flex-direction:horizontal;
     align-items:center;

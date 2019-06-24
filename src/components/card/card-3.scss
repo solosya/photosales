@@ -8,7 +8,7 @@
         @include flex-direction(row, horizontal);
         box-shadow:none;
         background: $white;
-
+        height:auto;
 
         &__container {
             padding: 0;
@@ -35,6 +35,10 @@
             margin-top: 13px;
         }
 
+        &__lineItems {
+            @include flexbox();
+            @include flex-direction(column, vertical);
+        }
 
         &__photo-top {
             @include flexbox();
@@ -83,7 +87,6 @@
     margin-right: 0;
     
     .c-cards-view {
-        height: 160px;
 
         &__media {
             @include flex-height(160px);
