@@ -16,7 +16,7 @@ const lineItem = (props) => {
     }
 
 
-    console.log(props.options);
+    // console.log(props.options);
 
     const options = props.options.filter((item) => {
         return !item.disabled;

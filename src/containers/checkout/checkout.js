@@ -73,28 +73,32 @@ class Checkout extends Component {
             // console.log(product.photoId, product.productId);
             return element.photoId === product.photoId && element.productId === product.productId;
         });
-
+        
+        console.log("PRODUCT: ", product);
         if (update === -1) {
             cart.push(product);
         } else {
             cart[update] = product;
         }
+
         this.setState({purchaseCart: cart}, () => {
-            console.log(this.state);
+            console.log("STATE:" ,this.state);
         });
     }
 
+
+
+    
     homeLinkHandler = () => {
         this.props.history.push('/');
     }
 
 
-
-
+    
     render() {
         // console.log(this.props);
+        const kevin = {...this.state.products}
 
-        console.log(this.props.cart);
         const cards = this.props.cart.map( (fav, i) => {
             const card =
                 [<CardCart 
@@ -103,7 +107,7 @@ class Checkout extends Component {
                     styles              = "card-3-mobile card-3-tablet card-3-desktop"
                     cardHandler         = {() => { return false;}}
                     favHandler          = {this.props.favHandler}
-                    products            = {this.state.products}
+                    products            = {kevin}
                     cartHandler         = {null}
                     handlePurchaseCart  = {this.handlePurchaseCart}
                     favourite

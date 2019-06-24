@@ -22,8 +22,7 @@ class CardCart extends Component {
             print: false,
             digital: false,
         },
-        products: {...this.props.products},
-        productMenu: {...this.props.products},
+        products: JSON.parse(JSON.stringify(this.props.products)),
         lineItems: [],
         lineItemCount: 1
     }
@@ -57,7 +56,7 @@ class CardCart extends Component {
 
         this.setState({lineItems: items}, () => {
 
-            this.props.handlePurchaseCart(product);
+            // this.props.handlePurchaseCart(product);
 
         });
     }
@@ -72,22 +71,34 @@ class CardCart extends Component {
         product.photoId = this.props.data.id;
         product.productId = index;
         
-        // disable the item in the menu
-        const menu = {...this.state.productMenu};
+        const menu = JSON.parse(JSON.stringify(this.state.products));
         const selectMenu = menu[category];
         selectMenu[index].disabled = true;
 
-        // add the product to the lineItems
-        const newLine = [...this.state.lineItems];
-        newLine.push(product);
 
-        this.setState({
-            lineItems: newLine,
-            productMenu: menu
-        }, () => {
-            // console.log(this.state);
+        
+        // console.log("COMPARE", selectMenu[index] === this.state.products['print'][0])
+        // console.log("products", this.state.products['print'][0]);
+        // add the product to the lineItems
+        const lineItems = [...this.state.lineItems];
+        lineItems.push(product);
+
+
+
+
+        this.setState(prevState => ({
+            lineItems,
+            products: {
+                ...prevState.products,
+                ...menu                    
+            }
+        }), () => {
+            console.log("NEW STATE", this.state);
             this.props.handlePurchaseCart(product);
+
         });
+
+
     }
 
 
@@ -100,17 +111,34 @@ class CardCart extends Component {
 
 
         // disable the item in the menu
-        const productMenu = {...this.state.productMenu};
-        const selectMenu = productMenu[category];
-        selectMenu[productId].disabled = false;
+        const productMenu = {...this.state.products};
 
-        this.setState({
+        const menu = JSON.parse(JSON.stringify(this.state.products));
+        const selectMenu = menu[category];
+        selectMenu[productId].disabled = true;
+        // this.setState(prevState => ({
+        //     ...prevState,
+        //     someProperty: {
+        //         ...prevState.someProperty,
+        //         someOtherProperty: {
+        //             ...prevState.someProperty.someOtherProperty, 
+        //             anotherProperty: {
+        //                ...prevState.someProperty.someOtherProperty.anotherProperty,
+        //                flag: false
+        //             }
+        //         }
+        //     }
+        // }))
+
+        this.setState(prevState => ({
             lineItems,
-            productMenu
-            }, () => {
-                console.log(this.state.productMenu);
+            products: {
+                ...prevState.products,
+                menu                    
             }
-        );
+        }), () => {
+            console.log("NEW STATE", this.state);
+        });
     }
 
     calculate = () => {
@@ -132,11 +160,9 @@ class CardCart extends Component {
             </div>
         }
 
-        console.log(this.props.data);
-        const printOptions = this.state.productMenu.print.map((plan, i) => {
-            return {value: plan.id, label: plan.label, category: "print", index: i, disabled: plan.disabled}
+        const printOptions = this.state.products.print.map((prod, i) => {
+            return {value: prod.id, label: prod.label, category: "print", index: i, disabled: prod.disabled}
         });
-        console.log(printOptions);
 
         // const digitalOptions = this.state.products.digital.map((plan, i) => {
         //     return {value: plan.id, label: plan.label, category: "digitial", index: i}
@@ -214,7 +240,7 @@ class CardCart extends Component {
                                 <div className="c-cards-view__lineItems">
                                     
                                     {lineItems}
-                                    {this.state.lineItems.length < this.state.productMenu.print.length ? newItem : null}
+                                    {this.state.lineItems.length < this.state.products.print.length ? newItem : null}
 
                                 </div>
 
