@@ -4,15 +4,53 @@ import styles  from './lineItem.module.scss';
 
 const lineItem = (props) => {
 
-
     const customStyles = {
-        option: (provided, state) => ({
-            ...provided,
-        }),
-        control: (provided) => ({
-            ...provided,
-            borderRadius: 0
-        }),
+        option: (provided, state) => {
+            return {...provided};
+        },
+        control: (provided, state) => {
+            const styles = {
+                ...provided,
+                borderRadius: 0,
+            }
+            if (state.isDisabled) {
+                styles.backgroundColor = 'white';
+            }
+            return styles;
+        },
+        dropdownIndicator: (provided, state) => {
+
+            const styles = {
+                ...provided
+            }
+            if (state.isDisabled) {
+                styles.color = 'white';
+            }
+            return styles;
+        },
+        indicatorSeparator: (provided, state) => {
+            const styles = {
+                ...provided
+            }
+            if (state.isDisabled) {
+                styles.backgroundColor = 'white';
+            }
+            return styles;
+        },
+        indicatorsContainer: (provided, state) => {
+            const styles = {
+                ...provided
+            }
+            if (state.isDisabled) {
+                styles.backgroundColor = 'white';
+                styles.flexShrink = '1';
+                styles.maxWidth= '10px';
+            }
+            return styles;
+        },
+
+
+        
     }
 
 
@@ -24,7 +62,7 @@ const lineItem = (props) => {
 
     let deleteButton = null;
     if (props.handleRemove) {
-        deleteButton = <p className={styles.delete} onClick={(e) => props.handleRemove(e, props.index -1, 'print')}>X</p>
+        deleteButton = <p className={styles.delete} onClick={(e) => props.handleRemove(e, props.product.id)}>X</p>
     }
 
     return (
@@ -38,14 +76,14 @@ const lineItem = (props) => {
                     options     = {options}
                 />
             </div>
-            {props.quantity
-                ? <input type="text" value={props.quantity} placeholder="Qty" onChange={(e) => props.handleQuantity(e,  props.index -1)} />
+            {props.product && props.product.category === 'print'
+                ? <input type="number" value={props.product.quantity} placeholder="Qty" onChange={(e) => props.handleQuantity(e,  props.product.id)} />
                 : null
             }
             {deleteButton}
 
-            {props.quantity
-                ? <p>$0.00 AUD</p>
+            {props.product
+                ? <p>${props.product.originalPrice} - ${props.product.displayPrice} AUD</p>
                 : null
             }
             

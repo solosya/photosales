@@ -25,56 +25,175 @@ class Checkout extends Component {
         cart: [],
         purchaseCart: [],
         total: 0,
+        discounts: {
+            lineItems: [
+                {
+                    id: 1,
+                    discount : 2,
+                    type: 'fixed',
+                    applyTo: 'rest',
+                    quantity: 1
+                },
+                {
+                    id: 2,
+                    discount : 2,
+                    type: 'fixed',
+                    applyTo: 'rest',
+                    quantity: 3,
+                },
+                {
+                    id: 3,
+                    discount : 2,
+                    type: 'percent',
+                    applyTo: 'all',
+                    quantity: 3,
+                    category: 'print',
+                }
+            ],
+            // category: [],
+            cart: [
+                {
+                    id: 50,
+                    discount : 5,
+                    type: 'fixed',
+                    applyTo: 'all',
+                    quantity: 2
+                },
+                {
+                    id: 51,
+                    discount : [
+                        {
+                            quantity: 2,
+                            discount:20,
+                            type: 'fixed',
+                            applyTo: 'all',
+                        },
+                        {
+                            quantity: 4,
+                            discount:15,
+                            type: 'fixed',
+                            applyTo: 'all',
+                        }
+                    ],
+                    rules: {
+                        // productType: 'photo',
+                        category: "digital",
+                        // tags: [],
+                        // products: [1],
+                    }
+                },
+
+
+            ]
+        },
         products: {
             print: [
                 {
+                    id: 3,
                     label: '6" x 4" ($5, additional copies $2)',
                     price : 5,
-                    id: 3
+                    displayPrice: 5,
+                    originalPrice: 5,
+                    discount: [1],
+                    category: 'print',
+
                 },
                 {
+                    id: 4,
                     label: '7" x 5" ($7, additional copies $2)',
-                    price : 6,
-                    id: 4
+                    price : 7,
+                    displayPrice: 7,
+                    originalPrice: 7,
+                    discount: [2],
+                    category: 'print',
+
                 },
                 {
+                    id: 5,
                     label: '8" x 6" ($7, additional copies $2)',
                     price : 7,
-                    id: 5
+                    displayPrice: 7,
+                    originalPrice: 7,
+                    discount: [3],
+                    category: 'print',
+
                 }
             ],
             digital: [
                 {
+                    id: 0,
                     label: 'Personal or single use',
-                    price : 20
+                    price : 20,
+                    displayPrice: 20,
+                    originalPrice:20,
+                    category: 'digital',
                 },
                 {
+                    id: 1,
                     label: 'Commercial use',
-                    prices : 50
+                    price : 50,
+                    displayPrice: 50,
+                    originalPrice:50,
+                    category: 'digital',
                 },
             ]
-
         },
-        discounts: {
-
-        }
     }
 
 
-    calculate = () => {
+    calculateTotal = () => {
 
+        const discounts = this.state.discounts.cart;
+        const cart = this.state.purchaseCart;
+        console.log(discounts);
+
+        for( let i=0; i < discounts.length; i++) {
+            let temp = [];
+
+            cart_items:
+            for (let j=0; j<cart.length; j++) {
+                console.log('checking rules');
+                if (discounts[i].rules) {
+                    const rules = Object.keys( discounts[i].rules );
+                    console.log(rules);
+                    
+                    for(let r=0;r<rules.length; r++) {
+                        if (cart[j][ rules[r] ] !==  discounts[i].rules[rules[r]] ) {
+                            continue cart_items;
+                        }
+                    }
+
+                    temp.push(cart[j]);
+
+                }
+                // console.log(temp.length, discounts[i].quantity);
+                // console.log("TEMP CART", temp);
+                if (temp.length > 0) {
+                    discounts[i].discount.forEach(discount => {
+                        console.log(discount);
+                    });
+                }
+            }
+        }
+
+
+
+
+        const total = this.state.purchaseCart.reduce( (accumulator, current) => {
+            return current.displayPrice + accumulator;
+        }, 0);
+
+        this.setState({total})
     }
 
     handlePurchaseCart = (product) => {
         const cart = [...this.state.purchaseCart];
-
         const update = cart.findIndex((element) => {
-            // console.log(element.photoId, element.productId);
-            // console.log(product.photoId, product.productId);
-            return element.photoId === product.photoId && element.productId === product.productId;
+            // console.log("PHOTO IDS");
+            // console.log(element.photoId, product.photoId);
+            // console.log(element.id, product.id);
+            return element.photoId === product.photoId && element.id === product.id;
         });
-        
-        console.log("PRODUCT: ", product);
         if (update === -1) {
             cart.push(product);
         } else {
@@ -82,12 +201,27 @@ class Checkout extends Component {
         }
 
         this.setState({purchaseCart: cart}, () => {
-            console.log("STATE:" ,this.state);
+            // console.log("STATE:" ,this.state);
+            this.calculateTotal();
         });
+
     }
 
 
+    handleRemoveItem = (product) => {
 
+        const cart = [...this.state.purchaseCart].filter((element) => {
+            // console.log(element.photoId, product.photoId);
+            // console.log(element.id, product.id);
+            return !(element.photoId === product.photoId && element.id === product.id);
+        });
+
+        this.setState({purchaseCart: cart}, () => {
+            // console.log("CHECKOUT STATE:" ,this.state);
+            this.calculateTotal();
+        });
+
+    }
     
     homeLinkHandler = () => {
         this.props.history.push('/');
@@ -96,8 +230,6 @@ class Checkout extends Component {
 
     
     render() {
-        // console.log(this.props);
-        const kevin = {...this.state.products}
 
         const cards = this.props.cart.map( (fav, i) => {
             const card =
@@ -107,9 +239,11 @@ class Checkout extends Component {
                     styles              = "card-3-mobile card-3-tablet card-3-desktop"
                     cardHandler         = {() => { return false;}}
                     favHandler          = {this.props.favHandler}
-                    products            = {kevin}
+                    products            = {this.state.products}
                     cartHandler         = {null}
+                    handleItemRemove    = {this.handleRemoveItem}
                     handlePurchaseCart  = {this.handlePurchaseCart}
+                    discounts           = {this.state.discounts}
                     favourite
                 ></CardCart>];
             
@@ -124,7 +258,7 @@ class Checkout extends Component {
         const purchases = this.state.purchaseCart.map((item, i) => {
             return (
                 <div key={i}>
-                    <p>{item.label} - {item.quantity}</p>
+                    <p>{item.label} - {item.quantity} - ${item.displayPrice}</p>
                 </div>
             )
         });
