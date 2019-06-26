@@ -170,6 +170,18 @@ class Checkout extends Component {
     attachDiscounts = () => {
         
     }
+
+    getFromCart = (photoid, productId) => {
+        const item = this.state.purchaseCart.filter((item) => {
+            return item.photoId === photoid && item.productId === productId;
+        });
+
+        if (item.length > 0) {
+            return item[0];
+        }
+        return null;
+    }
+
     calculateTotal = () => {
 
         const discounts = this.state.discounts.cart;
@@ -290,6 +302,8 @@ class Checkout extends Component {
                 let productDiscount = discountCollection[property];
                 productDiscount.products.forEach((product) => {
                     console.log(product);
+                    let cartProduct = this.getFromCart(product.photoId, product.productId);
+                    console.log(cartProduct);
                     // if (productDiscount.applyTo === 'all') {
                         
                     // }
@@ -302,7 +316,7 @@ class Checkout extends Component {
                 // product.displayPrice = discountPrice + nonDiscountPrice;
             }
         }
-        
+        console.log(this.state.purchaseCart);
 
         const total = this.state.purchaseCart.reduce( (accumulator, current) => {
             return current.displayPrice + accumulator;
