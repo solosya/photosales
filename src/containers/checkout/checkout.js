@@ -63,12 +63,14 @@ class Checkout extends Component {
                     id: 51,
                     discount : [
                         {
-                            quantity: 2,
+                            id:66,
+                            quantity: 1,
                             discount:20,
                             type: 'fixed',
                             applyTo: 'all',
                         },
                         {
+                            id:77,
                             quantity: 4,
                             discount:15,
                             type: 'fixed',
@@ -80,6 +82,31 @@ class Checkout extends Component {
                         category: "digital",
                         // tags: [],
                         // products: [1],
+                    }
+                },
+                {
+                    id: 52,
+                    discount : [
+                        {
+                            id: 45,
+                            quantity: 2,
+                            discount:100,
+                            type: 'fixed',
+                            applyTo: 'all',
+                        },
+                        {
+                            id:46,
+                            quantity: 4,
+                            discount:200,
+                            type: 'fixed',
+                            applyTo: 'all',
+                        }
+                    ],
+                    rules: {
+                        // productType: 'photo',
+                        // category: "digital",
+                        // tags: [],
+                        products: [1],
                     }
                 },
 
@@ -140,68 +167,142 @@ class Checkout extends Component {
         },
     }
 
-
+    attachDiscounts = () => {
+        
+    }
     calculateTotal = () => {
 
         const discounts = this.state.discounts.cart;
         const cart = this.state.purchaseCart;
-        console.log(discounts);
 
-        const discountCollection = [];
+        // final list of prodcuts that both discount rules and quantity apply to
+        const discountCollection = {};
+        const productsWithDiscounts = [];
 
         for( let i=0; i < discounts.length; i++) {
-            var temp = [];
+            console.log("TRYING DISCOUNT", discounts[i].id);
+
+
+            // products that match discount rules will be stored here.
+            // Only if quantity of these products reaches discount 
+            // quantity are they applied, i.e: stored in discountCollection
+            var discountProducts = [];
             var currentDiscountQuantity = 0;
             var currentDiscount = null;
 
+
+
             cart_items:
             for (let j=0; j<cart.length; j++) {
-                console.log('checking rules');
+                let product = cart[j];
+                console.log("CART ITEM ", j);
                 if (discounts[i].rules) {
                     const rules = Object.keys( discounts[i].rules );
-                    console.log(rules);
+                    
+                    // rules: {
+                    //     productType : 'photo',
+                    //     category    : "digital",
+                    //     tags        : [],
+                    //     products    : [1],
+                    // }
+
                     
                     for(let r=0;r<rules.length; r++) {
-                        if (cart[j][ rules[r] ] !==  discounts[i].rules[rules[r]] ) {
-                            continue cart_items;
-                        }
-                    }
 
-                    temp.push(cart[j]);
+                        let ruleKey = rules[r];
+                        // the value of rule comparrison might be any datatype, including an array
+                        // We convert all to an array to normalise so no check is needed later.
+                        let rule = [].concat( discounts[i].rules[ruleKey] );
 
+
+                        // this loop performs the comparrison to see if a rule applies to a product
+                        for (let value = 0; value < rule.length; value++) {
+                            
+                            let productKey = ruleKey;
+                            // Map rule keys to product keys for comparrison where mismatch
+                            if (ruleKey === 'products') {
+                                productKey = 'id';
+                            }
+                            console.log("THE CHECK:   ", ruleKey, productKey, rule[value], product[productKey]);
+                            if (product[ productKey ] !== rule[value] ) {
+                                continue cart_items;
+                            }
+                        } // FOR each discount rule VALUE (an array of values)
+
+
+                    }  // FOR each discount RULE
+
+
+                    console.log('ADDING PRODUCT ', product.id);
+                    product = {
+                        ...product,
+                        discount: discounts[i].id
+                    };
+                    discountProducts.push(product);
+
+                } else {
+                    console.log('NO DISOUNT RULES');
                 }
 
-                if (temp.length > 0) {
+
+                if (discountProducts.length > 0) {
+                    console.log('DECIDING IF ENOUGH DISCOUNT PRODUCTS ', product.id);
                     discounts[i].discount.forEach(discount => {
-                        if (temp.length >= discount.quantity) {
+                        console.log("DISCOUNT QUANTITY", discount.quantity, discountProducts.length);
+                        if (discountProducts.length >= discount.quantity) {
                             if (currentDiscountQuantity < discount.quantity) {
                                 currentDiscountQuantity = discount.quantity;
+
                                 currentDiscount = discount;
+                                currentDiscount = {
+                                    ...currentDiscount,
+                                    products: discountProducts
+                                }
+                                
+                                currentDiscount.products.forEach((product) => {
+                                    productsWithDiscounts.push(product.id);
+                                });
+
                             }
 
                         }
                     });
                 }
 
-                // APPLY ROUND OF DISCOUNTS HERE
-                // console.log(currentDiscount);
-                console.log(currentDiscount, temp);
+            } // FOR each product
+
+
+            // APPLY ROUND OF DISCOUNTS HERE
+            // console.log(currentDiscount);
+            console.log("CURRENT DISCOUNT", currentDiscount, discountProducts);
+            if (currentDiscount) {
+                discountCollection[currentDiscount.id] = currentDiscount;
+                // discountCollection.push(currentDiscount);
             }
 
-            // if (currentDiscount)
-            // discountCollection.push(
-            //     {
-            //         discount: {
-            //             ...currentDiscount,
-            //             items: [...temp]
-            //         }
-            //     }
-            // );
+        } // FOR each discount
+        
+        console.log("DISCOUNT COLLECTION", discountCollection);
+        console.log("PRODUCTS WITH DISCOUNTS", productsWithDiscounts);
 
+        for (var property in discountCollection) {
+            if (discountCollection.hasOwnProperty(property)) {
+                let productDiscount = discountCollection[property];
+                productDiscount.products.forEach((product) => {
+                    console.log(product);
+                    // if (productDiscount.applyTo === 'all') {
+                        
+                    // }
+                });
+
+
+                // const discountQuantity = product.quantity - discounts[j].quantity + 1;
+                // const discountPrice = discounts[j].discount * discountQuantity;
+                // const nonDiscountPrice = product.price * ( product.quantity - discountQuantity );
+                // product.displayPrice = discountPrice + nonDiscountPrice;
+            }
         }
-
-
-
+        
 
         const total = this.state.purchaseCart.reduce( (accumulator, current) => {
             return current.displayPrice + accumulator;
