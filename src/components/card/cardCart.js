@@ -163,7 +163,7 @@ class CardCart extends Component {
         if ( this.props.favourite ) {
             favourite = <div className="c-cards-view__buttons">
                 <div onClick={() => this.props.favHandler(this.props.data)} className="c-cards-view__favourite"></div>
-                <div onClick={() => this.props.cartHandler(this.props.data)} className={cn([close.close, "c-cards-view__close"])}></div>
+                <div onClick={() => this.props.handleRemovePhoto(this.props.data.id)} className={cn([close.close, "c-cards-view__close"])}></div>
             </div>
         }
 

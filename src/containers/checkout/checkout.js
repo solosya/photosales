@@ -147,8 +147,12 @@ class Checkout extends Component {
         const cart = this.state.purchaseCart;
         console.log(discounts);
 
+        const discountCollection = [];
+
         for( let i=0; i < discounts.length; i++) {
-            let temp = [];
+            var temp = [];
+            var currentDiscountQuantity = 0;
+            var currentDiscount = null;
 
             cart_items:
             for (let j=0; j<cart.length; j++) {
@@ -166,14 +170,34 @@ class Checkout extends Component {
                     temp.push(cart[j]);
 
                 }
-                // console.log(temp.length, discounts[i].quantity);
-                // console.log("TEMP CART", temp);
+
                 if (temp.length > 0) {
                     discounts[i].discount.forEach(discount => {
-                        console.log(discount);
+                        if (temp.length >= discount.quantity) {
+                            if (currentDiscountQuantity < discount.quantity) {
+                                currentDiscountQuantity = discount.quantity;
+                                currentDiscount = discount;
+                            }
+
+                        }
                     });
                 }
+
+                // APPLY ROUND OF DISCOUNTS HERE
+                // console.log(currentDiscount);
+                console.log(currentDiscount, temp);
             }
+
+            // if (currentDiscount)
+            // discountCollection.push(
+            //     {
+            //         discount: {
+            //             ...currentDiscount,
+            //             items: [...temp]
+            //         }
+            //     }
+            // );
+
         }
 
 
@@ -223,6 +247,21 @@ class Checkout extends Component {
 
     }
     
+    handleRemovePhoto = (id) => {
+        const cart = this.state.purchaseCart.filter((item) => {
+            return item.photoId !== id;
+        });
+        const photo = {};
+        photo.id = id;
+        this.setState({
+            purchaseCart: cart
+        }, () => {
+            this.props.toggleCart( photo );
+            this.calculateTotal();
+        });
+    }
+
+
     homeLinkHandler = () => {
         this.props.history.push('/');
     }
@@ -244,6 +283,7 @@ class Checkout extends Component {
                     handleItemRemove    = {this.handleRemoveItem}
                     handlePurchaseCart  = {this.handlePurchaseCart}
                     discounts           = {this.state.discounts}
+                    handleRemovePhoto   = {this.handleRemovePhoto}
                     favourite
                 ></CardCart>];
             
