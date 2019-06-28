@@ -7,7 +7,7 @@ import Header               from '../../components/partials/section_header.js';
 import CardCart             from '../../components/card/cardCart.js'; 
 import Divider              from '../../components/divider/divider';
 import Flexrow              from '../../components/layout/flexrow';
-
+import axios from 'axios';
 // import Modal                from '../../components/modals/modal';
 import * as actionTypes     from '../../store/actions';
 
@@ -257,7 +257,15 @@ class Checkout extends Component {
     collatedDiscounts;
 
 
+    componentDidMount() {
+        // return axios.get('/api/theme', qs.stringify( this.options ) )
+        // // return axios.get('/api/search?s=this')
+        //     .then( response => {
+        //         // var data = response.data;
+        //     }).catch( error => {
+        //     });    
 
+    }
 
     attachDiscountsFromRules = (product, rules, discount) => {
         for(let r=0;r<rules.length; r++) {
@@ -584,7 +592,7 @@ class Checkout extends Component {
 
 
     homeLinkHandler = () => {
-        this.props.history.push('/');
+        this.props.history.push('/photo');
     }
 
     handleGetCartItemDiscount = (product) => {

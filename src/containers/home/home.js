@@ -177,7 +177,7 @@ class Home extends Component {
     }
 
     checkoutLinkHandler = () => {
-        this.props.history.push('/checkout/');
+        this.props.history.push('/photo/checkout/');
     }
 
     showGallery = (card, panelName) => {

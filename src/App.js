@@ -22,7 +22,8 @@ class App extends Component {
         return (
             <div onClick={this.pageClicked}>
                 <Switch>
-                    <Route path="/checkout" component={Checkout} />
+                    <Route path="/photo/checkout" component={Checkout} />
+                    <Route path="/photo" component={Home} />
                     <Route path="/" component={Home} />
                 </Switch>
             </div>
