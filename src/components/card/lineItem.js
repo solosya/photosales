@@ -42,9 +42,10 @@ const lineItem = (props) => {
                 ...provided
             }
             if (state.isDisabled) {
-                styles.backgroundColor = 'white';
-                styles.flexShrink = '1';
-                styles.maxWidth= '10px';
+                styles.display ="none";
+                // styles.backgroundColor = 'white';
+                // styles.flexShrink = '1';
+                // styles.maxWidth= '10px';
             }
             return styles;
         },
