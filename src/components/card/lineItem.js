@@ -65,6 +65,25 @@ const lineItem = (props) => {
         deleteButton = <p className={styles.delete} onClick={(e) => props.handleRemove(e, props.product.id)}>X</p>
     }
 
+    let itemTotal = "";
+    let itemTotalFull = "";
+
+    if (props.product) {
+        itemTotal = props.product.price;
+        itemTotalFull = itemTotal;
+        
+        if (props.product.priceTotal) {
+            itemTotal = props.product.priceTotal;
+            itemTotalFull = itemTotal;
+        }
+    
+        // if (props.product.priceTotalDiscount) {
+        //     itemTotalDiscount = props.product.priceTotalDiscount;
+        // }
+
+    }
+
+
     return (
         <div className={styles.lineItem}>
             <div style={{width: 200}}>
@@ -83,7 +102,11 @@ const lineItem = (props) => {
             {deleteButton}
 
             {props.product
-                ? <p>${props.product.originalPrice} - ${props.product.displayPrice} AUD</p>
+                ? <p>
+                    {props.product.priceTotalFull !== props.product.priceTotal ? <span className={styles.fullPrice}>${props.product.priceTotalFull} - </span>  : ""}
+                    
+                    ${props.product.priceTotal} AUD
+                 </p>
                 : null
             }
             

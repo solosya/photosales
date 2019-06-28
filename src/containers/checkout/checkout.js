@@ -32,34 +32,48 @@ class Checkout extends Component {
                     discount : 2,
                     type: 'fixed',
                     applyTo: 'rest',
-                    quantity: 1
+                    quantity: 2
                 },
                 {
                     id: 2,
-                    discount : 2,
+                    discount : 10,
+                    type: 'fixed',
+                    applyTo: 'rest',
+                    quantity: 2,
+                },
+                {
+                    id: 3,
+                    discount : 20,
                     type: 'fixed',
                     applyTo: 'rest',
                     quantity: 3,
                 },
                 {
-                    id: 3,
-                    discount : 2,
-                    type: 'percent',
-                    applyTo: 'all',
-                    quantity: 3,
-                    category: 'print',
-                }
+                    id: 4,
+                    discount : 25,
+                    type: 'fixed',
+                    applyTo: 'rest',
+                    quantity: 2,
+                },
+                {
+                    id: 5,
+                    discount : 50,
+                    type: 'fixed',
+                    applyTo: 'rest',
+                    quantity: 2,
+                },
+
             ],
             // category: [],
             cart: [
-                {
-                    id: 50,
-                    ammount : 5,
-                    type: 'fixed',
-                    applyTo: 'all',
-                    quantity: 2,
-                    priority: 10,
-                },
+                // {
+                //     id: 50,
+                //     ammount : 5,
+                //     type: 'fixed',
+                //     applyTo: 'all',
+                //     quantity: 2,
+                //     priority: 10,
+                // },
                 {
                     id: 51,
                     priority: 7,
@@ -67,40 +81,14 @@ class Checkout extends Component {
                         {
                             id:66,
                             quantity: 2,
-                            ammount:666,
+                            ammount:30,
                             type: 'fixed',
                             applyTo: 'all',
                         },
                         {
                             id:77,
-                            quantity: 4,
-                            ammount:777,
-                            type: 'fixed',
-                            applyTo: 'all',
-                        }
-                    ],
-                    rules: {
-                        // productType: 'photo',
-                        category: "digital",
-                        // tags: [],
-                        // products: [1],
-                    }
-                },
-                {
-                    id: 52,
-                    priority: 8,
-                    discount : [
-                        {
-                            id: 45,
-                            quantity: 1,
-                            ammount:888,
-                            type: 'fixed',
-                            applyTo: 'all',
-                        },
-                        {
-                            id:46,
-                            quantity: 4,
-                            ammount:999,
+                            quantity: 6,
+                            ammount:20,
                             type: 'fixed',
                             applyTo: 'all',
                         }
@@ -109,7 +97,33 @@ class Checkout extends Component {
                         // productType: 'photo',
                         // category: "digital",
                         // tags: [],
-                        products: [1],
+                        products: [33],
+                    }
+                },
+                {
+                    id: 52,
+                    priority: 8,
+                    discount : [
+                        {
+                            id: 45,
+                            quantity: 2,
+                            ammount:15,
+                            type: 'fixed',
+                            applyTo: 'all',
+                        },
+                        {
+                            id:46,
+                            quantity: 6,
+                            ammount:10,
+                            type: 'fixed',
+                            applyTo: 'all',
+                        }
+                    ],
+                    rules: {
+                        // productType: 'photo',
+                        // category: "digitals",
+                        // tags: [],
+                        products: [22],
                     }
                 },
                 {
@@ -133,7 +147,7 @@ class Checkout extends Component {
                     ],
                     rules: {
                         // productType: 'photo',
-                        category: "print",
+                        category: "printly",
                         // tags: [],
                         // products: [1],
                     }
@@ -147,8 +161,8 @@ class Checkout extends Component {
                     id: 3,
                     label: '6" x 4" ($5, additional copies $2)',
                     price : 5,
-                    displayPrice: 5,
-                    originalPrice: 5,
+                    priceTotal: 5,
+                    priceTotalFull: 5,
                     discount: [1],
                     category: 'print',
 
@@ -157,9 +171,9 @@ class Checkout extends Component {
                     id: 4,
                     label: '7" x 5" ($7, additional copies $2)',
                     price : 7,
-                    displayPrice: 7,
-                    originalPrice: 7,
-                    discount: [2],
+                    priceTotal: 7,
+                    priceTotalFull: 7,
+                    discount: [1],
                     category: 'print',
 
                 },
@@ -167,28 +181,64 @@ class Checkout extends Component {
                     id: 5,
                     label: '8" x 6" ($7, additional copies $2)',
                     price : 7,
-                    displayPrice: 7,
-                    originalPrice: 7,
-                    discount: [3],
+                    priceTotal: 7,
+                    priceTotalFull: 7,
+                    discount: [1],
                     category: 'print',
 
+                },
+                {
+                    id: 6,
+                    label: '12" x 8" ($15, additional copies $10)',
+                    price : 15,
+                    priceTotal: 15,
+                    priceTotalFull: 15,
+                    discount: [2],
+                    category: 'print',
+                },
+                {
+                    id: 6,
+                    label: '14" x 11" ($25, additional copies $20)',
+                    price : 25,
+                    priceTotal: 25,
+                    priceTotalFull: 25,
+                    discount: [3],
+                    category: 'print',
+                },
+                {
+                    id: 7,
+                    label: '18" x 12" ($30, additional copies $25)',
+                    price : 30,
+                    priceTotal: 30,
+                    priceTotalFull: 30,
+                    discount: [4],
+                    category: 'print',
+                },
+                {
+                    id: 8,
+                    label: '36" x 24" ($55, additional copies $50)',
+                    price : 55,
+                    priceTotal: 55,
+                    priceTotalFull: 55,
+                    discount: [5],
+                    category: 'print',
                 }
             ],
             digital: [
                 {
-                    id: 0,
+                    id: 22,
                     label: 'Personal or single use',
-                    price :  1000,
-                    displayPrice:  1000,
-                    originalPrice: 1000,
+                    price :  20, // original price per item
+                    priceTotal: 20, // accumulated total with discount
+                    priceTotalFull: 20, // accumulated total without discount
                     category: 'digital',
                 },
                 {
-                    id: 1,
+                    id: 33,
                     label: 'Commercial use',
-                    price : 1500,
-                    displayPrice: 1500,
-                    originalPrice:1500,
+                    price : 50,
+                    priceTotal: 50,
+                    priceTotalFull: 50,
                     category: 'digital',
                 },
             ]
@@ -246,7 +296,7 @@ class Checkout extends Component {
     }
 
 
-    applyDiscountsFromQuantity = (discountRules, discountProducts) => {
+    attachDiscountsFromQuantity = (discountRules, discountProducts) => {
         // If this discount contains matching products based on the ruleset, 
         // we'll now calculate if they match the quantity to APPLY the discount
         if (discountProducts.length > 0) {
@@ -261,6 +311,7 @@ class Checkout extends Component {
                     // we need to deal with ranges, so this check applies the discount
                     // based on whether it beats any previous applied discout quantity.
                     if (this.currentDiscountQuantity < discount.quantity) {
+
                         this.currentDiscountQuantity = discount.quantity;
 
                         this.currentDiscount = {
@@ -269,26 +320,28 @@ class Checkout extends Component {
                         }
                         
 
-                        // going to keep an array of product ids for all products that 
-                        // have had a discount applied.  will use later to figure out discrepencies
-                        this.currentDiscount.products.forEach((product) => {
-
-                            if (this.productsWithDiscounts.indexOf( product.id + "-" + product.photoId ) > -1 ) {
-                                if (this.productsWithDoubleDiscounts.indexOf( product.id + "-" + product.photoId ) === -1 ) {
-                                    this.productsWithDoubleDiscounts.push(product.id +"-"+product.photoId);
-                                }
-                            } else {
-                                this.productsWithDiscounts.push(product.id +"-"+product.photoId);
-                            }
-
-                        });
                     }
                 }
-            });
+            }); // end foreach
+
+            // going to keep an array of product ids for all products that 
+            // have had a discount applied.  will use later to figure out discrepencies
+
+            if (this.currentDiscount) {
+                // debugger;
+                this.currentDiscount.products.forEach((product) => {
+                    if (this.productsWithDiscounts.indexOf( product.id + "-" + product.photoId ) > -1 ) {
+                        if (this.productsWithDoubleDiscounts.indexOf( product.id + "-" + product.photoId ) === -1 ) {
+                            this.productsWithDoubleDiscounts.push(product.id +"-"+product.photoId);
+                        }
+                    } else {
+                        this.productsWithDiscounts.push(product.id +"-"+product.photoId);
+                    }
+    
+                });
+            }
         }
     }
-
-
 
     getFromCart = (photoid, productId) => {
         const item = this.state.purchaseCart.filter((item) => {
@@ -301,8 +354,11 @@ class Checkout extends Component {
         return null;
     }
 
-    getCartItemIndex(product) {
-        return this.state.purchaseCart.findIndex((element) => {
+    getCartItemIndex(product, cart) {
+        if (typeof cart === "undefined") {
+            cart = this.state.purchaseCart;
+        }
+        return cart.findIndex((element) => {
             // console.log("PHOTO IDS");
             // console.log(element.photoId, product.photoId);
             // console.log(element.id, product.id);
@@ -323,7 +379,7 @@ class Checkout extends Component {
                     // console.log(product);
                     if (index >= applyFrom) {
                         const ammount = productDiscount.ammount;
-                        product.price = ammount;
+                        product.priceTotal = ammount;
                     }
 
                 });
@@ -333,23 +389,56 @@ class Checkout extends Component {
         }
     }
 
-    reconcileCollatedDiscounts() {
+    reconcileCollatedDiscounts(productsWithDoubleDiscounts, collatedDiscounts) {
         debugger;
-        for (let i = 0; i< this.productsWithDoubleDiscounts.length; i++) {
-            const productId = this.productsWithDoubleDiscounts[i];
-            var discounts = this.collatedDiscounts.filter((discount) => {
+
+        for (let i = 0; i< productsWithDoubleDiscounts.length; i++) {
+
+
+            const productId = productsWithDoubleDiscounts[i];
+            var discounts = collatedDiscounts.filter((discount) => {
                 return discount.products.filter((prod) => {
                     return prod.id + "-" + prod.photoId === productId;
-                })
-            })
+                });
+            });
+
         }
 
-
-
-        console.log(discounts);
+        // get best discount
+        let bestValue = Infinity;
+        let bestDiscount = null;
+        for (var j=0; j<discounts.length; j++) {
+            if (discounts[j].ammount < bestValue) {
+                bestValue = discounts[j].ammount;
+                bestDiscount = discounts[j].id;
+            }
+        }
+        const testCart = JSON.parse(JSON.stringify(this.state.purchaseCart));
+        // console.log(discounts);
+        // console.log(bestValue, bestDiscount);
         // this.productsWithDoubleDiscounts;
         // this.collatedDiscounts
     }
+
+
+    applyDiscountsToCart() {
+        const cart = JSON.parse(JSON.stringify(this.state.purchaseCart));
+
+        for (let i=0; i<this.collatedDiscounts.length; i++ ) {
+            console.log('applying discounts');
+
+            let discount = this.collatedDiscounts[i];
+            for (let j=0; j<discount.products.length; j++) {
+                let product = discount.products[j];
+                let itemIndex = this.getCartItemIndex(product, cart);
+                cart.splice(itemIndex, 1, product);
+                // console.log(itemIndex);
+            }
+        }
+        return cart;
+    }
+
+
 
     calculateTotal = () => {
 
@@ -363,7 +452,7 @@ class Checkout extends Component {
 
         for( let i=0; i < discounts.length; i++) {
             let discount = discounts[i];
-            console.log("TRYING DISCOUNT", discounts[i].id);
+            // console.log("TRYING DISCOUNT", discounts[i].id);
 
             // products that match discount rules will be stored here.
             // Only if quantity of these products reaches discount 
@@ -376,23 +465,21 @@ class Checkout extends Component {
             cart_items:
             for (let j=0; j<cart.length; j++) {
                 let product = cart[j];
-                // console.log("CART ITEM ", j);
                 
                 if (discount.rules) {
                     const rules = Object.keys( discount.rules );
-
+                    // debugger;
                     let prod = this.attachDiscountsFromRules(product, rules, discount);
                     if (false === prod) {
                         // if no rules match the product, move on.
                         continue cart_items;
                     }
-
                 } 
-
-                this.applyDiscountsFromQuantity(discount, this.discountProducts);
-                
-
             } // FOR each product
+
+            console.log("DISCOUNTS FROM RULES", this.discountProducts);
+            this.attachDiscountsFromQuantity(discount, this.discountProducts);
+
 
             // In discountCollection we use an object with key of discount id so that it overwrites
             // whatever was there previously.  Easier than storing in an array,
@@ -413,7 +500,10 @@ class Checkout extends Component {
         this.calculateCollatedDiscounts();
 
         if (this.productsWithDoubleDiscounts.length > 0) {
-            this.reconcileCollatedDiscounts();
+            const productsWithDoubleDiscounts   = JSON.parse(JSON.stringify(this.productsWithDoubleDiscounts))
+            const collatedDiscounts             = JSON.parse(JSON.stringify(this.collatedDiscounts))
+            
+            this.reconcileCollatedDiscounts(productsWithDoubleDiscounts, collatedDiscounts);
         }
 
 
@@ -427,18 +517,22 @@ class Checkout extends Component {
 
 
 
+        const finalCart = this.applyDiscountsToCart();
 
 
 
+        console.log("FINAL CART:", finalCart);
 
 
 
-
-        const total = this.state.purchaseCart.reduce( (accumulator, current) => {
-            return current.displayPrice + accumulator;
+        const total = finalCart.reduce( (accumulator, current) => {
+            return current.priceTotal  + accumulator;
         }, 0);
-
-        this.setState({total})
+        // console.log(finalCart);
+        this.setState({
+            total,
+            purchaseCart : finalCart
+        })
     }
 
     handlePurchaseCart = (product) => {
@@ -452,7 +546,7 @@ class Checkout extends Component {
         }
 
         this.setState({purchaseCart: cart}, () => {
-            // console.log("STATE:" ,this.state);
+            console.log("STATE:" ,this.state);
             this.calculateTotal();
         });
 
@@ -493,15 +587,20 @@ class Checkout extends Component {
         this.props.history.push('/');
     }
 
-
+    handleGetCartItemDiscount = (product) => {
+        const item = this.getCartItemIndex(product);
+        if (item === -1) {
+            return false;
+        }
+        return this.state.purchaseCart[item].priceTotal;
+    }
     
     render() {
-
-        const cards = this.props.cart.map( (fav, i) => {
+        const cards = this.props.cart.map( (product, i) => {
             const card =
                 [<CardCart 
                     key                 = {i}
-                    data                = {fav}
+                    data                = {product}
                     styles              = "card-3-mobile card-3-tablet card-3-desktop"
                     cardHandler         = {() => { return false;}}
                     favHandler          = {this.props.favHandler}
@@ -509,6 +608,11 @@ class Checkout extends Component {
                     cartHandler         = {null}
                     handleItemRemove    = {this.handleRemoveItem}
                     handlePurchaseCart  = {this.handlePurchaseCart}
+                    
+                    // discounts applied in this cart should update the discount
+                    // ammount in the child component, so add a function to the child,
+                    // to query the parent for its discount
+                    handleGetCartItemDiscount = {this.handleGetCartItemDiscount}
                     discounts           = {this.state.discounts}
                     handleRemovePhoto   = {this.handleRemovePhoto}
                     favourite
@@ -525,7 +629,7 @@ class Checkout extends Component {
         const purchases = this.state.purchaseCart.map((item, i) => {
             return (
                 <div key={i}>
-                    <p>{item.label} - {item.quantity} - ${item.displayPrice}</p>
+                    <p>{item.label} - {item.quantity} - ${item.priceTotal}</p>
                 </div>
             )
         });

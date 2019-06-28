@@ -58,20 +58,23 @@ class CardCart extends Component {
 
         const product = {...this.state.lineItems[productId]};
         product.quantity = +quantity;
-        product.displayPrice = product.price * product.quantity;
-        product.originalPrice = product.price * product.quantity;
+        product.priceTotal = product.price * product.quantity;
+        product.priceTotalFull = product.priceTotal;
+
 
         const discounts = this.props.discounts.lineItems;
         if (product.discount) {
+
             for( let i=0; i < product.discount.length; i++) {
                 const discountId = product.discount[i];
                 for (let j=0; j<discounts.length; j++) {
-    
+                    
                     if (discounts[j].id === discountId && product.quantity >= discounts[j].quantity) {
                         const discountQuantity = product.quantity - discounts[j].quantity + 1;
                         const discountPrice = discounts[j].discount * discountQuantity;
                         const nonDiscountPrice = product.price * ( product.quantity - discountQuantity );
-                        product.displayPrice = discountPrice + nonDiscountPrice;
+                        product.priceTotal = discountPrice + nonDiscountPrice;
+                        break;
                     }
                 }
             }
@@ -190,6 +193,11 @@ class CardCart extends Component {
         // console.log("DIGITA:", digitalProducts);
         const digitalItems = digitalProducts.map((item, i) => {
             if (item.category === 'digital') {
+
+                const cartDiscount = this.props.handleGetCartItemDiscount(item);
+                if (cartDiscount) {
+                    item.priceTotal = cartDiscount;
+                }
                 return (
                     <LineItem
                         key             = {i} 
@@ -220,6 +228,13 @@ class CardCart extends Component {
         });
         const printItems = printProducts.map((item, i) => {
             if (item.category === 'print') {
+
+                // const cartDiscount = this.props.handleGetCartItemDiscount(item);
+                // if (cartDiscount) {
+                //     item.priceTotal = cartDiscount;
+                // }
+                
+
                 return (
                     <LineItem
                         key             = {i} 

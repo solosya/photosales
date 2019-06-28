@@ -28,6 +28,15 @@ const intialState = {
             hasMedia: true,
             image: "https://weburbanist.com/wp-content/uploads/2008/10/lego_art_1.jpg"
         }
+        // {
+        //     id: 'lkiuygfsfdyny66',
+        //     title: "Lego",
+        //     content: "Less writing for the second card",
+        //     publishDate: "24rd may 2000",
+        //     hasMedia: true,
+        //     image: "https://weburbanist.com/wp-content/uploads/2008/10/lego_art_1.jpg"
+        // },
+
     ]
 }
 

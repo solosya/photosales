@@ -19,6 +19,7 @@
 
 
     &__title {
+        cursor:pointer;
         margin:0;
         @include font-size(32);
         color: $blue;
