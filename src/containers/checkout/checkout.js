@@ -25,136 +25,136 @@ class Checkout extends Component {
         cart: [],
         purchaseCart: [],
         total: 0,
-        discounts: {
-            lineItems: [
-                {
-                    id: 1,
-                    discount : 2,
-                    type: 'fixed',
-                    applyTo: 'rest',
-                    quantity: 2
-                },
-                {
-                    id: 2,
-                    discount : 10,
-                    type: 'fixed',
-                    applyTo: 'rest',
-                    quantity: 2,
-                },
-                {
-                    id: 3,
-                    discount : 20,
-                    type: 'fixed',
-                    applyTo: 'rest',
-                    quantity: 3,
-                },
-                {
-                    id: 4,
-                    discount : 25,
-                    type: 'fixed',
-                    applyTo: 'rest',
-                    quantity: 2,
-                },
-                {
-                    id: 5,
-                    discount : 50,
-                    type: 'fixed',
-                    applyTo: 'rest',
-                    quantity: 2,
-                },
+        // discounts: {
+        //     lineItems: [
+        //         {
+        //             id: 1,
+        //             discount : 2,
+        //             type: 'fixed',
+        //             applyTo: 'rest',
+        //             quantity: 2
+        //         },
+        //         {
+        //             id: 2,
+        //             discount : 10,
+        //             type: 'fixed',
+        //             applyTo: 'rest',
+        //             quantity: 2,
+        //         },
+        //         {
+        //             id: 3,
+        //             discount : 20,
+        //             type: 'fixed',
+        //             applyTo: 'rest',
+        //             quantity: 3,
+        //         },
+        //         {
+        //             id: 4,
+        //             discount : 25,
+        //             type: 'fixed',
+        //             applyTo: 'rest',
+        //             quantity: 2,
+        //         },
+        //         {
+        //             id: 5,
+        //             discount : 50,
+        //             type: 'fixed',
+        //             applyTo: 'rest',
+        //             quantity: 2,
+        //         },
 
-            ],
-            // category: [],
-            cart: [
-                // {
-                //     id: 50,
-                //     ammount : 5,
-                //     type: 'fixed',
-                //     applyTo: 'all',
-                //     quantity: 2,
-                //     priority: 10,
-                // },
-                {
-                    id: 51,
-                    priority: 7,
-                    discount : [
-                        {
-                            id:66,
-                            quantity: 2,
-                            ammount:30,
-                            type: 'fixed',
-                            applyTo: 'all',
-                        },
-                        {
-                            id:77,
-                            quantity: 6,
-                            ammount:20,
-                            type: 'fixed',
-                            applyTo: 'all',
-                        }
-                    ],
-                    rules: {
-                        // productType: 'photo',
-                        // category: "digital",
-                        // tags: [],
-                        products: [33],
-                    }
-                },
-                {
-                    id: 52,
-                    priority: 8,
-                    discount : [
-                        {
-                            id: 45,
-                            quantity: 2,
-                            ammount:15,
-                            type: 'fixed',
-                            applyTo: 'all',
-                        },
-                        {
-                            id:46,
-                            quantity: 6,
-                            ammount:10,
-                            type: 'fixed',
-                            applyTo: 'all',
-                        }
-                    ],
-                    rules: {
-                        // productType: 'photo',
-                        // category: "digitals",
-                        // tags: [],
-                        products: [22],
-                    }
-                },
-                {
-                    id: 53,
-                    priority: 12,
-                    discount : [
-                        {
-                            id:99,
-                            quantity: 2,
-                            ammount:555,
-                            type: 'fixed',
-                            applyTo: 'all',
-                        },
-                        {
-                            id:87,
-                            quantity: 4,
-                            ammount:444,
-                            type: 'fixed',
-                            applyTo: 'all',
-                        }
-                    ],
-                    rules: {
-                        // productType: 'photo',
-                        category: "printly",
-                        // tags: [],
-                        // products: [1],
-                    }
-                },
+        //     ],
+        //     // category: [],
+        //     cart: [
+        //         // {
+        //         //     id: 50,
+        //         //     ammount : 5,
+        //         //     type: 'fixed',
+        //         //     applyTo: 'all',
+        //         //     quantity: 2,
+        //         //     priority: 10,
+        //         // },
+        //         {
+        //             id: 51,
+        //             priority: 7,
+        //             discount : [
+        //                 {
+        //                     id:66,
+        //                     quantity: 2,
+        //                     ammount:30,
+        //                     type: 'fixed',
+        //                     applyTo: 'all',
+        //                 },
+        //                 {
+        //                     id:77,
+        //                     quantity: 6,
+        //                     ammount:20,
+        //                     type: 'fixed',
+        //                     applyTo: 'all',
+        //                 }
+        //             ],
+        //             rules: {
+        //                 // productType: 'photo',
+        //                 // category: "digital",
+        //                 // tags: [],
+        //                 products: [42],
+        //             }
+        //         },
+        //         {
+        //             id: 52,
+        //             priority: 8,
+        //             discount : [
+        //                 {
+        //                     id: 45,
+        //                     quantity: 2,
+        //                     ammount:15,
+        //                     type: 'fixed',
+        //                     applyTo: 'all',
+        //                 },
+        //                 {
+        //                     id:46,
+        //                     quantity: 6,
+        //                     ammount:10,
+        //                     type: 'fixed',
+        //                     applyTo: 'all',
+        //                 }
+        //             ],
+        //             rules: {
+        //                 // productType: 'photo',
+        //                 // category: "digitals",
+        //                 // tags: [],
+        //                 products: [22],
+        //             }
+        //         },
+        //         {
+        //             id: 53,
+        //             priority: 12,
+        //             discount : [
+        //                 {
+        //                     id:99,
+        //                     quantity: 2,
+        //                     ammount:555,
+        //                     type: 'fixed',
+        //                     applyTo: 'all',
+        //                 },
+        //                 {
+        //                     id:87,
+        //                     quantity: 4,
+        //                     ammount:444,
+        //                     type: 'fixed',
+        //                     applyTo: 'all',
+        //                 }
+        //             ],
+        //             rules: {
+        //                 // productType: 'photo',
+        //                 category: "digital",
+        //                 // tags: [],
+        //                 // products: [1],
+        //             }
+        //         },
 
-            ]
-        },
+        //     ]
+        // },
         products: {
             print: [
                 {
@@ -258,12 +258,15 @@ class Checkout extends Component {
 
 
     componentDidMount() {
-        // return axios.get('/api/theme', qs.stringify( this.options ) )
-        // // return axios.get('/api/search?s=this')
-        //     .then( response => {
-        //         // var data = response.data;
-        //     }).catch( error => {
-        //     });    
+        console.log('component mounted');
+        return axios.get('/api/shop/get-all' )
+        // return axios.get('/api/search?s=this')
+            .then( response => {
+                console.log(response);
+                // var data = response.data;
+            }).catch( error => {
+                console.log(error);
+            });    
 
     }
 
@@ -308,14 +311,13 @@ class Checkout extends Component {
         // If this discount contains matching products based on the ruleset, 
         // we'll now calculate if they match the quantity to APPLY the discount
         if (discountProducts.length > 0) {
-            // console.log('DECIDING IF ENOUGH DISCOUNT PRODUCTS ', product.id);
-            // debugger;
-            // console.log(discountRules);
+
             discountRules.discount.forEach( discount => {
-                // console.log("DISCOUNT QUANTITY", discount.quantity, discountProducts.length);
+
                 if (discountProducts.length >= discount.quantity) {
                     discount['ruleset_id'] = discountRules.id;
                     discount['priority'] = discountRules.priority;
+
                     // we need to deal with ranges, so this check applies the discount
                     // based on whether it beats any previous applied discout quantity.
                     if (this.currentDiscountQuantity < discount.quantity) {
@@ -397,50 +399,70 @@ class Checkout extends Component {
         }
     }
 
-    reconcileCollatedDiscounts(productsWithDoubleDiscounts, collatedDiscounts) {
-        debugger;
+    reconcileCollatedDiscounts(productsWithDoubleDiscounts, collatedDiscounts, cart) {
+
+        // first we iterate over each discount, and it's array of products to find the cheapest
+        // After it's found, we iterate again over each discount to remove the products that
+        // don't match the cheapest one.
 
         for (let i = 0; i< productsWithDoubleDiscounts.length; i++) {
-
-
             const productId = productsWithDoubleDiscounts[i];
-            var discounts = collatedDiscounts.filter((discount) => {
-                return discount.products.filter((prod) => {
-                    return prod.id + "-" + prod.photoId === productId;
-                });
-            });
+            let cheapest = null;
+            for (let i=0; i<collatedDiscounts.length; i++) {
+                let discount = collatedDiscounts[i];
+                for(let j=0; j<discount.products.length; j++) {
+                    let product = discount.products[j];
+                    let discountProductId = product.id + "-" + product.photoId;
+                    if (productId === discountProductId ) {
+                        if (cheapest === null) {
+                            cheapest = product;
+                        } else {
+                            if (product.priceTotal < cheapest.priceTotal) {
+                                cheapest = product;
+                            }
+                        }
+                    }
+                }
+            }
 
-        }
 
-        // get best discount
-        let bestValue = Infinity;
-        let bestDiscount = null;
-        for (var j=0; j<discounts.length; j++) {
-            if (discounts[j].ammount < bestValue) {
-                bestValue = discounts[j].ammount;
-                bestDiscount = discounts[j].id;
+
+
+            if (cheapest) {
+                // there could be more than one discount that has the same price
+                // all we're comparing against is the cheapest so we just want the first
+                let found = null; 
+
+                for (let k=0; k<collatedDiscounts.length; k++) {
+                    let discount = collatedDiscounts[k];
+                    for(let l=0; l<discount.products.length; l++) {
+                        let product = discount.products[l];
+                        let discountProductId = product.id + "-" + product.photoId;
+                        if (productId === discountProductId ) {
+                            if (product.priceTotal == cheapest.priceTotal) {
+                                if (found === null) {
+                                    found = product;
+                                }
+                            } else {
+                                collatedDiscounts[k].products.splice(l, 1);
+                            }
+                        }
+                    }
+                }
             }
         }
-        const testCart = JSON.parse(JSON.stringify(this.state.purchaseCart));
-        // console.log(discounts);
-        // console.log(bestValue, bestDiscount);
-        // this.productsWithDoubleDiscounts;
-        // this.collatedDiscounts
+        return collatedDiscounts;
     }
 
 
-    applyDiscountsToCart() {
-        const cart = JSON.parse(JSON.stringify(this.state.purchaseCart));
+    applyDiscountsToCart(cart, collatedDiscounts) {
 
-        for (let i=0; i<this.collatedDiscounts.length; i++ ) {
-            console.log('applying discounts');
-
-            let discount = this.collatedDiscounts[i];
+        for (let i=0; i<collatedDiscounts.length; i++ ) {
+            let discount = collatedDiscounts[i];
             for (let j=0; j<discount.products.length; j++) {
                 let product = discount.products[j];
                 let itemIndex = this.getCartItemIndex(product, cart);
                 cart.splice(itemIndex, 1, product);
-                // console.log(itemIndex);
             }
         }
         return cart;
@@ -451,7 +473,7 @@ class Checkout extends Component {
     calculateTotal = () => {
 
         const discounts = this.state.discounts.cart;
-        const cart = this.state.purchaseCart;
+        let cart = JSON.parse(JSON.stringify(this.state.purchaseCart));
 
         // final list of prodcuts that both discount rules and quantity apply to
         this.discountCollection = {};
@@ -460,7 +482,6 @@ class Checkout extends Component {
 
         for( let i=0; i < discounts.length; i++) {
             let discount = discounts[i];
-            // console.log("TRYING DISCOUNT", discounts[i].id);
 
             // products that match discount rules will be stored here.
             // Only if quantity of these products reaches discount 
@@ -507,11 +528,11 @@ class Checkout extends Component {
 
         this.calculateCollatedDiscounts();
 
+        var collatedDiscounts = JSON.parse(JSON.stringify(this.collatedDiscounts));
+        
         if (this.productsWithDoubleDiscounts.length > 0) {
-            const productsWithDoubleDiscounts   = JSON.parse(JSON.stringify(this.productsWithDoubleDiscounts))
-            const collatedDiscounts             = JSON.parse(JSON.stringify(this.collatedDiscounts))
-            
-            this.reconcileCollatedDiscounts(productsWithDoubleDiscounts, collatedDiscounts);
+            const productsWithDoubleDiscounts = JSON.parse(JSON.stringify(this.productsWithDoubleDiscounts));
+            collatedDiscounts = this.reconcileCollatedDiscounts(productsWithDoubleDiscounts, collatedDiscounts, cart);
         }
 
 
@@ -525,28 +546,28 @@ class Checkout extends Component {
 
 
 
-        const finalCart = this.applyDiscountsToCart();
+        cart = this.applyDiscountsToCart(cart, collatedDiscounts);
 
 
 
-        console.log("FINAL CART:", finalCart);
+        console.log("FINAL CART:", cart);
 
 
 
-        const total = finalCart.reduce( (accumulator, current) => {
+        const total = cart.reduce( (accumulator, current) => {
             return current.priceTotal  + accumulator;
         }, 0);
         // console.log(finalCart);
         this.setState({
             total,
-            purchaseCart : finalCart
+            purchaseCart : cart
         })
     }
 
     handlePurchaseCart = (product) => {
+        console.log('handling purchase cart');
         const cart = [...this.state.purchaseCart];
         const update = this.getCartItemIndex(product);
-
         if (update === -1) {
             cart.push(product);
         } else {
