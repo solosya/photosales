@@ -592,7 +592,7 @@ class Checkout extends Component {
 
 
     homeLinkHandler = () => {
-        this.props.history.push('/photo');
+        this.props.history.push("/"+window.layoutTemplate);
     }
 
     handleGetCartItemDiscount = (product) => {
