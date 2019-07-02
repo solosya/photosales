@@ -23,8 +23,7 @@ class CardCart extends Component {
             digital: false,
         },
         products: JSON.parse(JSON.stringify(this.props.products)),
-        lineItems: [],
-        lineItemCount: 1
+        lineItems: this.props.lineItems || []
     }
 
 
@@ -47,46 +46,46 @@ class CardCart extends Component {
         return n + (((mid-n)*2)+1) -1;
     }
 
-    handleQuantity = (e, productID) => {
-        const quantity = e.target.value;
-        const productId = this.state.lineItems.findIndex((element) => {
-            // console.log("PHOTO IDS");
-            // console.log(element.photoId, this.props.data.id);
-            // console.log(element.id, index);
-            return element.photoId === this.props.data.id && element.id === productID;
-        });
+    // handleQuantity = (e, productID) => {
+    //     const quantity = e.target.value;
+    //     const productId = this.state.lineItems.findIndex((element) => {
+    //         // console.log("PHOTO IDS");
+    //         // console.log(element.photoId, this.props.data.id);
+    //         // console.log(element.id, index);
+    //         return element.photoId === this.props.data.id && element.id === productID;
+    //     });
 
-        const product = {...this.state.lineItems[productId]};
-        product.quantity = +quantity;
-        product.priceTotal = product.price * product.quantity;
-        product.priceTotalFull = product.priceTotal;
+    //     const product = {...this.state.lineItems[productId]};
+    //     product.quantity = +quantity;
+    //     product.priceTotal = product.price * product.quantity;
+    //     product.priceTotalFull = product.priceTotal;
 
 
-        const discounts = this.props.discounts.lineItems;
-        if (product.discount) {
+    //     const discounts = this.props.discounts.lineItems;
+    //     if (product.discount) {
 
-            for( let i=0; i < product.discount.length; i++) {
-                const discountId = product.discount[i];
-                for (let j=0; j<discounts.length; j++) {
+    //         for( let i=0; i < product.discount.length; i++) {
+    //             const discountId = product.discount[i];
+    //             for (let j=0; j<discounts.length; j++) {
                     
-                    if (discounts[j].id === discountId && product.quantity >= discounts[j].quantity) {
-                        const discountQuantity = product.quantity - discounts[j].quantity + 1;
-                        const discountPrice = discounts[j].discount * discountQuantity;
-                        const nonDiscountPrice = product.price * ( product.quantity - discountQuantity );
-                        product.priceTotal = discountPrice + nonDiscountPrice;
-                        break;
-                    }
-                }
-            }
-        }
-        const items = [...this.state.lineItems];
-        items[productId] = product;
+    //                 if (discounts[j].id === discountId && product.quantity >= discounts[j].quantity) {
+    //                     const discountQuantity = product.quantity - discounts[j].quantity + 1;
+    //                     const discountPrice = discounts[j].discount * discountQuantity;
+    //                     const nonDiscountPrice = product.price * ( product.quantity - discountQuantity );
+    //                     product.priceTotal = discountPrice + nonDiscountPrice;
+    //                     break;
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     const items = [...this.state.lineItems];
+    //     items[productId] = product;
 
-        this.setState({lineItems: items}, () => {
-            // console.log("CARDCART STATE STATE", this.state);
-            this.props.handlePurchaseCart(product);
-        });
-    }
+    //     this.setState({lineItems: items}, () => {
+    //         // console.log("CARDCART STATE STATE", this.state);
+    //         this.props.handlePurchaseCart(product);
+    //     });
+    // }
 
 
     handleSelect = e => {
@@ -106,17 +105,14 @@ class CardCart extends Component {
         lineItems.push(product);
 
         this.setState(prevState => ({
-            lineItems,
+            // lineItems,
             products: {
                 ...prevState.products,
                 ...menu                    
             }
-        }), () => {
-            // console.log("CARDCART STATE STATE", this.state);
-            this.props.handlePurchaseCart(product);
-        });
-
-
+        }));
+        console.log(product);
+        this.props.handlePurchaseCart(product);
     }
 
 
@@ -185,9 +181,10 @@ class CardCart extends Component {
             options         = {digitalOptions}
             selectValue     = {null}
             handleSelect    = {this.handleSelect}
+            new // this line item has no product information attached.
         /> 
 
-        const digitalProducts = this.state.lineItems.filter((item, i) => {
+        const digitalProducts = this.props.data.lineItems.filter((item, i) => {
             return item.category === 'digital' ? true : false; 
         });
         // console.log("DIGITA:", digitalProducts);
@@ -207,7 +204,7 @@ class CardCart extends Component {
                         selectValue     = {digitalOptions[item.productId]}
                         product         = {item}
                         handleSelect    = {this.handleSelect}
-                        handleQuantity  = {this.handleQuantity}
+                        handleQuantity  = {this.props.handleQuantity}
                         handleRemove    = {this.removeItem}
                     />
                 )
@@ -222,18 +219,14 @@ class CardCart extends Component {
             options         = {printOptions}
             selectValue     = {null}
             handleSelect    = {this.handleSelect}
+            new // this line item has no product information attached.
         /> 
-        const printProducts = this.state.lineItems.filter((item, i) => {
+        const printProducts = this.props.data.lineItems.filter((item, i) => {
             return item.category === 'print' ? true : false; 
         });
         const printItems = printProducts.map((item, i) => {
             if (item.category === 'print') {
 
-                // const cartDiscount = this.props.handleGetCartItemDiscount(item);
-                // if (cartDiscount) {
-                //     item.priceTotal = cartDiscount;
-                // }
-                
 
                 return (
                     <LineItem
@@ -244,7 +237,7 @@ class CardCart extends Component {
                         selectValue     = {printOptions[item.productId]}
                         product         = {item}
                         handleSelect    = {this.handleSelect}
-                        handleQuantity  = {this.handleQuantity}
+                        handleQuantity  = {this.props.handleQuantity}
                         handleRemove    = {this.removeItem}
                     />
                 )

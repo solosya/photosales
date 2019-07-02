@@ -97,7 +97,7 @@ const lineItem = (props) => {
                 />
             </div>
             {props.product && props.product.category === 'print'
-                ? <input type="number" value={props.product.quantity} placeholder="Qty" onChange={(e) => props.handleQuantity(e,  props.product.id)} />
+                ? <input type="number" value={props.product.quantity} placeholder="Qty" onChange={(e) => props.handleQuantity(e,  props.product.id, props.product.photoId)} />
                 : null
             }
             {deleteButton}
