@@ -17,7 +17,27 @@ class Shop {
         console.log(this.discounts);
     }
     
+    applyLineItemDiscount(product) {
 
+        const discounts = this.discounts.lineItems;
+        if (product.discount) {
+
+            for( let i=0; i < product.discount.length; i++) {
+                const discountId = product.discount[i];
+                for (let j=0; j<discounts.length; j++) {
+                    
+                    if (discounts[j].id === discountId && product.quantity >= discounts[j].quantity) {
+                        const discountQuantity = product.quantity - discounts[j].quantity + 1;
+                        const discountPrice = discounts[j].discount * discountQuantity;
+                        const nonDiscountPrice = product.price * ( product.quantity - discountQuantity );
+                        product.priceTotal = discountPrice + nonDiscountPrice;
+                        break;
+                    }
+                }
+            }
+        }
+        return product;
+    }
 
     getCartItemIndex(product, cart) {
         if (typeof cart === "undefined") {
@@ -123,6 +143,7 @@ class Shop {
 
 
     calculateCollatedDiscounts() {
+
         for (let property in this.discountCollection) {
             if (this.discountCollection.hasOwnProperty(property)) {
                 let productDiscount = this.discountCollection[property];
@@ -252,8 +273,8 @@ class Shop {
             } // FOR each product
 
             console.log("DISCOUNTS FROM RULES", this.discountProducts);
+            // debugger;
             this.attachDiscountsFromQuantity(discount, this.discountProducts);
-
 
             // In discountCollection we use an object with key of discount id so that it overwrites
             // whatever was there previously.  Easier than storing in an array,
@@ -261,6 +282,9 @@ class Shop {
             if (this.currentDiscount) {
                 this.discountCollection[this.currentDiscount.ruleset_id] = this.currentDiscount;
             }
+
+            // this.discountProducts = [];
+
 
         } // FOR each discount
         
@@ -272,7 +296,6 @@ class Shop {
 
 
         this.calculateCollatedDiscounts();
-
         var collatedDiscounts = JSON.parse(JSON.stringify(this.collatedDiscounts));
         
         if (this.productsWithDoubleDiscounts.length > 0) {
@@ -283,13 +306,13 @@ class Shop {
 
 
         console.group('reconcile');
-        console.log("COLLATED DISCOUNTS: ", this.collatedDiscounts);
+        console.log("COLLATED DISCOUNTS: ", collatedDiscounts);
         // console.log(this.state.purchaseCart);
         console.groupEnd();
 
 
 
-
+        debugger;
 
         cart = this.applyDiscountsToCart(cart, collatedDiscounts);
 

@@ -35,13 +35,13 @@ class Checkout extends Component {
 
 
     // these zeroed in calculate function;
-    currentDiscountQuantity;
-    currentDiscount;
-    discountCollection;
-    productsWithDiscounts;
-    productsWithDoubleDiscounts;
-    discountProducts;
-    collatedDiscounts;
+    // currentDiscountQuantity;
+    // currentDiscount;
+    // discountCollection;
+    // productsWithDiscounts;
+    // productsWithDoubleDiscounts;
+    // discountProducts;
+    // collatedDiscounts;
 
     getSiteDiscounts() {
         return axios.get('/api/shop/discounts' );    
@@ -103,76 +103,61 @@ class Checkout extends Component {
 
 
 
-
     handlePurchaseCart = (product) => {
-
-        this.props.addItemToCart( product );
+        this.props.addItemToCart( product, this.state.discounts );
         console.log("AFTER DIPATCHING CALL!!!");
-        const cart = JSON.parse(JSON.stringify(this.state.purchaseCart));
-        const update = this.getCartItemIndex(product);
-        if (update === -1) {
-            cart.push(product);
-        } else {
-            cart[update] = product;
-        }
+        // const cart = JSON.parse(JSON.stringify(this.state.purchaseCart));
+        // const update = this.getCartItemIndex(product);
+        // if (update === -1) {
+        //     cart.push(product);
+        // } else {
+        //     cart[update] = product;
+        // }
+        // console.log(this.props.cart);
+        // const cart = this.getLineItemsFromCart(this.props.cart);
+        // console.log("THE ACTTILA CART UAUAY", cart);
 
+        // const shop = new Shop(cart, discounts);
+        // const totals = shop.calculateTotal();
+        // console.log("TOTALS", totals);
 
-        const discounts = JSON.parse(JSON.stringify(this.state.discounts))
-        const shop = new Shop(cart, discounts);
-        const totals = shop.calculateTotal();
-
-
-        this.setState({
-            total: totals.total,
-            purchaseCart : totals.cart
-        });
+        // this.setState({
+        //     total: totals.total,
+        // });
 
     }
 
-    handleQuantity = (e, productID, photoId) => {
-        console.log(productID);
-        const quantity = e.target.value;
-        const cartId = this.getCartItemIndex({id:productID, photoId});
-        console.log("HANDLE QUANTITY", cartId);
-
-
-        const product = JSON.parse(JSON.stringify(this.state.purchaseCart[cartId]));
+    handleQuantity = (quantity, product) => {
         product.quantity = +quantity;
         product.priceTotal = product.price * product.quantity;
         product.priceTotalFull = product.priceTotal;
+        this.props.updateCartItem( product, this.state.discounts );
 
+        // product.quantity = +quantity;
+        // product.priceTotal = product.price * product.quantity;
+        // product.priceTotalFull = product.priceTotal;
 
-        const discounts = this.state.discounts.lineItems;
-        if (product.discount) {
+        // const discounts = this.state.discounts.lineItems;
+        // if (product.discount) {
 
-            for( let i=0; i < product.discount.length; i++) {
-                const discountId = product.discount[i];
-                for (let j=0; j<discounts.length; j++) {
+        //     for( let i=0; i < product.discount.length; i++) {
+        //         const discountId = product.discount[i];
+        //         for (let j=0; j<discounts.length; j++) {
                     
-                    if (discounts[j].id === discountId && product.quantity >= discounts[j].quantity) {
-                        const discountQuantity = product.quantity - discounts[j].quantity + 1;
-                        const discountPrice = discounts[j].discount * discountQuantity;
-                        const nonDiscountPrice = product.price * ( product.quantity - discountQuantity );
-                        product.priceTotal = discountPrice + nonDiscountPrice;
-                        break;
-                    }
-                }
-            }
-        }
-
-        const purchaseCart = JSON.parse(JSON.stringify(this.state.purchaseCart));
-        purchaseCart[cartId] = product;
-
-        this.setState({
-            purchaseCart 
-        }, () => {
-            console.log(this.state);
-        });
+        //             if (discounts[j].id === discountId && product.quantity >= discounts[j].quantity) {
+        //                 const discountQuantity = product.quantity - discounts[j].quantity + 1;
+        //                 const discountPrice = discounts[j].discount * discountQuantity;
+        //                 const nonDiscountPrice = product.price * ( product.quantity - discountQuantity );
+        //                 product.priceTotal = discountPrice + nonDiscountPrice;
+        //                 break;
+        //             }
+        //         }
+        //     }
+        // }
     }
 
 
     handleRemoveLineItem = (product) => {
-
         const cart = [...this.state.purchaseCart].filter((element) => {
             // console.log(element.photoId, product.photoId);
             // console.log(element.id, product.id);
@@ -217,7 +202,7 @@ class Checkout extends Component {
         let purchases = null;
         let cards = null;
         if (this.state.discounts && this.state.products) {
-
+            console.log("RENDERING,", this.props.cart);
             cards = this.props.cart.map( (product, i) => {
                 const card =
                     [<CardCart 
@@ -305,7 +290,7 @@ class Checkout extends Component {
                                 <Col classes={["col-12"]}>
                                     <Flexrow>
                                         <h2>Total</h2>
-                                        <p>${this.state.total} AUD</p>
+                                        <p>${this.props.total} AUD</p>
                                     </Flexrow>
                                 </Col>
                             </Row>
@@ -334,6 +319,7 @@ const mapStateToProps = state => {
     return {
         favourites : state.favourites,
         cart: state.cart,
+        total: state.total,
     }
 };
 
@@ -341,7 +327,8 @@ const mapDispatchToProps = dispatch => {
     return {
         toggleFavourite: (photo) => dispatch({type:actionTypes.TOGGLE_FAVOURITE, photo}),
         toggleCart: (photo) => dispatch({type:actionTypes.TOGGLE_CART, photo}),
-        addItemToCart: (product) => dispatch({type:actionTypes.ADD_ITEM_TO_CART, product})
+        addItemToCart: (product, discounts) => dispatch({type:actionTypes.ADD_ITEM_TO_CART, product, discounts}),
+        updateCartItem: (product, discounts) => dispatch({type:actionTypes.UPDATE_CART_ITEM, product, discounts})
     }
 
 }

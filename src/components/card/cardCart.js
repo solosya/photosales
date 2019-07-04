@@ -46,46 +46,6 @@ class CardCart extends Component {
         return n + (((mid-n)*2)+1) -1;
     }
 
-    // handleQuantity = (e, productID) => {
-    //     const quantity = e.target.value;
-    //     const productId = this.state.lineItems.findIndex((element) => {
-    //         // console.log("PHOTO IDS");
-    //         // console.log(element.photoId, this.props.data.id);
-    //         // console.log(element.id, index);
-    //         return element.photoId === this.props.data.id && element.id === productID;
-    //     });
-
-    //     const product = {...this.state.lineItems[productId]};
-    //     product.quantity = +quantity;
-    //     product.priceTotal = product.price * product.quantity;
-    //     product.priceTotalFull = product.priceTotal;
-
-
-    //     const discounts = this.props.discounts.lineItems;
-    //     if (product.discount) {
-
-    //         for( let i=0; i < product.discount.length; i++) {
-    //             const discountId = product.discount[i];
-    //             for (let j=0; j<discounts.length; j++) {
-                    
-    //                 if (discounts[j].id === discountId && product.quantity >= discounts[j].quantity) {
-    //                     const discountQuantity = product.quantity - discounts[j].quantity + 1;
-    //                     const discountPrice = discounts[j].discount * discountQuantity;
-    //                     const nonDiscountPrice = product.price * ( product.quantity - discountQuantity );
-    //                     product.priceTotal = discountPrice + nonDiscountPrice;
-    //                     break;
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     const items = [...this.state.lineItems];
-    //     items[productId] = product;
-
-    //     this.setState({lineItems: items}, () => {
-    //         // console.log("CARDCART STATE STATE", this.state);
-    //         this.props.handlePurchaseCart(product);
-    //     });
-    // }
 
 
     handleSelect = e => {
@@ -119,9 +79,6 @@ class CardCart extends Component {
     removeItem = (e, productID ) => {
 
         const productIndex = this.state.lineItems.findIndex((element) => {
-            // console.log("PHOTO IDS");
-            // console.log(element.photoId, this.props.data.id);
-            // console.log(element.id, index);
             return element.photoId === this.props.data.id && element.id === productID;
         });
 
@@ -147,9 +104,6 @@ class CardCart extends Component {
             });
     }
 
-    // calculate = () => {
-    //     this.setState()
-    // }
 
 
     render() {
@@ -175,6 +129,12 @@ class CardCart extends Component {
         });
     
 
+
+
+
+        // **************************************************
+        //                DIGITAL PRODUCTS
+        // **************************************************
         const newDigitalItem = <LineItem
             key             = {93939393939}
             active          = {!this.state.productStatus.digital}
@@ -187,7 +147,7 @@ class CardCart extends Component {
         const digitalProducts = this.props.data.lineItems.filter((item, i) => {
             return item.category === 'digital' ? true : false; 
         });
-        // console.log("DIGITA:", digitalProducts);
+
         const digitalItems = digitalProducts.map((item, i) => {
             if (item.category === 'digital') {
 
@@ -213,7 +173,12 @@ class CardCart extends Component {
 
 
 
-        const newPrintItem = <LineItem
+
+
+        // **************************************************
+        //                      PRINT PRODUCTS
+        // **************************************************
+        const newPrintItem  = <LineItem
             key             = {93939393939}
             active          = {!this.state.productStatus.print}
             options         = {printOptions}

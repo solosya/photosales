@@ -1,6 +1,8 @@
 import * as actionTypes from './actions';
+import Shop from '../containers/checkout/shop';
 
 const intialState = {
+    total: 0,
     favourites: [
         {
             id: '6e5hfdghs5dt',
@@ -46,6 +48,56 @@ const intialState = {
 const reducer = (state = intialState, action) => {
     console.log(action);
 
+
+    const findPhotoInCart  = (cart, product) => {
+        const index = cart.findIndex((item) => {
+            return product.photoId === item.id;
+        });
+        return index;
+    }
+
+    const findProductInCartItem = (photo, product) => {
+        const index = photo.lineItems.findIndex((photo) => {
+            return photo.id === product.id;
+        });
+        return index;
+    }
+
+
+
+    const getLineItemsFromCart = (cart) => {
+        const items = [];
+        for (let i=0; i<cart.length; i++) {
+            let cartItem = cart[i];
+            for (let j=0; j<cartItem.lineItems.length; j++) {
+                let photo = cartItem.lineItems[j];
+                items.push(photo);
+            }
+        }
+        return items;
+    }
+
+
+    const placeLineItemsIntoCart = (cart, discountItems) => {
+        for (let i=0; i<discountItems.length; i++) {
+            let discountedItem = discountItems[i];
+            discounts:
+            for (let j=0; j<cart.length; j++) {
+                let originalPhoto = cart[j];
+                for (let k=0; k<originalPhoto.lineItems.length; k++) {
+                    let originalItem = originalPhoto.lineItems[k];
+                    if (originalItem.id === discountedItem.id && originalItem.photoId === discountedItem.photoId) {
+                        originalPhoto.lineItems[k] = discountedItem;
+                        break discounts;
+                    }
+                }
+            }
+        }
+        return cart;
+    }
+
+
+
     switch (action.type) {
 
         case actionTypes.TOGGLE_FAVOURITE: {
@@ -84,28 +136,29 @@ const reducer = (state = intialState, action) => {
         }
         case actionTypes.ADD_ITEM_TO_CART: {
             console.log("IN THE REDUCER");
-            // console.log(state);
             let cart = [...state.cart];
             const product = action.product;
-            
-            const found = cart.findIndex((item) => {
-                return product.photoId === item.id;
-            });
-            
-            if (found > -1) {
-                const foundCart = JSON.parse(JSON.stringify( cart[found] ));
-                const update = foundCart.lineItems.findIndex((photo) => {
-                    return photo.photoId === product.photoId && photo.id === product.id;
-                });
-                if (update === -1) {
-                    foundCart.lineItems.push(product);
+            const photoIndex = findPhotoInCart(cart, product);
+            if (photoIndex > -1) {
+                const photo = JSON.parse(JSON.stringify( cart[photoIndex] ));
+                const index = findProductInCartItem(photo, action.product);
+
+                if (index === -1) {
+                    photo.lineItems.push(product);
                 } else {
-                    foundCart.lineItems[update] = product;
+                    photo.lineItems[index] = product;
                 }
 
-                cart[found] = foundCart;
+                cart[photoIndex] = photo;
+                const flatCart = getLineItemsFromCart(cart)
+                const shop = new Shop(flatCart, action.discounts);
+                // debugger;
+                const total = shop.calculateTotal();
+                cart = placeLineItemsIntoCart(cart, total.cart);
+
                 return {
                     ...state,
+                    total: total.total,
                     cart
                 };
             }
@@ -115,8 +168,34 @@ const reducer = (state = intialState, action) => {
 
         }
 
+        case actionTypes.UPDATE_CART_ITEM: {
+            const cart = [...state.cart];
+            const photoIndex = findPhotoInCart(cart, action.product);
+            if (photoIndex > -1) {
+                const photo = JSON.parse(JSON.stringify( cart[photoIndex] ));
+                const index = findProductInCartItem(photo, action.product);
+
+                if (index > -1) {
+                    var product = photo.lineItems[index]
+                    product = action.product;
+                    const shop = new Shop([], action.discounts);
+                    product = shop.applyLineItemDiscount(product);
+                } 
+
+                cart[photoIndex].lineItems[index] = product;
+
+                const flatCart = getLineItemsFromCart(cart)
+                const shop = new Shop(flatCart, action.discounts);
+                const total = shop.calculateTotal();
+
+                return {
+                    ...state,
+                    total:total.total,
+                    cart
+                };
+            }
+        }
         default:
-            console.log("RETURNING DEFAULT STATE");
             return state;
     }
 };

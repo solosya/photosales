@@ -84,7 +84,7 @@ const lineItem = (props) => {
 
     }
 
-
+    console.log(props.product);
     return (
         <div className={styles.lineItem}>
             <div style={{width: 200}}>
@@ -97,7 +97,7 @@ const lineItem = (props) => {
                 />
             </div>
             {props.product && props.product.category === 'print'
-                ? <input type="number" value={props.product.quantity} placeholder="Qty" onChange={(e) => props.handleQuantity(e,  props.product.id, props.product.photoId)} />
+                ? <input type="number" value={props.product.quantity} placeholder="Qty" onChange={(e) => props.handleQuantity(e.target.value,  props.product)} />
                 : null
             }
             {deleteButton}
