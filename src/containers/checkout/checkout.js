@@ -12,7 +12,6 @@ import axios from 'axios';
 import * as actionTypes     from '../../store/actions';
 
 import {products, discounts} from './data';
-import Shop from './shop';
 
 
 class Checkout extends Component {
@@ -34,14 +33,6 @@ class Checkout extends Component {
 
 
 
-    // these zeroed in calculate function;
-    // currentDiscountQuantity;
-    // currentDiscount;
-    // discountCollection;
-    // productsWithDiscounts;
-    // productsWithDoubleDiscounts;
-    // discountProducts;
-    // collatedDiscounts;
 
     getSiteDiscounts() {
         return axios.get('/api/shop/discounts' );    
@@ -67,32 +58,11 @@ class Checkout extends Component {
 
 
 
-
-
-    // getFromCart = (photoid, productId) => {
-    //     const item = this.state.purchaseCart.filter((item) => {
-    //         return item.photoId === photoid && item.productId === productId;
-    //     });
-
-    //     if (item.length > 0) {
-    //         JSON.parse(JSON.stringify(item[0]));
-    //     }
-    //     return null;
-    // }
-
-
-
-
-
-
     getCartItemIndex(product, cart) {
         if (typeof cart === "undefined") {
             cart = this.state.purchaseCart;
         }
         return cart.findIndex((element) => {
-            // console.log("PHOTO IDS");
-            // console.log(element.photoId, product.photoId);
-            // console.log(element.id, product.id);
             return element.photoId === product.photoId && element.id === product.id;
         });
     }
@@ -106,25 +76,6 @@ class Checkout extends Component {
     handlePurchaseCart = (product) => {
         this.props.addItemToCart( product, this.state.discounts );
         console.log("AFTER DIPATCHING CALL!!!");
-        // const cart = JSON.parse(JSON.stringify(this.state.purchaseCart));
-        // const update = this.getCartItemIndex(product);
-        // if (update === -1) {
-        //     cart.push(product);
-        // } else {
-        //     cart[update] = product;
-        // }
-        // console.log(this.props.cart);
-        // const cart = this.getLineItemsFromCart(this.props.cart);
-        // console.log("THE ACTTILA CART UAUAY", cart);
-
-        // const shop = new Shop(cart, discounts);
-        // const totals = shop.calculateTotal();
-        // console.log("TOTALS", totals);
-
-        // this.setState({
-        //     total: totals.total,
-        // });
-
     }
 
     handleQuantity = (quantity, product) => {
@@ -132,40 +83,15 @@ class Checkout extends Component {
         product.priceTotal = product.price * product.quantity;
         product.priceTotalFull = product.priceTotal;
         this.props.updateCartItem( product, this.state.discounts );
-
-        // product.quantity = +quantity;
-        // product.priceTotal = product.price * product.quantity;
-        // product.priceTotalFull = product.priceTotal;
-
-        // const discounts = this.state.discounts.lineItems;
-        // if (product.discount) {
-
-        //     for( let i=0; i < product.discount.length; i++) {
-        //         const discountId = product.discount[i];
-        //         for (let j=0; j<discounts.length; j++) {
-                    
-        //             if (discounts[j].id === discountId && product.quantity >= discounts[j].quantity) {
-        //                 const discountQuantity = product.quantity - discounts[j].quantity + 1;
-        //                 const discountPrice = discounts[j].discount * discountQuantity;
-        //                 const nonDiscountPrice = product.price * ( product.quantity - discountQuantity );
-        //                 product.priceTotal = discountPrice + nonDiscountPrice;
-        //                 break;
-        //             }
-        //         }
-        //     }
-        // }
     }
 
 
     handleRemoveLineItem = (product) => {
         const cart = [...this.state.purchaseCart].filter((element) => {
-            // console.log(element.photoId, product.photoId);
-            // console.log(element.id, product.id);
             return !(element.photoId === product.photoId && element.id === product.id);
         });
 
         this.setState({purchaseCart: cart}, () => {
-            // console.log("CHECKOUT STATE:" ,this.state);
             this.calculateTotal();
         });
 

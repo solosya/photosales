@@ -2,35 +2,35 @@ export const discounts = {
     lineItems: [
         {
             id: 1,
-            discount : 2,
-            type: 'fixed',
+            ammount : 2,
+            type: 'subtract',
             applyTo: 'rest',
             quantity: 2
         },
         {
             id: 2,
-            discount : 10,
+            ammount : 10,
             type: 'fixed',
             applyTo: 'rest',
             quantity: 2,
         },
         {
             id: 3,
-            discount : 20,
+            ammount : 20,
             type: 'fixed',
             applyTo: 'rest',
             quantity: 3,
         },
         {
             id: 4,
-            discount : 25,
+            ammount : 25,
             type: 'fixed',
             applyTo: 'rest',
             quantity: 2,
         },
         {
             id: 5,
-            discount : 50,
+            ammount : 50,
             type: 'fixed',
             applyTo: 'rest',
             quantity: 2,
@@ -46,8 +46,8 @@ export const discounts = {
                 {
                     id:66,
                     quantity: 2,
-                    ammount:30,
-                    type: 'fixed',
+                    ammount:10,
+                    type: 'percent',
                     applyTo: 'all',
                 },
                 {

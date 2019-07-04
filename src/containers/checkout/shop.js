@@ -12,9 +12,6 @@ class Shop {
         this.currentDiscountQuantity = 0;
         this.currentDiscount = null;
         this.collatedDiscounts = [];
-
-
-        console.log(this.discounts);
     }
     
     applyLineItemDiscount(product) {
@@ -27,10 +24,23 @@ class Shop {
                 for (let j=0; j<discounts.length; j++) {
                     
                     if (discounts[j].id === discountId && product.quantity >= discounts[j].quantity) {
+                        const productDiscount = discounts[j];
+
                         const discountQuantity = product.quantity - discounts[j].quantity + 1;
-                        const discountPrice = discounts[j].discount * discountQuantity;
+                        if (productDiscount.type === 'fixed') {
+                            var discountPrice = productDiscount.ammount * discountQuantity;
+                       }
+                        if (productDiscount.type === 'subtract') {
+                            var discountPrice = ( product.price - productDiscount.ammount)  * discountQuantity;
+                        }
+                        if (productDiscount.type === 'percent') {
+                            var discountPrice = product.price - (( productDiscount.ammount * (productDiscount.ammount/100) ) * discountQuantity);
+                        }
+
+                        
+                        
                         const nonDiscountPrice = product.price * ( product.quantity - discountQuantity );
-                        product.priceTotal = discountPrice + nonDiscountPrice;
+                        product.priceTotal = (discountPrice + nonDiscountPrice);
                         break;
                     }
                 }
@@ -44,9 +54,6 @@ class Shop {
             cart = this.state.cart;
         }
         return cart.findIndex((element) => {
-            // console.log("PHOTO IDS");
-            // console.log(element.photoId, product.photoId);
-            // console.log(element.id, product.id);
             return element.photoId === product.photoId && element.id === product.id;
         });
     }
@@ -123,9 +130,7 @@ class Shop {
 
             // going to keep an array of product ids for all products that 
             // have had a discount applied.  will use later to figure out discrepencies
-
             if (this.currentDiscount) {
-                // debugger;
                 this.currentDiscount.products.forEach((product) => {
                     if (this.productsWithDiscounts.indexOf( product.id + "-" + product.photoId ) > -1 ) {
                         if (this.productsWithDoubleDiscounts.indexOf( product.id + "-" + product.photoId ) === -1 ) {
@@ -155,7 +160,17 @@ class Shop {
                     // console.log(product);
                     if (index >= applyFrom) {
                         const ammount = productDiscount.ammount;
-                        product.priceTotal = ammount;
+
+                        if (productDiscount.type === 'fixed') {
+                            product.priceTotal = ammount;
+                        }
+                        if (productDiscount.type === 'subtract') {
+                            product.priceTotal = product.price - ammount;
+                        }
+                        if (productDiscount.type === 'percent') {
+                            product.priceTotal = product.price - (product.price * (ammount/100));
+                        }
+
                     }
 
                 });
@@ -244,7 +259,7 @@ class Shop {
 
 
     calculateTotal() {
-        console.log(this.discounts);
+        // console.log(this.discounts);
         const discounts = this.discounts.cart;
         let cart = this.cart;
 
@@ -256,6 +271,10 @@ class Shop {
         for( let i=0; i < discounts.length; i++) {
             let discount = discounts[i];
 
+            this.discountProducts = [];
+            this.currentDiscountQuantity = 0;
+            this.currentDiscount = null;
+            this.collatedDiscounts = [];
 
             cart_items:
             for (let j=0; j<cart.length; j++) {
@@ -272,7 +291,7 @@ class Shop {
                 } 
             } // FOR each product
 
-            console.log("DISCOUNTS FROM RULES", this.discountProducts);
+            // console.log("DISCOUNTS FROM RULES", this.discountProducts);
             // debugger;
             this.attachDiscountsFromQuantity(discount, this.discountProducts);
 
@@ -283,16 +302,14 @@ class Shop {
                 this.discountCollection[this.currentDiscount.ruleset_id] = this.currentDiscount;
             }
 
-            // this.discountProducts = [];
-
 
         } // FOR each discount
         
-        console.group('results');
-        console.log("DISCOUNT COLLECTION",              this.discountCollection);
-        console.log("PRODUCTS WITH DISCOUNTS",          this.productsWithDiscounts);
-        console.log("PRODUCTS WITH DOUBLE DISCOUNTS",   this.productsWithDoubleDiscounts);
-        console.groupEnd();
+        // console.group('results');
+        // console.log("DISCOUNT COLLECTION",              this.discountCollection);
+        // console.log("PRODUCTS WITH DISCOUNTS",          this.productsWithDiscounts);
+        // console.log("PRODUCTS WITH DOUBLE DISCOUNTS",   this.productsWithDoubleDiscounts);
+        // console.groupEnd();
 
 
         this.calculateCollatedDiscounts();
@@ -305,19 +322,17 @@ class Shop {
 
 
 
-        console.group('reconcile');
-        console.log("COLLATED DISCOUNTS: ", collatedDiscounts);
-        // console.log(this.state.purchaseCart);
-        console.groupEnd();
+        // console.group('reconcile');
+        // console.log("COLLATED DISCOUNTS: ", collatedDiscounts);
+        // // console.log(this.state.purchaseCart);
+        // console.groupEnd();
 
 
-
-        debugger;
 
         cart = this.applyDiscountsToCart(cart, collatedDiscounts);
 
 
-        console.log("FINAL CART:", cart);
+        // console.log("FINAL CART:", cart);
 
         const total = cart.reduce( (accumulator, current) => {
             return current.priceTotal  + accumulator;
@@ -328,7 +343,6 @@ class Shop {
             total
         };
 
-        // console.log(finalCart);
     }
 
 
