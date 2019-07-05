@@ -68,6 +68,7 @@ const lineItem = (props) => {
 
     let itemTotal = "";
     let itemTotalFull = "";
+    let discountName = "";
 
     if (props.product) {
         itemTotal = props.product.price;
@@ -77,7 +78,10 @@ const lineItem = (props) => {
             itemTotal = props.product.priceTotal;
             itemTotalFull = itemTotal;
         }
-    
+        // debugger;
+        if ( props.product.discountName ) {
+            discountName = props.product.discountName ; 
+        }
         // if (props.product.priceTotalDiscount) {
         //     itemTotalDiscount = props.product.priceTotalDiscount;
         // }
@@ -101,7 +105,7 @@ const lineItem = (props) => {
                 : null
             }
             {deleteButton}
-
+            {discountName}
             {props.product
                 ? <p>
                     {props.product.priceTotalFull !== props.product.priceTotal ? <span className={styles.fullPrice}>${props.product.priceTotalFull} - </span>  : ""}

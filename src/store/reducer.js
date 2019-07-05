@@ -151,7 +151,7 @@ const reducer = (state = intialState, action) => {
 
                 cart[photoIndex] = photo;
                 const flatCart = getLineItemsFromCart(cart)
-                const shop = new Shop(flatCart, action.discounts);
+                const shop = new Shop(flatCart);
                 // debugger;
                 const total = shop.calculateTotal();
                 cart = placeLineItemsIntoCart(cart, total.cart);
@@ -174,19 +174,20 @@ const reducer = (state = intialState, action) => {
             if (photoIndex > -1) {
                 const photo = JSON.parse(JSON.stringify( cart[photoIndex] ));
                 const index = findProductInCartItem(photo, action.product);
-
+                // debugger;
                 if (index > -1) {
-                    var product = photo.lineItems[index]
-                    product = action.product;
-                    const shop = new Shop([], action.discounts);
+                    // var product = photo.lineItems[index]
+                    var product = action.product;
+                    const shop = new Shop([]);
                     product = shop.applyLineItemDiscount(product);
+                    
+                    cart[photoIndex].lineItems[index] = product;
                 } 
 
-                cart[photoIndex].lineItems[index] = product;
 
-                const flatCart = getLineItemsFromCart(cart)
-                const shop = new Shop(flatCart, action.discounts);
-                const total = shop.calculateTotal();
+                const flatCart = getLineItemsFromCart(cart);
+                const shop2 = new Shop(flatCart);
+                const total = shop2.calculateTotal();
 
                 return {
                     ...state,

@@ -1,9 +1,14 @@
+import {products, Discounts} from './data';
+import axios from 'axios';
+
+
+
+
 class Shop {
 
-    constructor(cart, discounts) {
+    constructor(cart) {
 
         this.cart = cart;
-        this.discounts = discounts;
 
         // products that match discount rules will be stored here.
         // Only if quantity of these products reaches discount 
@@ -12,8 +17,25 @@ class Shop {
         this.currentDiscountQuantity = 0;
         this.currentDiscount = null;
         this.collatedDiscounts = [];
+        this.discounts = Discounts;
     }
     
+
+
+    componentDidMount() {
+        const self = this;
+        axios.all([this.getSiteDiscounts(), this.getSiteProducts()])
+        .then(axios.spread(function (discount, products) {
+            self.setState({
+                // discounts: discount.data.data,
+                products: products.data.data
+            }, () => {
+                console.log(self.state);
+            });
+        }));
+    }
+
+
     applyLineItemDiscount(product) {
 
         const discounts = this.discounts.lineItems;
@@ -23,24 +45,33 @@ class Shop {
                 const discountId = product.discount[i];
                 for (let j=0; j<discounts.length; j++) {
                     
-                    if (discounts[j].id === discountId && product.quantity >= discounts[j].quantity) {
-                        const productDiscount = discounts[j];
+                    if (discounts[j].id === discountId ) {
+                        var productDiscount = discounts[j];
+                        // debugger;
 
-                        const discountQuantity = product.quantity - discounts[j].quantity + 1;
-                        if (productDiscount.type === 'fixed') {
-                            var discountPrice = productDiscount.ammount * discountQuantity;
-                       }
-                        if (productDiscount.type === 'subtract') {
-                            var discountPrice = ( product.price - productDiscount.ammount)  * discountQuantity;
-                        }
-                        if (productDiscount.type === 'percent') {
-                            var discountPrice = product.price - (( productDiscount.ammount * (productDiscount.ammount/100) ) * discountQuantity);
+                        if (productDiscount.discount && productDiscount.discount.length > 0) {
+                            let chosenDiscount = null;
+                            let chosenDiscountAmmount = 0;
+                            
+                            for (let k=0; k<productDiscount.discount.length; k++) {
+                                if (typeof productDiscount.discount[k].active != "undefined" && productDiscount.discount[k].active === false) {
+                                    continue;
+                                }
+
+                                if (product.quantity >= productDiscount.discount[k].quantity && productDiscount.discount[k].quantity > chosenDiscountAmmount) {
+                                    chosenDiscount = k;
+                                    chosenDiscountAmmount = productDiscount.discount[k].quantity;
+                                }
+                            }
+                            if (null !== chosenDiscount) {
+                                productDiscount = productDiscount.discount[chosenDiscount];
+                            }
                         }
 
-                        
-                        
-                        const nonDiscountPrice = product.price * ( product.quantity - discountQuantity );
-                        product.priceTotal = (discountPrice + nonDiscountPrice);
+                        // APPLYING DISCOUNT
+                        product = this.applyDiscount(product, productDiscount);
+                        product.discountName = productDiscount.name;
+
                         break;
                     }
                 }
@@ -145,7 +176,33 @@ class Shop {
         }
     }
 
+    applyDiscount(product, productDiscount)
+    {
+        let discountQuantity = product.quantity;
+        let nonDiscountQuantity = 0;
+        if (productDiscount.applyTo === 'rest'){
+            discountQuantity = product.quantity - productDiscount.quantity + 1;
+            nonDiscountQuantity = productDiscount.quantity - 1;
+        }
 
+        let nonDiscountPrice = product.price * nonDiscountQuantity;
+
+        if (productDiscount.type === 'fixed') {
+            var discountPrice = productDiscount.ammount * discountQuantity;
+            product.priceTotal = nonDiscountPrice + discountPrice;
+        }
+        if (productDiscount.type === 'subtract') {
+            var discountPrice = ( product.price - productDiscount.ammount)  * discountQuantity;
+            product.priceTotal = nonDiscountPrice + discountPrice;
+
+        }
+        if (productDiscount.type === 'percent') {
+            var discountPrice =  ( product.price * (productDiscount.ammount/100) ) * discountQuantity;
+            product.priceTotal = nonDiscountPrice +  ( ( product.price * product.quantity) - discountPrice );
+
+        }
+        return product;
+    }
 
     calculateCollatedDiscounts() {
 
@@ -159,18 +216,9 @@ class Shop {
                 productDiscount.products.forEach((product, index) => {
                     // console.log(product);
                     if (index >= applyFrom) {
-                        const ammount = productDiscount.ammount;
 
-                        if (productDiscount.type === 'fixed') {
-                            product.priceTotal = ammount;
-                        }
-                        if (productDiscount.type === 'subtract') {
-                            product.priceTotal = product.price - ammount;
-                        }
-                        if (productDiscount.type === 'percent') {
-                            product.priceTotal = product.price - (product.price * (ammount/100));
-                        }
-
+                        // APPLYING DISCOUNT
+                        product = this.applyDiscount(product, productDiscount);
                     }
 
                 });
@@ -261,6 +309,7 @@ class Shop {
     calculateTotal() {
         // console.log(this.discounts);
         const discounts = this.discounts.cart;
+        const lineDiscounts = this.discounts.lineItems;
         let cart = this.cart;
 
         // final list of prodcuts that both discount rules and quantity apply to
@@ -268,6 +317,31 @@ class Shop {
         this.productsWithDiscounts = [];
         this.productsWithDoubleDiscounts = [];
 
+
+
+        // Discounts can be applied directly to a product, or they can contain rules to match products
+        // first iterate over products to see if they have a disount applied,
+        // then itterate over discounts to see if any producst match the rules
+
+        // apply discounts based on products
+        // debugger;
+        // for (let p = 0; p<cart.length; p++) {
+        //     if (typeof cart[p].discount !== "undefined" && cart[p].discount.length > 0);
+        //         let discountId = cart[p].discount[0];
+
+        // }
+
+
+
+        
+        // ******************************************************
+        // CART DISCOUNTS NEED TO TAKE INTO ACCOUNT LINE ITEM QUANTITY!!!
+        // ******************************************************
+
+
+
+
+        // apply discounts based on rules
         for( let i=0; i < discounts.length; i++) {
             let discount = discounts[i];
 

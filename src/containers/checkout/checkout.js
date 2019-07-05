@@ -11,7 +11,7 @@ import axios from 'axios';
 // import Modal                from '../../components/modals/modal';
 import * as actionTypes     from '../../store/actions';
 
-import {products, discounts} from './data';
+import {products} from './data';
 
 
 class Checkout extends Component {
@@ -26,7 +26,7 @@ class Checkout extends Component {
         photos: null,
         purchaseCart: [],
         total: 0,
-        discounts: discounts,
+        // discounts: discounts,
         products: products,
 
     }
@@ -47,7 +47,7 @@ class Checkout extends Component {
         axios.all([this.getSiteDiscounts(), this.getSiteProducts()])
         .then(axios.spread(function (discount, products) {
             self.setState({
-                discounts: discount.data.data,
+                // discounts: discount.data.data,
                 products: products.data.data
             }, () => {
                 console.log(self.state);
@@ -73,16 +73,19 @@ class Checkout extends Component {
 
 
 
-    handlePurchaseCart = (product) => {
-        this.props.addItemToCart( product, this.state.discounts );
-        console.log("AFTER DIPATCHING CALL!!!");
+    addLineItemToCart = (product) => {
+        this.props.addLineItemToCart( product );
+    }
+
+    removeLineItemFromCart = (product) => {
+        this.props.removeLineItemFromCart( product );
     }
 
     handleQuantity = (quantity, product) => {
         product.quantity = +quantity;
         product.priceTotal = product.price * product.quantity;
         product.priceTotalFull = product.priceTotal;
-        this.props.updateCartItem( product, this.state.discounts );
+        this.props.updateCartItem( product );
     }
 
 
@@ -94,7 +97,6 @@ class Checkout extends Component {
         this.setState({purchaseCart: cart}, () => {
             this.calculateTotal();
         });
-
     }
     
     handleRemovePhoto = (id) => {
@@ -127,7 +129,7 @@ class Checkout extends Component {
     render() {
         let purchases = null;
         let cards = null;
-        if (this.state.discounts && this.state.products) {
+        if (this.state.products) {
             console.log("RENDERING,", this.props.cart);
             cards = this.props.cart.map( (product, i) => {
                 const card =
@@ -140,14 +142,13 @@ class Checkout extends Component {
                         products            = {this.state.products}
                         cartHandler         = {null}
                         handleItemRemove    = {this.handleRemoveLineItem}
-                        handlePurchaseCart  = {this.handlePurchaseCart}
+                        addLineItemToCart   = {this.addLineItemToCart}
                         handleQuantity      = {this.handleQuantity}
                         
                         // discounts applied in this cart should update the discount
                         // ammount in the child component, so add a function to the child,
                         // to query the parent for its discount
                         handleGetCartItemDiscount = {this.handleGetCartItemDiscount}
-                        discounts           = {this.state.discounts}
                         handleRemovePhoto   = {this.handleRemovePhoto}
                         favourite
                     ></CardCart>];
@@ -253,8 +254,9 @@ const mapDispatchToProps = dispatch => {
     return {
         toggleFavourite: (photo) => dispatch({type:actionTypes.TOGGLE_FAVOURITE, photo}),
         toggleCart: (photo) => dispatch({type:actionTypes.TOGGLE_CART, photo}),
-        addItemToCart: (product, discounts) => dispatch({type:actionTypes.ADD_ITEM_TO_CART, product, discounts}),
-        updateCartItem: (product, discounts) => dispatch({type:actionTypes.UPDATE_CART_ITEM, product, discounts})
+        addLineItemToCart: (product) => dispatch({type:actionTypes.ADD_ITEM_TO_CART, product}),
+        removeLineItemFromCart: (product) => dispatch({type:actionTypes.ADD_ITEM_TO_CART, product}),
+        updateCartItem: (product) => dispatch({type:actionTypes.UPDATE_CART_ITEM, product})
     }
 
 }

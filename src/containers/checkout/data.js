@@ -1,11 +1,61 @@
-export const discounts = {
+export const Discounts = {
     lineItems: [
         {
+            id: 200,
+            discount : [
+                {
+                    id:66,
+                    quantity: 2,
+                    ammount:10,
+                    type: 'percent',
+                    applyTo: 'all',
+                    name: "2 or more 10% off each!",
+                    active: true
+                },
+                {
+                    id:77,
+                    quantity: 3,
+                    ammount:20,
+                    type: 'fixed',
+                    applyTo: 'all',
+                    name: "3 or more $20 each!",
+                    active: true
+                },
+                {
+                    id:78,
+                    quantity: 4,
+                    ammount:3,
+                    type: 'subtract',
+                    applyTo: 'all',
+                    name: "4 or more $3 off each!",
+                    active: true
+                }
+
+            ],
+            dates: {
+                from: '2019-05-08',
+                to: '2019-10-01'
+            },
+            rules: {
+                // productType: 'photo',
+                // category: "digital",
+                // tags: [],
+                products: [33],
+            }
+        },
+        {
             id: 1,
-            ammount : 2,
-            type: 'subtract',
-            applyTo: 'rest',
-            quantity: 2
+            discount : [
+                {
+                    id:66,
+                    quantity: 2,
+                    ammount:2,
+                    type: 'fixed',
+                    applyTo: 'rest',
+                    name: "Additional copies $2!",
+                    active: true
+                }
+            ]
         },
         {
             id: 2,
@@ -41,7 +91,6 @@ export const discounts = {
     cart: [
         {
             id: 51,
-            priority: 7,
             discount : [
                 {
                     id:66,
@@ -49,13 +98,23 @@ export const discounts = {
                     ammount:10,
                     type: 'percent',
                     applyTo: 'all',
+                    name: "2 or more 10% off each!"
                 },
                 {
                     id:77,
-                    quantity: 6,
+                    quantity: 3,
                     ammount:20,
                     type: 'fixed',
                     applyTo: 'all',
+                    name: "3 or more $20 each!"
+                },
+                {
+                    id:78,
+                    quantity: 4,
+                    ammount:3,
+                    type: 'subtract',
+                    applyTo: 'all',
+                    name: "4 or more $3 off each!"
                 }
             ],
             rules: {
@@ -117,6 +176,32 @@ export const discounts = {
                 // products: [1],
             }
         },
+        {
+            id: 53,
+            priority: 12,
+            discount : [
+                {
+                    id:99,
+                    quantity: 2,
+                    ammount:100,
+                    type: 'fixed',
+                    applyTo: 'all',
+                },
+                {
+                    id:87,
+                    quantity: 4,
+                    ammount:75,
+                    type: 'fixed',
+                    applyTo: 'all',
+                }
+            ],
+            rules: {
+                // productType: 'photo',
+                category: "print",
+                // tags: [],
+                // products: [1],
+            }
+        },
 
     ]
 };
@@ -129,7 +214,7 @@ export const products = {
             price : 5,
             priceTotal: 5,
             priceTotalFull: 5,
-            discount: [1],
+            discount: [],
             category: 'print',
 
         },

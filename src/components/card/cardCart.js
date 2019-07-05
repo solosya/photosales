@@ -72,7 +72,7 @@ class CardCart extends Component {
             }
         }));
         console.log(product);
-        this.props.handlePurchaseCart(product);
+        this.props.addLineItemToCart(product);
     }
 
 
