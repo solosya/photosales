@@ -46,7 +46,7 @@ const intialState = {
 }
 
 const reducer = (state = intialState, action) => {
-    console.log(action);
+    // console.log(action);
 
 
     const findPhotoInCart  = (cart, product) => {
@@ -77,6 +77,16 @@ const reducer = (state = intialState, action) => {
         return items;
     }
 
+    const resetCartTotals = (cart) => {
+        for (let i=0; i<cart.length; i++) {
+            let cartItem = cart[i];
+            for (let j=0; j<cartItem.lineItems.length; j++) {
+                let photo = cartItem.lineItems[j];
+                photo.priceTotal = photo.price;
+            }
+        }
+        return cart;
+    }
 
     const placeLineItemsIntoCart = (cart, discountItems) => {
         for (let i=0; i<discountItems.length; i++) {
@@ -96,6 +106,9 @@ const reducer = (state = intialState, action) => {
         return cart;
     }
 
+    const calculateTotals = (cart) => {
+
+    }
 
 
     switch (action.type) {
@@ -118,7 +131,8 @@ const reducer = (state = intialState, action) => {
             }
         }
         case actionTypes.TOGGLE_CART: {
-            let cart = [...state.cart];
+            let cart = resetCartTotals([...state.cart]);
+
             const found = cart.filter((item) => {
                 return action.photo.id !== item.id;
             });
@@ -128,19 +142,27 @@ const reducer = (state = intialState, action) => {
             } else {
                 cart.push(action.photo);
             }
-            console.log(cart);
+
+            // cart = calculateTotals(cart);
+            const flatCart = getLineItemsFromCart(cart)
+            const shop = new Shop(flatCart);
+            const total = shop.calculateTotal();
+            cart = placeLineItemsIntoCart(cart, total.cart);
+
             return {
                 ...state,
-                cart
+                cart,
+                total: total.total
             }
         }
         case actionTypes.ADD_ITEM_TO_CART: {
-            console.log("IN THE REDUCER");
-            let cart = [...state.cart];
+            let cart = resetCartTotals([...state.cart]);
+
             const product = action.product;
             const photoIndex = findPhotoInCart(cart, product);
             if (photoIndex > -1) {
                 const photo = JSON.parse(JSON.stringify( cart[photoIndex] ));
+                // debugger;
                 const index = findProductInCartItem(photo, action.product);
 
                 if (index === -1) {
@@ -152,7 +174,6 @@ const reducer = (state = intialState, action) => {
                 cart[photoIndex] = photo;
                 const flatCart = getLineItemsFromCart(cart)
                 const shop = new Shop(flatCart);
-                // debugger;
                 const total = shop.calculateTotal();
                 cart = placeLineItemsIntoCart(cart, total.cart);
 
@@ -164,38 +185,68 @@ const reducer = (state = intialState, action) => {
             }
 
             return state;
-
-
         }
+
+        
+        case actionTypes.REMOVE_ITEM_FROM_CART: {
+            let cart = resetCartTotals([...state.cart]);
+
+            const photoIndex = findPhotoInCart(cart, { photoId: action.photoId });
+            if (photoIndex > -1) {
+                const photo = JSON.parse(JSON.stringify( cart[photoIndex] ));
+                const index = findProductInCartItem(photo, { id: action.productId} );
+                if (index !== -1) {
+                    photo.lineItems.splice(index, 1);
+                }
+
+                cart[photoIndex] = photo;
+                const flatCart = getLineItemsFromCart(cart);
+                // debugger;
+                const shop = new Shop(flatCart);
+                const total = shop.calculateTotal();
+                console.log("AFTER REDUCER SHOP", total);
+                cart = placeLineItemsIntoCart(cart, total.cart);
+                console.log('AFTER REDUCER', cart);
+                cart = JSON.parse(JSON.stringify( cart ));
+
+                return {
+                    ...state,
+                    total: total.total,
+                    cart
+                };
+            }
+
+            return state;
+        }
+
 
         case actionTypes.UPDATE_CART_ITEM: {
             const cart = [...state.cart];
             const photoIndex = findPhotoInCart(cart, action.product);
+
             if (photoIndex > -1) {
                 const photo = JSON.parse(JSON.stringify( cart[photoIndex] ));
                 const index = findProductInCartItem(photo, action.product);
-                // debugger;
+
                 if (index > -1) {
-                    // var product = photo.lineItems[index]
-                    var product = action.product;
-                    const shop = new Shop([]);
-                    product = shop.applyLineItemDiscount(product);
-                    
-                    cart[photoIndex].lineItems[index] = product;
+                    cart[photoIndex].lineItems[index] = action.product;
                 } 
 
-
                 const flatCart = getLineItemsFromCart(cart);
-                const shop2 = new Shop(flatCart);
-                const total = shop2.calculateTotal();
+                const shop = new Shop(flatCart);
+                const total = shop.calculateTotal();
+                const finalCart = placeLineItemsIntoCart(cart, total.cart);
 
                 return {
                     ...state,
                     total:total.total,
-                    cart
+                    cart: finalCart
                 };
             }
+            return state;
         }
+
+
         default:
             return state;
     }

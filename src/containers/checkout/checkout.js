@@ -77,8 +77,8 @@ class Checkout extends Component {
         this.props.addLineItemToCart( product );
     }
 
-    removeLineItemFromCart = (product) => {
-        this.props.removeLineItemFromCart( product );
+    removeLineItemFromCart = (productId, photoId) => {
+        this.props.removeLineItemFromCart( productId, photoId );
     }
 
     handleQuantity = (quantity, product) => {
@@ -89,16 +89,7 @@ class Checkout extends Component {
     }
 
 
-    handleRemoveLineItem = (product) => {
-        const cart = [...this.state.purchaseCart].filter((element) => {
-            return !(element.photoId === product.photoId && element.id === product.id);
-        });
-
-        this.setState({purchaseCart: cart}, () => {
-            this.calculateTotal();
-        });
-    }
-    
+   
     handleRemovePhoto = (id) => {
         const cart = this.state.purchaseCart.filter((item) => {
             return item.photoId !== id;
@@ -109,7 +100,6 @@ class Checkout extends Component {
             purchaseCart: cart
         }, () => {
             this.props.toggleCart( photo );
-            this.calculateTotal();
         });
     }
 
@@ -130,20 +120,20 @@ class Checkout extends Component {
         let purchases = null;
         let cards = null;
         if (this.state.products) {
-            console.log("RENDERING,", this.props.cart);
+            // console.log("RENDERING,", this.props.cart);
             cards = this.props.cart.map( (product, i) => {
                 const card =
                     [<CardCart 
-                        key                 = {i}
-                        data                = {product}
-                        styles              = "card-3-mobile card-3-tablet card-3-desktop"
-                        cardHandler         = {() => { return false;}}
-                        favHandler          = {this.props.favHandler}
-                        products            = {this.state.products}
-                        cartHandler         = {null}
-                        handleItemRemove    = {this.handleRemoveLineItem}
-                        addLineItemToCart   = {this.addLineItemToCart}
-                        handleQuantity      = {this.handleQuantity}
+                        key                     = {i}
+                        data                    = {product}
+                        styles                  = "card-3-mobile card-3-tablet card-3-desktop"
+                        cardHandler             = {() => { return false;}}
+                        favHandler              = {this.props.favHandler}
+                        products                = {this.state.products}
+                        cartHandler             = {null}
+                        removeLineItemFromCart  = {this.removeLineItemFromCart}
+                        addLineItemToCart       = {this.addLineItemToCart}
+                        handleQuantity          = {this.handleQuantity}
                         
                         // discounts applied in this cart should update the discount
                         // ammount in the child component, so add a function to the child,
@@ -200,7 +190,6 @@ class Checkout extends Component {
                                         title="My Cart"
                                         thin
                                     />
-                                    {console.log(this.props) }
                                 </Col>
                             </Row>
 
@@ -255,7 +244,7 @@ const mapDispatchToProps = dispatch => {
         toggleFavourite: (photo) => dispatch({type:actionTypes.TOGGLE_FAVOURITE, photo}),
         toggleCart: (photo) => dispatch({type:actionTypes.TOGGLE_CART, photo}),
         addLineItemToCart: (product) => dispatch({type:actionTypes.ADD_ITEM_TO_CART, product}),
-        removeLineItemFromCart: (product) => dispatch({type:actionTypes.ADD_ITEM_TO_CART, product}),
+        removeLineItemFromCart: (productId, photoId) => dispatch({type:actionTypes.REMOVE_ITEM_FROM_CART, productId, photoId}),
         updateCartItem: (product) => dispatch({type:actionTypes.UPDATE_CART_ITEM, product})
     }
 

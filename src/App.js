@@ -22,7 +22,7 @@ if (urlPath[1] === 'page') {
 class App extends Component {
 
     pageClicked = () => {
-        console.log('page clicked');
+        // console.log('page clicked');
     }
 
     render() {

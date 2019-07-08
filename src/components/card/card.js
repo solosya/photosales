@@ -14,7 +14,7 @@ class Card extends Component {
         const count = this.props.count || 0;
         const panel = this.props.panel || null;
         const image = this.props.data.images && this.props.data.images.length > 0 ? this.props.data.images[0] : this.props.data;
-        const type = this.props.type || null;
+        // const type = this.props.type || null;
         let favourite = null;
         
         if ( this.props.favourite ) {

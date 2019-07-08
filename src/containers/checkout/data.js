@@ -1,210 +1,248 @@
-export const Discounts = {
-    lineItems: [
-        {
-            id: 200,
-            discount : [
-                {
-                    id:66,
-                    quantity: 2,
-                    ammount:10,
-                    type: 'percent',
-                    applyTo: 'all',
-                    name: "2 or more 10% off each!",
-                    active: true
-                },
-                {
-                    id:77,
-                    quantity: 3,
-                    ammount:20,
-                    type: 'fixed',
-                    applyTo: 'all',
-                    name: "3 or more $20 each!",
-                    active: true
-                },
-                {
-                    id:78,
-                    quantity: 4,
-                    ammount:3,
-                    type: 'subtract',
-                    applyTo: 'all',
-                    name: "4 or more $3 off each!",
-                    active: true
-                }
-
-            ],
-            dates: {
-                from: '2019-05-08',
-                to: '2019-10-01'
+export const Discounts = [
+    {
+        id: 200,
+        discount : [
+            {
+                id:66,
+                quantity: 2,
+                ammount:2,
+                type: 'fixed',
+                applyTo: 'rest',
+                name: "Additional copies $2",
+                active: true
             },
-            rules: {
-                // productType: 'photo',
-                // category: "digital",
-                // tags: [],
-                products: [33],
-            }
+        ],
+        dates: {
+            from: '2019-05-08',
+            to: '2019-10-01'
         },
-        {
-            id: 1,
-            discount : [
-                {
-                    id:66,
-                    quantity: 2,
-                    ammount:2,
-                    type: 'fixed',
-                    applyTo: 'rest',
-                    name: "Additional copies $2!",
-                    active: true
-                }
-            ]
+        type: 'lineitem',
+        rules: {
+            // productType: 'photo',
+            // category: "digital",
+            // tags: [],
+            products: [3,4,5],
+        }
+    },
+    {
+        id: 201,
+        discount : [
+            {
+                id:67,
+                quantity: 2,
+                ammount:10,
+                type: 'fixed',
+                applyTo: 'rest',
+                name: "additional copies $10",
+                active: true
+            },
+        ],
+        dates: {
+            from: '2019-05-08',
+            to: '2019-10-01'
         },
-        {
-            id: 2,
-            ammount : 10,
-            type: 'fixed',
-            applyTo: 'rest',
-            quantity: 2,
+        type: 'lineitem',
+        rules: {
+            // productType: 'photo',
+            // category: "digital",
+            // tags: [],
+            products: [6],
+        }
+    },
+    {
+        id: 202,
+        discount : [
+            {
+                id:745,
+                quantity: 2,
+                ammount:20,
+                type: 'fixed',
+                applyTo: 'rest',
+                name: "additional copies $20",
+                active: true
+            },
+        ],
+        dates: {
+            from: '2019-05-08',
+            to: '2019-10-01'
         },
-        {
-            id: 3,
-            ammount : 20,
-            type: 'fixed',
-            applyTo: 'rest',
-            quantity: 3,
+        type: 'lineitem',
+        rules: {
+            // productType: 'photo',
+            // category: "digital",
+            // tags: [],
+            products: [7],
+        }
+    },
+    {
+        id: 203,
+        discount : [
+            {
+                id:745,
+                quantity: 2,
+                ammount:25,
+                type: 'fixed',
+                applyTo: 'rest',
+                name: "additional copies $25",
+                active: true
+            },
+        ],
+        dates: {
+            from: '2019-05-08',
+            to: '2019-10-01'
         },
-        {
-            id: 4,
-            ammount : 25,
-            type: 'fixed',
-            applyTo: 'rest',
-            quantity: 2,
+        type: 'lineitem',
+        rules: {
+            // productType: 'photo',
+            // category: "digital",
+            // tags: [],
+            products: [8],
+        }
+    },
+    {
+        id: 204,
+        discount : [
+            {
+                id:745,
+                quantity: 2,
+                ammount:50,
+                type: 'fixed',
+                applyTo: 'rest',
+                name: "additional copies $50",
+                active: true
+            },
+        ],
+        dates: {
+            from: '2019-05-08',
+            to: '2019-10-01'
         },
-        {
-            id: 5,
-            ammount : 50,
-            type: 'fixed',
-            applyTo: 'rest',
-            quantity: 2,
-        },
+        type: 'lineitem',
+        rules: {
+            // productType: 'photo',
+            // category: "digital",
+            // tags: [],
+            products: [9],
+        }
+    },
 
-    ],
-    // category: [],
-    cart: [
-        {
-            id: 51,
-            discount : [
-                {
-                    id:66,
-                    quantity: 2,
-                    ammount:10,
-                    type: 'percent',
-                    applyTo: 'all',
-                    name: "2 or more 10% off each!"
-                },
-                {
-                    id:77,
-                    quantity: 3,
-                    ammount:20,
-                    type: 'fixed',
-                    applyTo: 'all',
-                    name: "3 or more $20 each!"
-                },
-                {
-                    id:78,
-                    quantity: 4,
-                    ammount:3,
-                    type: 'subtract',
-                    applyTo: 'all',
-                    name: "4 or more $3 off each!"
-                }
-            ],
-            rules: {
-                // productType: 'photo',
-                // category: "digital",
-                // tags: [],
-                products: [33],
+    {
+        id: 51,
+        discount : [
+            {
+                id:66,
+                quantity: 2,
+                ammount:30,
+                type: 'fixed',
+                applyTo: 'all',
+                name: "2 or more Commercial",
+                active: true
+            },
+            {
+                id:77,
+                quantity: 6,
+                ammount:20,
+                type: 'fixed',
+                applyTo: 'all',
+                name: "6 or more Commercial",
+                active: true
             }
-        },
-        {
-            id: 52,
-            priority: 8,
-            discount : [
-                {
-                    id: 45,
-                    quantity: 2,
-                    ammount:15,
-                    type: 'fixed',
-                    applyTo: 'all',
-                },
-                {
-                    id:46,
-                    quantity: 6,
-                    ammount:10,
-                    type: 'fixed',
-                    applyTo: 'all',
-                }
-            ],
-            rules: {
-                // productType: 'photo',
-                // category: "digitals",
-                // tags: [],
-                products: [22],
+        ],
+        type: 'cart',
+        rules: {
+            // productType: 'photo',
+            // category: "digital",
+            // tags: [],
+            products: [33],
+        }
+    },
+    {
+        id: 52,
+        priority: 8,
+        discount : [
+            {
+                id: 45,
+                quantity: 2,
+                ammount:15,
+                type: 'fixed',
+                applyTo: 'all',
+                active: true
+            },
+            {
+                id:46,
+                quantity: 6,
+                ammount:10,
+                type: 'fixed',
+                applyTo: 'all',
+                active: true
             }
-        },
-        {
-            id: 53,
-            priority: 12,
-            discount : [
-                {
-                    id:99,
-                    quantity: 2,
-                    ammount:555,
-                    type: 'fixed',
-                    applyTo: 'all',
-                },
-                {
-                    id:87,
-                    quantity: 4,
-                    ammount:444,
-                    type: 'fixed',
-                    applyTo: 'all',
-                }
-            ],
-            rules: {
-                // productType: 'photo',
-                category: "digital",
-                // tags: [],
-                // products: [1],
-            }
-        },
-        {
-            id: 53,
-            priority: 12,
-            discount : [
-                {
-                    id:99,
-                    quantity: 2,
-                    ammount:100,
-                    type: 'fixed',
-                    applyTo: 'all',
-                },
-                {
-                    id:87,
-                    quantity: 4,
-                    ammount:75,
-                    type: 'fixed',
-                    applyTo: 'all',
-                }
-            ],
-            rules: {
-                // productType: 'photo',
-                category: "print",
-                // tags: [],
-                // products: [1],
-            }
-        },
+        ],
+        type: 'cart',
+        rules: {
+            // productType: 'photo',
+            // category: "digitals",
+            // tags: [],
+            products: [22],
+        }
+    },
+    {
+        id: 53,
+        priority: 12,
+        active: false,
+        discount : [
+            {
+                id:99,
+                quantity: 2,
+                ammount:555,
+                type: 'fixed',
+                applyTo: 'all',
+                active: true
 
-    ]
-};
+            },
+            {
+                id:87,
+                quantity: 4,
+                ammount:444,
+                type: 'fixed',
+                applyTo: 'all',
+                active: true
+            }
+        ],
+        rules: {
+            // productType: 'photo',
+            category: "digital",
+            // tags: [],
+            // products: [1],
+        }
+    },
+    {
+        id: 53,
+        priority: 12,
+        active: false,
+        discount : [
+            {
+                id:99,
+                quantity: 2,
+                ammount:100,
+                type: 'fixed',
+                applyTo: 'all',
+            },
+            {
+                id:87,
+                quantity: 4,
+                ammount:75,
+                type: 'fixed',
+                applyTo: 'all',
+            }
+        ],
+        rules: {
+            // productType: 'photo',
+            category: "print",
+            // tags: [],
+            // products: [1],
+        }
+    }
+
+];
 
 export const products = {
     print: [
@@ -216,7 +254,6 @@ export const products = {
             priceTotalFull: 5,
             discount: [],
             category: 'print',
-
         },
         {
             id: 4,
@@ -224,7 +261,7 @@ export const products = {
             price : 7,
             priceTotal: 7,
             priceTotalFull: 7,
-            discount: [1],
+            discount: [],
             category: 'print',
 
         },
@@ -234,7 +271,7 @@ export const products = {
             price : 7,
             priceTotal: 7,
             priceTotalFull: 7,
-            discount: [1],
+            discount: [],
             category: 'print',
 
         },
@@ -244,34 +281,34 @@ export const products = {
             price : 15,
             priceTotal: 15,
             priceTotalFull: 15,
-            discount: [2],
-            category: 'print',
-        },
-        {
-            id: 6,
-            label: '14" x 11" ($25, additional copies $20)',
-            price : 25,
-            priceTotal: 25,
-            priceTotalFull: 25,
-            discount: [3],
+            discount: [],
             category: 'print',
         },
         {
             id: 7,
-            label: '18" x 12" ($30, additional copies $25)',
-            price : 30,
-            priceTotal: 30,
-            priceTotalFull: 30,
-            discount: [4],
+            label: '14" x 11" ($25, additional copies $20)',
+            price : 25,
+            priceTotal: 25,
+            priceTotalFull: 25,
+            discount: [],
             category: 'print',
         },
         {
             id: 8,
+            label: '18" x 12" ($30, additional copies $25)',
+            price : 30,
+            priceTotal: 30,
+            priceTotalFull: 30,
+            discount: [],
+            category: 'print',
+        },
+        {
+            id: 9,
             label: '36" x 24" ($55, additional copies $50)',
             price : 55,
             priceTotal: 55,
             priceTotalFull: 55,
-            discount: [5],
+            discount: [],
             category: 'print',
         }
     ],

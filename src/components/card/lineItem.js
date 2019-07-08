@@ -63,22 +63,13 @@ const lineItem = (props) => {
 
     let deleteButton = null;
     if (props.handleRemove) {
-        deleteButton = <p className={styles.delete} onClick={(e) => props.handleRemove(e, props.product.id)}>X</p>
+        deleteButton = <p className={styles.delete} onClick={(e) => props.handleRemove(e, props.product.category, props.product.id, props.product.photoId)}>X</p>
     }
 
-    let itemTotal = "";
-    let itemTotalFull = "";
     let discountName = "";
 
     if (props.product) {
-        itemTotal = props.product.price;
-        itemTotalFull = itemTotal;
-        
-        if (props.product.priceTotal) {
-            itemTotal = props.product.priceTotal;
-            itemTotalFull = itemTotal;
-        }
-        // debugger;
+
         if ( props.product.discountName ) {
             discountName = props.product.discountName ; 
         }

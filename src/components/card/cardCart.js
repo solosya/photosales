@@ -60,47 +60,34 @@ class CardCart extends Component {
         const selectMenu = menu[category];
         selectMenu[index].disabled = true;
 
-        // add the product to the lineItems
-        const lineItems = [...this.state.lineItems];
-        lineItems.push(product);
-
         this.setState(prevState => ({
-            // lineItems,
             products: {
                 ...prevState.products,
                 ...menu                    
             }
         }));
-        console.log(product);
+        console.log("ADDING THIS PRODUCT:",  product);
         this.props.addLineItemToCart(product);
     }
 
 
-    removeItem = (e, productID ) => {
+    removeItem = (e, category, productId, photoId ) => {
 
-        const productIndex = this.state.lineItems.findIndex((element) => {
-            return element.photoId === this.props.data.id && element.id === productID;
+        // enable the item in the menu
+        const menu = JSON.parse(JSON.stringify(this.state.products));
+        const selectMenu = menu[category];
+        const menuIndex = selectMenu.findIndex((element) => {
+            return element.id === productId;
         });
 
-        const lineItems = [...this.state.lineItems];
-        const product = lineItems[productIndex];
-        const productId = product.productId;
-        lineItems.splice(productIndex, 1);
-
-
-        // disable the item in the menu
-        const menu = JSON.parse(JSON.stringify(this.state.products));
-        const selectMenu = menu[product.category];
-        selectMenu[productId].disabled = false;
+        selectMenu[menuIndex].disabled = false;
         this.setState(prevState => ({
-            lineItems,
             products: {
                 ...prevState.products,
                 ...menu                    
             }
         }), () => {
-            // console.log("CARDCART STATE", this.state);
-            this.props.handleItemRemove(product);
+            this.props.removeLineItemFromCart(productId, photoId);
             });
     }
 
@@ -144,9 +131,11 @@ class CardCart extends Component {
             new // this line item has no product information attached.
         /> 
 
+        console.log("DIGITAL PRODUCTS", this.props.data);
         const digitalProducts = this.props.data.lineItems.filter((item, i) => {
             return item.category === 'digital' ? true : false; 
         });
+
 
         const digitalItems = digitalProducts.map((item, i) => {
             if (item.category === 'digital') {
@@ -169,6 +158,7 @@ class CardCart extends Component {
                     />
                 )
             }
+            return null;
         });
 
 
@@ -207,6 +197,8 @@ class CardCart extends Component {
                     />
                 )
             }
+            return null;
+
         });
 
 
