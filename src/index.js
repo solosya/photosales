@@ -2,21 +2,26 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import './index.css';
+import Store from './store/store';
+
 import {Provider} from 'react-redux';
-import {createStore} from 'redux';
-import reducer from './store/reducer';
 import {BrowserRouter} from 'react-router-dom';
 
+// const middle = store => {
+//     return next => {
+//         return action => {
+//             const result = next(action);
+//             return result;
+//         }
+//     }
+// }
 
-const store = createStore(
-    reducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-    );
+
 
 const elem = document.getElementById('photo-sales');
 
 ReactDOM.render(
-    <Provider store={store}>
+    <Provider store={Store}>
         <BrowserRouter>
             <App />
         </BrowserRouter>

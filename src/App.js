@@ -13,10 +13,11 @@ axios.defaults.headers.post['Content-Type']       = 'application/x-www-form-urle
 delete window.vigblat;
 
 const urlPath = window.location.pathname.split("/");
+
 if (urlPath[1] === 'page') {
     window.layoutTemplate = urlPath[1] + '/' + urlPath[2] || 'photos';
 } else {
-    window.layoutTemplate = urlPath[1];
+    window.layoutTemplate = urlPath[1] || 'photos';
 }
 
 class App extends Component {

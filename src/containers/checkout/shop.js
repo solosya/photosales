@@ -7,19 +7,11 @@ import axios from 'axios';
 class Shop {
 
     constructor(cart) {
-
         this.cart = cart;
         this.discounts = Discounts;
-
-        // products that match discount rules will be stored here.
-        // Only if quantity of these products reaches discount 
-        // quantity are they applied, i.e: stored in discountCollection
-        this.discountProducts               = [];
-        this.currentDiscountQuantity        = 0;
-        this.collatedDiscounts              = [];
-        // this.productsWithDiscounts          = [];
-        this.productsWithDoubleDiscounts    = [];
-
+        this.currentDiscountQuantity = 0;
+        // console.log(this.cart, this.discounts);
+        return;
     }
     
 
@@ -29,7 +21,6 @@ class Shop {
         axios.all([this.getSiteDiscounts(), this.getSiteProducts()])
         .then(axios.spread(function (discount, products) {
             self.setState({
-                // discounts: discount.data.data,
                 products: products.data.data
             }, () => {
                 console.log(self.state);
@@ -42,49 +33,6 @@ class Shop {
         return JSON.parse(JSON.stringify(data));
     }
 
-    applyLineItemDiscount(product) {
-
-        const discounts = this.discounts.lineItems;
-        if (product.discount) {
-
-            for( let i=0; i < product.discount.length; i++) {
-                const discountId = product.discount[i];
-                for (let j=0; j<discounts.length; j++) {
-                    
-                    if (discounts[j].id === discountId ) {
-                        var productDiscount = discounts[j];
-
-                        
-                        if (productDiscount.discount && productDiscount.discount.length > 0) {
-                            let chosenDiscount = null;
-                            let chosenDiscountAmmount = 0;
-                            
-                            for (let k=0; k<productDiscount.discount.length; k++) {
-                                if (typeof productDiscount.discount[k].active != "undefined" && productDiscount.discount[k].active === false) {
-                                    continue;
-                                }
-
-                                if (product.quantity >= productDiscount.discount[k].quantity && productDiscount.discount[k].quantity > chosenDiscountAmmount) {
-                                    chosenDiscount = k;
-                                    chosenDiscountAmmount = productDiscount.discount[k].quantity;
-                                }
-                            }
-                            if (null !== chosenDiscount) {
-                                productDiscount = productDiscount.discount[chosenDiscount];
-                            }
-                        }
-
-                        // APPLYING DISCOUNT
-                        product = this.applyDiscount(product, productDiscount);
-                        product.discountName = productDiscount.name;
-
-                        break;
-                    }
-                }
-            }
-        }
-        return product;
-    }
 
     getCartItemIndex(product, cart) {
         if (typeof cart === "undefined") {
@@ -104,7 +52,7 @@ class Shop {
             // the value of rule comparrison might be any datatype, including an array
             // We convert all to an array to normalise so no check is needed later.
             let rule = [].concat( discount.rules[ruleKey] );
-
+            if (rule.length === 0) return false;
 
             // this loop performs the comparrison to see if a rule applies to a product
             for (let value = 0; value < rule.length; value++) {
@@ -115,11 +63,11 @@ class Shop {
                 // decided on schema for the whole enterprise
                 if (ruleKey === 'products') {
                     productKey = 'id';
+
                     if (rule.indexOf(product[ productKey ]) > -1) {
                         break;
                     }
                 }
-                // console.log("THE CHECK:   ", ruleKey, productKey, rule[value], product[productKey]);
                 if (product[ productKey ] !== rule[value] ) {
                     return false;
                 }
@@ -133,9 +81,7 @@ class Shop {
             discount: discount.id
         };
 
-        this.discountProducts.push(product);
-
-        return true;
+        return product;
     }
 
 
@@ -147,7 +93,6 @@ class Shop {
         // We'll now calculate if they match the quantity to APPLY the discount
         let currentDiscount = null;
         if (discountProducts.length > 0) {
-            // if (typeof discountRules.type !== "undefined" ) 
 
             discountRules.discount.forEach( discount => {
                 
@@ -167,11 +112,11 @@ class Shop {
 
                     if (winningProducts.length > 0) {
                         discount['ruleset_id'] = discountRules.id;
-
                         currentDiscount = {
                             ...discount,
                             products: winningProducts
                         }
+                        console.log("CURRENT DISCOUNT", currentDiscount);
                     }
                 } 
                 
@@ -255,6 +200,7 @@ class Shop {
             let discount = collatedDiscounts[i];
             for (let j=0; j<discount.products.length; j++) {
                 let product = discount.products[j];
+                product.discountName = discount.name;
                 let itemIndex = this.getCartItemIndex(product, cart);
                 cart.splice(itemIndex, 1, product);
             }
@@ -326,10 +272,16 @@ class Shop {
 
 
     calculateTotal() {
-        // console.log(this.discounts);
         const discounts = this.discounts;
-        let cart = this.cart;
-        console.log("THE CART", cart);
+        // initially get a base total for all items by multiplying
+        // the price by the quantity. Easy as.
+        let cart = this.cart.map((item) => {
+            item.priceTotal = item.price * item.quantity;
+            item.priceTotalFull = item.priceTotal;
+            return item;
+        });
+
+
         const discountCollection = {};
         const productsWithDiscounts =[];
         const productsWithDoubleDiscounts =[];
@@ -346,19 +298,16 @@ class Shop {
 
 
 
-        // console.log("THE CART", cart);
-
         // apply discounts based on rules
         for( let i=0; i < discounts.length; i++) {
             let discount = discounts[i];
             if (false === discount.active ) {
                 continue;
             }
-            this.discountProducts = [];
+            let discountProducts = [];
             this.currentDiscountQuantity = 0;
-            this.collatedDiscounts = [];
             
-            cart_items:
+
             for (let j=0; j<cart.length; j++) {
                 let product = cart[j];
                 
@@ -368,14 +317,15 @@ class Shop {
                     let prod = this.attachDiscountsFromRules(product, rules, discount);
                     if (false === prod) {
                         // if no rules match the product, move on.
-                        continue cart_items;
+                        continue;
                     }
+                    discountProducts.push(prod);
+
                 } 
             } // FOR each product
 
-            console.log("DISCOUNT PRODUCTS", this.discountProducts);
 
-            const currentDiscount = this.attachDiscountsFromQuantity(discount, this.discountProducts);
+            const currentDiscount = this.attachDiscountsFromQuantity(discount, discountProducts);
             
             // going to keep an array of product ids for all products that 
             // have had a discount applied.  will use later to figure out discrepencies
@@ -443,10 +393,10 @@ class Shop {
 
 
 
-        console.group('results');
-            console.log("DISCOUNT COLLECTION", discountCollection);
-            console.log("COLLATED DISCOUNTS", collatedDiscounts);
-        console.groupEnd();
+        // console.group('results');
+        //     console.log("DISCOUNT COLLECTION", discountCollection);
+        //     console.log("COLLATED DISCOUNTS", collatedDiscounts);
+        // console.groupEnd();
 
         
         
@@ -460,17 +410,9 @@ class Shop {
 
 
 
-        // console.group('reconcile');
-        // console.log("COLLATED DISCOUNTS: ", collatedDiscounts);
-        // // console.log(this.state.purchaseCart);
-        // console.groupEnd();
-
-
-
         cart = this.applyDiscountsToCart(cart, collatedDiscounts);
 
 
-        console.log("FINAL CART:", cart);
 
         const total = cart.reduce( (accumulator, current) => {
             return current.priceTotal  + accumulator;

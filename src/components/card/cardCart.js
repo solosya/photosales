@@ -66,7 +66,7 @@ class CardCart extends Component {
                 ...menu                    
             }
         }));
-        console.log("ADDING THIS PRODUCT:",  product);
+
         this.props.addLineItemToCart(product);
     }
 
@@ -131,7 +131,7 @@ class CardCart extends Component {
             new // this line item has no product information attached.
         /> 
 
-        console.log("DIGITAL PRODUCTS", this.props.data);
+
         const digitalProducts = this.props.data.lineItems.filter((item, i) => {
             return item.category === 'digital' ? true : false; 
         });

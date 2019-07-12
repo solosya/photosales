@@ -1,53 +1,14 @@
-import * as actionTypes from './actions';
+import * as actionTypes from './actions/actions';
 import Shop from '../containers/checkout/shop';
+import {favourites, cart} from '../containers/checkout/data';
 
 const intialState = {
     total: 0,
-    favourites: [
-        {
-            id: '6e5hfdghs5dt',
-            title: "Prince One",
-            content: "First image in another gallery",
-            publishDate: "23rd may 2000",
-            hasMedia: true,
-            image: "https://static.guim.co.uk/sys-images/Music/Pix/pictures/2011/6/3/1307115506503/Prince-performing-on-stag-007.jpg",
-        }
-    ],
-    cart: [
-        {
-            id: 'j49fj3fgsdsgdf8rj',
-            title: "Cat",
-            content: "This is the body content which is very long as i want it to dot dot dot with an eillpsesssese so that i can see it's wokring and then celebrate a job well done",
-            publishDate: "23rd may 2000",
-            hasMedia: true,
-            image: "https://i.ytimg.com/vi/EuvTORWs244/maxresdefault.jpg",
-            lineItems: [],
-        },
-        {
-            id: 'lkiuygfyny66',
-            title: "Lego",
-            content: "Less writing for the second card",
-            publishDate: "24rd may 2000",
-            hasMedia: true,
-            image: "https://weburbanist.com/wp-content/uploads/2008/10/lego_art_1.jpg",
-            lineItems: [],
-        }
-        // {
-        //     id: 'lkiuygfsfdyny66',
-        //     title: "Lego",
-        //     content: "Less writing for the second card",
-        //     publishDate: "24rd may 2000",
-        //     hasMedia: true,
-        //     image: "https://weburbanist.com/wp-content/uploads/2008/10/lego_art_1.jpg"
-        // },
-
-    ],
-    pink: ['blue']
+    favourites,
+    cart
 }
 
 const reducer = (state = intialState, action) => {
-    // console.log(action);
-
 
     const findPhotoInCart  = (cart, product) => {
         const index = cart.findIndex((item) => {
@@ -62,8 +23,6 @@ const reducer = (state = intialState, action) => {
         });
         return index;
     }
-
-
 
     const getLineItemsFromCart = (cart) => {
         const items = [];
@@ -103,11 +62,19 @@ const reducer = (state = intialState, action) => {
                 }
             }
         }
-        return cart;
+        return JSON.parse(JSON.stringify( cart ));
     }
 
-    const calculateTotals = (cart) => {
 
+    const calculateTotal = (cart) => {
+        const flatCart = getLineItemsFromCart(cart)
+        const shop = new Shop(flatCart);
+        const total = shop.calculateTotal();
+        cart = placeLineItemsIntoCart(cart, total.cart);
+        return {
+            total,
+            finalCart: cart
+        }
     }
 
 
@@ -143,18 +110,16 @@ const reducer = (state = intialState, action) => {
                 cart.push(action.photo);
             }
 
-            // cart = calculateTotals(cart);
-            const flatCart = getLineItemsFromCart(cart)
-            const shop = new Shop(flatCart);
-            const total = shop.calculateTotal();
-            cart = placeLineItemsIntoCart(cart, total.cart);
+            var {total, finalCart} = calculateTotal(cart);
 
             return {
                 ...state,
-                cart,
+                cart: finalCart,
                 total: total.total
             }
         }
+
+
         case actionTypes.ADD_ITEM_TO_CART: {
             let cart = resetCartTotals([...state.cart]);
 
@@ -162,7 +127,6 @@ const reducer = (state = intialState, action) => {
             const photoIndex = findPhotoInCart(cart, product);
             if (photoIndex > -1) {
                 const photo = JSON.parse(JSON.stringify( cart[photoIndex] ));
-                // debugger;
                 const index = findProductInCartItem(photo, action.product);
 
                 if (index === -1) {
@@ -172,14 +136,11 @@ const reducer = (state = intialState, action) => {
                 }
 
                 cart[photoIndex] = photo;
-                const flatCart = getLineItemsFromCart(cart)
-                const shop = new Shop(flatCart);
-                const total = shop.calculateTotal();
-                cart = placeLineItemsIntoCart(cart, total.cart);
+                // let {total, finalCart} = calculateTotal(cart);
 
                 return {
                     ...state,
-                    total: total.total,
+                    total:0,
                     cart
                 };
             }
@@ -200,19 +161,12 @@ const reducer = (state = intialState, action) => {
                 }
 
                 cart[photoIndex] = photo;
-                const flatCart = getLineItemsFromCart(cart);
-                // debugger;
-                const shop = new Shop(flatCart);
-                const total = shop.calculateTotal();
-                console.log("AFTER REDUCER SHOP", total);
-                cart = placeLineItemsIntoCart(cart, total.cart);
-                console.log('AFTER REDUCER', cart);
-                cart = JSON.parse(JSON.stringify( cart ));
+                let {total, finalCart} = calculateTotal(cart);
 
                 return {
                     ...state,
                     total: total.total,
-                    cart
+                    cart: finalCart
                 };
             }
 
@@ -230,23 +184,29 @@ const reducer = (state = intialState, action) => {
 
                 if (index > -1) {
                     cart[photoIndex].lineItems[index] = action.product;
+                    cart[photoIndex].lineItems[index].priceTotal = 'pending';
                 } 
-
-                const flatCart = getLineItemsFromCart(cart);
-                const shop = new Shop(flatCart);
-                const total = shop.calculateTotal();
-                const finalCart = placeLineItemsIntoCart(cart, total.cart);
 
                 return {
                     ...state,
-                    total:total.total,
-                    cart: finalCart
+                    total:'pending',
+                    cart
                 };
             }
             return state;
         }
 
+        case actionTypes.TOTAL_CART: {
+            console.log(action);
+            // const cart = [...state.cart];
+            // let {total, finalCart} = calculateTotal(cart);
+            return {
+                ...state,
+                total:action.total,
+                cart: action.cart
+            };
 
+        }
         default:
             return state;
     }

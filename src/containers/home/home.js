@@ -11,7 +11,7 @@ import PanelTwo             from '../../components/panels/panel2';
 import Modal                from '../../components/modals/modal';
 import Gallery              from '../../components/gallery/gallery';
 import Favourites           from '../../components/favourites/favourites';
-import * as actionTypes     from '../../store/actions';
+import * as actionTypes     from '../../store/actions/actions';
 
 
 

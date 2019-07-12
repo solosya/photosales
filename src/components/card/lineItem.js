@@ -69,7 +69,7 @@ const lineItem = (props) => {
     let discountName = "";
 
     if (props.product) {
-
+        console.log(props.product);
         if ( props.product.discountName ) {
             discountName = props.product.discountName ; 
         }
@@ -79,7 +79,6 @@ const lineItem = (props) => {
 
     }
 
-    console.log(props.product);
     return (
         <div className={styles.lineItem}>
             <div style={{width: 200}}>

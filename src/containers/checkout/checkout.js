@@ -9,7 +9,8 @@ import Divider              from '../../components/divider/divider';
 import Flexrow              from '../../components/layout/flexrow';
 import axios from 'axios';
 // import Modal                from '../../components/modals/modal';
-import * as actionTypes     from '../../store/actions';
+import * as actionTypes     from '../../store/actions/actions';
+import * as actionCreators  from '../../store/actions/actions';
 
 import {products} from './data';
 
@@ -83,8 +84,6 @@ class Checkout extends Component {
 
     handleQuantity = (quantity, product) => {
         product.quantity = +quantity;
-        product.priceTotal = product.price * product.quantity;
-        product.priceTotalFull = product.priceTotal;
         this.props.updateCartItem( product );
     }
 
@@ -243,9 +242,9 @@ const mapDispatchToProps = dispatch => {
     return {
         toggleFavourite: (photo) => dispatch({type:actionTypes.TOGGLE_FAVOURITE, photo}),
         toggleCart: (photo) => dispatch({type:actionTypes.TOGGLE_CART, photo}),
-        addLineItemToCart: (product) => dispatch({type:actionTypes.ADD_ITEM_TO_CART, product}),
+        addLineItemToCart: (product) => dispatch(actionCreators.addItemToCart(product)),
         removeLineItemFromCart: (productId, photoId) => dispatch({type:actionTypes.REMOVE_ITEM_FROM_CART, productId, photoId}),
-        updateCartItem: (product) => dispatch({type:actionTypes.UPDATE_CART_ITEM, product})
+        updateCartItem: (product) => dispatch(actionCreators.updateCartItem(product))
     }
 
 }
