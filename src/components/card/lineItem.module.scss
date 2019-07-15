@@ -1,9 +1,10 @@
 .lineItem {
     display:flex;
+    min-width:100%;
 }
 
 .delete {
-    margin: 0 12px;
+    margin: 0 7px;
     color:red;
     cursor:pointer;
 }
@@ -12,4 +13,13 @@
     color:red;
     font-weight:bold;
     text-decoration: line-through;
+}
+.quantity { 
+    padding:5px;
+    font-size:16px;
+    width:35px;
+    height:31px;
+    margin:0 10px;
+    text-align:center;
+    
 }

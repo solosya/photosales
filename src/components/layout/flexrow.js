@@ -1,11 +1,12 @@
 import React  from 'react'
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 
 
-const flexrow = ({children}) => {
+const flexrow = (props) => {
+
     return (
-        <Brow>
-            {children}
+        <Brow {...props}>
+            {props.children}
         </Brow>
     )
 }
@@ -15,8 +16,14 @@ const Brow = styled.div`
     position:relative;
     display: flex;
     flex-direction:horizontal;
-    align-items:center;
+    align-items:start;
+    vertical-align:middle;
+    
+    ${props => props.borderTop && css`
+        border-top: 1px solid #595859;
+        padding-top: 10px;
+        margin-top:33px;
+    `}
+
 `
-
-
 export default flexrow

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 
 const Checkbox = ({ className, checked, ...props }) => (
-    <label>
+    <label style={{display:'block'}}>
         <CheckboxContainer className={className}>
             <HiddenCheckbox checked={checked} {...props} />
             <StyledCheckbox checked={checked}>
@@ -12,7 +12,7 @@ const Checkbox = ({ className, checked, ...props }) => (
                 </Icon>
             </StyledCheckbox>
         </CheckboxContainer>
-        {props.label ? <span> {props.label} </span> : "" }
+        {props.label ? <Label> {props.label} </Label> : "" }
     </label>
 )
 
@@ -57,8 +57,15 @@ const StyledCheckbox = styled.div`
 `
 
 const CheckboxContainer = styled.div`
-    display: inline-block;
+    /* display: inline-block; */
     vertical-align: middle;
+    float:left;
+    margin-right:12px;
 `
 
+const Label = styled.span`
+    font-size: 15px;
+    font-weight: bold;
+    color: #595859;
+`
 export default Checkbox

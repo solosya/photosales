@@ -88,7 +88,7 @@ class CardCart extends Component {
             }
         }), () => {
             this.props.removeLineItemFromCart(productId, photoId);
-            });
+        });
     }
 
 
@@ -244,8 +244,9 @@ class CardCart extends Component {
 
                             
                             <Flexrow>
-                                <Checkbox label="Print" checked={this.state.productStatus.print} name="print" onChange={this.handleCheckbox} />
-                                
+                                <div style={{width:'100px', marginTop:'13px'}}> 
+                                    <Checkbox label="Print" checked={this.state.productStatus.print} name="print" onChange={this.handleCheckbox} />
+                                </div>
                                 <div className="c-cards-view__lineItems">
                                     
                                     {printItems}
@@ -260,7 +261,9 @@ class CardCart extends Component {
 
 
                             <Flexrow>
-                                <Checkbox label="Digital" checked={this.state.productStatus.digital} name="digital" onChange={this.handleCheckbox} />
+                                <div style={{width:'100px', marginTop:'13px'}}> 
+                                    <Checkbox label="Digital" checked={this.state.productStatus.digital} name="digital" onChange={this.handleCheckbox} />
+                                </div>
                                 <div className="c-cards-view__lineItems">
                                     
                                     {digitalItems}

@@ -30,6 +30,10 @@
             @include font-size(40);
         }
 
+        &--30 {
+            @include font-size(30);
+
+        }
         &--light {
             font-weight: $weightLight;
         }

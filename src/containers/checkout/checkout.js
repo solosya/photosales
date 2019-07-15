@@ -6,7 +6,10 @@ import Container            from '../../components/layout/container';
 import Header               from '../../components/partials/section_header.js';
 import CardCart             from '../../components/card/cardCart.js'; 
 import Divider              from '../../components/divider/divider';
-import Flexrow              from '../../components/layout/flexrow';
+import Total                from '../../components/checkoutTotal';
+import Billing              from './billing';
+import {Elements, StripeProvider} from 'react-stripe-elements';
+import Payment              from './payment';
 import axios from 'axios';
 // import Modal                from '../../components/modals/modal';
 import * as actionTypes     from '../../store/actions/actions';
@@ -29,6 +32,7 @@ class Checkout extends Component {
         total: 0,
         // discounts: discounts,
         products: products,
+        billing: {}
 
     }
 
@@ -115,11 +119,30 @@ class Checkout extends Component {
         return this.state.purchaseCart[item].priceTotal;
     }
     
+    handlePayment = (token) => {
+        console.log('and the token is!!', token);
+        console.log(this.state.billing);
+
+    }
+    handleBillingForm = (value, field) => {
+        const billing = {...this.state.billing};
+        billing[field] = value;
+        console.log('handling the billing form');
+        console.log(value, field);
+
+        this.setState({
+            billing
+        });
+    }
+
+
+
     render() {
         let purchases = null;
         let cards = null;
         if (this.state.products) {
             // console.log("RENDERING,", this.props.cart);
+            
             cards = this.props.cart.map( (product, i) => {
                 const card =
                     [<CardCart 
@@ -188,6 +211,7 @@ class Checkout extends Component {
                                     <Header 
                                         title="My Cart"
                                         thin
+                                        medium
                                     />
                                 </Col>
                             </Row>
@@ -203,10 +227,11 @@ class Checkout extends Component {
 
                             <Row>
                                 <Col classes={["col-12"]}>
-                                    <Flexrow>
-                                        <h2>Total</h2>
-                                        <p>${this.props.total} AUD</p>
-                                    </Flexrow>
+                                    <Total
+                                        total={this.props.total}
+                                        borderTop
+                                        >
+                                    </Total>
                                 </Col>
                             </Row>
                         </Col>
@@ -220,6 +245,20 @@ class Checkout extends Component {
                     </Row>
 
 
+
+
+                    <Billing 
+                        handleBillingForm={this.handleBillingForm}
+                        {...this.state.billing}
+                    />
+
+
+
+                    <StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">
+                        <Elements>
+                            <Payment handleSubmit={this.handlePayment}/>
+                        </Elements>
+                    </StripeProvider>
                 </Container>
 
 

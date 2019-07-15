@@ -1,5 +1,5 @@
-import React from 'react'
-import Select               from 'react-select';
+import React   from 'react'
+import Select  from 'react-select';
 import styles  from './lineItem.module.scss';
 
 const lineItem = (props) => {
@@ -12,6 +12,7 @@ const lineItem = (props) => {
             const styles = {
                 ...provided,
                 borderRadius: 0,
+                height:'45px'
             }
             if (state.isDisabled) {
                 styles.backgroundColor = 'white';
@@ -81,7 +82,7 @@ const lineItem = (props) => {
 
     return (
         <div className={styles.lineItem}>
-            <div style={{width: 200}}>
+            <div style={{minWidth: '280px'}}>
                 <Select 
                     styles      = {customStyles} 
                     isDisabled  = {props.active} 
@@ -91,10 +92,9 @@ const lineItem = (props) => {
                 />
             </div>
             {props.product && props.product.category === 'print'
-                ? <input type="number" value={props.product.quantity} placeholder="Qty" onChange={(e) => props.handleQuantity(e.target.value,  props.product)} />
+                ? <input className={styles.quantity} type="number" min="1" value={props.product.quantity} placeholder="Qty" onChange={(e) => props.handleQuantity(e.target.value,  props.product)} />
                 : null
             }
-            {deleteButton}
             {discountName}
             {props.product
                 ? <p>
@@ -104,6 +104,8 @@ const lineItem = (props) => {
                  </p>
                 : null
             }
+            {deleteButton}
+
             
         </div>
 )

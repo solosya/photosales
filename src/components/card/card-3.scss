@@ -7,11 +7,13 @@
     .c-cards-view {
         @include flex-direction(row, horizontal);
         box-shadow:none;
-        background: $white;
+        // background: red;
         height:auto;
 
         &__container {
             padding: 0;
+            width:100%;
+            // background:yellow;
         }
 
         &__category {
@@ -38,6 +40,9 @@
         &__lineItems {
             @include flexbox();
             @include flex-direction(column, vertical);
+            @include justify-content(center);
+            width:100%;
+            margin-bottom:10px;
         }
 
         &__photo-top {

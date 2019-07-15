@@ -93,19 +93,29 @@ export const update = (product) => {
 export const total = (cart) => {
     // let {total, finalCart} = calculateTotal(cart);
     console.log('calling the backend here');
-    axios.post('/api/shop/total', {"cart": cart} )
-    .then((r) => {
-        console.log(r);
+    // axios.post('/api/shop/total', {"cart": cart} )
+    // .then((r) => {
+    //     console.log(r);
         
-        // let car =  {
-        //     type: TOTAL_CART,
-        //     total,
-        //     cart: finalCart
-        // }
-        // return car;
-        return {};
-    });
+    //     // let car =  {
+    //     //     type: TOTAL_CART,
+    //     //     total,
+    //     //     cart: finalCart
+    //     // }
+    //     // return car;
+    //     return {
+    //         type: TOTAL_CART,
+    //         total,
+    //         cart: cart
 
-    return {};
+    //     };
+    // });
+
+    return {
+        type: TOTAL_CART,
+        total,
+        cart: cart
+
+    };
 
 }
