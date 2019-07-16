@@ -5,7 +5,8 @@ import cn         from 'classnames';
 const button = (props) => { 
     const id = props.id || null;
     const type = props.type || null;
-    const classes = props.classes.map((clas) => {
+    let classes = props.classes || [];
+    classes = classes.map((clas) => {
         return styles[clas] ? styles[clas] : false;
     });
 

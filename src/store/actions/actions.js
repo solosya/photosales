@@ -13,9 +13,11 @@ const getLineItemsFromCart = (cart) => {
     const items = [];
     for (let i=0; i<cart.length; i++) {
         let cartItem = cart[i];
-        for (let j=0; j<cartItem.lineItems.length; j++) {
-            let photo = cartItem.lineItems[j];
-            items.push(photo);
+        if (typeof cartItem.lineItems != 'undefined') {
+            for (let j=0; j<cartItem.lineItems.length; j++) {
+                let photo = cartItem.lineItems[j];
+                items.push(photo);
+            }
         }
     }
     return items;
@@ -58,7 +60,7 @@ export const addItemToCart = (product) => {
         setTimeout(() => {
             dispatch(total(cart));
 
-        },2000);
+        });
     }
 }
 
@@ -68,7 +70,7 @@ export const updateCartItem = (product) => {
         const cart = store.getState()['cart'];
         setTimeout(() => {
             dispatch(total(cart));
-        },2000);
+        });
     }
 }
 
@@ -91,7 +93,7 @@ export const update = (product) => {
 
 
 export const total = (cart) => {
-    // let {total, finalCart} = calculateTotal(cart);
+    let {total, finalCart} = calculateTotal(cart);
     console.log('calling the backend here');
     // axios.post('/api/shop/total', {"cart": cart} )
     // .then((r) => {
@@ -114,7 +116,7 @@ export const total = (cart) => {
     return {
         type: TOTAL_CART,
         total,
-        cart: cart
+        cart: finalCart
 
     };
 

@@ -131,10 +131,13 @@ class CardCart extends Component {
             new // this line item has no product information attached.
         /> 
 
-
-        const digitalProducts = this.props.data.lineItems.filter((item, i) => {
-            return item.category === 'digital' ? true : false; 
-        });
+        console.log(this.props.data);
+        let digitalProducts = [];
+        if (typeof this.props.data.lineItems != 'undefined') {
+            digitalProducts = this.props.data.lineItems.filter((item, i) => {
+                return item.category === 'digital' ? true : false; 
+            });
+        }
 
 
         const digitalItems = digitalProducts.map((item, i) => {
@@ -176,9 +179,12 @@ class CardCart extends Component {
             handleSelect    = {this.handleSelect}
             new // this line item has no product information attached.
         /> 
-        const printProducts = this.props.data.lineItems.filter((item, i) => {
-            return item.category === 'print' ? true : false; 
-        });
+        let printProducts = [];
+        if (typeof this.props.data.lineItems != 'undefined') {
+            printProducts = this.props.data.lineItems.filter((item, i) => {
+                return item.category === 'print' ? true : false; 
+            });
+        }
         const printItems = printProducts.map((item, i) => {
             if (item.category === 'print') {
 
@@ -204,7 +210,7 @@ class CardCart extends Component {
 
 
         return (
-            <div onClick={() => this.props.cardHandler(count, panel)} className={this.props.styles}>
+            <div key={this.props.data.id} onClick={() => this.props.cardHandler(count, panel)} className={this.props.styles}>
                 <a  href                = {this.props.data.url} 
                     className           = ""
                     data-id             = {this.props.data.id} 

@@ -362,14 +362,14 @@ export const cart = [
         hasMedia: true,
         image: "https://weburbanist.com/wp-content/uploads/2008/10/lego_art_1.jpg",
         lineItems: [],
-    }
-    // {
-    //     id: 'lkiuygfsfdyny66',
-    //     title: "Lego",
-    //     content: "Less writing for the second card",
-    //     publishDate: "24rd may 2000",
-    //     hasMedia: true,
-    //     image: "https://weburbanist.com/wp-content/uploads/2008/10/lego_art_1.jpg"
-    // },
+    },
+    {
+        id: 'lkiuygfsfdyny66',
+        title: "Prince",
+        content: "Less writing for the second card",
+        publishDate: "24rd may 2000",
+        hasMedia: true,
+        image: "https://static.guim.co.uk/sys-images/Music/Pix/pictures/2011/6/3/1307115506503/Prince-performing-on-stag-007.jpg"
+    },
 
 ];

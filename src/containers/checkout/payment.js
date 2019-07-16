@@ -3,6 +3,7 @@ import {CardElement, injectStripe} from 'react-stripe-elements';
 import Row                  from '../../components/layout/row';
 import Col                  from '../../components/layout/col';
 import Header               from '../../components/partials/section_header.js';
+import Button               from '../../components/button/button';
 
 
 
@@ -15,9 +16,7 @@ class Payment extends Component {
       }
     
     async submit(ev) {
-        console.log('going to comlpete purchase now');
         let {token} = await this.props.stripe.createToken({name: "Name"});
-        console.log(token);
         this.props.handleSubmit(token);
     }
 
@@ -37,7 +36,7 @@ class Payment extends Component {
                                 medium
                             />
                             <CardElement />
-                            <button onClick={this.submit}>Complete purchase</button>
+                            <Button handler={this.submit} classes={["button", "button--red", "button--top-30"]}>Complete purchase</Button>
 
                         </Col>
                     </Row>

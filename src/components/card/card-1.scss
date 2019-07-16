@@ -20,10 +20,10 @@
         &__heading {
             @include flex-height(53px);
             @include font-size(20);
+            margin:0;
         }
         &__description {
-            margin-top: 5px;
-            @include flex-height(40px);
+            display:none;
         }
 
         &__time {
@@ -86,7 +86,7 @@
     margin-right: 0;
     
     .c-cards-view {
-        height: 493px;
+        // height: 493px;
 
         &__media {
             @include flex-height(228px);
@@ -102,13 +102,13 @@
         }
 
         &__heading {
-            @include flex-height(90px);
-            @include font-size(22);
+            @include flex-height(40px);
+            @include font-size(26);
             line-height:1.36;
         }
+
         &__description {
-            margin-top: 5px;
-            @include flex-height(61px);
+            display:none;
         }
 
 

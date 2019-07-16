@@ -3,15 +3,19 @@ import styled from 'styled-components';
 import Flexrow  from '../components/layout/flexrow';
 
 const checkoutTotal = (props) => {
+
+    const total = typeof props.total === 'number' ? +props.total.toFixed(2) : props.total;
+
     return (
         <Flexrow {...props}>
             <Label>Total</Label>
-            <Price>${props.total} AUD</Price>
+            <Price>${total} AUD</Price>
         </Flexrow>
     )
 }
 
 const Label = styled.h2`
+    font-family: 'Roboto';
     font-size: 20px;
     font-weight: 300;
     color: #595859;
@@ -20,6 +24,7 @@ const Label = styled.h2`
 `
 
 const Price = styled.p`
+    font-family: 'Roboto';
     font-size: 22px;
     font-weight:500;
     color:black;

@@ -1,6 +1,7 @@
 @import '../../styles/global.scss';
 
 .button {
+    font-family: 'Roboto';
     border: none;
     outline: none;
     background: none;
@@ -47,7 +48,7 @@
     
     &--md {
         height: auto;
-         padding: 12px 30px;
+        padding: 12px 30px;
     }
 
     &--blue {
@@ -221,7 +222,7 @@
         border: 0px none;
         text-align: left;
         min-width: inherit;
-         padding: 0;
+        padding: 0;
         text-transform: capitalize;
         background-color: transparent;
         @include transition(all 0.3s ease);

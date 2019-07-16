@@ -18,6 +18,9 @@ const reducer = (state = intialState, action) => {
     }
 
     const findProductInCartItem = (photo, product) => {
+        if (typeof photo.lineItems === 'undefined') {
+            return -1;
+        }
         const index = photo.lineItems.findIndex((photo) => {
             return photo.id === product.id;
         });
@@ -28,9 +31,12 @@ const reducer = (state = intialState, action) => {
         const items = [];
         for (let i=0; i<cart.length; i++) {
             let cartItem = cart[i];
-            for (let j=0; j<cartItem.lineItems.length; j++) {
-                let photo = cartItem.lineItems[j];
-                items.push(photo);
+
+            if (typeof cartItem.lineItems != 'undefined') {
+                for (let j=0; j<cartItem.lineItems.length; j++) {
+                    let photo = cartItem.lineItems[j];
+                    items.push(photo);
+                }
             }
         }
         return items;
@@ -39,9 +45,11 @@ const reducer = (state = intialState, action) => {
     const resetCartTotals = (cart) => {
         for (let i=0; i<cart.length; i++) {
             let cartItem = cart[i];
-            for (let j=0; j<cartItem.lineItems.length; j++) {
-                let photo = cartItem.lineItems[j];
-                photo.priceTotal = photo.price;
+            if (typeof cartItem.lineItems != 'undefined') {
+                for (let j=0; j<cartItem.lineItems.length; j++) {
+                    let photo = cartItem.lineItems[j];
+                    photo.priceTotal = photo.price;
+                }
             }
         }
         return cart;
@@ -128,7 +136,9 @@ const reducer = (state = intialState, action) => {
             if (photoIndex > -1) {
                 const photo = JSON.parse(JSON.stringify( cart[photoIndex] ));
                 const index = findProductInCartItem(photo, action.product);
-
+                if (typeof photo.lineItems === 'undefined') {
+                    photo.lineItems = [];
+                }
                 if (index === -1) {
                     photo.lineItems.push(product);
                 } else {
@@ -184,12 +194,12 @@ const reducer = (state = intialState, action) => {
 
                 if (index > -1) {
                     cart[photoIndex].lineItems[index] = action.product;
-                    cart[photoIndex].lineItems[index].priceTotal = 'pending';
+                    cart[photoIndex].lineItems[index].priceTotal = 'p';
                 } 
 
                 return {
                     ...state,
-                    total:'pending',
+                    total:'p',
                     cart
                 };
             }

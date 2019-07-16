@@ -12,10 +12,12 @@ const lineItem = (props) => {
             const styles = {
                 ...provided,
                 borderRadius: 0,
+                borderColor: "#e7e7e7",
                 height:'45px'
             }
             if (state.isDisabled) {
                 styles.backgroundColor = 'white';
+                styles.color = 'black';
             }
             return styles;
         },
@@ -81,7 +83,7 @@ const lineItem = (props) => {
     }
 
     return (
-        <div className={styles.lineItem}>
+        <div className={styles.lineItem} title={discountName}>
             <div style={{minWidth: '280px'}}>
                 <Select 
                     styles      = {customStyles} 
@@ -93,12 +95,12 @@ const lineItem = (props) => {
             </div>
             {props.product && props.product.category === 'print'
                 ? <input className={styles.quantity} type="number" min="1" value={props.product.quantity} placeholder="Qty" onChange={(e) => props.handleQuantity(e.target.value,  props.product)} />
-                : null
+                : <div className={styles.quantityspacer}></div>
             }
-            {discountName}
+            
             {props.product
-                ? <p>
-                    {props.product.priceTotalFull !== props.product.priceTotal ? <span className={styles.fullPrice}>${props.product.priceTotalFull} - </span>  : ""}
+                ? <p className={styles.price}>
+                    {/* {props.product.priceTotalFull !== props.product.priceTotal ? <span className={styles.fullPrice}>${props.product.priceTotalFull} - </span>  : ""} */}
                     
                     ${props.product.priceTotal} AUD
                  </p>

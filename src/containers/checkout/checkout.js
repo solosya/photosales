@@ -14,9 +14,9 @@ import axios from 'axios';
 // import Modal                from '../../components/modals/modal';
 import * as actionTypes     from '../../store/actions/actions';
 import * as actionCreators  from '../../store/actions/actions';
-
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'; // ES6
 import {products} from './data';
-
+import Todo from './TodoList';
 
 class Checkout extends Component {
     
@@ -32,19 +32,30 @@ class Checkout extends Component {
         total: 0,
         // discounts: discounts,
         products: products,
-        billing: {}
-
+        billing: {
+            firstname   : "",
+            lastname    : "",
+            email       : "",
+            phone       : "",
+            address     : "",
+            suburb      : "",
+            state       : "",
+            postcode    : "",
+            licence     : false,
+        },
+        billingErrors : [],
+        billingRequired :["firstname", "lastname", "email", "phone", "address", "suburb", "state", "postcode", "licence"]
     }
 
 
 
 
     getSiteDiscounts() {
-        return axios.get('/api/shop/discounts' );    
+        return axios.get('/api/shop/discounts' );
     }
 
     getSiteProducts() {
-        return axios.get('/api/shop/products' );    
+        return axios.get('/api/shop/products' );
     }
 
     componentDidMount() {
@@ -52,7 +63,6 @@ class Checkout extends Component {
         axios.all([this.getSiteDiscounts(), this.getSiteProducts()])
         .then(axios.spread(function (discount, products) {
             self.setState({
-                // discounts: discount.data.data,
                 products: products.data.data
             }, () => {
                 console.log(self.state);
@@ -92,18 +102,17 @@ class Checkout extends Component {
     }
 
 
-   
     handleRemovePhoto = (id) => {
-        const cart = this.state.purchaseCart.filter((item) => {
-            return item.photoId !== id;
-        });
+        // const cart = this.state.purchaseCart.filter((item) => {
+        //     return item.photoId !== id;
+        // });
         const photo = {};
         photo.id = id;
-        this.setState({
-            purchaseCart: cart
-        }, () => {
+        // this.setState({
+        //     purchaseCart: cart
+        // }, () => {
             this.props.toggleCart( photo );
-        });
+        // });
     }
 
 
@@ -119,23 +128,82 @@ class Checkout extends Component {
         return this.state.purchaseCart[item].priceTotal;
     }
     
-    handlePayment = (token) => {
-        console.log('and the token is!!', token);
-        console.log(this.state.billing);
 
+    checkBillingErrors = (form, field = false) => {
+        let billing = form || this.state.billing;
+        if (field) { 
+            billing = {[field]: billing[field]};
+        }
+        const billingRequired = this.state.billingRequired;
+        let billingErrors = [...this.state.billingErrors];
+
+        for (let field in billing) {
+            if (billing.hasOwnProperty(field)) {
+                if (billingRequired.indexOf(field) > -1 ) {
+                    const fieldIndex = billingErrors.indexOf(field);
+                    
+                    if (!billing[field]) {
+                        if (fieldIndex === -1) {
+                            billingErrors.push(field);
+                        }
+                    } else {
+                        if (fieldIndex > -1) {
+                            billingErrors.splice(fieldIndex, 1);
+                        }
+                    }
+                }
+            }
+        }
+        return billingErrors;
     }
-    handleBillingForm = (value, field) => {
-        const billing = {...this.state.billing};
-        billing[field] = value;
-        console.log('handling the billing form');
-        console.log(value, field);
+
+    handlePayment = (token) => {
+        const billingErrors = this.checkBillingErrors();
 
         this.setState({
-            billing
+            billingErrors
+        }, () => {
+            console.log(this.state.billingErrors);
         });
+
+
+
+        if (billingErrors.length > 0) {
+            console.log('NOT DOING PAYENT');
+            return;
+        }
+        console.log('ALL GOOD!!');
+
+        console.log('and the token is!!', token);
+        console.log(this.state.billing);
     }
 
 
+    handleBillingForm = (value, field) => {
+        const billing = {...this.state.billing};
+        if (field === 'licence') {
+            // licence is the only boolean and we get the old state,
+            // so flip to new state
+            value = !value;
+        }
+        billing[field] = value;
+        const billingErrors = this.checkBillingErrors(billing, field);
+        
+        this.setState({
+            billing,
+            billingErrors
+        });
+    }
+    handleFindBillingErrors = (field) => {
+        const billingErrors = this.state.billingErrors;
+        if (billingErrors.indexOf(field) > -1) {
+            return true;
+        }
+        return false;
+    }
+    handleRemoveFuck = (i) => {
+
+    }
 
     render() {
         let purchases = null;
@@ -145,8 +213,8 @@ class Checkout extends Component {
             
             cards = this.props.cart.map( (product, i) => {
                 const card =
-                    [<CardCart 
-                        key                     = {i}
+                    <CardCart 
+                        key                     = {"milo"+i}
                         data                    = {product}
                         styles                  = "card-3-mobile card-3-tablet card-3-desktop"
                         cardHandler             = {() => { return false;}}
@@ -163,16 +231,17 @@ class Checkout extends Component {
                         handleGetCartItemDiscount = {this.handleGetCartItemDiscount}
                         handleRemovePhoto   = {this.handleRemovePhoto}
                         favourite
-                    ></CardCart>];
+                        onClick = {() => this.handleRemoveFuck(i)}
+                    >fuck</CardCart>;
                 
                 // add a divider beneath each card except the last
-                if (i !== this.props.cart.length -1) {
-                    card.push( <Divider key={i+'div'}/>)
-                }
+                // if (i !== this.props.cart.length -1) {
+                //     card.push( <Divider key={i+'div'}/>)
+                // }
 
                 return card;
             });
-
+            console.log(cards);
             purchases = this.state.purchaseCart.map((item, i) => {
                 return (
                     <div key={i}>
@@ -216,11 +285,26 @@ class Checkout extends Component {
                                 </Col>
                             </Row>
 
+                            <Row>
+                                <Col classes={["col-12", "col-lg-8"]}>
+                                    <Todo />
+                                </Col>
+                            </Row>
 
 
                             <Row>
                                 <Col classes={["col-12"]}>
-                                    { cards ? cards : null}
+                                    <ReactCSSTransitionGroup
+                                        transitionName="card"
+                                        transitionEnterTimeout={500}
+                                        transitionLeaveTimeout={3000}
+                                        transitionAppear={true}
+                                        transitionAppearTimeout={500}
+
+                                        >
+                              
+                                        { cards ? cards : null}
+                                    </ReactCSSTransitionGroup>
                                 </Col>
                             </Row>
 
@@ -248,7 +332,8 @@ class Checkout extends Component {
 
 
                     <Billing 
-                        handleBillingForm={this.handleBillingForm}
+                        handleBillingForm = {this.handleBillingForm}
+                        handleFindBillingErrors = {this.handleFindBillingErrors}
                         {...this.state.billing}
                     />
 

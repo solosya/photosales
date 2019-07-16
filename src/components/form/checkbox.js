@@ -64,6 +64,7 @@ const CheckboxContainer = styled.div`
 `
 
 const Label = styled.span`
+    font-family: 'Roboto';
     font-size: 15px;
     font-weight: bold;
     color: #595859;
