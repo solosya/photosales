@@ -1,4 +1,14 @@
-.favourite {
+import React from 'react'
+import styled, {css} from 'styled-components';
+
+
+const favIcon = (props) => {
+    return <Favourite {...props} />
+}
+
+
+
+const Favourite = styled.div`
     background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOSIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE5IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiMwMDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTUuMzIgMS4yNGMxLjUzMyAwIDIuOTI1Ljg1MyAzLjYzIDIuMjI2YS42MzYuNjM2IDAgMCAwIC4yMTQuMjRjLjAxNi4wMS4wMy4wMi4wNTIuMDMybC4wMDEtLjAwMi4wMjQuMDEyYS41ODIuNTgyIDAgMCAwIC4yMTcuMDU3LjU5OS41OTkgMCAwIDAgLjU5My0uMzQ0QTQuMDc3IDQuMDc3IDAgMCAxIDEzLjY4IDEuMjRjMi4yNTUgMCA0LjA5IDEuODUxIDQuMDkgNC4xMjZhNC4xMjUgNC4xMjUgMCAwIDEtMS4xNDMgMi44Nkw5LjUgMTQuNTUyIDIuMzc2IDguMjNBNC4xMjggNC4xMjggMCAwIDEgMS4yMyA1LjM2N2MwLTIuMjc2IDEuODM0LTQuMTI3IDQuMDktNC4xMjdNMTMuNjggMEE1LjMxIDUuMzEgMCAwIDAgOS41IDIuMDQ1IDUuMzA3IDUuMzA3IDAgMCAwIDUuMzIgMEMyLjM4NSAwIDAgMi40MDcgMCA1LjM2N2MwIDEuNDA2LjUzNSAyLjczNiAxLjUwNyAzLjc0MmwuMDI2LjAyNCA3LjU2IDYuNzEyYS42MTIuNjEyIDAgMCAwIC44MTMgMGw3LjU1Mi02LjcwNC4wMTItLjAxLjAyMi0uMDIxQTUuMzYgNS4zNiAwIDAgMCAxOSA1LjM2OEMxOSAyLjQwNyAxNi42MTIgMCAxMy42OCAwIi8+Cjwvc3ZnPg==");
     background-repeat: no-repeat;
     background-size:contain;
@@ -7,12 +17,18 @@
     cursor:pointer;
     transition: all 400ms ease;
 
-    &On {
-        // background-image: url('/images/heart-red.svg');
+    ${props => props.on && css`
         background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNCIgdmlld0JveD0iMCAwIDE3IDE0Ij4KICAgIDxwYXRoIGZpbGw9IiNGMDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTQuMzIuMjRjMS41MzMgMCAyLjkyNS44NTMgMy42MyAyLjIyNmEuNjM2LjYzNiAwIDAgMCAuMjE0LjI0Yy4wMTYuMDEuMDMuMDIuMDUyLjAzMmwuMDAxLS4wMDIuMDI0LjAxMmEuNTgyLjU4MiAwIDAgMCAuMjE3LjA1Ny41OTkuNTk5IDAgMCAwIC41OTMtLjM0NEE0LjA3NyA0LjA3NyAwIDAgMSAxMi42OC4yNGMyLjI1NSAwIDQuMDkgMS44NTEgNC4wOSA0LjEyNmE0LjEyNSA0LjEyNSAwIDAgMS0xLjE0MyAyLjg2TDguNSAxMy41NTIgMS4zNzYgNy4yM0E0LjEyOCA0LjEyOCAwIDAgMSAuMjMgNC4zNjdDLjIzIDIuMDkgMi4wNjQuMjQgNC4zMi4yNCIvPgo8L3N2Zz4=");
-    }
-    &--grey {
-        opacity:0.6;
-    }
-}
+    `}
 
+
+    /* &On {
+        background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNCIgdmlld0JveD0iMCAwIDE3IDE0Ij4KICAgIDxwYXRoIGZpbGw9IiNGMDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTQuMzIuMjRjMS41MzMgMCAyLjkyNS44NTMgMy42MyAyLjIyNmEuNjM2LjYzNiAwIDAgMCAuMjE0LjI0Yy4wMTYuMDEuMDMuMDIuMDUyLjAzMmwuMDAxLS4wMDIuMDI0LjAxMmEuNTgyLjU4MiAwIDAgMCAuMjE3LjA1Ny41OTkuNTk5IDAgMCAwIC41OTMtLjM0NEE0LjA3NyA0LjA3NyAwIDAgMSAxMi42OC4yNGMyLjI1NSAwIDQuMDkgMS44NTEgNC4wOSA0LjEyNmE0LjEyNSA0LjEyNSAwIDAgMS0xLjE0MyAyLjg2TDguNSAxMy41NTIgMS4zNzYgNy4yM0E0LjEyOCA0LjEyOCAwIDAgMSAuMjMgNC4zNjdDLjIzIDIuMDkgMi4wNjQuMjQgNC4zMi4yNCIvPgo8L3N2Zz4=");
+    } */
+    /* &--grey {
+        opacity:0.6;
+    } */
+`
+
+
+export default favIcon

@@ -1,22 +1,28 @@
+// Libraries
 import React, {Component}   from 'react';
-import {connect}            from 'react-redux';
+import {connect}                    from 'react-redux';
+import axios                        from 'axios';
+import {Elements, StripeProvider}   from 'react-stripe-elements';
+import TransitionGroup              from 'react-transition-group/TransitionGroup'; 
+import CSSTransition                from 'react-transition-group/CSSTransition'; 
+
+// Components
 import Row                  from '../../components/layout/row';
 import Col                  from '../../components/layout/col';
 import Container            from '../../components/layout/container';
 import Header               from '../../components/partials/section_header.js';
 import CardCart             from '../../components/card/cardCart.js'; 
-import Divider              from '../../components/divider/divider';
 import Total                from '../../components/checkoutTotal';
 import Billing              from './billing';
-import {Elements, StripeProvider} from 'react-stripe-elements';
 import Payment              from './payment';
-import axios from 'axios';
-// import Modal                from '../../components/modals/modal';
+import Modal                from '../../components/modals/modal';
+import Favourites           from '../../components/favourites/favourites';
+
+// Actions
 import * as actionTypes     from '../../store/actions/actions';
 import * as actionCreators  from '../../store/actions/actions';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'; // ES6
+
 import {products} from './data';
-import Todo from './TodoList';
 
 class Checkout extends Component {
     
@@ -30,7 +36,7 @@ class Checkout extends Component {
         photos: null,
         purchaseCart: [],
         total: 0,
-        // discounts: discounts,
+        showFavourites : false,
         products: products,
         billing: {
             firstname   : "",
@@ -47,6 +53,21 @@ class Checkout extends Component {
         billingRequired :["firstname", "lastname", "email", "phone", "address", "suburb", "state", "postcode", "licence"]
     }
 
+
+    showFavourites = () => {
+        if (this.props.favourites.length > 0) {
+            this.setState({
+                showFavourites : true,
+            });
+            document.body.setAttribute('style', 'overflow: hidden;')
+        }
+    }
+    closeFavourites = () => {
+        this.setState({
+            showFavourites: false
+        });
+        document.body.removeAttribute('style', 'overflow: hidden;')
+    }
 
 
 
@@ -101,18 +122,8 @@ class Checkout extends Component {
         this.props.updateCartItem( product );
     }
 
-
     handleRemovePhoto = (id) => {
-        // const cart = this.state.purchaseCart.filter((item) => {
-        //     return item.photoId !== id;
-        // });
-        const photo = {};
-        photo.id = id;
-        // this.setState({
-        //     purchaseCart: cart
-        // }, () => {
-            this.props.toggleCart( photo );
-        // });
+        this.props.toggleCart( {id} );
     }
 
 
@@ -201,47 +212,59 @@ class Checkout extends Component {
         }
         return false;
     }
-    handleRemoveFuck = (i) => {
-
-    }
 
     render() {
         let purchases = null;
         let cards = null;
+
+
+        const favourites = 
+            <Modal closeHandler={this.closeFavourites} children={favourites => (
+                <Favourites 
+                    favourites  = {this.props.favourites}
+                    favHandler  = {this.props.toggleFavourite}
+                    cartHandler = {this.props.toggleCart}
+                />
+            )} >   
+            </Modal>
+
+
+
+
+
         if (this.state.products) {
-            // console.log("RENDERING,", this.props.cart);
             
             cards = this.props.cart.map( (product, i) => {
+                const key = product.title + product.id;
                 const card =
-                    <CardCart 
-                        key                     = {"milo"+i}
-                        data                    = {product}
-                        styles                  = "card-3-mobile card-3-tablet card-3-desktop"
-                        cardHandler             = {() => { return false;}}
-                        favHandler              = {this.props.favHandler}
-                        products                = {this.state.products}
-                        cartHandler             = {null}
-                        removeLineItemFromCart  = {this.removeLineItemFromCart}
-                        addLineItemToCart       = {this.addLineItemToCart}
-                        handleQuantity          = {this.handleQuantity}
-                        
-                        // discounts applied in this cart should update the discount
-                        // ammount in the child component, so add a function to the child,
-                        // to query the parent for its discount
-                        handleGetCartItemDiscount = {this.handleGetCartItemDiscount}
-                        handleRemovePhoto   = {this.handleRemovePhoto}
-                        favourite
-                        onClick = {() => this.handleRemoveFuck(i)}
-                    >fuck</CardCart>;
+                    <CSSTransition key={key}
+                        timeout={400}
+                        classNames="card"
+                        >
+                        <CardCart  
+                            key                     = {"Card"+i}
+                            data                    = {product}
+                            styles                  = "card-3-mobile card-3-tablet card-3-desktop"
+                            cardHandler             = {() => { return false;}}
+                            favHandler              = {this.props.favHandler}
+                            products                = {this.state.products}
+                            cartHandler             = {null}
+                            removeLineItemFromCart  = {this.removeLineItemFromCart}
+                            addLineItemToCart       = {this.addLineItemToCart}
+                            handleQuantity          = {this.handleQuantity}
+                            
+                            // discounts applied in this cart should update the discount
+                            // ammount in the child component, so add a function to the child,
+                            // to query the parent for its discount
+                            handleGetCartItemDiscount = {this.handleGetCartItemDiscount}
+                            handleRemovePhoto   = {this.handleRemovePhoto}
+                            favourite
+                        />
+                    </CSSTransition>;
                 
-                // add a divider beneath each card except the last
-                // if (i !== this.props.cart.length -1) {
-                //     card.push( <Divider key={i+'div'}/>)
-                // }
-
                 return card;
             });
-            console.log(cards);
+
             purchases = this.state.purchaseCart.map((item, i) => {
                 return (
                     <div key={i}>
@@ -255,6 +278,8 @@ class Checkout extends Component {
 
         return (
             <>
+                {this.state.showFavourites  ? favourites : null}
+
                 <Container>
         
                     <Row>
@@ -285,26 +310,12 @@ class Checkout extends Component {
                                 </Col>
                             </Row>
 
-                            <Row>
-                                <Col classes={["col-12", "col-lg-8"]}>
-                                    <Todo />
-                                </Col>
-                            </Row>
-
 
                             <Row>
                                 <Col classes={["col-12"]}>
-                                    <ReactCSSTransitionGroup
-                                        transitionName="card"
-                                        transitionEnterTimeout={500}
-                                        transitionLeaveTimeout={3000}
-                                        transitionAppear={true}
-                                        transitionAppearTimeout={500}
-
-                                        >
-                              
+                                    <TransitionGroup>
                                         { cards ? cards : null}
-                                    </ReactCSSTransitionGroup>
+                                    </TransitionGroup>
                                 </Col>
                             </Row>
 

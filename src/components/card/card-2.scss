@@ -136,6 +136,14 @@
 
     @media #{$desktop-up} {
 
+        &:not(:last-child) {
+            margin-bottom:20px;
+            padding-bottom:20px;
+            border-bottom: 1px solid rgba($greyish, 0.8);
+        }
+
+
+
         @include card-2-tablet-base();
     }
 }

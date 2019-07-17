@@ -27,8 +27,8 @@ class Home extends Component {
         panels: [],
         photos: null,
         showGallery: false,
+        showFavourites : false,
         selectedGallery: null,
-        favourites:[],
         cart: [],
     }
     

@@ -1,8 +1,12 @@
+// Libraries
 import React, {Component}   from 'react'
-import styles               from './favourites.module.scss';
+import TransitionGroup      from 'react-transition-group/TransitionGroup'; 
+import CSSTransition        from 'react-transition-group/CSSTransition'; 
+// Components
 import Card                 from '../../components/card/card.js'; 
 import Divider              from '../../components/divider/divider';
-
+// Styles
+import styles               from './favourites.module.scss';
 class Favourites extends Component {
 
 
@@ -10,21 +14,23 @@ class Favourites extends Component {
     render() { 
 
         const cards = this.props.favourites.map( (fav, i) => {
+            console.log(fav);
+            const key = fav.title + fav.id;
             const card =
-                [<Card 
-                    key={i}
-                    data={fav}
-                    styles="card-2-mobile card-2-tablet card-2-desktop"
-                    cardHandler={() => { return false;}}
-                    favHandler={this.props.favHandler}
-                    cartHandler={this.props.cartHandler}
-                    favourite
-                ></Card>];
-            
-            // add a divider beneath each card except the last
-            if (i !== this.props.favourites.length -1) {
-                card.push( <Divider key={i+'div'}/>)
-            }
+                <CSSTransition key={key}
+                    timeout={400}
+                    classNames="card"
+                    >
+                    <Card 
+                        key={i}
+                        data={fav}
+                        styles="card-2-mobile card-2-tablet card-2-desktop"
+                        cardHandler={() => { return false;}}
+                        favHandler={this.props.favHandler}
+                        cartHandler={this.props.cartHandler}
+                        favourite
+                    ></Card>
+            </CSSTransition>;
            
             return card;
         });
@@ -34,7 +40,9 @@ class Favourites extends Component {
         return (
             <div className={styles.favourites}>
                 <h1 className={styles.favourites__title}>Favourites</h1>
-                { cards ? cards : null}
+                <TransitionGroup>
+                    { cards ? cards : null}
+                </TransitionGroup>
 
             </div>
         )

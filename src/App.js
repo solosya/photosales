@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import {Route, Switch}             from 'react-router-dom';
+import {Route}             from 'react-router-dom';
+import { AnimatedSwitch }   from 'react-router-transition';
 import Home                 from './containers/home/home';
 import Checkout             from './containers/checkout/checkout';
 import axios                from 'axios';
-
+import './app.scss';
 // _appJsConfig
 
 axios.defaults.baseURL = window.location.origin;
@@ -29,11 +30,16 @@ class App extends Component {
     render() {
         return (
             <div onClick={this.pageClicked}>
-                <Switch>
+                <AnimatedSwitch
+                      atEnter={{ opacity: 0 }}
+                      atLeave={{ opacity: 0 }}
+                      atActive={{ opacity: 1 }}
+                      className="switch-wrapper"
+                >
                     <Route path={"/" + window.layoutTemplate + "/checkout"} component={Checkout} />
                     <Route path={"/" + window.layoutTemplate} component={Home} />
                     <Route path="/" component={Home} />
-                </Switch>
+                </AnimatedSwitch>
             </div>
         );
     }

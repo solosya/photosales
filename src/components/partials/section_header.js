@@ -1,6 +1,7 @@
 import React            from 'react';
 import styles           from './sectionheader.module.scss';
 import cn               from 'classnames';
+import FavIcon          from '../favourites/favIcon';
 
 
 
@@ -32,7 +33,11 @@ const sectionHeader = (props) => {
 
         cart = 
             <div className={styles['c-section-head__buttons']}>
-                <div className={favStyles} onClick={props.favouritesHandler}>Favourites</div>
+                <div className={styles['c-section-head__favourite']} onClick={ props.favouritesHandler}>
+                    <FavIcon on={props.favourites > 0} />
+                    <label>Favourites</label>
+                </div>
+                {/* <div className={favStyles} onClick={props.favouritesHandler}>Favourites</div> */}
                 <div onClick={props.checkoutLinkHandler} className={cartStyles}>{ props.cartItems} Check out</div>
             </div>;
     }

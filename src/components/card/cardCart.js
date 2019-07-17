@@ -131,7 +131,6 @@ class CardCart extends Component {
             new // this line item has no product information attached.
         /> 
 
-        console.log(this.props.data);
         let digitalProducts = [];
         if (typeof this.props.data.lineItems != 'undefined') {
             digitalProducts = this.props.data.lineItems.filter((item, i) => {

@@ -1,8 +1,10 @@
+@import '../../styles/global.scss';
 @import "./card";
 
 @mixin card-3-base() {
     margin-left: -20px;
     margin-right: -20px;
+
 
     .c-cards-view {
         @include flex-direction(row, horizontal);
@@ -10,6 +12,7 @@
         // background: red;
         height:auto;
 
+        
         &__container {
             padding: 0;
             width:100%;
@@ -154,7 +157,12 @@
 .card-3-desktop {
 
     @media #{$desktop-up} {
-
+        &:not(:last-child) {
+            margin-bottom:20px;
+            padding-bottom:20px;
+            border-bottom: 1px solid rgba($greyish, 0.8);
+        }
+    
         @include card-3-tablet-base();
     }
 }

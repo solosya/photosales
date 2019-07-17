@@ -9,9 +9,6 @@ import styled, {css} from 'styled-components';
 
 const billing = (props) => {
 
-
-
-    console.log(props);
     return (
         <Row margin="50px">
             <Col classes={["col-12", "col-lg-8"]}>

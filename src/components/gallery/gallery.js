@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
 import styles from './gallery.module.scss';
-import favStyle from '../../styles/favourite.module.scss';
+// import favStyle from '../../styles/favourite.module.scss';
 import "react-image-gallery/styles/css/image-gallery.css";
 import ImageGallery from 'react-image-gallery';
 import Button from '../../components/button/button';
 import cloudinary from 'cloudinary-core';
 import cn         from 'classnames';
-
+import FavIcon    from '../favourites/favIcon';
     
 
 
@@ -90,8 +90,6 @@ class Gallery extends Component {
     render() {
         if (this.state.items.length === 0) return null;
         const currentItem = this.state.items[this.state.current];
-        const favourited = currentItem.favourite ? favStyle.favouriteOn : '';
-        const favouriteStyles = cn(favStyle.favourite, favourited);
         const cartButtonText = currentItem.cart ? "REMOVE FROM CART": "ADD TO CART" ;
 
 
@@ -116,7 +114,7 @@ class Gallery extends Component {
 
 
                     <div className={styles.gallery__right}>
-                        <div onClick={ this.toggleFavourite}  className={favouriteStyles}></div>
+                        <FavIcon onClick={ this.toggleFavourite} on={currentItem.favourite} />
 
                         <div className={styles.gallery__info}>
                             { currentItem ? 
