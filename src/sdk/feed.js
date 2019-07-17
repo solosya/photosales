@@ -9,8 +9,8 @@ export class Feed {
             this.options.blogid = this.options.blogid; // search takes an id instead of a guid
         }
 
-        let requestType = 'post';
-        let url = '/home/load-articles';
+        let requestType = 'get';
+        let url = '/api/blog/get-blog-feed';
     
         const requestData = { 
             offset      : this.options.offset, 
@@ -22,7 +22,12 @@ export class Feed {
         if (this.options.blogid) {
             requestData['blogguid'] = this.options.blogid;
         }
-    
+
+        if (this.options.title) {
+            requestData['title'] = this.options.title;
+            requestData['titleMatch'] = 'exact';
+        }
+
         if (this.options.loadtype === 'user') {
             url = '/api/'+ this.options.loadtype+'/load-more-managed';
             requestType = 'get';
@@ -42,13 +47,14 @@ export class Feed {
             url = '/api/search';
             requestType = 'get';
         }
-        // console.log(url, qs.stringify(requestData));
-        return axios[requestType](url, qs.stringify( this.options ) )
+        console.log(requestType, url + "?" +  qs.stringify(requestData));
+        return axios[requestType](url + "?" + qs.stringify( requestData ) );
         // return axios.get('/api/search?s=this')
-            .then( response => {
-                // var data = response.data;
-            }).catch( error => {
-            });    
+            // .then( response => {
+            //     console.log(response);
+            //     // var data = response.data;
+            // }).catch( error => {
+        // });    
     }
 }
 
@@ -63,7 +69,8 @@ export class ArticleFeed extends Feed {
             'nonPinnedOffset'   :   options.non_pinned || -1,
             'loadtype'          :   options.loadtype || "home",
             'offset'            :   options.offset || 0,
-            'blogid'            :   options.blogid,
+            'blogid'            :   options.blogid || null,
+            'title'             :   options.title  || null,
             'search'            :   options.searchterm    || null,
             'limit'             :   options.limit,
         };

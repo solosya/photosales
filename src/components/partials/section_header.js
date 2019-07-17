@@ -2,7 +2,7 @@ import React            from 'react';
 import styles           from './sectionheader.module.scss';
 import cn               from 'classnames';
 import FavIcon          from '../favourites/favIcon';
-
+import CheckoutIcon     from '../CartIcon';
 
 
 const sectionHeader = (props) => {
@@ -26,10 +26,10 @@ const sectionHeader = (props) => {
     let cart = null;
 
     if (props.cart) {
-        const favouritesOn = props.favourites > 0 ? styles['c-section-head__favouriteOn'] : '';
-        const favStyles = cn(styles['c-section-head__favourite'], favouritesOn);
-        const cartOn = props.cartItems > 0 ? styles['c-section-head__cartOn'] : '';
-        const cartStyles = cn(styles['c-section-head__cart'], cartOn);
+        // const favouritesOn = props.favourites > 0 ? styles['c-section-head__favouriteOn'] : '';
+        // const favStyles = cn(styles['c-section-head__favourite'], favouritesOn);
+        // const cartOn = props.cartItems > 0 ? styles['c-section-head__cartOn'] : '';
+        // const cartStyles = cn(styles['c-section-head__cart'], cartOn);
 
         cart = 
             <div className={styles['c-section-head__buttons']}>
@@ -38,7 +38,11 @@ const sectionHeader = (props) => {
                     <label>Favourites</label>
                 </div>
                 {/* <div className={favStyles} onClick={props.favouritesHandler}>Favourites</div> */}
-                <div onClick={props.checkoutLinkHandler} className={cartStyles}>{ props.cartItems} Check out</div>
+                <div className={styles['c-section-head__cart']} onClick={ props.checkoutLinkHandler}>
+                    <CheckoutIcon on={props.cartItems > 0} />
+                    <label>Checkout</label>
+                </div>
+                {/* <div onClick={props.checkoutLinkHandler} className={cartStyles}>{ props.cartItems} Check out</div> */}
             </div>;
     }
 

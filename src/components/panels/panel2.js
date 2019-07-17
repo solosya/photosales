@@ -10,7 +10,7 @@ const panel_1 = (props) => {
 
     return (
 
-        <Row key={props.title}>
+        <Row key={props.title}  margin={props.margin || ""}>
             <Col classes={["col-12"]}>
                 <Header title={props.title} />
             </Col>

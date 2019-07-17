@@ -11,6 +11,7 @@ axios.defaults.baseURL = window.location.origin;
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 axios.defaults.headers.common['X-CSRF-Token']     = window.vigblat;
 axios.defaults.headers.post['Content-Type']       = 'application/x-www-form-urlencoded';
+axios.defaults.headers.get['Content-Type']       = 'application/x-www-form-urlencoded';
 delete window.vigblat;
 
 const urlPath = window.location.pathname.split("/");

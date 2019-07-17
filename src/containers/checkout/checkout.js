@@ -246,7 +246,7 @@ class Checkout extends Component {
                             data                    = {product}
                             styles                  = "card-3-mobile card-3-tablet card-3-desktop"
                             cardHandler             = {() => { return false;}}
-                            favHandler              = {this.props.favHandler}
+                            favHandler              = {this.props.toggleFavourite}
                             products                = {this.state.products}
                             cartHandler             = {null}
                             removeLineItemFromCart  = {this.removeLineItemFromCart}

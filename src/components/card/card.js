@@ -29,7 +29,7 @@ class Card extends Component {
 
         return (
             <div onClick={() => this.props.cardHandler(count, panel)} className={this.props.styles}>
-                <a  href                = {this.props.data.url} 
+                <a  href                = "#"
                     className           = ""
                     data-id             = {this.props.data.id} 
                     data-guid           = {this.props.data.guid} 

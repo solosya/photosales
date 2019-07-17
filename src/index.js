@@ -28,3 +28,6 @@ ReactDOM.render(
     </Provider>,
     elem
 );
+
+
+// docker run -p 80:80 -v $(pwd):/var/www/html php:7.2-apache

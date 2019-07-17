@@ -1,21 +1,27 @@
 import React   from 'react';
-import classes from './row.module.scss';
-// import cn                   from 'classnames';
+import styled, {css} from 'styled-components';
 
 
 const row = (props) => {
 
-    let inline = {};
-
-    if (props.margin) {
-        inline = {marginTop: props.margin};
-    }
-
     return (
-        <div className={classes.row} style={inline}>
+        <Row {...props}>
             {props.children}
-        </div>
+        </Row>
     )
 }
+
+
+const Row = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+
+    ${props => props.margin && css`
+        margin-top: ${props.margin}
+    `}
+`
+
 
 export default row;

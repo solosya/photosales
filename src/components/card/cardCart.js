@@ -7,6 +7,7 @@ import cn                   from 'classnames';
 import Checkbox from '../form/checkbox';
 import Flexrow from '../layout/flexrow';
 import LineItem from './lineItem';
+import FavIcon          from '../favourites/favIcon';
 
 // Styles
 import './card-3.scss';
@@ -99,10 +100,12 @@ class CardCart extends Component {
         const image = this.props.data.images && this.props.data.images.length > 0 ? this.props.data.images[0] : this.props.data;
 
         let favourite = null;
-
+        console.log(this.props);
         if ( this.props.favourite ) {
             favourite = <div className="c-cards-view__buttons">
-                <div onClick={() => this.props.favHandler(this.props.data)} className="c-cards-view__favourite"></div>
+                <FavIcon onClick={() => this.props.favHandler(this.props.data)} on={true} />
+
+                {/* <div onClick={() => this.props.favHandler(this.props.data)} className="c-cards-view__favourite"></div> */}
                 <div onClick={() => this.props.handleRemovePhoto(this.props.data.id)} className={cn([close.close, "c-cards-view__close"])}></div>
             </div>
         }
