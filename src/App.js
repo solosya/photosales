@@ -3,6 +3,7 @@ import {Route}             from 'react-router-dom';
 import { AnimatedSwitch }   from 'react-router-transition';
 import Home                 from './containers/home/home';
 import Checkout             from './containers/checkout/checkout';
+
 import axios                from 'axios';
 import './app.scss';
 // _appJsConfig
@@ -38,7 +39,7 @@ class App extends Component {
                       className="switch-wrapper"
                 >
                     <Route path={"/" + window.layoutTemplate + "/checkout"} component={Checkout} />
-                    <Route path={"/" + window.layoutTemplate} component={Home} />
+                    <Route path={"/" + window.layoutTemplate + "/:section"} component={Home} />
                     <Route path="/" component={Home} />
                 </AnimatedSwitch>
             </div>

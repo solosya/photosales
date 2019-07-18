@@ -1,13 +1,21 @@
-import React, {Component} from 'react'
-import styles from './gallery.module.scss';
-// import favStyle from '../../styles/favourite.module.scss';
-import "react-image-gallery/styles/css/image-gallery.css";
+//Libraries
+import React, {Component}   from 'react'
+import axios                from 'axios';
+import cloudinary           from 'cloudinary-core';
+import cn                   from 'classnames';
+
+//Components
 import ImageGallery from 'react-image-gallery';
-import Button from '../../components/button/button';
-import cloudinary from 'cloudinary-core';
-import cn         from 'classnames';
-import FavIcon    from '../favourites/favIcon';
-    
+import Button       from '../../components/button/button';
+import FavIcon      from '../favourites/favIcon';
+
+import Blockspinner from '../spinners/BlockSpinner';
+
+
+//Styles
+import styles       from './gallery.module.scss';
+import "react-image-gallery/styles/css/image-gallery.css";
+import "./image-gallery-overrides.scss";
 
 
 
@@ -16,7 +24,6 @@ class Gallery extends Component {
         current: 0,
         gallery: null,
         items: [],
-        images: []
     };
 
     gallerySelect= (data) => {
@@ -24,34 +31,58 @@ class Gallery extends Component {
     }
 
     componentDidMount() {
-        const cloudinaryCore = new cloudinary.Cloudinary({cloud_name: 'cognitives'});
-        const images = this.props.panel.images.map((item) => {
-            const url = cloudinaryCore.url(item.image, {
-                width: "580",
-                height: "384",
-                crop: "fit" 
 
+        
+        return axios.get('/api/article/get-article?articleId='+ this.props.id).then(r => {
+            // console.log(r);
+            // const cloudinaryCore = new cloudinary.Cloudinary({cloud_name: 'cognitives'});
+            // console.log(r.data.media);
+
+            const images = r.data.media.map((item) => {
+                // const url = cloudinaryCore.url(item.url, {
+                //     width: "580",
+                //     height: "384",
+                //     crop: "fit" 
+    
+                // });
+                // console.log(styles.gallery__img);
+                const {favourite, cart} = this.props.checkPhotoStatus(item.id);
+                
+                return {
+                    ...item,
+                    url: item.path,
+                    content: item.caption,
+                    favourite,
+                    cart,
+                    hasMedia: true,
+                    original: item.path,
+                    originalClass: styles.gallery__img,
+                };
             });
-
-            return {
-                original: url,
-                description: url,
-                originalClass: styles.gallery__img,
-            };
+        
+        
+            this.setState({
+                gallery: this.props.gallery,
+                items: images
+            }, () => {
+                console.log(this.state);
+            });
+        
+        
         });
 
-        this.setState({
-            gallery: this.props.panel,
-            items: this.props.panel.images,
-            images: images
-        });
+
+
     }
 
     toggleFavourite =() => {
         const items = [...this.state.items];
         const currentItem = items[this.state.current];
         currentItem.favourite = !currentItem.favourite;
-        this.setState({items}); 
+        this.setState({items}, () => {
+            console.log("NEW STATE AFTER TOGGLE", this.state);
+        }); 
+        console.log(items[this.state.current]);
         this.props.favouriteHandler(items[this.state.current]);
     }
 
@@ -88,39 +119,44 @@ class Gallery extends Component {
 
 
     render() {
-        if (this.state.items.length === 0) return null;
+        if (this.state.items.length === 0) return <Blockspinner />;
         const currentItem = this.state.items[this.state.current];
         const cartButtonText = currentItem.cart ? "REMOVE FROM CART": "ADD TO CART" ;
 
-
+        console.log("CURRENT ITEM", currentItem);
         return (
+
+            
+
             <div className={styles.gallery}>
                 <h1 className={styles.gallery__title} >{this.state.gallery.title}</h1>
                 
                 <div className={styles.gallery__container}>
+
                     <div className={styles.gallery__left}>
                         <div className={styles.gallery__imagecontainer}>
                             <ImageGallery 
-                                items={this.state.images} 
-                                onSlide={this.gallerySelect}
-                                renderLeftNav = {this.renderLeftNav}
-                                renderRightNav = {this.renderRightNav}
-                                showThumbnails ={false}
+                                items                   = {this.state.items} 
+                                onSlide                 = {this.gallerySelect}
+                                renderLeftNav           = {this.renderLeftNav}
+                                renderRightNav          = {this.renderRightNav}
+                                showThumbnails          = {false}
+                                showPlayButton          = {false}
+                                showFullscreenButton    = {false}
                             />
                         </div>
-                        {/* <img src={this.state.items[this.state.current].url} alt="" /> */}
                     </div>
 
 
 
                     <div className={styles.gallery__right}>
-                        <FavIcon onClick={ this.toggleFavourite} on={currentItem.favourite} />
+                        <FavIcon grey onClick={ this.toggleFavourite} on={currentItem.favourite} />
 
                         <div className={styles.gallery__info}>
                             { currentItem ? 
                                 <>
                                 <h2 className={styles.gallery__phototitle}>{currentItem.title}</h2>
-                                <p className={styles.gallery__photocaption}>{currentItem.content}</p>
+                                <p className={styles.gallery__photocaption}>{currentItem.caption}</p>
                                 </>
                                 : null
                             }
@@ -133,9 +169,9 @@ class Gallery extends Component {
                         <div className={styles.gallery__meta}>
                         { currentItem ? 
                             <>
-                            <p><span>Size</span> 1598 x 832 pixels at 300 dpi</p>
-                            <p><span>Photographer</span> Eliot Smithington</p>
-                            <p><span>Date photo taken</span> 22/03/2019</p>
+                            <p className={styles.gallery__metainfo}><span>Size</span> {currentItem.width} x {currentItem.height}</p>
+                            <p className={styles.gallery__metainfo}><span>Photographer</span> Name</p>
+                            <p className={styles.gallery__metainfo}><span>Date photo taken</span> date</p>
                             </>
                             : null
                         }

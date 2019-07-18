@@ -98,6 +98,7 @@ class CardCart extends Component {
         const count = this.props.count || 0;
         const panel = this.props.panel || null;
         const image = this.props.data.images && this.props.data.images.length > 0 ? this.props.data.images[0] : this.props.data;
+        console.log("CHECKOUT 1", this.props.data);
 
         let favourite = null;
         console.log(this.props);
@@ -209,11 +210,11 @@ class CardCart extends Component {
 
         });
 
-
+        console.log("CHECKOUT", image);
 
         return (
             <div key={this.props.data.id} onClick={() => this.props.cardHandler(count, panel)} className={this.props.styles}>
-                <a  href                = {this.props.data.url} 
+                <div  href                = "#" 
                     className           = ""
                     data-id             = {this.props.data.id} 
                     data-guid           = {this.props.data.guid} 
@@ -232,8 +233,8 @@ class CardCart extends Component {
                                     <source media="(max-width: 500px)" srcSet={this.props.data.imageSmall} />
 
                                     { this.props.data.lazyload === false
-                                        ?  <img width={this.props.data.imgWidth} height={this.props.data.imgHeight} className="img-fluid" src={image.image} alt="" />
-                                        :  <img width={this.props.data.imgWidth} height={this.props.data.imgHeight} className="img-fluid" src={image.image} data-original={this.props.data.articleImg} alt="" />
+                                        ?  <img width={this.props.data.imgWidth} height={this.props.data.imgHeight} className="img-fluid" src={image.url} alt="" />
+                                        :  <img width={this.props.data.imgWidth} height={this.props.data.imgHeight} className="img-fluid" src={image.url} data-original={this.props.data.articleImg} alt="" />
                                     }
 
                                     <div className="video-icon"></div>
@@ -287,7 +288,7 @@ class CardCart extends Component {
 
 
                     </article>
-                </a>
+                </div>
             </div>
         )
     }

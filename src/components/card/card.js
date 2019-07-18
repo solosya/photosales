@@ -41,15 +41,15 @@ class Card extends Component {
 
                     <article className="c-cards-view">
 
-                        { (image.hasMedia) ? 
+                        { (this.props.data.hasMedia) && 
                             <figure className='c-cards-view__media'>
                                 <picture>
                                     <source media="(max-width: 767px) and (min-width: 501px)" srcSet={this.props.data.imageMedium} />
                                     <source media="(max-width: 500px)" srcSet={this.props.data.imageSmall} />
 
                                     { this.props.data.lazyload === false
-                                        ?  <img width={this.props.data.imgWidth} height={this.props.data.imgHeight} className="img-fluid" src={image.image} alt="" />
-                                        :  <img width={this.props.data.imgWidth} height={this.props.data.imgHeight} className="img-fluid" src={image.image} data-original={this.props.data.articleImg} alt="" />
+                                        ?  <img width={this.props.data.imgWidth} height={this.props.data.imgHeight} className="img-fluid" src={image.url} alt="" />
+                                        :  <img width={this.props.data.imgWidth} height={this.props.data.imgHeight} className="img-fluid" src={image.url} data-original={this.props.data.articleImg} alt="" />
                                     }
 
                                     <div className="video-icon"></div>
@@ -57,7 +57,7 @@ class Card extends Component {
                                 </picture>
 
                             </figure>
-                            : null
+                            
                         }
                         
                         <div className="c-cards-view__container">

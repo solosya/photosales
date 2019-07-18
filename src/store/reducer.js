@@ -89,15 +89,17 @@ const reducer = (state = intialState, action) => {
     switch (action.type) {
 
         case actionTypes.TOGGLE_FAVOURITE: {
+            console.log('in the REDUCER!!!');
             let favourites = [...state.favourites];
-
+            debugger;
             const found = favourites.filter((item) => {
                 return action.photo.id !== item.id;
             });
-
+            console.log("FOUND?", found);
+            // first attemp to remove the favourite
             if (found.length < favourites.length) {
                 favourites = found;
-            } else {
+            } else { // add it
                 favourites.push(action.photo);
             }
             return {

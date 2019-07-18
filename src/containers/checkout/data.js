@@ -339,7 +339,7 @@ export const favourites = [
         content: "First image in another gallery",
         publishDate: "23rd may 2000",
         hasMedia: true,
-        image: "https://static.guim.co.uk/sys-images/Music/Pix/pictures/2011/6/3/1307115506503/Prince-performing-on-stag-007.jpg",
+        url: "https://static.guim.co.uk/sys-images/Music/Pix/pictures/2011/6/3/1307115506503/Prince-performing-on-stag-007.jpg",
     }
 ];
 
@@ -351,7 +351,7 @@ export const cart = [
         content: "This is the body content which is very long as i want it to dot dot dot with an eillpsesssese so that i can see it's wokring and then celebrate a job well done",
         publishDate: "23rd may 2000",
         hasMedia: true,
-        image: "https://i.ytimg.com/vi/EuvTORWs244/maxresdefault.jpg",
+        url: "https://i.ytimg.com/vi/EuvTORWs244/maxresdefault.jpg",
         lineItems: [],
     },
     {
@@ -360,7 +360,7 @@ export const cart = [
         content: "Less writing for the second card",
         publishDate: "24rd may 2000",
         hasMedia: true,
-        image: "https://weburbanist.com/wp-content/uploads/2008/10/lego_art_1.jpg",
+        url: "https://weburbanist.com/wp-content/uploads/2008/10/lego_art_1.jpg",
         lineItems: [],
     },
     {
@@ -369,7 +369,7 @@ export const cart = [
         content: "Less writing for the second card",
         publishDate: "24rd may 2000",
         hasMedia: true,
-        image: "https://static.guim.co.uk/sys-images/Music/Pix/pictures/2011/6/3/1307115506503/Prince-performing-on-stag-007.jpg"
+        url: "https://static.guim.co.uk/sys-images/Music/Pix/pictures/2011/6/3/1307115506503/Prince-performing-on-stag-007.jpg"
     },
 
 ];

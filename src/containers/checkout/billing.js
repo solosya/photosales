@@ -3,7 +3,7 @@ import Row                  from '../../components/layout/row';
 import Col                  from '../../components/layout/col';
 import Header               from '../../components/partials/section_header.js';
 import Checkbox             from '../../components/form/checkbox';
-
+// import Blockspinner         from '../../components/spinners/BlockSpinner';
 
 import styled, {css} from 'styled-components';
 
@@ -94,6 +94,8 @@ const FormLabel = styled.label`
     font-family: 'Roboto';
     display:block;
     font-size:16px;
+    font-weight:500;
+    color:black;
     margin-bottom:6px;
     margin-top:20px;
 `
@@ -102,12 +104,12 @@ const FormInput = styled.input`
     font-family: 'Roboto';
     width:95%;
     padding:5px 10px;
-    height:35px;
+    height:45px;
     border: solid 1px #e7e7e7;
     font-size:16px;
     color: #595859;
     ${props => props.error && css`
-    border-color:#c51515;
+        border-color:#c51515;
     `}
     &:focus {
         outline:none;

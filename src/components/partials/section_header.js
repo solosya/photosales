@@ -26,11 +26,6 @@ const sectionHeader = (props) => {
     let cart = null;
 
     if (props.cart) {
-        // const favouritesOn = props.favourites > 0 ? styles['c-section-head__favouriteOn'] : '';
-        // const favStyles = cn(styles['c-section-head__favourite'], favouritesOn);
-        // const cartOn = props.cartItems > 0 ? styles['c-section-head__cartOn'] : '';
-        // const cartStyles = cn(styles['c-section-head__cart'], cartOn);
-
         cart = 
             <div className={styles['c-section-head__buttons']}>
                 <div className={styles['c-section-head__favourite']} onClick={ props.favouritesHandler}>
@@ -38,7 +33,7 @@ const sectionHeader = (props) => {
                     <label>Favourites</label>
                 </div>
                 {/* <div className={favStyles} onClick={props.favouritesHandler}>Favourites</div> */}
-                <div className={styles['c-section-head__cart']} onClick={ props.checkoutLinkHandler}>
+                <div className={styles['c-section-head__cart']} onClick={ () => props.linkHandler("/checkout/")}>
                     <CheckoutIcon on={props.cartItems > 0} />
                     <label>Checkout</label>
                 </div>
@@ -48,7 +43,7 @@ const sectionHeader = (props) => {
 
 
     return (
-        <div className={styles['c-section-head']}>
+        <div onClick={!props.larger ? ()=>props.linkHandler("/"+props.title.toLowerCase()+"/"): null} className={styles['c-section-head']}>
 
             <div className={styles['c-section-head__title-container']}>
                     <h1 onClick={props.homeLinkHandler} className={titleStyles}>{props.title}</h1>

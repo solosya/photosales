@@ -29,7 +29,7 @@
     }
     &__right {
         margin-left: 20px;
-        padding: 0 20px;
+        padding-left: 20px;
         border-left: 1px solid $offwhite;
     }
     &__info {
@@ -37,11 +37,27 @@
         border-bottom: 1px solid $offwhite;
         padding-bottom: 30px;
     }
+
+    &__metainfo {
+        margin-top: 12px;
+        @include font-size(12);
+        color:rgba(89, 88, 89, 0.7);
+        font-weight:$weightMedium;
+        letter-spacing: 0.5px;
+        > span {
+            color:black;
+            font-weight:$weightBold;
+            letter-spacing: normal;
+        }
+    }
+
+
     &__phototitle {
         @include font-size(26);
         font-weight: $weightLight;
         color: $greyish;
-        @include flex-height(38px);
+        overflow:hidden;
+        @include flex-height(65px);
     }
     &__photocaption {
         @include font-size(13);
