@@ -1,7 +1,7 @@
 //Libraries
 import React, {Component}   from 'react';
 import {connect}            from 'react-redux';
-import axios                from 'axios';
+// import axios                from 'axios';
 import {Route, Switch}      from 'react-router-dom';
 
 //Routes
@@ -15,8 +15,6 @@ import Col                  from '../../components/layout/col';
 import Container            from '../../components/layout/container';
 import Search               from '../../components/search/search';
 import Header               from '../../components/partials/section_header.js';
-// import PanelOne             from '../../components/panels/panel1';
-// import PanelTwo             from '../../components/panels/panel2';
 import Modal                from '../../components/modals/modal';
 import Gallery              from '../../components/gallery/gallery';
 import Favourites           from '../../components/favourites/favourites';
@@ -27,8 +25,6 @@ import {ArticleFeed}        from '../../sdk/feed';
 //Actions
 import * as actionTypes     from '../../store/actions/actions';
 
-//Data
-import {panels} from './data';
 
 class Home extends Component {
 
@@ -39,7 +35,7 @@ class Home extends Component {
             url: "www.picturebooth.com",
             guid: "b6d174e5-70d2-4274-900a-46632b9b3e56",
         },
-        panels: [],
+        // panels: [],
         photos: null,
         showGallery: false,
         showFavourites : false,
@@ -48,69 +44,11 @@ class Home extends Component {
     }
     
 
-    componentDidMount () {
-        this.getPanels();
-        return;
-        this.getThemeConfig().then( (r) => {
-            const pages = r.data.data.page;
-            const pagePanels = pages.photos || null;
-            if (!pagePanels) return;
-
-            pagePanels.sections.map( (panel, i) => {
-                
-                this.getFeed(panel).then( r => {
-                    let feed = r.data.articles.map(article => {
-                        const media = article.featuredMedia;
-                        return {
-                            id: article.articleId,
-                            title: article.title,
-                            content: article.excerpt,
-                            date: article.publishedDate,
-                            hasMedia: article.hasMedia,
-                            images: [{
-                                id: media.id,
-                                height: media.height,
-                                width: media.width,
-                                filesize: media.fileSize,
-                                type: media.fileType,
-                                url: media.media.url
-                            }]
-                        }
-                    });
-
-                    panel.feed = feed;
-                    const panels = [...this.state.panels, panel];
-
-                    this.setState({
-                        panels
-                    }, () => {
-                        console.log(this.state.panels);
-                    });
-
-                });
-
-            });
-
-
-        });
-
-    }
-
-    getThemeConfig = () => {
-        return axios.get('/api/theme/get-config');
-    }
-
-    getPanels = () => {
-        this.setState({panels: panels}, () => {
-            console.log(this.state);
-        });
-    }
 
     getFeed = (panel) => {
         const options = {
             offset          : 0,
             limit           : panel.artilceCount,
-            // blogid          : this.state.blogData.guid,
             title           : panel.blog,
             non_pinned      : 0
         };
@@ -118,25 +56,21 @@ class Home extends Component {
         return Feed.fetch();
     }
 
-    // linkHandler = (page) => {
-    //     if (typeof page === 'undefined') page = "";
-    //     this.props.history.push("/"+window.layoutTemplate + page);
-    // }
 
-    showGallery = (card, panelName) => {
-        console.log('showGallery');
-        console.log(card, panelName);
-        let selected = null;
-        const panel = this.state.panels.find((panel) => {
-            return panel.title === panelName;
-        });
-        console.log(panel);
-        if (panel) {
-            selected = panel.feed[card];
-        }
-        console.log(selected);
+    showGallery = (gallery) => {
+        // console.log('showGallery');
+        // console.log(card, panelName);
+        // let selected = null;
+        // const panel = this.state.panels.find((panel) => {
+        //     return panel.title === panelName;
+        // });
+        // console.log(panel);
+        // if (panel) {
+        //     selected = panel.feed[card];
+        // }
+        // console.log(selected);
         this.setState({
-            selectedGallery: selected,
+            selectedGallery: gallery,
             showGallery: true,
             showFavourites : false
         }, () => {
@@ -169,8 +103,6 @@ class Home extends Component {
     }
 
     checkFavouriteStatus = (photoid) => {
-        console.log('checking favourite status', photoid);
-        console.log(this.props.favourites);
 
         const found = this.props.favourites.filter((item) => {
             return photoid === item.id;
@@ -260,13 +192,23 @@ class Home extends Component {
                 </Container>
 
                 <Switch>
+                    <Route path={"/" + window.layoutTemplate + "/:section"} render={(props) => 
+                        <Section {...this.state}
+                            title={"Galleries"}
+                            cardHandler={this.showGallery} 
+                            linkHandler = {this.props.linkHandler}
+                            feedHandler={this.getFeed}
+                        /> 
+                    } />
+
                     <Route path={"/" + window.layoutTemplate} render={(props) => 
-                        <Index {...this.state} cardHandler={this.showGallery} linkHandler={this.props.linkHandler} />
+                        <Index {...this.state} 
+                            cardHandler={this.showGallery} 
+                            linkHandler={this.props.linkHandler} 
+                            feedHandler={this.getFeed}
+                        />
                     } />
                     
-                    <Route path={"/" + window.layoutTemplate + "/:section"} render={() => 
-                        <Section linkHandler={this.props.linkHandler} /> 
-                    } />
                 </Switch>
 
 

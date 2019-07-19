@@ -1,6 +1,5 @@
 import React from 'react';
-import styled, {css, keyframes} from 'styled-components';
-// import "./BlockSpinner.module.scss";
+import styled, { keyframes } from 'styled-components';
 
 const BlockSpinner = () => {
     return (

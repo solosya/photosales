@@ -98,10 +98,10 @@ class CardCart extends Component {
         const count = this.props.count || 0;
         const panel = this.props.panel || null;
         const image = this.props.data.images && this.props.data.images.length > 0 ? this.props.data.images[0] : this.props.data;
-        console.log("CHECKOUT 1", this.props.data);
 
+        
         let favourite = null;
-        console.log(this.props);
+
         if ( this.props.favourite ) {
             favourite = <div className="c-cards-view__buttons">
                 <FavIcon onClick={() => this.props.favHandler(this.props.data)} on={true} />
@@ -210,8 +210,8 @@ class CardCart extends Component {
 
         });
 
-        console.log("CHECKOUT", image);
 
+        
         return (
             <div key={this.props.data.id} onClick={() => this.props.cardHandler(count, panel)} className={this.props.styles}>
                 <div  href                = "#" 

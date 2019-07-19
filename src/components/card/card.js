@@ -10,14 +10,10 @@ class Card extends Component {
     
     
     render() {
-        // console.log(this.props)
-        // const cardClass = cn( card_1["card-mobile"], card_1["card-tablet"], card_1["card-desktop"] );
+
         const count = this.props.count || 0;
         const panel = this.props.panel || null;
         const image = this.props.data.images && this.props.data.images.length > 0 ? this.props.data.images[0] : this.props.data;
-        // const type = this.props.type || null;
-        // console.log(image);
-        // console.log(this.props);
         let favourite = null;
         
         if ( this.props.favourite ) {
@@ -27,7 +23,7 @@ class Card extends Component {
             </div>
         }
 
-
+        // console.log(count, panel);
 
         return (
             <div onClick={() => this.props.cardHandler(count, panel)} className={this.props.styles}>
