@@ -18,8 +18,8 @@ class Index extends Component {
         }
 
     componentDidMount () {
-        this.getPanels();
-        return;
+        // this.getPanels();
+        // return;
         this.getThemeConfig().then( (r) => {
             const pages = r.data.data.page;
             const pagePanels = pages.photos || null;

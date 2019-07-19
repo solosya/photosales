@@ -28,6 +28,11 @@ export class Feed {
             requestData['titleMatch'] = 'exact';
         }
 
+        if (this.options.urlid) {
+            requestData['urlid'] = this.options.urlid;
+        }
+
+
         if (this.options.loadtype === 'user') {
             url = '/api/'+ this.options.loadtype+'/load-more-managed';
             requestType = 'get';
@@ -71,6 +76,7 @@ export class ArticleFeed extends Feed {
             'offset'            :   options.offset || 0,
             'blogid'            :   options.blogid || null,
             'title'             :   options.title  || null,
+            'urlid'             :   options.urlid  || null,
             'search'            :   options.searchterm    || null,
             'limit'             :   options.limit,
         };

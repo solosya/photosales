@@ -35,7 +35,6 @@ class Home extends Component {
             url: "www.picturebooth.com",
             guid: "b6d174e5-70d2-4274-900a-46632b9b3e56",
         },
-        // panels: [],
         photos: null,
         showGallery: false,
         showFavourites : false,
@@ -49,7 +48,7 @@ class Home extends Component {
         const options = {
             offset          : 0,
             limit           : panel.artilceCount,
-            title           : panel.blog,
+            urlid           : panel.blog,
             non_pinned      : 0
         };
         const Feed = new ArticleFeed(options);
@@ -58,17 +57,6 @@ class Home extends Component {
 
 
     showGallery = (gallery) => {
-        // console.log('showGallery');
-        // console.log(card, panelName);
-        // let selected = null;
-        // const panel = this.state.panels.find((panel) => {
-        //     return panel.title === panelName;
-        // });
-        // console.log(panel);
-        // if (panel) {
-        //     selected = panel.feed[card];
-        // }
-        // console.log(selected);
         this.setState({
             selectedGallery: gallery,
             showGallery: true,
@@ -133,25 +121,25 @@ class Home extends Component {
     render() {
 
         console.log("RENDERING HOME", this.props.favourites);
-        // console.log("GALLERY", this.state.selectedGallery);
+
         const gallery = 
             <Modal 
                 width        = "954px" 
                 height       = "575px" 
                 closeHandler = {this.closeGallery} 
-                children     = {gallery => (
+                children     = { () => (
                     <Gallery 
                         id               = {this.state.selectedGallery.id}
                         gallery          = {this.state.selectedGallery} 
                         favouriteHandler = {this.props.toggleFavourite}
                         checkPhotoStatus = {this.photoStatusHandler}
                         cartHandler      = {this.props.toggleCart}
-                        />
+                    />
             )} >   
             </Modal>
 
         const favourites = 
-            <Modal closeHandler={this.closeFavourites} children={favourites => (
+            <Modal closeHandler={this.closeFavourites} children={ () => (
                 <Favourites 
                     favourites  = {this.props.favourites}
                     favHandler  = {this.props.toggleFavourite}
