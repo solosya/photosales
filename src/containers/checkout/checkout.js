@@ -54,6 +54,21 @@ class Checkout extends Component {
     }
 
 
+    componentDidMount() {
+        const self = this;
+        axios.all([this.getSiteDiscounts(), this.getSiteProducts()])
+        .then(axios.spread(function (discount, products) {
+            self.setState({
+                products: products.data.data
+            }, () => {
+                console.log(self.state);
+            });
+        }));
+    }
+
+
+
+
     showFavourites = () => {
         if (this.props.favourites.length > 0) {
             this.setState({
@@ -79,17 +94,6 @@ class Checkout extends Component {
         return axios.get('/api/shop/products' );
     }
 
-    componentDidMount() {
-        const self = this;
-        axios.all([this.getSiteDiscounts(), this.getSiteProducts()])
-        .then(axios.spread(function (discount, products) {
-            self.setState({
-                products: products.data.data
-            }, () => {
-                console.log(self.state);
-            });
-        }));
-    }
 
 
 
@@ -127,10 +131,7 @@ class Checkout extends Component {
     }
 
 
-    homeLinkHandler = () => {
-        this.props.history.push("/"+window.layoutTemplate);
-    }
-
+    
     handleGetCartItemDiscount = (product) => {
         const item = this.getCartItemIndex(product);
         if (item === -1) {
@@ -289,7 +290,7 @@ class Checkout extends Component {
                                 title               = {this.state.blogData.title} 
                                 cartItems           = {this.props.cart.length}
                                 favourites          = {this.props.favourites.length}
-                                homeLinkHandler     = {this.homeLinkHandler}
+                                linkHandler         = {this.props.linkHandler}
                                 favouritesHandler   = {this.showFavourites}
                                 larger 
                                 cart

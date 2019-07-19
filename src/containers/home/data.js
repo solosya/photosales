@@ -26,6 +26,7 @@ panels.forEach((panel) => {
         {
             title: "cats and lego",
             date: "25th February 2019",
+            hasMedia: true,
             images: [
                 {
                     id: 'j49fj3fgsdsgdf8rj',
@@ -57,6 +58,7 @@ panels.forEach((panel) => {
         {
             title: "Prince",
             date: "25th April 2010",
+            hasMedia: true,
             images: [
                 {
                     id: '6e5hfdghs5dt',
@@ -87,6 +89,7 @@ panels.forEach((panel) => {
         {
             title: "David Bowie",
             date: "25th April 2014",
+            hasMedia: true,
             images: [
                 {
                     id: 'j49fda4j38rj',

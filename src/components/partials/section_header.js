@@ -43,10 +43,10 @@ const sectionHeader = (props) => {
 
 
     return (
-        <div onClick={!props.larger ? ()=>props.linkHandler("/"+props.title.toLowerCase()+"/"): null} className={styles['c-section-head']}>
+        <div className={styles['c-section-head']}>
 
             <div className={styles['c-section-head__title-container']}>
-                    <h1 onClick={props.homeLinkHandler} className={titleStyles}>{props.title}</h1>
+                    <h1 onClick={()=> props.linkHandler(props.linkUrl)} className={titleStyles}>{props.title}</h1>
                 { cart } 
             </div>
 

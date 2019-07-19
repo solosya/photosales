@@ -7,12 +7,15 @@ import Header               from '../../components/partials/section_header.js';
 const panel_1 = (props) => {
 
     let cardCount = 0;
-
+    console.log("archived photos".toLowerCase().replace(/\s/g, "-"));
     return (
 
         <Row key={props.title}  margin={props.margin || ""}>
             <Col classes={["col-12"]}>
-                <Header title={props.title} />
+                <Header 
+                    linkHandler={props.linkHandler} 
+                    linkUrl = { "/"+ props.title.toLowerCase().replace(/\s/g, "-")+ "/" }
+                    title={props.title} />
             </Col>
 
             { props.cards[cardCount] ?

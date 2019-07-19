@@ -8,13 +8,16 @@ import './card-2.scss';
 class Card extends Component {
 
     
-
+    
     render() {
+        // console.log(this.props)
         // const cardClass = cn( card_1["card-mobile"], card_1["card-tablet"], card_1["card-desktop"] );
         const count = this.props.count || 0;
         const panel = this.props.panel || null;
         const image = this.props.data.images && this.props.data.images.length > 0 ? this.props.data.images[0] : this.props.data;
         // const type = this.props.type || null;
+        // console.log(image);
+        // console.log(this.props);
         let favourite = null;
         
         if ( this.props.favourite ) {
@@ -26,39 +29,23 @@ class Card extends Component {
 
 
 
-
         return (
             <div onClick={() => this.props.cardHandler(count, panel)} className={this.props.styles}>
-                <a  href                = "#"
-                    className           = ""
-                    data-id             = {this.props.data.id} 
-                    data-guid           = {this.props.data.guid} 
-                    data-position       = {this.props.data.position} 
-                    data-social         = {this.props.data.social}
-                    data-article-image  = {this.props.data.articleImg} 
-                    data-article-text   = {this.props.data.title}
+                <div  
+                    className       = ""
+                    data-id         = {this.props.data.id} 
+                    data-guid       = {this.props.data.guid} 
+                    data-position   = {this.props.data.position} 
                     >
 
                     <article className="c-cards-view">
-
-                        { (this.props.data.hasMedia) && 
-                            <figure className='c-cards-view__media'>
-                                <picture>
-                                    <source media="(max-width: 767px) and (min-width: 501px)" srcSet={this.props.data.imageMedium} />
-                                    <source media="(max-width: 500px)" srcSet={this.props.data.imageSmall} />
-
-                                    { this.props.data.lazyload === false
-                                        ?  <img width={this.props.data.imgWidth} height={this.props.data.imgHeight} className="img-fluid" src={image.url} alt="" />
-                                        :  <img width={this.props.data.imgWidth} height={this.props.data.imgHeight} className="img-fluid" src={image.url} data-original={this.props.data.articleImg} alt="" />
-                                    }
-
-                                    <div className="video-icon"></div>
-
-                                </picture>
-
-                            </figure>
-                            
-                        }
+                        <figure className='c-cards-view__media'>
+                            <picture>
+                                <source media="(max-width: 767px) and (min-width: 501px)" srcSet={this.props.data.imageMedium} />
+                                <source media="(max-width: 500px)" srcSet={this.props.data.imageSmall} />
+                                <img width={this.props.data.imgWidth} height={this.props.data.imgHeight} className="img-fluid" src={image.url} alt="" />
+                            </picture>
+                        </figure>
                         
                         <div className="c-cards-view__container">
 
@@ -77,7 +64,7 @@ class Card extends Component {
 
 
                     </article>
-                </a>
+                </div>
             </div>
         )
     }

@@ -1,12 +1,16 @@
+//Libraries
 import React, { Component } from 'react';
-import {Route}             from 'react-router-dom';
+import { Route }            from 'react-router-dom';
+import { withRouter }       from 'react-router';
 import { AnimatedSwitch }   from 'react-router-transition';
+import axios                from 'axios';
+
+//Components
 import Home                 from './containers/home/home';
 import Checkout             from './containers/checkout/checkout';
 
-import axios                from 'axios';
+//Styles
 import './app.scss';
-// _appJsConfig
 
 axios.defaults.baseURL = window.location.origin;
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -25,26 +29,34 @@ if (urlPath[1] === 'page') {
 
 class App extends Component {
 
-    pageClicked = () => {
-        // console.log('page clicked');
+
+    linkHandler = (page) => {
+        if (typeof page === 'undefined') page = "";
+        this.props.history.push("/"+window.layoutTemplate + page);
     }
 
     render() {
         return (
-            <div onClick={this.pageClicked}>
+            <div>
                 <AnimatedSwitch
-                      atEnter={{ opacity: 0 }}
-                      atLeave={{ opacity: 0 }}
-                      atActive={{ opacity: 1 }}
-                      className="switch-wrapper"
+                    atEnter={{ opacity: 0 }}
+                    atLeave={{ opacity: 0 }}
+                    atActive={{ opacity: 1 }}
+                    className="switch-wrapper"
                 >
-                    <Route path={"/" + window.layoutTemplate + "/checkout"} component={Checkout} />
-                    <Route path={"/" + window.layoutTemplate + "/:section"} component={Home} />
-                    <Route path="/" component={Home} />
+                    <Route path={"/" + window.layoutTemplate + "/checkout"} render={ () => 
+                        <Checkout linkHandler={this.linkHandler}/> } />
+                    
+                    <Route path={"/" + window.layoutTemplate + "/:section"} render={ () => 
+                        <Home linkHandler={this.linkHandler}/>} />
+                    
+                    <Route path="/" render={ () => 
+                        <Home linkHandler={this.linkHandler}/>} />
+                        
                 </AnimatedSwitch>
             </div>
         );
     }
 }
 
-export default App;
+export default withRouter(App);

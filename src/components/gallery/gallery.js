@@ -54,7 +54,6 @@ class Gallery extends Component {
                     content: item.caption,
                     favourite,
                     cart,
-                    hasMedia: true,
                     original: item.path,
                     originalClass: styles.gallery__img,
                 };
@@ -62,13 +61,35 @@ class Gallery extends Component {
         
         
             this.setState({
-                gallery: this.props.gallery,
                 items: images
             }, () => {
                 console.log(this.state);
             });
         
         
+        }).catch(() => {
+
+            const images = this.props.gallery.images.map((item) => {
+                const {favourite, cart} = this.props.checkPhotoStatus(item.id);
+                
+                return {
+                    ...item,
+                    caption:item.content,
+                    favourite,
+                    cart,
+                    original: item.url,
+                    originalClass: styles.gallery__img,
+                };
+            });
+            console.log(images);
+            this.setState({
+                items: images
+            }, () => {
+                console.log(this.state);
+            });
+
+
+            console.log('catcheded a nan error');
         });
 
 
@@ -119,6 +140,7 @@ class Gallery extends Component {
 
 
     render() {
+        console.log(this.state);
         if (this.state.items.length === 0) return <Blockspinner />;
         const currentItem = this.state.items[this.state.current];
         const cartButtonText = currentItem.cart ? "REMOVE FROM CART": "ADD TO CART" ;
@@ -129,7 +151,7 @@ class Gallery extends Component {
             
 
             <div className={styles.gallery}>
-                <h1 className={styles.gallery__title} >{this.state.gallery.title}</h1>
+                <h1 className={styles.gallery__title} >{this.props.gallery.title}</h1>
                 
                 <div className={styles.gallery__container}>
 

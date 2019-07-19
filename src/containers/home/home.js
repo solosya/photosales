@@ -118,9 +118,10 @@ class Home extends Component {
         return Feed.fetch();
     }
 
-    linkHandler = (page) => {
-        this.props.history.push("/"+window.layoutTemplate + page);
-    }
+    // linkHandler = (page) => {
+    //     if (typeof page === 'undefined') page = "";
+    //     this.props.history.push("/"+window.layoutTemplate + page);
+    // }
 
     showGallery = (card, panelName) => {
         console.log('showGallery');
@@ -200,6 +201,7 @@ class Home extends Component {
     render() {
 
         console.log("RENDERING HOME", this.props.favourites);
+        // console.log("GALLERY", this.state.selectedGallery);
         const gallery = 
             <Modal 
                 width        = "954px" 
@@ -238,13 +240,11 @@ class Home extends Component {
                     <Row>
                         <Col classes={["col-12"]}>
                             <Header 
-                                title = {this.state.blogData.title} 
-                                // url   = {this.state.blogData.url}
-                                favourites = {this.props.favourites.length}
-                                cartItems = {this.props.cart.length}
-                                favouritesHandler = {this.showFavourites}
-                                linkHandler = {this.linkHandler}
-                                homeLinkHandler = {null}
+                                title               = {this.state.blogData.title} 
+                                favourites          = {this.props.favourites.length}
+                                cartItems           = {this.props.cart.length}
+                                linkHandler         = {this.props.linkHandler}
+                                favouritesHandler   = {this.showFavourites}
                                 larger 
                                 cart
                             />
@@ -260,9 +260,13 @@ class Home extends Component {
                 </Container>
 
                 <Switch>
-                    <Route exact path={"/" + window.layoutTemplate} render={(props) => 
-                        <Index {...this.state} cardHandler={this.showGallery} linkHandler={this.linkHandler} />} />
-                    <Route path={"/" + window.layoutTemplate + "/:section"} component={Section} />
+                    <Route path={"/" + window.layoutTemplate} render={(props) => 
+                        <Index {...this.state} cardHandler={this.showGallery} linkHandler={this.props.linkHandler} />
+                    } />
+                    
+                    <Route path={"/" + window.layoutTemplate + "/:section"} render={() => 
+                        <Section linkHandler={this.props.linkHandler} /> 
+                    } />
                 </Switch>
 
 

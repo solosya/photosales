@@ -16,7 +16,7 @@ const index = (props) => {
                 <Container key={i}>
                     {panel.template === "panel1" ?
                         <PanelOne 
-                            cardHandler={props.showGallery} 
+                            cardHandler={props.cardHandler} 
                             title={panel.title} 
                             cards={panel.feed}
                             margin={margin}
@@ -26,7 +26,7 @@ const index = (props) => {
 
                     {panel.template === "panel2" ?
                         <PanelTwo 
-                            cardHandler={props.showGallery} 
+                            cardHandler={props.cardHandler} 
                             title={panel.title} 
                             cards={panel.feed}
                             margin={margin}

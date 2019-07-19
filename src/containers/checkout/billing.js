@@ -43,7 +43,7 @@ const billing = (props) => {
 
                             </Col>
                             <Col classes={["col-md-6"]}>
-                                <FormLabel>First name*</FormLabel>
+                                <FormLabel>Last name*</FormLabel>
                                 <FormInput error={props.handleFindBillingErrors("lastname")} type="text" value={props.lastName} placeholder="Last name" onChange={(e) => props.handleBillingForm(e.target.value, "lastname")} />
                                 <ErrorLabel active={props.handleFindBillingErrors("lastname")}>This field is required</ErrorLabel>
 

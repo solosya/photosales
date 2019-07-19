@@ -12,8 +12,10 @@ const panel_1 = (props) => {
     return (
         <Row key={props.title} margin={props.margin || ""}>
             <Col classes={["col-12"]}>
-            {/* <Header onClick={() => this.props.linkHandler("/"+props.title+"/")} title={props.title} /> */}
-            <Header linkHandler={props.linkHandler} title={props.title} />
+                <Header 
+                    linkHandler={props.linkHandler} 
+                    linkUrl = { "/"+ props.title.toLowerCase().replace(/\s/g, "-")+ "/" }
+                    title={props.title} />
             </Col>
 
             { props.cards[cardCount] ?
