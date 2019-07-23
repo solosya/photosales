@@ -6,6 +6,10 @@ import CheckoutIcon     from '../CartIcon';
 
 
 const sectionHeader = (props) => {
+
+    let isLoggedIn = "";
+
+    
     const titleStyleArr = [styles['c-section-head__title']];
     if (props.larger) {
         titleStyleArr.push(styles["c-section-head__title--40"]);
@@ -18,14 +22,18 @@ const sectionHeader = (props) => {
         titleStyleArr.push(styles["c-section-head__title--light"]);
     }
 
+    if (props.loggedIn && props.loggedIn === true) {
+        isLoggedIn = "c-section-head__loggedin";
+    }
 
-
+    
     const titleStyles = cn( titleStyleArr );
     
 
     let cart = null;
 
     if (props.cart) {
+
         cart = 
             <div className={styles['c-section-head__buttons']}>
                 <div className={styles['c-section-head__favourite']} onClick={ props.favouritesHandler}>
@@ -43,7 +51,7 @@ const sectionHeader = (props) => {
 
 
     return (
-        <div className={styles['c-section-head']}>
+        <div className={cn(styles['c-section-head'], styles[isLoggedIn])}>
 
             <div className={styles['c-section-head__title-container']}>
                     <h1 onClick={()=> props.linkHandler(props.linkUrl)} className={titleStyles}>{props.title}</h1>

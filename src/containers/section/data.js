@@ -29,6 +29,7 @@ panels.forEach((panel) => {
             images: [
                 {
                     id: 'j49fj3fgsdsgdf8rj',
+                    guid: 'j49fj3fgsdsgdf8rj',
                     title: "Cat",
                     content: "This is the body content which is very long as i want it to dot dot dot with an eillpsesssese so that i can see it's wokring and then celebrate a job well done",
                     publishDate: "23rd may 2000",
@@ -36,6 +37,7 @@ panels.forEach((panel) => {
                 },
                 {
                     id: 'lkiuygfyny66',
+                    guid: 'lkiuygfyny66',
                     title: "Lego",
                     content: "Less writing for the second card",
                     publishDate: "24rd may 2000",
@@ -43,6 +45,7 @@ panels.forEach((panel) => {
                 },
                 {
                     id: 'mjghjligm',
+                    guid: 'mjghjligm',
                     title: "Guitar!",
                     content: "Less writing for the second card",
                     publishDate: "24rd may 2000",
@@ -57,6 +60,7 @@ panels.forEach((panel) => {
             images: [
                 {
                     id: '6e5hfdghs5dt',
+                    guid: '6e5hfdghs5dt',
                     title: "Prince One",
                     content: "First image in another gallery",
                     publishDate: "23rd may 2000",
@@ -64,6 +68,7 @@ panels.forEach((panel) => {
                 },
                 {
                     id: 'jkjjfddswyj',
+                    guid: 'jkjjfddswyj',
                     title: "Prince Two",
                     content: "What's he been up to all these years",
                     publishDate: "24rd may 2000",
@@ -71,6 +76,7 @@ panels.forEach((panel) => {
                 },
                 {
                     id: 'bgdsr44',
+                    guid: 'bgdsr44',
                     title: "Prince Three",
                     content: "Lelatlalala",
                     publishDate: "24rd may 2000",
@@ -84,6 +90,7 @@ panels.forEach((panel) => {
             images: [
                 {
                     id: 'j49fda4j38rj',
+                    guid: 'j49fda4j38rj',
                     title: "Bowie One",
                     content: "This is the body content which is very long as i want it to dot dot dot with an eillpsesssese so that i can see it's wokring and then celebrate a job well done",
                     publishDate: "23rd may 2000",
@@ -91,6 +98,7 @@ panels.forEach((panel) => {
                 },
                 {
                     id: 'j49fj38rj',
+                    guid: 'j49fj38rj',
                     title: "Bowie Two",
                     content: "Less writing for the second card",
                     publishDate: "24rd may 2000",
@@ -98,6 +106,7 @@ panels.forEach((panel) => {
                 },
                 {
                     id: 'fsdbfht',
+                    guid: 'fsdbfht',
                     title: "Bowie Three",
                     content: "Less writing for the second card",
                     publishDate: "24rd may 2000",
@@ -112,6 +121,7 @@ panels.forEach((panel) => {
             images: [
                 {
                     id: 'yuthfdj49fda4j38rj',
+                    guid: 'yuthfdj49fda4j38rj',
                     title: "Lennon One",
                     content: "This is the body content which is very long as i want it to dot dot dot with an eillpsesssese so that i can see it's wokring and then celebrate a job well done",
                     publishDate: "23rd may 2000",
@@ -119,6 +129,7 @@ panels.forEach((panel) => {
                 },
                 {
                     id: 'hfmvbcxj49fj38rj',
+                    guid: 'hfmvbcxj49fj38rj',
                     title: "Lennon Two",
                     content: "Less writing for the second card",
                     publishDate: "24rd may 2000",
@@ -126,6 +137,7 @@ panels.forEach((panel) => {
                 },
                 {
                     id: 'mkyuuffsdbfht',
+                    guid: 'mkyuuffsdbfht',
                     title: "Lennon Three",
                     content: "Less writing for the second card",
                     publishDate: "24rd may 2000",
@@ -140,6 +152,7 @@ panels.forEach((panel) => {
             images: [
                 {
                     id: 'vhfgb-ikj49fda4j38rj',
+                    guid: 'vhfgb-ikj49fda4j38rj',
                     title: "Nina One",
                     content: "This is the body content which is very long as i want it to dot dot dot with an eillpsesssese so that i can see it's wokring and then celebrate a job well done",
                     publishDate: "23rd may 2000",
@@ -147,6 +160,7 @@ panels.forEach((panel) => {
                 },
                 {
                     id: 'j49fk-mm--j38rj',
+                    guid: 'j49fk-mm--j38rj',
                     title: "Nina Two",
                     content: "Less writing for the second card",
                     publishDate: "24rd may 2000",
@@ -154,6 +168,7 @@ panels.forEach((panel) => {
                 },
                 {
                     id: 'm-uym-myfsdbfht',
+                    guid: 'm-uym-myfsdbfht',
                     title: "Nina Three",
                     content: "Less writing for the second card",
                     publishDate: "24rd may 2000",
@@ -168,6 +183,7 @@ panels.forEach((panel) => {
             images: [
                 {
                     id: 'jsfg-dsf-49fda4j38rj',
+                    guid: 'jsfg-dsf-49fda4j38rj',
                     title: "Kate One",
                     content: "This is the body content which is very long as i want it to dot dot dot with an eillpsesssese so that i can see it's wokring and then celebrate a job well done",
                     publishDate: "23rd may 2000",
@@ -175,6 +191,7 @@ panels.forEach((panel) => {
                 },
                 {
                     id: 'j4asfsa-=adf-9fj38rj',
+                    guid: 'j4asfsa-=adf-9fj38rj',
                     title: "Kate Two",
                     content: "Less writing for the second card",
                     publishDate: "24rd may 2000",
@@ -182,6 +199,7 @@ panels.forEach((panel) => {
                 },
                 {
                     id: 'fsdasdfasd-s-adfbfht',
+                    guid: 'fsdasdfasd-s-adfbfht',
                     title: "Kate Three",
                     content: "Less writing for the second card",
                     publishDate: "24rd may 2000",

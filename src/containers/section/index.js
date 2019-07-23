@@ -10,7 +10,6 @@ import PanelThree           from '../../components/panels/panel3';
 
 //Data
 import {panels} from './data';
-console.log(panels);
 
 class Index extends Component {
         state = {
@@ -57,10 +56,14 @@ class Index extends Component {
                     });
 
                 });
+                
+                return true;
 
             });
 
 
+        }).catch(() => {
+            this.getPanels();
         });
 
     }

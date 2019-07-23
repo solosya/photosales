@@ -71,13 +71,13 @@ export class ArticleFeed extends Feed {
         this.limit      = options.limit      || 10;
         this.offset     = options.offset     || 0;
         this.options    = {
-            'nonPinnedOffset'   :   options.non_pinned || -1,
-            'loadtype'          :   options.loadtype || "home",
-            'offset'            :   options.offset || 0,
-            'blogid'            :   options.blogid || null,
-            'title'             :   options.title  || null,
-            'urlid'             :   options.urlid  || null,
-            'search'            :   options.searchterm    || null,
+            'nonPinnedOffset'   :   options.non_pinned  || -1,
+            'loadtype'          :   options.loadtype    || "home",
+            'offset'            :   options.offset      || 0,
+            'blogid'            :   options.blogid      || null,
+            'title'             :   options.title       || null,
+            'urlid'             :   options.urlid       || null,
+            'search'            :   options.searchterm  || null,
             'limit'             :   options.limit,
         };
     }

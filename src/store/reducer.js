@@ -1,12 +1,16 @@
 import * as actionTypes from './actions/actions';
 import Shop from '../containers/checkout/shop';
-import {favourites, cart} from '../containers/checkout/data';
+// import {favourites, cart} from '../containers/checkout/data';
 
 const intialState = {
     total: 0,
-    favourites,
-    cart
+    favourites: [],
+    cart: [],
+    isLoggedIn: true,
 }
+
+
+// localStorage.setItem('authUser', JSON.stringify(action.auth.user));
 
 const reducer = (state = intialState, action) => {
 
@@ -88,13 +92,44 @@ const reducer = (state = intialState, action) => {
 
     switch (action.type) {
 
+        case actionTypes.LOGIN_ON_REFRESH: {
+            return {
+                ...state,
+                isLoggedIn: action.isLoggedIn,
+                hasAccess: action.hasAccess
+            }
+        }
+        case actionTypes.FETCH_SAVED: {
+            console.log('fetched favourites in the reducer!!', action.media);
+
+            const favourites  = [...state.favourites];
+            const cart  = [...state.cart];
+
+            for(let i=0;i<action.media.length;i++) {
+                if (action.media[i].type === 'favourite') {
+                    favourites.push(action.media[i]);
+                }
+                if (action.media[i].type === 'cart') {
+                    cart.push(action.media[i]);
+                }
+            }
+
+            console.log(favourites, cart);
+            return {
+                ...state,
+                favourites,
+                cart
+            }
+        }
+
+
         case actionTypes.TOGGLE_FAVOURITE: {
-            console.log('in the REDUCER!!!');
+
             let favourites = [...state.favourites];
             const found = favourites.filter((item) => {
                 return action.photo.id !== item.id;
             });
-            console.log("FOUND?", found);
+
             // first attemp to remove the favourite
             if (found.length < favourites.length) {
                 favourites = found;
@@ -106,6 +141,8 @@ const reducer = (state = intialState, action) => {
                 favourites
             }
         }
+
+
         case actionTypes.TOGGLE_CART: {
             let cart = resetCartTotals([...state.cart]);
 

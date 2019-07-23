@@ -65,6 +65,7 @@
         color: $greyish;
         line-height: 1.46;
         @include flex-height(81px);
+        overflow:hidden;
 
     }
 

@@ -23,8 +23,8 @@ const panel_1 = (props) => {
             <Col classes={["col-12"]}>
 
                 <Row>
-                    {props.cards.slice(0,3).map((card) => {
-                        return <Col classes={["col-12", "col-md-3"]}>
+                    {props.cards.slice(0,3).map((card, i) => {
+                        return <Col key={i} classes={["col-12", "col-md-3"]}>
                             <Card 
                                 cardHandler={props.cardHandler} 
                                 data={props.cards[cardCount]} 

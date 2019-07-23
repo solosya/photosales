@@ -8,7 +8,10 @@
         display: flex;
         position:relative;
     }
-
+    
+    &__loggedin {
+        background:green;
+    }
 
     &__link {
         flex-grow:1;

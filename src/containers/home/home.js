@@ -23,7 +23,8 @@ import Favourites           from '../../components/favourites/favourites';
 import {ArticleFeed}        from '../../sdk/feed';
 
 //Actions
-import * as actionTypes     from '../../store/actions/actions';
+// import * as actionTypes     from '../../store/actions/actions';
+import * as actionCreators  from '../../store/actions/actions';
 
 
 class Home extends Component {
@@ -39,10 +40,12 @@ class Home extends Component {
         showGallery: false,
         showFavourites : false,
         selectedGallery: null,
-        cart: [],
     }
     
+    componentDidMount = () => {
+        this.props.fetchFavourites();
 
+    }
 
     getFeed = (panel) => {
         const options = {
@@ -102,6 +105,7 @@ class Home extends Component {
     }
 
     checkCartStatus = (photoid) => {
+        console.log(this.props.cart);
         const found = this.props.cart.filter((item) => {
             return photoid === item.id;
         });
@@ -148,6 +152,9 @@ class Home extends Component {
             )} >   
             </Modal>
 
+            const cartCount = (typeof this.props.cart !== 'undefined') ? this.props.cart.length : 0;
+            const favCount = (typeof this.props.favourites !== 'undefined') ? this.props.favourites.length : 0;
+console.log("HOME RENDER", this.props.cart, cartCount);
 
         return (
             <React.Fragment>
@@ -161,10 +168,11 @@ class Home extends Component {
                         <Col classes={["col-12"]}>
                             <Header 
                                 title               = {this.state.blogData.title} 
-                                favourites          = {this.props.favourites.length}
-                                cartItems           = {this.props.cart.length}
+                                favourites          = {favCount}
+                                cartItems           = {cartCount}
                                 linkHandler         = {this.props.linkHandler}
                                 favouritesHandler   = {this.showFavourites}
+                                loggedIn            = {this.props.isLoggedIn}
                                 larger 
                                 cart
                             />
@@ -200,11 +208,6 @@ class Home extends Component {
                 </Switch>
 
 
-
-
-
-
-
             </React.Fragment>
 
 
@@ -217,16 +220,16 @@ class Home extends Component {
 const mapStateToProps = state => {
     return {
         favourites : state.favourites,
-        cart: state.cart
+        cart: state.cart,
+        isLoggedIn: state.isLoggedIn
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        toggleFavourite: (photo) => {
-            dispatch({type:actionTypes.TOGGLE_FAVOURITE, photo})
-        },
-        toggleCart: (photo) => dispatch({type:actionTypes.TOGGLE_CART, photo})
+        toggleCart      : (photo) => dispatch( actionCreators.toggleCart(photo) ),
+        toggleFavourite : (photo) => dispatch( actionCreators.toggleFavourite(photo) ),
+        fetchFavourites : ()      => dispatch( actionCreators.fetchSaved() ),
     }
 
 }

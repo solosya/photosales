@@ -1,7 +1,7 @@
 //Libraries
 import React, {Component}   from 'react'
 import axios                from 'axios';
-import cloudinary           from 'cloudinary-core';
+// import cloudinary           from 'cloudinary-core';
 import cn                   from 'classnames';
 
 //Components
@@ -81,15 +81,13 @@ class Gallery extends Component {
                     originalClass: styles.gallery__img,
                 };
             });
-            console.log(images);
+            // console.log(images);
             this.setState({
                 items: images
             }, () => {
-                console.log(this.state);
+                // console.log(this.state);
             });
 
-
-            console.log('catcheded a nan error');
         });
 
 
@@ -103,7 +101,7 @@ class Gallery extends Component {
         this.setState({items}, () => {
             console.log("NEW STATE AFTER TOGGLE", this.state);
         }); 
-        console.log(items[this.state.current]);
+        // console.log(items[this.state.current]);
         this.props.favouriteHandler(items[this.state.current]);
     }
 
@@ -140,12 +138,12 @@ class Gallery extends Component {
 
 
     render() {
-        console.log(this.state);
+        // console.log(this.state);
         if (this.state.items.length === 0) return <Blockspinner />;
         const currentItem = this.state.items[this.state.current];
         const cartButtonText = currentItem.cart ? "REMOVE FROM CART": "ADD TO CART" ;
 
-        console.log("CURRENT ITEM", currentItem);
+        // console.log("CURRENT ITEM", currentItem);
         return (
 
             

@@ -17,7 +17,6 @@ import {BrowserRouter} from 'react-router-dom';
 // }
 
 
-
 const elem = document.getElementById('photo-sales');
 
 ReactDOM.render(

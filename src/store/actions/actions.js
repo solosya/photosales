@@ -1,13 +1,22 @@
+//Libraries
 import store from '../store';
-import Shop from '../../containers/checkout/shop';
 import axios from 'axios';
+import qs from  'qs';
 
+//Comopnents
+import Shop from '../../containers/checkout/shop';
+
+//Actions
+export const FETCH_SAVED            = 'FETCH_SAVED';
 export const TOGGLE_FAVOURITE       = 'TOGGLE_FAVOURITE';
 export const TOGGLE_CART            = 'TOGGLE_CART';
 export const ADD_ITEM_TO_CART       = 'ADD_ITEM_TO_CART';
 export const REMOVE_ITEM_FROM_CART  = 'REMOVE_ITEM_FROM_CART';
 export const UPDATE_CART_ITEM       = 'UPDATE_CART_ITEM';
 export const TOTAL_CART             = 'TOTAL_CART';
+export const LOGIN_ON_REFRESH       = 'LOGIN_ON_REFRESH';
+export const LOGIN                  = 'LOGIN';
+
 
 const getLineItemsFromCart = (cart) => {
     const items = [];
@@ -53,13 +62,90 @@ const calculateTotal = (cart) => {
 }
 
 
+export const login = (user) => {
+    console.log("******************* LOGGING IN ************************");
+    console.log(user);
+    return dispatch => {
+
+        axios.post('/api/auth/login', qs.stringify({"username": user.username, "password": user.password})).then((r) => {
+            console.log(r);
+            if (r.data.success === 1) {
+                dispatch({
+                    type: LOGIN_ON_REFRESH,
+                    isLoggedIn: true,
+                    hasAccess: true,
+                });
+            }
+        });
+    }
+
+
+
+}
+
+
+
+export const toggleFavourite = (photo) => {
+    console.log("TIGGLIG", photo);
+    
+    return dispatch => {
+
+        axios.post('/api/user/follow-media', qs.stringify({"guid": photo.guid, "type": 'favourite'})).then((r) => {
+            console.log(r);
+            if (r.data.success === 1) {
+                dispatch({
+                    type: TOGGLE_FAVOURITE,
+                    photo: photo
+                });
+            }
+        });
+    }
+}
+
+
+export const toggleCart = (photo) => {
+    console.log("taglling", photo);
+    
+    return dispatch => {
+
+        axios.post('/api/user/follow-media', qs.stringify({"guid": photo.guid, "type": 'cart'})).then((r) => {
+            console.log("TOGGLING CART", r);
+            if (r.data.success === 1) {
+                dispatch({
+                    type: TOGGLE_CART,
+                    photo: photo
+                });
+            }
+        });
+    }
+}
+
+
+export const fetchSaved = () => {
+
+    return dispatch => {
+
+        axios.get('/api/user/user-media').then((r) => {
+
+            const media = r.data.media.map((m) => {
+                m.url = m.path;
+                return m;
+            });
+            console.log("AFTER FAVOURITE FETCH", media);
+            dispatch({
+                type: FETCH_SAVED,
+                media
+            });
+        });
+    }
+}
+
 export const addItemToCart = (product) => {
     return dispatch => {
         dispatch(add(product));
         const cart = store.getState()['cart'];
         setTimeout(() => {
             dispatch(total(cart));
-
         });
     }
 }
@@ -73,6 +159,7 @@ export const updateCartItem = (product) => {
         });
     }
 }
+
 
 
 export const add = (product) => {

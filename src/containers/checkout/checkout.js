@@ -126,8 +126,9 @@ class Checkout extends Component {
         this.props.updateCartItem( product );
     }
 
-    handleRemovePhoto = (id) => {
-        this.props.toggleCart( {id} );
+    handleRemovePhoto = (photo) => {
+        console.log("REMOVING PHOTO", photo);
+        this.props.toggleCart( photo );
     }
 
 
@@ -237,6 +238,8 @@ class Checkout extends Component {
             
             cards = this.props.cart.map( (product, i) => {
                 const key = product.title + product.id;
+
+                console.log(product);
                 const card =
                     <CSSTransition key={key}
                         timeout={400}
@@ -266,13 +269,13 @@ class Checkout extends Component {
                 return card;
             });
 
-            purchases = this.state.purchaseCart.map((item, i) => {
-                return (
-                    <div key={i}>
-                        <p>{item.label} - {item.quantity} - ${item.priceTotal}</p>
-                    </div>
-                )
-            });
+            // purchases = this.state.purchaseCart.map((item, i) => {
+            //     return (
+            //         <div key={i}>
+            //             <p>{item.label} - {item.quantity} - ${item.priceTotal}</p>
+            //         </div>
+            //     )
+            // });
         }
 
 
@@ -297,6 +300,14 @@ class Checkout extends Component {
                             />
                         </Col>
                     </Row>
+
+
+                    {/* { !this.props.isLoggedIn &&  <Login /> } */}
+
+
+
+
+
 
                     <Row>
                         <Col classes={["col-12", "col-lg-8"]}>
@@ -342,20 +353,24 @@ class Checkout extends Component {
 
 
 
+                    { this.props.isLoggedIn &&  
+                        <Billing 
+                            handleBillingForm = {this.handleBillingForm}
+                            handleFindBillingErrors = {this.handleFindBillingErrors}
+                            {...this.state.billing}
+                        />
+                    }
 
-                    <Billing 
-                        handleBillingForm = {this.handleBillingForm}
-                        handleFindBillingErrors = {this.handleFindBillingErrors}
-                        {...this.state.billing}
-                    />
+
+                    { this.props.isLoggedIn &&  
+                        <StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">
+                            <Elements>
+                                <Payment handleSubmit={this.handlePayment}/>
+                            </Elements>
+                        </StripeProvider>
+                    }
 
 
-
-                    <StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">
-                        <Elements>
-                            <Payment handleSubmit={this.handlePayment}/>
-                        </Elements>
-                    </StripeProvider>
                 </Container>
 
 
@@ -371,16 +386,17 @@ const mapStateToProps = state => {
         favourites : state.favourites,
         cart: state.cart,
         total: state.total,
+        isLoggedIn: state.isLoggedIn
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        toggleFavourite: (photo) => dispatch({type:actionTypes.TOGGLE_FAVOURITE, photo}),
-        toggleCart: (photo) => dispatch({type:actionTypes.TOGGLE_CART, photo}),
-        addLineItemToCart: (product) => dispatch(actionCreators.addItemToCart(product)),
+        toggleCart:             (photo)     => dispatch(actionCreators.toggleCart(photo)),
+        updateCartItem:         (product)   => dispatch(actionCreators.updateCartItem(product)),
+        toggleFavourite:        (photo)     => dispatch(actionCreators.toggleFavourite(photo)),
+        addLineItemToCart:      (product)   => dispatch(actionCreators.addItemToCart(product)),
         removeLineItemFromCart: (productId, photoId) => dispatch({type:actionTypes.REMOVE_ITEM_FROM_CART, productId, photoId}),
-        updateCartItem: (product) => dispatch(actionCreators.updateCartItem(product))
     }
 
 }

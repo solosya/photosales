@@ -2,11 +2,14 @@
 import React, {Component}   from 'react'
 import TransitionGroup      from 'react-transition-group/TransitionGroup'; 
 import CSSTransition        from 'react-transition-group/CSSTransition'; 
+
 // Components
 import Card                 from '../../components/card/card.js'; 
-import Divider              from '../../components/divider/divider';
+// import Divider              from '../../components/divider/divider';
+
 // Styles
 import styles               from './favourites.module.scss';
+
 class Favourites extends Component {
 
 
@@ -31,11 +34,11 @@ class Favourites extends Component {
                         favourite
                     ></Card>
             </CSSTransition>;
-           
+
             return card;
         });
         
-
+        console.log(cards);
 
         return (
             <div className={styles.favourites}>
