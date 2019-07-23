@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 // import PropTypes            from 'prop-types'
 import {connect}            from 'react-redux'
-
+import {withRouter}         from 'react-router'
 //Components
 import Card                 from '../../components/card/card.js'
 import Row                  from '../../components/layout/row'
@@ -36,11 +36,13 @@ class LoginPage extends Component {
 
     login = () => {
         console.log('in the login handler');
-        this.props.login({...this.state});
+        this.props.login({...this.state}, this.props.history);
     }
 
-    guest(user) {
+    guest = () => {
         console.log('guesting the guest');
+        this.props.guest(this.props.history);
+
     }
 
     render() {
@@ -98,7 +100,7 @@ class LoginPage extends Component {
 
                     { cards.length > 0 &&
                         <>
-                            <Row>
+                            <Row margin="70px">
                                 <Col classes={["col-12"]}>
                                     <Header 
                                         title="My Cart"
@@ -137,12 +139,14 @@ const mapStateToProps = state => {
     }
 };
 const mapDispatchToProps = dispatch => {
+
     return {
-        toggleCart:             (photo) => dispatch(actionCreators.toggleCart(photo)),
-        toggleFavourite:        (photo) => dispatch(actionCreators.toggleFavourite(photo)),
-        login:                  (user)  => dispatch(actionCreators.login(user)),
+        toggleFavourite: (photo)         => dispatch(actionCreators.toggleFavourite(photo)),
+        toggleCart:      (photo)         => dispatch(actionCreators.toggleCart(photo)),
+        guest:           (router)        => dispatch(actionCreators.guest(router)),
+        login:           (user, router)  => dispatch(actionCreators.login(user, router)),
     }
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginPage));

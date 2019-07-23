@@ -1,21 +1,23 @@
 //Libraries
-import store from '../store';
-import axios from 'axios';
-import qs from  'qs';
+import store            from '../store'
+import axios            from 'axios'
+import qs               from  'qs'
+// import { browserHistory } from 'react-router';
 
 //Comopnents
-import Shop from '../../containers/checkout/shop';
+import Shop             from '../../containers/checkout/shop'
 
 //Actions
-export const FETCH_SAVED            = 'FETCH_SAVED';
-export const TOGGLE_FAVOURITE       = 'TOGGLE_FAVOURITE';
-export const TOGGLE_CART            = 'TOGGLE_CART';
-export const ADD_ITEM_TO_CART       = 'ADD_ITEM_TO_CART';
-export const REMOVE_ITEM_FROM_CART  = 'REMOVE_ITEM_FROM_CART';
-export const UPDATE_CART_ITEM       = 'UPDATE_CART_ITEM';
-export const TOTAL_CART             = 'TOTAL_CART';
-export const LOGIN_ON_REFRESH       = 'LOGIN_ON_REFRESH';
-export const LOGIN                  = 'LOGIN';
+export const FETCH_SAVED            = 'FETCH_SAVED'
+export const TOGGLE_FAVOURITE       = 'TOGGLE_FAVOURITE'
+export const TOGGLE_CART            = 'TOGGLE_CART'
+export const ADD_ITEM_TO_CART       = 'ADD_ITEM_TO_CART'
+export const REMOVE_ITEM_FROM_CART  = 'REMOVE_ITEM_FROM_CART'
+export const UPDATE_CART_ITEM       = 'UPDATE_CART_ITEM'
+export const TOTAL_CART             = 'TOTAL_CART'
+export const LOGIN_ON_REFRESH       = 'LOGIN_ON_REFRESH'
+export const LOGIN                  = 'LOGIN'
+export const TOGGLE_GUEST           = 'TOGGLE_GUEST'
 
 
 const getLineItemsFromCart = (cart) => {
@@ -62,11 +64,8 @@ const calculateTotal = (cart) => {
 }
 
 
-export const login = (user) => {
-    console.log("******************* LOGGING IN ************************");
-    console.log(user);
+export const login = (user, router) => {
     return dispatch => {
-
         axios.post('/api/auth/login', qs.stringify({"username": user.username, "password": user.password})).then((r) => {
             console.log(r);
             if (r.data.success === 1) {
@@ -75,13 +74,22 @@ export const login = (user) => {
                     isLoggedIn: true,
                     hasAccess: true,
                 });
+                router.push(window.basePath + '/checkout');
             }
         });
     }
-
-
-
 }
+
+
+export const guest = (router) => {
+    return dispatch => {
+        dispatch({
+            type: TOGGLE_GUEST,
+        });
+        router.push(window.basePath + '/checkout');
+    }
+}
+
 
 
 

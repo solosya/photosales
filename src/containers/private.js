@@ -5,16 +5,17 @@ import { connect }              from 'react-redux';
 class EnsureLoggedInContainer extends Component {
 
     render() {
-        if (this.props.isLoggedIn) {
+        if (this.props.isLoggedIn || this.props.guest) {
             return this.props.children;
         } 
-        return <Redirect to="/login" />
+        return <Redirect to={window.basePath + "/login"} />
     }
 }
 
 function mapStateToProps(state, ownProps) {
     return {
         isLoggedIn: state.isLoggedIn,
+        guest: state.guest
     }
 }
 

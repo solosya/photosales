@@ -29,9 +29,9 @@ delete window.vigblat;
 const urlPath = window.location.pathname.split("/");
 
 if (urlPath[1] === 'page') {
-    window.layoutTemplate = urlPath[1] + '/' + urlPath[2] || 'photos';
+    window.basePath = '/' + urlPath[1] + '/' + urlPath[2] || 'photos';
 } else {
-    window.layoutTemplate = urlPath[1] || 'photos';
+    window.basePath = '/' + urlPath[1] || 'photos';
 }
 
 
@@ -39,8 +39,8 @@ if (window._appJsConfig) {
     console.log(window._appJsConfig);
     store.dispatch({
         type: actionTypes.LOGIN_ON_REFRESH, 
-        isLoggedIn: true === window._appJsConfig.isUserLoggedIn === 1, 
-        hasAccess: true === window._appJsConfig.userHasBlogAccess === 1
+        isLoggedIn: (true === (window._appJsConfig.isUserLoggedIn === 1)), 
+        hasAccess:  (true === (window._appJsConfig.userHasBlogAccess === 1))
     });
 }
 
@@ -50,7 +50,7 @@ class App extends Component {
 
     linkHandler = (page) => {
         if (typeof page === 'undefined') page = "";
-        this.props.history.push("/"+window.layoutTemplate + page);
+        this.props.history.push(window.basePath + page);
     }
 
     render() {
@@ -62,19 +62,18 @@ class App extends Component {
                     atActive={{ opacity: 1 }}
                     className="switch-wrapper"
                 >
+                    <Route path={window.basePath + "/login"} component={Login} />
 
-                    <Route path="/login" component={Login} />
-
-                    <Route path={"/" + window.layoutTemplate + "/checkout"} render={ () => 
+                    <Route path={window.basePath + "/checkout"} render={ () => 
                         <EnsureLoggedInContainer>
                             <Checkout linkHandler={this.linkHandler}/> 
                         </EnsureLoggedInContainer> 
                     } />
 
-                    <Route path={"/" + window.layoutTemplate + "/:section"} render={ () => 
+                    <Route path={window.basePath + "/:section"} render={ () => 
                         <Home linkHandler={this.linkHandler}/>} />
                     
-                    <Route path="/" render={ () => 
+                    <Route path={window.basePath} render={ () => 
                         <Home linkHandler={this.linkHandler}/>} />
 
 

@@ -55,6 +55,7 @@
     "react-infinite-calendar": "^2.3.1",
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.1",
+    "react-router-redux": "^4.0.8",
     "react-router-transition": "^1.3.0",
     "react-select": "^3.0.4",
     "react-stripe-elements": "^4.0.0",

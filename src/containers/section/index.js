@@ -24,10 +24,13 @@ class Index extends Component {
             const pagePanels = pages.photos || null;
             if (!pagePanels) return;
 
-            pagePanels.sections.map( (panel, i) => {
+            let panelData = [];
+
+            const fetching = pagePanels.sections.map( (panel, i) => {
                 
-                this.props.feedHandler(panel).then( r => {
-                    let feed = r.data.articles.map(article => {
+                const feed = this.props.feedHandler(panel).then( r => {
+                    
+                    panel.feed = r.data.articles.map(article => {
                         const media = article.featuredMedia;
                         return {
                             id: article.articleId,
@@ -46,20 +49,32 @@ class Index extends Component {
                         }
                     });
 
-                    panel.feed = feed;
-                    const panels = [...this.state.panels, panel];
-
-                    this.setState({
-                        panels
-                    }, () => {
-                        console.log(this.state.panels);
-                    });
+                    console.log(panel.title);
+                    return panel;
+                    // panelData.push(panel)
+                    // const panels = [...this.state.panels, panel];
 
                 });
-                
-                return true;
+
+                panelData.push(feed);
 
             });
+
+            axios.all(panelData).then((results) => {
+                console.log(results);
+                this.setState({
+                    panels: results
+                }, () => {
+                    console.log(this.state.panels);
+                });
+
+            });
+
+            // this.setState({
+            //     panels: panelData
+            // }, () => {
+            //     console.log(this.state.panels);
+            // });
 
 
         }).catch(() => {

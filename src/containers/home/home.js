@@ -188,7 +188,7 @@ console.log("HOME RENDER", this.props.cart, cartCount);
                 </Container>
 
                 <Switch>
-                    <Route path={"/" + window.layoutTemplate + "/:section"} render={(props) => 
+                    <Route path={window.basePath + "/:section"} render={(props) => 
                         <Section {...this.state}
                             title={"Galleries"}
                             cardHandler={this.showGallery} 
@@ -197,7 +197,7 @@ console.log("HOME RENDER", this.props.cart, cartCount);
                         /> 
                     } />
 
-                    <Route path={"/" + window.layoutTemplate} render={(props) => 
+                    <Route path={window.basePath} render={(props) => 
                         <Index {...this.state} 
                             cardHandler={this.showGallery} 
                             linkHandler={this.props.linkHandler} 

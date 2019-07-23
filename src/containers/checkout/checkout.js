@@ -353,22 +353,18 @@ class Checkout extends Component {
 
 
 
-                    { this.props.isLoggedIn &&  
-                        <Billing 
-                            handleBillingForm = {this.handleBillingForm}
-                            handleFindBillingErrors = {this.handleFindBillingErrors}
-                            {...this.state.billing}
-                        />
-                    }
+                    <Billing 
+                        handleBillingForm = {this.handleBillingForm}
+                        handleFindBillingErrors = {this.handleFindBillingErrors}
+                        {...this.state.billing}
+                    />
 
 
-                    { this.props.isLoggedIn &&  
-                        <StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">
-                            <Elements>
-                                <Payment handleSubmit={this.handlePayment}/>
-                            </Elements>
-                        </StripeProvider>
-                    }
+                    <StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">
+                        <Elements>
+                            <Payment handleSubmit={this.handlePayment}/>
+                        </Elements>
+                    </StripeProvider>
 
 
                 </Container>

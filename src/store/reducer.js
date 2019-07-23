@@ -6,7 +6,8 @@ const intialState = {
     total: 0,
     favourites: [],
     cart: [],
-    isLoggedIn: true,
+    isLoggedIn: false,
+    guest:false
 }
 
 
@@ -91,6 +92,14 @@ const reducer = (state = intialState, action) => {
 
 
     switch (action.type) {
+
+        case actionTypes.TOGGLE_GUEST: {
+            const guest  = !state.guest;
+            return {
+                ...state,
+                guest
+            }
+        }
 
         case actionTypes.LOGIN_ON_REFRESH: {
             return {

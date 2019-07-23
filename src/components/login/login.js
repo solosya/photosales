@@ -8,24 +8,22 @@ import Button               from '../button/button';
 
 const login = (props) => {
 
-        return (
-            <LoginContainer>
-                <Title>Returning as a subscriber</Title>
+    return (
+        <LoginContainer>
+            <Title>Returning as a subscriber</Title>
 
-                <FormLabel>Email</FormLabel>
-                <FormInput error="" type="text" value={props.username} placeholder="eg. johnsmith@gmail.com" onChange={(e) => props.formHandler(e.target.value, "username")} />
-                <ErrorLabel active="">This field is required</ErrorLabel>
+            <FormLabel>Email</FormLabel>
+            <FormInput error="" type="text" value={props.username} placeholder="eg. johnsmith@gmail.com" onChange={(e) => props.formHandler(e.target.value, "username")} />
+            <ErrorLabel active="">This field is required</ErrorLabel>
 
 
-                <FormLabel>Password</FormLabel>
-                <FormInput error="" type="password" value={props.password} placeholder="" onChange={(e) => props.formHandler(e.target.value, "password")} />
-                <ErrorLabel active="">This field is required</ErrorLabel>
+            <FormLabel>Password</FormLabel>
+            <FormInput error="" type="password" value={props.password} placeholder="" onChange={(e) => props.formHandler(e.target.value, "password")} />
+            <ErrorLabel active="">This field is required</ErrorLabel>
 
-                <Button handler={props.loginHandler} classes={["button", "button--red", "button--top-30", "button--center"]}>CONTINUE TO CHECKOUT</Button>
-            </LoginContainer>
-        )
-        
-    
+            <Button handler={props.loginHandler} classes={["button", "button--red", "button--top-30", "button--center"]}>CONTINUE TO CHECKOUT</Button>
+        </LoginContainer>
+    )
     
 }
 
@@ -35,6 +33,7 @@ const LoginContainer = styled.div`
     height: 385px;
     background: rgba(231,231,231, 0.6);
     padding:35px;
+    padding-left:50px;
 `
 
 const Title = styled.h2`
@@ -58,6 +57,7 @@ const FormLabel = styled.label`
 `
 
 const FormInput = styled.input`
+    box-sizing:border-box;
     font-family: 'Roboto';
     width:95%;
     padding:5px 10px;
@@ -89,12 +89,5 @@ const ErrorLabel = styled.p`
     `}
 
 `
-
-
-
-
-
-
-
 
 export default login;
