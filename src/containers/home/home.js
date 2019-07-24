@@ -1,50 +1,42 @@
 //Libraries
-import React, {Component}   from 'react';
-import {connect}            from 'react-redux';
-// import axios                from 'axios';
-import {Route, Switch}      from 'react-router-dom';
+import React, {Component}   from 'react'
+import {connect}            from 'react-redux'
+import {withRouter}         from 'react-router'
+import {Route, Switch}      from 'react-router-dom'
 
 //Routes
-import Index                from '../section/index';
-import Section              from '../section/section';
-
+import Index                from '../section/index'
+import Section              from '../section/section'
 
 //Components
-import Row                  from '../../components/layout/row';
-import Col                  from '../../components/layout/col';
-import Container            from '../../components/layout/container';
-import Search               from '../../components/search/search';
-import Header               from '../../components/partials/section_header.js';
-import Modal                from '../../components/modals/modal';
-import Gallery              from '../../components/gallery/gallery';
-import Favourites           from '../../components/favourites/favourites';
+import Row                  from '../../components/layout/row'
+import Col                  from '../../components/layout/col'
+import Container            from '../../components/layout/container'
+import Search               from '../../components/search/search'
+import Header               from '../../components/partials/section_header.js'
+import Modal                from '../../components/modals/modal'
+import Gallery              from '../../components/gallery/gallery'
+import Favourites           from '../../components/favourites/favourites'
 
 //Helpers
-import {ArticleFeed}        from '../../sdk/feed';
+import {ArticleFeed}        from '../../sdk/feed'
 
 //Actions
-// import * as actionTypes     from '../../store/actions/actions';
-import * as actionCreators  from '../../store/actions/actions';
+import * as actionCreators  from '../../store/actions/actions'
 
 
 class Home extends Component {
 
     state = {
-        networkData: null,
-        blogData: {
-            title: "Photo sales",
-            url: "www.picturebooth.com",
-            guid: "b6d174e5-70d2-4274-900a-46632b9b3e56",
-        },
-        photos: null,
+        searchResults: [],
         showGallery: false,
         showFavourites : false,
         selectedGallery: null,
     }
     
     componentDidMount = () => {
+        console.log('mounting HOME');
         this.props.fetchFavourites();
-
     }
 
     getFeed = (panel) => {
@@ -58,6 +50,9 @@ class Home extends Component {
         return Feed.fetch();
     }
 
+    searchResults = (term) => {
+        this.props.history.push(window.basePath + '/search?for=' + term);
+    }
 
     showGallery = (gallery) => {
         this.setState({
@@ -93,32 +88,8 @@ class Home extends Component {
         document.body.removeAttribute('style', 'overflow: hidden;')
     }
 
-    checkFavouriteStatus = (photoid) => {
-
-        const found = this.props.favourites.filter((item) => {
-            return photoid === item.id;
-        });
-        if (found.length > 0) {
-            return true;
-        }
-        return false;
-    }
-
-    checkCartStatus = (photoid) => {
-        console.log(this.props.cart);
-        const found = this.props.cart.filter((item) => {
-            return photoid === item.id;
-        });
-        if (found.length > 0) {
-            return true;
-        }
-        return false;
-    }
-
     photoStatusHandler = (photoid) => {
-        const favourite = this.checkFavouriteStatus(photoid);
-        const cart = this.checkCartStatus(photoid);
-        return {favourite, cart};
+        return this.props.photoStatusHandler(photoid, this.props.favourites, this.props.cart);
     } 
 
 
@@ -152,10 +123,9 @@ class Home extends Component {
             )} >   
             </Modal>
 
-            const cartCount = (typeof this.props.cart !== 'undefined') ? this.props.cart.length : 0;
-            const favCount = (typeof this.props.favourites !== 'undefined') ? this.props.favourites.length : 0;
-console.log("HOME RENDER", this.props.cart, cartCount);
-
+        const cartCount = (typeof this.props.cart !== 'undefined') ? this.props.cart.length : 0;
+        const favCount = (typeof this.props.favourites !== 'undefined') ? this.props.favourites.length : 0;
+        console.log("HOME RENDER", this.props.cart, cartCount);
         return (
             <React.Fragment>
                 
@@ -167,7 +137,7 @@ console.log("HOME RENDER", this.props.cart, cartCount);
                     <Row>
                         <Col classes={["col-12"]}>
                             <Header 
-                                title               = {this.state.blogData.title} 
+                                title               = {this.props.pageTitle} 
                                 favourites          = {favCount}
                                 cartItems           = {cartCount}
                                 linkHandler         = {this.props.linkHandler}
@@ -181,19 +151,22 @@ console.log("HOME RENDER", this.props.cart, cartCount);
     
                     <Row>
                         <Col classes={["col-12", "col-md-9"]}>
-                            <Search />
+                            <Search searchHandler={this.searchResults} />
                         </Col>
                     </Row>
     
                 </Container>
 
+
                 <Switch>
+
+
                     <Route path={window.basePath + "/:section"} render={(props) => 
                         <Section {...this.state}
-                            title={"Galleries"}
-                            cardHandler={this.showGallery} 
+                            title = {"Galleries"}
+                            cardHandler = {this.showGallery} 
                             linkHandler = {this.props.linkHandler}
-                            feedHandler={this.getFeed}
+                            feedHandler = {this.getFeed}
                         /> 
                     } />
 
@@ -206,7 +179,6 @@ console.log("HOME RENDER", this.props.cart, cartCount);
                     } />
                     
                 </Switch>
-
 
             </React.Fragment>
 
@@ -221,7 +193,8 @@ const mapStateToProps = state => {
     return {
         favourites : state.favourites,
         cart: state.cart,
-        isLoggedIn: state.isLoggedIn
+        isLoggedIn: state.isLoggedIn,
+        pageTitle: state.pageTitle
     }
 };
 
@@ -234,4 +207,4 @@ const mapDispatchToProps = dispatch => {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default withRouter( connect(mapStateToProps, mapDispatchToProps)(Home) );

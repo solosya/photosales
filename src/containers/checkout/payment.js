@@ -13,7 +13,7 @@ class Payment extends Component {
     constructor(props) {
         super(props);
         this.submit = this.submit.bind(this);
-      }
+    }
     
     async submit(ev) {
         let {token} = await this.props.stripe.createToken({name: "Name"});

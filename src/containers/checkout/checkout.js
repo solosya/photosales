@@ -382,7 +382,8 @@ const mapStateToProps = state => {
         favourites : state.favourites,
         cart: state.cart,
         total: state.total,
-        isLoggedIn: state.isLoggedIn
+        isLoggedIn: state.isLoggedIn,
+        pageTitle: state.pageTitle
     }
 };
 

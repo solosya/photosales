@@ -1,29 +1,34 @@
 @import "./card";
 
-@mixin card-1-base() {
+@mixin card-2-base() {
     margin-left: -20px;
     margin-right: -20px;
 
     .c-cards-view {
-        @include flex-direction(column, vertical);
+        @include flex-direction(row, horizontal);
+        box-shadow:none;
         background: $white;
-        
+
 
         &__container {
-            padding: 30px 25px 30px 25px;
+            padding: 0;
         }
 
         &__category {
-            margin-bottom: 11px;
         }
 
         &__heading {
-            @include flex-height(53px);
-            @include font-size(20);
             margin:0;
+            @include flex-height(25px);
+            @include font-size(18);
+            margin-bottom:10px;
+            font-weight: $weightMedium;
         }
         &__description {
-            display:none;
+            @include font-size(13);
+            line-height: 1.54;
+            @include flex-height(62px);
+            color: $greyish;
         }
 
         &__time {
@@ -50,46 +55,29 @@
                 overflow: hidden;
             }
         }
-
-        &.social {
-
-            .social-icon {
-                @include size(30px);
-
-                &:before {
-                    @include font-size(13);
-                    line-height: 32px;
-                }
-            }
-
-            &.without-image {
-                .c-cards-view__container {
-                    padding-top: 40px;
-                }
-            }
-        }
-
     }
 }
 
-.card-1-mobile {
+.card-2-mobile {
     @media #{$mobile} {
-        @include card-1-base();
+        @include card-2-base();
 
     }
 }
 
 
-@mixin card-1-tablet-base {
-    @include card-1-base();
+@mixin card-2-tablet-base {
+    @include card-2-base();
     margin-left: 0;
     margin-right: 0;
+    
     .c-cards-view {
-        // height: 493px;
-        background:orange;
-
+        height: 160px;
+        background:green;
         &__media {
-            @include flex-height(228px);
+            @include flex-height(160px);
+            @include flex-width(240px);
+            margin-right: 36px;
 
             img {
                 height: 100%;
@@ -98,17 +86,12 @@
         }
 
         &__category {
-            margin-bottom: 9px;
         }
 
         &__heading {
-            @include flex-height(40px);
-            @include font-size(26);
-            line-height:1.36;
         }
-
         &__description {
-            display:none;
+            @include flex-height(60px);
         }
 
 
@@ -119,7 +102,6 @@
                     padding: 30px;
                 }
                 &__category {
-                    margin-bottom: 50px;
                 }
         
                 &__heading {
@@ -127,7 +109,7 @@
                 }
                 &__description {
                     margin-top: 5px;
-                    @include flex-height(225px);
+                    // @include flex-height(225px);
                     @include font-size(15);
                     line-height: 1.9;
                 }
@@ -144,17 +126,25 @@
 
 }
 
-.card-1-tablet {
+.card-2-tablet {
     @media #{$tablet} {
-        @include card-1-tablet-base();
+        @include card-2-tablet-base();
     }
 
 }
-.card-1-desktop {
+.card-2-desktop {
 
     @media #{$desktop-up} {
 
-        @include card-1-tablet-base();
+        &:not(:last-child) {
+            margin-bottom:20px;
+            padding-bottom:20px;
+            border-bottom: 1px solid rgba($greyish, 0.8);
+        }
+
+
+
+        @include card-2-tablet-base();
     }
 }
 

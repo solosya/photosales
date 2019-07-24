@@ -4,7 +4,7 @@ import qs from  'qs';
 
 export class Feed {
     fetch = () => {
-
+        console.log(this.options);
         if (this.options.search != null) {
             this.options.blogid = this.options.blogid; // search takes an id instead of a guid
         }
@@ -52,14 +52,17 @@ export class Feed {
             url = '/api/search';
             requestType = 'get';
         }
-        console.log(requestType, url + "?" +  qs.stringify(requestData));
+
+        if (this.options.mediaSearch) {
+            console.log('THIS IS A MEDIA SEARCH')
+            requestData['keyword'] = this.options.mediaSearch;
+            url = '/api/search/media';
+            requestType = 'get';
+        }
+
+
+        console.log(requestType, url + "?" +  qs.stringify( requestData ) );
         return axios[requestType](url + "?" + qs.stringify( requestData ) );
-        // return axios.get('/api/search?s=this')
-            // .then( response => {
-            //     console.log(response);
-            //     // var data = response.data;
-            // }).catch( error => {
-        // });    
     }
 }
 
@@ -78,6 +81,7 @@ export class ArticleFeed extends Feed {
             'title'             :   options.title       || null,
             'urlid'             :   options.urlid       || null,
             'search'            :   options.searchterm  || null,
+            'mediaSearch'       :   options.mediaSearch || null,
             'limit'             :   options.limit,
         };
     }

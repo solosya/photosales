@@ -1,11 +1,22 @@
-import React, {Component}   from 'react';
-import cn                   from 'classnames';
-import styles               from './search.module.scss';
-import formstyles           from '../../styles/form.module.scss';
-import moment               from 'moment';
-import Button               from '../button/button';
-import Datepicker           from '../datepicker/datepicker';
-import {ArticleFeed}        from '../../sdk/feed';
+//Libraries
+import React, {Component}   from 'react'
+// import {withRouter}         from 'react-router'
+import axios                from 'axios'
+import qs                   from  'qs'
+import cn                   from 'classnames'
+// import Datepicker           from '../datepicker/datepicker'
+import moment               from 'moment'
+
+//Components
+import Button               from '../button/button'
+
+//Utils
+import {ArticleFeed}        from '../../sdk/feed'
+
+//Styles
+import styles               from './search.module.scss'
+import formstyles           from '../../styles/form.module.scss'
+
 
 class Search extends Component {
     
@@ -28,22 +39,10 @@ class Search extends Component {
     }
 
 
-    search = () => {
-        const options = {
-            offset          : 0,
-            limit           : 10,
-            non_pinned      : 0,
-            searchterm      : this.state.search,
-        };
-
-        const Feed = new ArticleFeed(options);
-        const photos = Feed.fetch();
-        this.setState({photos: photos});
-    }
-
-
-    searchTerm = (e) => {
-        this.setState({search: e.target.value});
+    search = (search) => {
+        this.setState({search}, () => {
+            console.log(this.state);
+        });
     }
 
 
@@ -81,17 +80,23 @@ class Search extends Component {
 
     }
 
+    keyPressed = (e) => {
+        if (e.key === "Enter") {
+            this.props.searchHandler(this.state.search)
+        }
+    }
+
     render() {
 
         return (
             <div className={styles.search}>
                 <div className="">
-                    <input value={this.props.search} onChange={(e) => this.searchTerm(e)} type="search" className={cn( formstyles['c-form__input'], formstyles['c-form__input--bordered'])} name="search" id="search" placeholder="Search" />
+                    <input onKeyPress={this.keyPressed} value={this.props.search} onChange={(e) => this.search(e.target.value)} type="search" className={cn( formstyles['c-form__input'], formstyles['c-form__input--bordered'])} name="search" id="search" placeholder="Search" />
                     <span className={styles["search__icon"]}></span>
                 </div>
 
 
-                <div className={styles.search__dates}>
+                {/* <div className={styles.search__dates}>
 
                     <Datepicker 
                         index    = {1} 
@@ -127,9 +132,9 @@ class Search extends Component {
                     />
 
 
-                </div>
+                </div> */}
 
-                <Button handler={this.search} classes={["button", "button--red", "button--top-30"]}>SEARCH</Button>
+                <Button handler={() => this.props.searchHandler(this.state.search) } classes={["button", "button--red", "button--top-30"]}>SEARCH</Button>
 
             </div>
 

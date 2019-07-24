@@ -19,14 +19,16 @@ class Index extends Component {
     componentDidMount () {
         // this.getPanels();
         // return;
+
         this.getThemeConfig().then( (r) => {
+
             const pages = r.data.data.page;
             const pagePanels = pages.photos || null;
             if (!pagePanels) return;
 
             let panelData = [];
 
-            const fetching = pagePanels.sections.map( (panel, i) => {
+            pagePanels.sections.map( (panel, i) => {
                 
                 const feed = this.props.feedHandler(panel).then( r => {
                     
@@ -62,6 +64,7 @@ class Index extends Component {
 
             axios.all(panelData).then((results) => {
                 console.log(results);
+                // NEED TO ORDER PANELS
                 this.setState({
                     panels: results
                 }, () => {

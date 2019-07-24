@@ -30,7 +30,8 @@ const panel_1 = (props) => {
                                 data={props.cards[cardCount]} 
                                 count={cardCount++}
                                 panel={props.title}
-                                styles="card-1-mobile card-1-tablet card-1-desktop"
+                                styles = {["card-1-mobile", "card-1-tablet", "card-1-desktop"]}
+                                // styles="card-1-mobile card-1-tablet card-1-desktop"
                             />
                         </Col>
                     })}

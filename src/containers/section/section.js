@@ -92,7 +92,8 @@ class Section extends Component {
                                                     count       = {this.cardCount++}
                                                     panel       = {this.props.title}
                                                     cardHandler = {this.showGallery} 
-                                                    styles      = "card-1-mobile card-1-tablet card-1-desktop"
+                                                    styles      = {["card-1-mobile", "card-1-tablet", "card-1-desktop"]}
+                                                    // styles      = "card-1-mobile card-1-tablet card-1-desktop"
                                                 />
                                             </Col>
                                         )
@@ -113,8 +114,9 @@ class Section extends Component {
                                             data        = {card} 
                                             count       = {this.cardCount++}
                                             panel       = {this.props.title}
-                                            cardHandler = {this.showGallery} 
-                                            styles      = "card-1-mobile card-1-tablet card-1-desktop"
+                                            cardHandler = {this.showGallery}
+                                            styles      = {["card-1-mobile", "card-1-tablet", "card-1-desktop"]}
+                                            // styles      = "card-1-mobile card-1-tablet card-1-desktop"
                                         />
 
                                     </Col>

@@ -19,7 +19,6 @@ import * as actionCreators  from '../../store/actions/actions'
 class LoginPage extends Component {
 
     state = {
-        pageTitle: "Photo Sales",
         username: "",
         password:""
     }
@@ -55,7 +54,7 @@ class LoginPage extends Component {
                 <Card 
                     key         = {i}
                     data        = {product}
-                    styles      = "card-2-mobile card-2-tablet card-2-desktop"
+                    styles      = {["card-2-mobile", "card-2-tablet", "card-2-desktop"]}
                     cardHandler = {() => { return false;}}
                     favHandler  = {this.props.favHandler}
                     cartHandler = {this.props.cartHandler}
@@ -73,7 +72,7 @@ class LoginPage extends Component {
                 <Row>
                     <Col classes={["col-12"]}>
                         <Header 
-                            title               = {this.state.pageTitle} 
+                            title               = {this.props.pageTitle} 
                             cartItems           = {this.props.cart.length}
                             favourites          = {this.props.favourites.length}
                             linkHandler         = {this.props.linkHandler}
@@ -134,7 +133,9 @@ const mapStateToProps = state => {
         favourites : state.favourites,
         cart: state.cart,
         isLoggedIn: state.isLoggedIn,
-        tempLoggedIn: state.tempLoggedIn
+        tempLoggedIn: state.tempLoggedIn,
+        pageTitle: state.pageTitle
+
 
     }
 };

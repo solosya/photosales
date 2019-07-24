@@ -3,11 +3,13 @@ import Shop from '../containers/checkout/shop';
 // import {favourites, cart} from '../containers/checkout/data';
 
 const intialState = {
-    total: 0,
-    favourites: [],
-    cart: [],
-    isLoggedIn: false,
-    guest:false
+    cart        : [],
+    live        : true,
+    total       : 0,
+    guest       : false,
+    favourites  : [],
+    isLoggedIn  : false,
+    pageTitle   : "Photo Sales"
 }
 
 
@@ -109,7 +111,7 @@ const reducer = (state = intialState, action) => {
             }
         }
         case actionTypes.FETCH_SAVED: {
-            console.log('fetched favourites in the reducer!!', action.media);
+            // console.log('fetched favourites in the reducer!!', action.media);
 
             const favourites  = [...state.favourites];
             const cart  = [...state.cart];
@@ -123,7 +125,7 @@ const reducer = (state = intialState, action) => {
                 }
             }
 
-            console.log(favourites, cart);
+            // console.log(favourites, cart);
             return {
                 ...state,
                 favourites,
@@ -133,7 +135,7 @@ const reducer = (state = intialState, action) => {
 
 
         case actionTypes.TOGGLE_FAVOURITE: {
-
+            console.log('toggleing the favourite');
             let favourites = [...state.favourites];
             const found = favourites.filter((item) => {
                 return action.photo.id !== item.id;
@@ -145,6 +147,9 @@ const reducer = (state = intialState, action) => {
             } else { // add it
                 favourites.push(action.photo);
             }
+
+            localStorage.setItem('favourites', JSON.stringify(favourites));
+            
             return {
                 ...state,
                 favourites
@@ -166,6 +171,8 @@ const reducer = (state = intialState, action) => {
             }
 
             var {total, finalCart} = calculateTotal(cart);
+            
+            localStorage.setItem('cart', JSON.stringify(finalCart));
 
             return {
                 ...state,
@@ -254,7 +261,7 @@ const reducer = (state = intialState, action) => {
         }
 
         case actionTypes.TOTAL_CART: {
-            console.log(action);
+            // console.log(action);
             // const cart = [...state.cart];
             // let {total, finalCart} = calculateTotal(cart);
             return {

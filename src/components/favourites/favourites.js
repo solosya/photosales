@@ -27,7 +27,7 @@ class Favourites extends Component {
                     <Card 
                         key={i}
                         data={fav}
-                        styles="card-2-mobile card-2-tablet card-2-desktop"
+                        styles = {["card-2-mobile", "card-2-tablet", "card-2-desktop"]}
                         cardHandler={() => { return false;}}
                         favHandler={this.props.favHandler}
                         cartHandler={this.props.cartHandler}

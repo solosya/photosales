@@ -96,18 +96,38 @@ export const guest = (router) => {
 export const toggleFavourite = (photo) => {
     console.log("TIGGLIG", photo);
     
-    return dispatch => {
+    const loggedIn = store.getState()['isLoggedIn'];
+    console.log(loggedIn);
+    if (loggedIn) {
 
-        axios.post('/api/user/follow-media', qs.stringify({"guid": photo.guid, "type": 'favourite'})).then((r) => {
-            console.log(r);
-            if (r.data.success === 1) {
+        return dispatch => {
+    
+            axios.post('/api/user/follow-media', qs.stringify({"guid": photo.guid, "type": 'favourite'})).then((r) => {
+                console.log(r);
+                if (r.data.success === 1) {
+                    dispatch({
+                        type: TOGGLE_FAVOURITE,
+                        photo: photo
+                    });
+                }
+            }).catch(() => {
+                // use local storage
                 dispatch({
                     type: TOGGLE_FAVOURITE,
                     photo: photo
                 });
-            }
+            });
+        }
+    }
+
+    return dispatch => {
+        // use local storage
+        dispatch({
+            type: TOGGLE_FAVOURITE,
+            photo: photo
         });
     }
+
 }
 
 
@@ -116,20 +136,39 @@ export const toggleCart = (photo) => {
     
     return dispatch => {
 
-        axios.post('/api/user/follow-media', qs.stringify({"guid": photo.guid, "type": 'cart'})).then((r) => {
-            console.log("TOGGLING CART", r);
-            if (r.data.success === 1) {
+        const loggedIn = store.getState()['isLoggedIn'];
+        if (loggedIn) {
+    
+            axios.post('/api/user/follow-media', qs.stringify({"guid": photo.guid, "type": 'cart'})).then((r) => {
+                console.log("TOGGLING CART", r);
+                if (r.data.success === 1) {
+                    dispatch({
+                        type: TOGGLE_CART,
+                        photo: photo
+                    });
+                }
+            }).catch(() => {
+                // use local storage
                 dispatch({
                     type: TOGGLE_CART,
                     photo: photo
                 });
-            }
-        });
+            });
+        } else {
+            // use local storage
+            dispatch({
+                type: TOGGLE_CART,
+                photo: photo
+            });
+        }
     }
 }
 
 
 export const fetchSaved = () => {
+
+    const loggedIn = store.getState()['isLoggedIn'];
+    //fetch local state to compare against logged in state
 
     return dispatch => {
 

@@ -1,20 +1,19 @@
 //Libraries
-import React, { Component } from 'react';
-import { Route }            from 'react-router-dom';
-import { withRouter }       from 'react-router';
-import { AnimatedSwitch }   from 'react-router-transition';
-import axios                from 'axios';
+import React, { Component }     from 'react'
+import { Route, Switch }        from 'react-router-dom'
+import { withRouter }           from 'react-router'
+import axios                    from 'axios'
 
 //Components
-import Home                     from './containers/home/home';
-import Checkout                 from './containers/checkout/checkout';
-import Login                    from './containers/login/login';
-import store                    from './store/store';
-import EnsureLoggedInContainer  from './containers/private';
+import Home                     from './containers/home/home'
+import Checkout                 from './containers/checkout/checkout'
+import Login                    from './containers/login/login'
+import Search                   from './containers/search/search'
+import store                    from './store/store'
+import EnsureLoggedInContainer  from './containers/private'
 
 //Actions
-import * as actionTypes     from './store/actions/actions';
-
+import * as actionTypes         from './store/actions/actions'
 
 //Styles
 import './app.scss';
@@ -26,6 +25,7 @@ axios.defaults.headers.post['Content-Type']       = 'application/x-www-form-urle
 axios.defaults.headers.get['Content-Type']        = 'application/x-www-form-urlencoded';
 delete window.vigblat;
 
+
 const urlPath = window.location.pathname.split("/");
 
 if (urlPath[1] === 'page') {
@@ -36,11 +36,12 @@ if (urlPath[1] === 'page') {
 
 
 if (window._appJsConfig) {
-    console.log(window._appJsConfig);
     store.dispatch({
         type: actionTypes.LOGIN_ON_REFRESH, 
         isLoggedIn: (true === (window._appJsConfig.isUserLoggedIn === 1)), 
-        hasAccess:  (true === (window._appJsConfig.userHasBlogAccess === 1))
+        hasAccess:  (true === (window._appJsConfig.userHasBlogAccess === 1)),
+        live: true,
+        pageTitle: window.pageTitle
     });
 }
 
@@ -53,16 +54,45 @@ class App extends Component {
         this.props.history.push(window.basePath + page);
     }
 
+    checkFavouriteStatus = (photoid, favourites) => {
+        const found = favourites.filter((item) => {
+            return photoid === item.id;
+        });
+        if (found.length > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    checkCartStatus = (photoid, cart) => {
+        const found = cart.filter((item) => {
+            return photoid === item.id;
+        });
+        if (found.length > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    photoStatusHandler = (photoid, favourites, cartItems) => {
+        const favourite = this.checkFavouriteStatus(photoid, favourites);
+        const cart = this.checkCartStatus(photoid, cartItems);
+        return {favourite, cart};
+    }
+
+
     render() {
         return (
             <div>
-                <AnimatedSwitch
+                <Switch
                     atEnter={{ opacity: 0 }}
                     atLeave={{ opacity: 0 }}
                     atActive={{ opacity: 1 }}
                     className="switch-wrapper"
                 >
-                    <Route path={window.basePath + "/login"} component={Login} />
+                    <Route path={window.basePath + "/login"} render={ () => 
+                        <Login linkHandler={this.linkHandler} />
+                    } />
 
                     <Route path={window.basePath + "/checkout"} render={ () => 
                         <EnsureLoggedInContainer>
@@ -70,15 +100,27 @@ class App extends Component {
                         </EnsureLoggedInContainer> 
                     } />
 
+                    <Route path={window.basePath + "/search"} render={ () => 
+                        <Search linkHandler={this.linkHandler}
+                                photoStatusHandler={this.photoStatusHandler} 
+                        />
+                    } />
+
                     <Route path={window.basePath + "/:section"} render={ () => 
-                        <Home linkHandler={this.linkHandler}/>} />
+                        <Home   linkHandler={this.linkHandler}
+                                photoStatusHandler={this.photoStatusHandler} 
+                            />
+                        } />
                     
                     <Route path={window.basePath} render={ () => 
-                        <Home linkHandler={this.linkHandler}/>} />
+                        <Home   linkHandler={this.linkHandler} 
+                                photoStatusHandler={this.photoStatusHandler} 
+                            />
+                        } />
 
 
                         
-                </AnimatedSwitch>
+                </Switch>
             </div>
         );
     }

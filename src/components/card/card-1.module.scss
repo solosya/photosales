@@ -7,7 +7,7 @@
     .c-cards-view {
         @include flex-direction(column, vertical);
         background: $white;
-        
+
 
         &__container {
             padding: 30px 25px 30px 25px;
@@ -84,9 +84,9 @@
     @include card-1-base();
     margin-left: 0;
     margin-right: 0;
+    
     .c-cards-view {
         // height: 493px;
-        background:orange;
 
         &__media {
             @include flex-height(228px);

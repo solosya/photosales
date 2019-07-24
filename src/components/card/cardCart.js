@@ -4,10 +4,10 @@ import React, {Component}   from 'react';
 import Dotdotdot            from 'react-dotdotdot';
 import cn                   from 'classnames';
 // Components
-import Checkbox from '../form/checkbox';
-import Flexrow from '../layout/flexrow';
-import LineItem from './lineItem';
-import FavIcon          from '../favourites/favIcon';
+import Checkbox             from '../form/checkbox';
+import Flexrow              from '../layout/flexrow';
+import LineItem             from './lineItem';
+import FavIcon              from '../favourites/favIcon';
 
 // Styles
 import './card-3.scss';
