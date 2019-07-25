@@ -35,7 +35,6 @@ class Home extends Component {
     }
     
     componentDidMount = () => {
-        console.log('mounting HOME');
         this.props.fetchFavourites();
     }
 
@@ -50,7 +49,7 @@ class Home extends Component {
         return Feed.fetch();
     }
 
-    searchResults = (term) => {
+    searchResultsHandler = (term) => {
         this.props.history.push(window.basePath + '/search?for=' + term);
     }
 
@@ -95,7 +94,7 @@ class Home extends Component {
 
     render() {
 
-        console.log("RENDERING HOME", this.props.favourites);
+        // console.log("RENDERING HOME", this.props.favourites);
 
         const gallery = 
             <Modal 
@@ -125,7 +124,7 @@ class Home extends Component {
 
         const cartCount = (typeof this.props.cart !== 'undefined') ? this.props.cart.length : 0;
         const favCount = (typeof this.props.favourites !== 'undefined') ? this.props.favourites.length : 0;
-        console.log("HOME RENDER", this.props.cart, cartCount);
+        // console.log("HOME RENDER", this.props.cart, cartCount);
         return (
             <React.Fragment>
                 
@@ -151,7 +150,7 @@ class Home extends Component {
     
                     <Row>
                         <Col classes={["col-12", "col-md-9"]}>
-                            <Search searchHandler={this.searchResults} />
+                            <Search searchHandler={this.searchResultsHandler} />
                         </Col>
                     </Row>
     

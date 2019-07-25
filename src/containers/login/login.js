@@ -1,5 +1,6 @@
 //Libraries
 import React, { Component } from 'react'
+import axios                from 'axios'
 // import PropTypes            from 'prop-types'
 import {connect}            from 'react-redux'
 import {withRouter}         from 'react-router'
@@ -41,8 +42,17 @@ class LoginPage extends Component {
     guest = () => {
         console.log('guesting the guest');
         this.props.guest(this.props.history);
-
     }
+
+    forgot = (email) => {
+        axios.post(window.basePath + '/api/auth/forgot-password', {email}).then((r) => {
+            if (r.success === 1) {
+                console.log('sent');
+            }
+        });
+    }
+
+
 
     render() {
 

@@ -73,7 +73,7 @@
     
     .c-cards-view {
         height: 160px;
-        background:green;
+
         &__media {
             @include flex-height(160px);
             @include flex-width(240px);

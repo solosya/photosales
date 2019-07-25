@@ -49,13 +49,17 @@ class Gallery extends Component {
                 const {favourite, cart} = this.props.checkPhotoStatus(item.id);
                 
                 return {
-                    ...item,
-                    url: item.path,
-                    content: item.caption,
-                    favourite,
+                    id      : item.id,
+                    url     : item.path,
+                    guid    : item.guid,
+                    title   : item.title,
+                    width   : item.width,
+                    height  : item.height,
+                    caption : item.caption,
+
                     cart,
-                    original: item.path,
-                    originalClass: styles.gallery__img,
+                    favourite,
+                    original: item.path, // needed for gallery
                 };
             });
         
@@ -78,7 +82,6 @@ class Gallery extends Component {
                     favourite,
                     cart,
                     original: item.url,
-                    originalClass: styles.gallery__img,
                 };
             });
             // console.log(images);

@@ -67,7 +67,7 @@ const calculateTotal = (cart) => {
 export const login = (user, router) => {
     return dispatch => {
         axios.post('/api/auth/login', qs.stringify({"username": user.username, "password": user.password})).then((r) => {
-            console.log(r);
+            // console.log(r);
             if (r.data.success === 1) {
                 dispatch({
                     type: LOGIN_ON_REFRESH,
@@ -112,6 +112,7 @@ export const toggleFavourite = (photo) => {
                 }
             }).catch(() => {
                 // use local storage
+                photo.saveType = 'favourite';
                 dispatch({
                     type: TOGGLE_FAVOURITE,
                     photo: photo
@@ -122,6 +123,7 @@ export const toggleFavourite = (photo) => {
 
     return dispatch => {
         // use local storage
+        photo.saveType = 'favourite';
         dispatch({
             type: TOGGLE_FAVOURITE,
             photo: photo
@@ -149,6 +151,7 @@ export const toggleCart = (photo) => {
                 }
             }).catch(() => {
                 // use local storage
+                photo.saveType = 'cart';
                 dispatch({
                     type: TOGGLE_CART,
                     photo: photo
@@ -156,6 +159,7 @@ export const toggleCart = (photo) => {
             });
         } else {
             // use local storage
+            photo.saveType = 'cart';
             dispatch({
                 type: TOGGLE_CART,
                 photo: photo
@@ -168,22 +172,50 @@ export const toggleCart = (photo) => {
 export const fetchSaved = () => {
 
     const loggedIn = store.getState()['isLoggedIn'];
-    //fetch local state to compare against logged in state
 
     return dispatch => {
-
-        axios.get('/api/user/user-media').then((r) => {
-
-            const media = r.data.media.map((m) => {
-                m.url = m.path;
-                return m;
+        
+        if (loggedIn) {
+            axios.get('/api/user/user-media').then((r) => {
+                console.log("FAVOURITE FETCH SERVER", r.data.media);
+    
+                const media = r.data.media.map((m) => {
+                    return {
+                        id       : m.id,
+                        url      : m.path,
+                        guid     : m.guid,
+                        title    : m.title,
+                        width    : m.width,
+                        height   : m.height,
+                        caption  : m.caption,
+                        saveType : m.type, //cart or favourite
+                    }
+                });
+                console.log("AFTER FAVOURITE FETCH", media);
+                
+                dispatch({
+                    type: FETCH_SAVED,
+                    media,
+                    loggedIn
+                });
             });
-            console.log("AFTER FAVOURITE FETCH", media);
+
+        } else {
+            console.log('getting saved from local');
+            // Attempt to get cart and favourites from local storage
+            const cartString = localStorage.getItem('cart');
+            const favString  = localStorage.getItem('favourites');
+            
+            const cart       =  cartString ? JSON.parse(cartString) : [];
+            const favourites =  favString  ? JSON.parse(favString)  : [];
+            const saved = cart.concat(favourites);
+            if (saved.length === 0 ) return;
+
             dispatch({
                 type: FETCH_SAVED,
-                media
+                media: saved,
             });
-        });
+        }
     }
 }
 

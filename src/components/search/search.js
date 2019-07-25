@@ -1,8 +1,8 @@
 //Libraries
 import React, {Component}   from 'react'
 // import {withRouter}         from 'react-router'
-import axios                from 'axios'
-import qs                   from  'qs'
+// import axios                from 'axios'
+// import qs                   from  'qs'
 import cn                   from 'classnames'
 // import Datepicker           from '../datepicker/datepicker'
 import moment               from 'moment'
@@ -11,7 +11,7 @@ import moment               from 'moment'
 import Button               from '../button/button'
 
 //Utils
-import {ArticleFeed}        from '../../sdk/feed'
+// import {ArticleFeed}        from '../../sdk/feed'
 
 //Styles
 import styles               from './search.module.scss'
@@ -81,6 +81,8 @@ class Search extends Component {
     }
 
     keyPressed = (e) => {
+        console.log(this.props);
+        console.log(this.state);
         if (e.key === "Enter") {
             this.props.searchHandler(this.state.search)
         }

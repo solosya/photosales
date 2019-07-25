@@ -19,6 +19,7 @@ class Section extends Component {
     
     state = {
         galleries: [],
+        waypoint: true
     }
 
     cardCount = 0;
@@ -126,7 +127,9 @@ class Section extends Component {
 
                         </Row>
     
-                        <Waypoint onEnter={this.loadMore} />
+                        {(this.state.waypoint && this.state.photos.length > 0) &&
+                                <Waypoint onEnter={this.loadMore} />
+                            }
 
                         <Row margin="30px">
                             <Col classes={["col-12"]}>

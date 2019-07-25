@@ -9,11 +9,11 @@ import Col                  from '../../components/layout/col'
 import Card                 from '../../components/card/card.js'
 import Header               from '../../components/partials/section_header.js'
 import Container            from '../../components/layout/container'
-import Button               from '../../components/button/button'
+// import Button               from '../../components/button/button'
 import SearchField          from '../../components/search/search'
-import Modal                from '../../components/modals/modal'
-import Gallery              from '../../components/gallery/gallery'
-import Favourites           from '../../components/favourites/favourites'
+// import Modal                from '../../components/modals/modal'
+// import Gallery              from '../../components/gallery/gallery'
+// import Favourites           from '../../components/favourites/favourites'
 
 //Actions
 import * as actionCreators  from '../../store/actions/actions'
@@ -29,28 +29,45 @@ import {panels}             from '../section/data'
     
 
     state = {
-        photos: []
+        photos: [],
+        waypoint: true
     }
 
+    cardCount = 0;
+    keyword = '';
+
     componentDidMount = () => {
-        // console.log("MOIUNTING SEARCH");
-        console.log(panels[1].feed[0].images);
         const params = new URLSearchParams(this.props.location.search);
-        const keyword = params.get('for'); // bar
-        if (!keyword) return;
-        
+        this.keyword = params.get('for'); // bar
+        if (!this.keyword) return;
+        this.performSearch();
+    }
+
+    searchResultsHandler = (term) => {
+        this.keyword = term;
+        this.props.history.push(window.basePath + '/search?for=' + this.keyword);
+        this.performSearch();
+    }
+
+
+    performSearch = (offset = 0) => {
+
+        if (offset === 0) {
+            this.setState({photos: []});
+        }
+
         const options = {
-            offset          : 0,
-            limit           : 30,
-            mediaSearch     : keyword,
+            offset,
+            limit : 3,
+            mediaSearch: this.keyword,
         };
 
         const search = new ArticleFeed(options);
         
         return search.fetch().then((r) => {
+            let waypoint = true;
             console.log(r.data);
-            const photos = r.data.media.map((media) => {
-                
+            let photos = r.data.media.map((media) => {
                 return {
                     id: media.id,
                     height: media.height,
@@ -60,44 +77,52 @@ import {panels}             from '../section/data'
                     url: media.cdn_path
                 }
             });
-            this.setState({photos: photos});
+            
+            console.log(photos);
+            
+            // no more photos but leave the ones that are there
+            if (photos.length === 0 && options.offset > 0) {
+                this.setState({waypoint: false});
+                return;
+            }
+
+            // first search and no photos so remove all
+            if (photos.length === 0) {
+                this.setState({
+                    waypoint: false
+                });
+                return;
+            }
+
+
+            // remove the waypoint but still render the photos it DID find
+            if (photos.length < options.limit) {
+                waypoint = false;
+            }
+
+            // this must be load more so add the photos to the list
+            if (options.offset !== 0) {
+                photos = this.state.photos.concat(photos);
+            }
+
+            
+
+            this.setState({photos, waypoint});
+        
         }).catch(() => {
             this.setState({photos: panels[1].feed[0].images});
         });
     }
 
-    // checkFavouriteStatus = (photoid) => {
-    //     const found = this.props.favourites.filter((item) => {
-    //         return photoid === item.id;
-    //     });
-    //     if (found.length > 0) {
-    //         return true;
-    //     }
-    //     return false;
-    // }
 
-    // checkCartStatus = (photoid) => {
-    //     console.log(this.props.cart);
-    //     const found = this.props.cart.filter((item) => {
-    //         return photoid === item.id;
-    //     });
-    //     if (found.length > 0) {
-    //         return true;
-    //     }
-    //     return false;
-    // }
-
-    // checkPhotoStatus = (photoid) => {
-    //     const favourite = this.checkFavouriteStatus(photoid);
-    //     const cart = this.checkCartStatus(photoid);
-    //     return {favourite, cart};
-    // } 
+    loadMore = () => {
+        this.performSearch(this.cardCount);
+    }
 
 
     render() {
-
-
-
+        this.cardCount = 0;
+        
         const cartCount = (typeof this.props.cart       !== 'undefined') ? this.props.cart.length : 0;
         const favCount  = (typeof this.props.favourites !== 'undefined') ? this.props.favourites.length : 0;
 
@@ -125,7 +150,7 @@ import {panels}             from '../section/data'
 
                     <Row>
                         <Col classes={["col-12", "col-md-9"]}>
-                            <SearchField searchHandler={this.searchResults} />
+                            <SearchField searchHandler={this.searchResultsHandler} />
                         </Col>
                     </Row>
 
@@ -150,6 +175,7 @@ import {panels}             from '../section/data'
                                 {this.state.photos.map((photo, i) => {
                                     
                                     const {favourite, cart} = this.props.photoStatusHandler(photo.id, this.props.favourites, this.props.cart);
+                                    this.cardCount++;
                                     
                                     return (
                                         <Col key={i} classes={["col-12", "col-md-4"]} marginBottom="30px">
@@ -170,10 +196,9 @@ import {panels}             from '../section/data'
 
                             </Row>
 
-                                
-
-
-                            {/* <Waypoint onEnter={this.loadMore} /> */}
+                            {(this.state.waypoint && this.state.photos.length > 0) &&
+                                <Waypoint onEnter={this.loadMore} />
+                            }
 
                             <Row margin="30px">
                                 <Col classes={["col-12"]}>

@@ -83,7 +83,7 @@ class App extends Component {
 
     render() {
         return (
-            <div>
+            <div style={{marginBottom: "60px"}}>
                 <Switch
                     atEnter={{ opacity: 0 }}
                     atLeave={{ opacity: 0 }}

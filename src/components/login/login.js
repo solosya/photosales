@@ -20,7 +20,7 @@ const login = (props) => {
             <FormLabel>Password</FormLabel>
             <FormInput error="" type="password" value={props.password} placeholder="" onChange={(e) => props.formHandler(e.target.value, "password")} />
             <ErrorLabel active="">This field is required</ErrorLabel>
-
+            <p>forgot password?</p>
             <Button handler={props.loginHandler} classes={["button", "button--red", "button--top-30", "button--center"]}>CONTINUE TO CHECKOUT</Button>
         </LoginContainer>
     )

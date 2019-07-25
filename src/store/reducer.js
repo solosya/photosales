@@ -117,10 +117,10 @@ const reducer = (state = intialState, action) => {
             const cart  = [...state.cart];
 
             for(let i=0;i<action.media.length;i++) {
-                if (action.media[i].type === 'favourite') {
+                if (action.media[i].saveType === 'favourite') {
                     favourites.push(action.media[i]);
                 }
-                if (action.media[i].type === 'cart') {
+                if (action.media[i].saveType === 'cart') {
                     cart.push(action.media[i]);
                 }
             }
@@ -137,6 +137,8 @@ const reducer = (state = intialState, action) => {
         case actionTypes.TOGGLE_FAVOURITE: {
             console.log('toggleing the favourite');
             let favourites = [...state.favourites];
+            const loggedIn = state.isLoggedIn;
+
             const found = favourites.filter((item) => {
                 return action.photo.id !== item.id;
             });
@@ -148,8 +150,10 @@ const reducer = (state = intialState, action) => {
                 favourites.push(action.photo);
             }
 
-            localStorage.setItem('favourites', JSON.stringify(favourites));
-            
+            if (!loggedIn) {
+                localStorage.setItem('favourites', JSON.stringify(favourites));
+            }
+
             return {
                 ...state,
                 favourites

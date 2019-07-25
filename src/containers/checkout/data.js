@@ -332,44 +332,44 @@ export const products = {
     ]
 }
 
-export const favourites = [
-    {
-        id: '6e5hfdghs5dt',
-        title: "Prince One",
-        content: "First image in another gallery",
-        publishDate: "23rd may 2000",
-        hasMedia: true,
-        url: "https://static.guim.co.uk/sys-images/Music/Pix/pictures/2011/6/3/1307115506503/Prince-performing-on-stag-007.jpg",
-    }
-];
+// export const favourites = [
+//     {
+//         id: '6e5hfdghs5dt',
+//         title: "Prince One",
+//         content: "First image in another gallery",
+//         publishDate: "23rd may 2000",
+//         hasMedia: true,
+//         url: "https://static.guim.co.uk/sys-images/Music/Pix/pictures/2011/6/3/1307115506503/Prince-performing-on-stag-007.jpg",
+//     }
+// ];
 
 
-export const cart = [
-    {
-        id: 'j49fj3fgsdsgdf8rj',
-        title: "Cat",
-        content: "This is the body content which is very long as i want it to dot dot dot with an eillpsesssese so that i can see it's wokring and then celebrate a job well done",
-        publishDate: "23rd may 2000",
-        hasMedia: true,
-        url: "https://i.ytimg.com/vi/EuvTORWs244/maxresdefault.jpg",
-        lineItems: [],
-    },
-    {
-        id: 'lkiuygfyny66',
-        title: "Lego",
-        content: "Less writing for the second card",
-        publishDate: "24rd may 2000",
-        hasMedia: true,
-        url: "https://weburbanist.com/wp-content/uploads/2008/10/lego_art_1.jpg",
-        lineItems: [],
-    },
-    {
-        id: 'lkiuygfsfdyny66',
-        title: "Prince",
-        content: "Less writing for the second card",
-        publishDate: "24rd may 2000",
-        hasMedia: true,
-        url: "https://static.guim.co.uk/sys-images/Music/Pix/pictures/2011/6/3/1307115506503/Prince-performing-on-stag-007.jpg"
-    },
+// export const cart = [
+//     {
+//         id: 'j49fj3fgsdsgdf8rj',
+//         title: "Cat",
+//         content: "This is the body content which is very long as i want it to dot dot dot with an eillpsesssese so that i can see it's wokring and then celebrate a job well done",
+//         publishDate: "23rd may 2000",
+//         hasMedia: true,
+//         url: "https://i.ytimg.com/vi/EuvTORWs244/maxresdefault.jpg",
+//         lineItems: [],
+//     },
+//     {
+//         id: 'lkiuygfyny66',
+//         title: "Lego",
+//         content: "Less writing for the second card",
+//         publishDate: "24rd may 2000",
+//         hasMedia: true,
+//         url: "https://weburbanist.com/wp-content/uploads/2008/10/lego_art_1.jpg",
+//         lineItems: [],
+//     },
+//     {
+//         id: 'lkiuygfsfdyny66',
+//         title: "Prince",
+//         content: "Less writing for the second card",
+//         publishDate: "24rd may 2000",
+//         hasMedia: true,
+//         url: "https://static.guim.co.uk/sys-images/Music/Pix/pictures/2011/6/3/1307115506503/Prince-performing-on-stag-007.jpg"
+//     },
 
-];
+// ];
