@@ -1,5 +1,5 @@
-import * as actionTypes from './actions/actions';
-import Shop from '../containers/checkout/shop';
+import * as actionTypes from './actions/actions'
+import Shop from '../containers/checkout/shop'
 // import {favourites, cart} from '../containers/checkout/data';
 
 const intialState = {
@@ -13,7 +13,6 @@ const intialState = {
 }
 
 
-// localStorage.setItem('authUser', JSON.stringify(action.auth.user));
 
 const reducer = (state = intialState, action) => {
 
@@ -135,7 +134,7 @@ const reducer = (state = intialState, action) => {
 
 
         case actionTypes.TOGGLE_FAVOURITE: {
-            console.log('toggleing the favourite');
+
             let favourites = [...state.favourites];
             const loggedIn = state.isLoggedIn;
 
@@ -265,9 +264,7 @@ const reducer = (state = intialState, action) => {
         }
 
         case actionTypes.TOTAL_CART: {
-            // console.log(action);
-            // const cart = [...state.cart];
-            // let {total, finalCart} = calculateTotal(cart);
+
             return {
                 ...state,
                 total:action.total,

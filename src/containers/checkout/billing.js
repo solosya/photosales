@@ -63,21 +63,23 @@ const billing = (props) => {
                             </Col>
 
                         </Row>
-                        <div style={{marginTop:'13px'}}> 
 
-                        <Checkbox 
-                            label="I am interested in receiving promotional offers from Sunraysia Daily" 
-                            checked={props.promotion} 
-                            onChange={props.handleFun}
-                            name="promotion" />
-                        </div>
-                        <div style={{marginTop:'13px'}}> 
+                        
+                        {/* <div style={{marginTop:'13px'}}> 
 
-                        <Checkbox 
-                            label="I accept the Photo Sales licensing Agreement terms of use" 
-                            checked={props.licence} 
-                            onChange={() => props.handleBillingForm(props.licence, "licence")}
-                            name="promotion" />
+                            <Checkbox 
+                                label="I am interested in receiving promotional offers from Sunraysia Daily" 
+                                checked={props.promotion} 
+                                onChange={props.handleFun}
+                                name="promotion" />
+                        </div> */}
+
+                        <div style={{marginTop:'13px'}}> 
+                            <Checkbox 
+                                label="I accept the Photo Sales licensing Agreement terms of use" 
+                                checked={props.licence} 
+                                onChange={() => props.handleBillingForm(props.licence, "licence")}
+                                name="promotion" />
                         </div>
                     </Col>
                 </Row>

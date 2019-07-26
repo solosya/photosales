@@ -24,6 +24,7 @@ class Gallery extends Component {
         current: 0,
         gallery: null,
         items: [],
+        complete: false
     };
 
     gallerySelect= (data) => {
@@ -34,9 +35,7 @@ class Gallery extends Component {
 
         
         return axios.get('/api/article/get-article?articleId='+ this.props.id).then(r => {
-            // console.log(r);
             // const cloudinaryCore = new cloudinary.Cloudinary({cloud_name: 'cognitives'});
-            // console.log(r.data.media);
 
             const images = r.data.media.map((item) => {
                 // const url = cloudinaryCore.url(item.url, {
@@ -45,7 +44,6 @@ class Gallery extends Component {
                 //     crop: "fit" 
     
                 // });
-                // console.log(styles.gallery__img);
                 const {favourite, cart} = this.props.checkPhotoStatus(item.id);
                 
                 return {
@@ -57,15 +55,16 @@ class Gallery extends Component {
                     height  : item.height,
                     caption : item.caption,
 
-                    cart,
-                    favourite,
+                    cart,       //boolean to show if photo is in the cart
+                    favourite, // boolean to show if photo is in the favourites
                     original: item.path, // needed for gallery
                 };
             });
         
         
             this.setState({
-                items: images
+                items: images,
+                complete: true,
             }, () => {
                 console.log(this.state);
             });
@@ -73,7 +72,7 @@ class Gallery extends Component {
         
         }).catch(() => {
 
-            const images = this.props.gallery.images.map((item) => {
+            const items = this.props.gallery.images.map((item) => {
                 const {favourite, cart} = this.props.checkPhotoStatus(item.id);
                 
                 return {
@@ -84,12 +83,8 @@ class Gallery extends Component {
                     original: item.url,
                 };
             });
-            // console.log(images);
-            this.setState({
-                items: images
-            }, () => {
-                // console.log(this.state);
-            });
+
+            this.setState({ items });
 
         });
 
@@ -101,10 +96,8 @@ class Gallery extends Component {
         const items = [...this.state.items];
         const currentItem = items[this.state.current];
         currentItem.favourite = !currentItem.favourite;
-        this.setState({items}, () => {
-            console.log("NEW STATE AFTER TOGGLE", this.state);
-        }); 
-        // console.log(items[this.state.current]);
+        this.setState({items}); 
+
         this.props.favouriteHandler(items[this.state.current]);
     }
 
@@ -141,12 +134,14 @@ class Gallery extends Component {
 
 
     render() {
-        // console.log(this.state);
-        if (this.state.items.length === 0) return <Blockspinner />;
+
+        if (this.state.items.length === 0 && !this.state.complete) return <Blockspinner />;
+        if (this.state.items.length === 0 && this.state.complete) return <div>No images to display</div>;
+
         const currentItem = this.state.items[this.state.current];
         const cartButtonText = currentItem.cart ? "REMOVE FROM CART": "ADD TO CART" ;
 
-        // console.log("CURRENT ITEM", currentItem);
+
         return (
 
             

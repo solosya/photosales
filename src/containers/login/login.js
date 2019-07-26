@@ -1,6 +1,8 @@
 //Libraries
 import React, { Component } from 'react'
 import axios                from 'axios'
+import qs                   from  'qs'
+
 // import PropTypes            from 'prop-types'
 import {connect}            from 'react-redux'
 import {withRouter}         from 'react-router'
@@ -21,7 +23,9 @@ class LoginPage extends Component {
 
     state = {
         username: "",
-        password:""
+        password:"",
+        email: "",
+        forgot: false,
     }
 
     // static propTypes = {
@@ -35,24 +39,26 @@ class LoginPage extends Component {
     }
 
     login = () => {
-        console.log('in the login handler');
         this.props.login({...this.state}, this.props.history);
     }
 
     guest = () => {
-        console.log('guesting the guest');
         this.props.guest(this.props.history);
     }
 
-    forgot = (email) => {
-        axios.post(window.basePath + '/api/auth/forgot-password', {email}).then((r) => {
+    forgotHandler = () => {
+        axios.post('/api/auth/forgot-password', qs.stringify({email:this.state.email})).then((r) => {
             if (r.success === 1) {
-                console.log('sent');
+                this.setState({forgot:false});
             }
+        }).catch(() => {
+            this.setState({forgot:false});
         });
     }
 
-
+    renderForgotHandler = () => {
+        this.setState({forgot:true});
+    }
 
     render() {
 
@@ -100,9 +106,16 @@ class LoginPage extends Component {
                         <Row>
                             <Col classes={["col-12"]}>
                                 <LoginPanel 
-                                    loginHandler={this.login} 
-                                    loginFormHandler={this.loginForm}
-                                    guestHandler={this.guest}/>
+                                    email               = {this.state.email}
+                                    username            = {this.state.username}
+                                    password            = {this.state.password}
+                                    renderForgot        = {this.state.forgot}
+                                    loginHandler        = {this.login} 
+                                    guestHandler        = {this.guest}
+                                    forgotHandler       = {this.forgotHandler}
+                                    loginFormHandler    = {this.loginForm}
+                                    renderForgotHandler = {this.renderForgotHandler}
+                                />
                             </Col>
                         </Row>
                     

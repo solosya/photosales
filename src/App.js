@@ -6,10 +6,9 @@ import axios                    from 'axios'
 
 //Components
 import Home                     from './containers/home/home'
-import Checkout                 from './containers/checkout/checkout'
-import Login                    from './containers/login/login'
-import Search                   from './containers/search/search'
 import store                    from './store/store'
+import Login                    from './containers/login/login'
+import Checkout                 from './containers/checkout/checkout'
 import EnsureLoggedInContainer  from './containers/private'
 
 //Actions
@@ -50,6 +49,7 @@ class App extends Component {
 
 
     linkHandler = (page) => {
+        if (page === false) return;
         if (typeof page === 'undefined') page = "";
         this.props.history.push(window.basePath + page);
     }
@@ -100,11 +100,19 @@ class App extends Component {
                         </EnsureLoggedInContainer> 
                     } />
 
-                    <Route path={window.basePath + "/search"} render={ () => 
+                    {/* <Route path={window.basePath + "/search"} render={ () => 
                         <Search linkHandler={this.linkHandler}
                                 photoStatusHandler={this.photoStatusHandler} 
                         />
+                    } /> */}
+
+                    <Route path={window.basePath + "/search"} render={ () => 
+                        <Home linkHandler={this.linkHandler}
+                                photoStatusHandler={this.photoStatusHandler} 
+                        />
                     } />
+
+
 
                     <Route path={window.basePath + "/:section"} render={ () => 
                         <Home   linkHandler={this.linkHandler}

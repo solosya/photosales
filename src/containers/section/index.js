@@ -1,12 +1,12 @@
 // Libraries
 import React, { Component } from 'react'
-import axios                from 'axios';
+import axios                from 'axios'
 
 //Components
-import Container            from '../../components/layout/container';
-import PanelOne             from '../../components/panels/panel1';
-import PanelTwo             from '../../components/panels/panel2';
-import PanelThree           from '../../components/panels/panel3';
+import Container            from '../../components/layout/container'
+import PanelOne             from '../../components/panels/panel1'
+import PanelTwo             from '../../components/panels/panel2'
+import PanelThree           from '../../components/panels/panel3'
 
 //Data
 import {panels} from './data';

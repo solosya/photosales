@@ -1,10 +1,10 @@
 
-import axios from  'axios';
-import qs from  'qs';
+import axios    from  'axios'
+import qs       from  'qs'
 
 export class Feed {
     fetch = () => {
-        console.log(this.options);
+        // console.log(this.options);
         if (this.options.search != null) {
             this.options.blogid = this.options.blogid; // search takes an id instead of a guid
         }
@@ -32,6 +32,10 @@ export class Feed {
             requestData['urlid'] = this.options.urlid;
         }
 
+        if (this.options.blogInfo) {
+            requestData['returnBlog'] = this.options.blogInfo;
+        }
+
 
         if (this.options.loadtype === 'user') {
             url = '/api/'+ this.options.loadtype+'/load-more-managed';
@@ -46,7 +50,7 @@ export class Feed {
         }
     
         if (this.options.search) {
-            console.log('THIS IS A SEARCH')
+            // console.log('THIS IS A SEARCH')
             let refinedSearch = this.options.search;
             requestData['s'] = refinedSearch;
             url = '/api/search';
@@ -54,7 +58,7 @@ export class Feed {
         }
 
         if (this.options.mediaSearch) {
-            console.log('THIS IS A MEDIA SEARCH')
+            // console.log('THIS IS A MEDIA SEARCH')
             requestData['keyword'] = this.options.mediaSearch;
             url = '/api/search/media';
             requestType = 'get';
@@ -82,6 +86,7 @@ export class ArticleFeed extends Feed {
             'urlid'             :   options.urlid       || null,
             'search'            :   options.searchterm  || null,
             'mediaSearch'       :   options.mediaSearch || null,
+            "blogInfo"          :   options.blogInfo    || false,
             'limit'             :   options.limit,
         };
     }

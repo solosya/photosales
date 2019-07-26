@@ -81,8 +81,8 @@ class Search extends Component {
     }
 
     keyPressed = (e) => {
-        console.log(this.props);
-        console.log(this.state);
+        // console.log(this.props);
+        // console.log(this.state);
         if (e.key === "Enter") {
             this.props.searchHandler(this.state.search)
         }

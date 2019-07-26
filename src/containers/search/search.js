@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import {connect}            from 'react-redux'
-import {withRouter}         from 'react-router'
+import { connect }          from 'react-redux'
+import { withRouter }       from 'react-router'
 import { Waypoint }         from 'react-waypoint'
 
 //Components
@@ -43,6 +43,14 @@ import {panels}             from '../section/data'
         this.performSearch();
     }
 
+    componentDidUpdate() {
+        const params = new URLSearchParams(this.props.location.search);
+        const keyword = params.get('for'); // bar
+        if (!keyword || keyword === this.keyword) return;
+        this.keyword = keyword;
+        this.performSearch();
+    }
+
     searchResultsHandler = (term) => {
         this.keyword = term;
         this.props.history.push(window.basePath + '/search?for=' + this.keyword);
@@ -66,20 +74,19 @@ import {panels}             from '../section/data'
         
         return search.fetch().then((r) => {
             let waypoint = true;
-            console.log(r.data);
+            // console.log(r.data);
             let photos = r.data.media.map((media) => {
                 return {
-                    id: media.id,
-                    height: media.height,
-                    width: media.width,
-                    filesize: media.fileSize,
-                    type: media.fileType,
-                    url: media.cdn_path
+                    id        : media.id,
+                    url       : media.cdn_path,
+                    guid      : media.guid,
+                    type      : media.fileType,
+                    width     : media.width,
+                    height    : media.height,
+                    filesize  : media.fileSize,
                 }
             });
-            
-            console.log(photos);
-            
+                        
             // no more photos but leave the ones that are there
             if (photos.length === 0 && options.offset > 0) {
                 this.setState({waypoint: false});
@@ -123,15 +130,15 @@ import {panels}             from '../section/data'
     render() {
         this.cardCount = 0;
         
-        const cartCount = (typeof this.props.cart       !== 'undefined') ? this.props.cart.length : 0;
-        const favCount  = (typeof this.props.favourites !== 'undefined') ? this.props.favourites.length : 0;
+        // const cartCount = (typeof this.props.cart       !== 'undefined') ? this.props.cart.length : 0;
+        // const favCount  = (typeof this.props.favourites !== 'undefined') ? this.props.favourites.length : 0;
 
         return (
 
 
             <>
 
-                <Container>
+                {/* <Container>
                     
                     <Row>
                         <Col classes={["col-12"]}>
@@ -154,7 +161,7 @@ import {panels}             from '../section/data'
                         </Col>
                     </Row>
 
-                </Container>
+                </Container> */}
 
 
 

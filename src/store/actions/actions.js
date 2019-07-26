@@ -8,16 +8,16 @@ import qs               from  'qs'
 import Shop             from '../../containers/checkout/shop'
 
 //Actions
-export const FETCH_SAVED            = 'FETCH_SAVED'
-export const TOGGLE_FAVOURITE       = 'TOGGLE_FAVOURITE'
-export const TOGGLE_CART            = 'TOGGLE_CART'
-export const ADD_ITEM_TO_CART       = 'ADD_ITEM_TO_CART'
-export const REMOVE_ITEM_FROM_CART  = 'REMOVE_ITEM_FROM_CART'
-export const UPDATE_CART_ITEM       = 'UPDATE_CART_ITEM'
-export const TOTAL_CART             = 'TOTAL_CART'
-export const LOGIN_ON_REFRESH       = 'LOGIN_ON_REFRESH'
 export const LOGIN                  = 'LOGIN'
+export const TOTAL_CART             = 'TOTAL_CART'
+export const FETCH_SAVED            = 'FETCH_SAVED'
+export const TOGGLE_CART            = 'TOGGLE_CART'
 export const TOGGLE_GUEST           = 'TOGGLE_GUEST'
+export const ADD_ITEM_TO_CART       = 'ADD_ITEM_TO_CART'
+export const TOGGLE_FAVOURITE       = 'TOGGLE_FAVOURITE'
+export const UPDATE_CART_ITEM       = 'UPDATE_CART_ITEM'
+export const LOGIN_ON_REFRESH       = 'LOGIN_ON_REFRESH'
+export const REMOVE_ITEM_FROM_CART  = 'REMOVE_ITEM_FROM_CART'
 
 
 const getLineItemsFromCart = (cart) => {
@@ -94,10 +94,11 @@ export const guest = (router) => {
 
 
 export const toggleFavourite = (photo) => {
-    console.log("TIGGLIG", photo);
+    // console.log("TIGGLIG", photo);
     
     const loggedIn = store.getState()['isLoggedIn'];
-    console.log(loggedIn);
+    const live = store.getState()['live'];
+    // console.log(loggedIn);
     if (loggedIn) {
 
         return dispatch => {
@@ -112,11 +113,13 @@ export const toggleFavourite = (photo) => {
                 }
             }).catch(() => {
                 // use local storage
-                photo.saveType = 'favourite';
-                dispatch({
-                    type: TOGGLE_FAVOURITE,
-                    photo: photo
-                });
+                if (!live ) { // this is just for local dev in local npm server
+                    photo.saveType = 'favourite';
+                    dispatch({
+                        type: TOGGLE_FAVOURITE,
+                        photo: photo
+                    });
+                }
             });
         }
     }
@@ -134,11 +137,13 @@ export const toggleFavourite = (photo) => {
 
 
 export const toggleCart = (photo) => {
-    console.log("taglling", photo);
+    // console.log("taglling", photo);
     
     return dispatch => {
 
         const loggedIn = store.getState()['isLoggedIn'];
+        const live = store.getState()['live'];
+
         if (loggedIn) {
     
             axios.post('/api/user/follow-media', qs.stringify({"guid": photo.guid, "type": 'cart'})).then((r) => {
@@ -151,11 +156,13 @@ export const toggleCart = (photo) => {
                 }
             }).catch(() => {
                 // use local storage
-                photo.saveType = 'cart';
-                dispatch({
-                    type: TOGGLE_CART,
-                    photo: photo
-                });
+                if (!live ) { // this is just for local dev in local npm server
+                    photo.saveType = 'cart';
+                    dispatch({
+                        type: TOGGLE_CART,
+                        photo: photo
+                    });
+                }
             });
         } else {
             // use local storage
@@ -177,7 +184,7 @@ export const fetchSaved = () => {
         
         if (loggedIn) {
             axios.get('/api/user/user-media').then((r) => {
-                console.log("FAVOURITE FETCH SERVER", r.data.media);
+                // console.log("FAVOURITE FETCH SERVER", r.data.media);
     
                 const media = r.data.media.map((m) => {
                     return {
@@ -191,7 +198,7 @@ export const fetchSaved = () => {
                         saveType : m.type, //cart or favourite
                     }
                 });
-                console.log("AFTER FAVOURITE FETCH", media);
+                // console.log("AFTER FAVOURITE FETCH", media);
                 
                 dispatch({
                     type: FETCH_SAVED,
@@ -201,7 +208,7 @@ export const fetchSaved = () => {
             });
 
         } else {
-            console.log('getting saved from local');
+            // console.log('getting saved from local');
             // Attempt to get cart and favourites from local storage
             const cartString = localStorage.getItem('cart');
             const favString  = localStorage.getItem('favourites');

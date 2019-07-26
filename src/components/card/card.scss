@@ -2,6 +2,10 @@
 
 
 .c-cards-view {
+    &:hover {
+        cursor:pointer;
+    }
+    
     @include flexbox();
     height: 100%;
     // @include calc(height, '100% - 40px');

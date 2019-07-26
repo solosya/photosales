@@ -20,13 +20,21 @@ const login = (props) => {
             <FormLabel>Password</FormLabel>
             <FormInput error="" type="password" value={props.password} placeholder="" onChange={(e) => props.formHandler(e.target.value, "password")} />
             <ErrorLabel active="">This field is required</ErrorLabel>
-            <p>forgot password?</p>
+            <Forgot onClick={props.renderForgotHandler}>Forgot password?</Forgot>
             <Button handler={props.loginHandler} classes={["button", "button--red", "button--top-30", "button--center"]}>CONTINUE TO CHECKOUT</Button>
         </LoginContainer>
     )
     
 }
 
+const Forgot = styled.p`
+    margin-top:10px;
+    font-size:10px;
+    color: rgba(89, 88, 89, 0.7);
+    &:hover {
+        cursor:pointer;
+    }
+`
 
 const LoginContainer = styled.div`
     box-sizing: border-box;

@@ -11,12 +11,13 @@ import Section              from '../section/section'
 //Components
 import Row                  from '../../components/layout/row'
 import Col                  from '../../components/layout/col'
-import Container            from '../../components/layout/container'
-import Search               from '../../components/search/search'
-import Header               from '../../components/partials/section_header.js'
 import Modal                from '../../components/modals/modal'
+import Header               from '../../components/partials/section_header.js'
+import Search               from '../../components/search/search'
 import Gallery              from '../../components/gallery/gallery'
+import Container            from '../../components/layout/container'
 import Favourites           from '../../components/favourites/favourites'
+import SearchContainer      from '../search/search'
 
 //Helpers
 import {ArticleFeed}        from '../../sdk/feed'
@@ -28,16 +29,16 @@ import * as actionCreators  from '../../store/actions/actions'
 class Home extends Component {
 
     state = {
-        searchResults: [],
         showGallery: false,
         showFavourites : false,
         selectedGallery: null,
     }
     
     componentDidMount = () => {
+        // console.log();
         this.props.fetchFavourites();
     }
-
+    
     getFeed = (panel) => {
         const options = {
             offset          : 0,
@@ -61,13 +62,13 @@ class Home extends Component {
         }, () => {
             console.log(this.state);
         });
-        document.body.setAttribute('style', 'overflow: hidden;')
+        document.body.setAttribute('style', 'overflow: hidden;height:100%;')
     }
     closeGallery = () => {
         this.setState({
             showGallery: false
         });
-        document.body.removeAttribute('style', 'overflow: hidden;')
+        document.body.removeAttribute('style', 'overflow: hidden;height:100%;')
     }
 
 
@@ -77,14 +78,14 @@ class Home extends Component {
                 showFavourites : true,
                 showGallery: false,
             });
-            document.body.setAttribute('style', 'overflow: hidden;')
+            document.body.setAttribute('style', 'overflow: hidden;height:100%;')
         }
     }
     closeFavourites = () => {
         this.setState({
             showFavourites: false
         });
-        document.body.removeAttribute('style', 'overflow: hidden;')
+        document.body.removeAttribute('style', 'overflow: hidden;height:100%;')
     }
 
     photoStatusHandler = (photoid) => {
@@ -94,7 +95,6 @@ class Home extends Component {
 
     render() {
 
-        // console.log("RENDERING HOME", this.props.favourites);
 
         const gallery = 
             <Modal 
@@ -160,12 +160,20 @@ class Home extends Component {
                 <Switch>
 
 
+                    <Route path={window.basePath + "/search"} render={ () => 
+                        <SearchContainer 
+                                linkHandler={this.linkHandler}
+                                photoStatusHandler={this.photoStatusHandler} 
+                        />
+                    } />
+
+
+
                     <Route path={window.basePath + "/:section"} render={(props) => 
                         <Section {...this.state}
-                            title = {"Galleries"}
+                            section     = {this.props.match.params.section}
                             cardHandler = {this.showGallery} 
                             linkHandler = {this.props.linkHandler}
-                            feedHandler = {this.getFeed}
                         /> 
                     } />
 
