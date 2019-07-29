@@ -1,23 +1,70 @@
 //Libraries
-import React, {Component}   from 'react'
-import Dotdotdot            from 'react-dotdotdot'
-import cn                   from 'classnames'
+import React        from 'react'
+import Dotdotdot    from 'react-dotdotdot'
+import cn           from 'classnames'
 
 //Components
-import FavIcon              from '../favourites/favIcon'
-import CartIcon             from '../CartIcon'
+import FavIcon      from '../favourites/favIcon'
+import CartIcon     from '../CartIcon'
+import Admin        from './admin'
+
+//Styles
+import card1        from './card-1.module.scss'
+import card2        from './card-2.module.scss'
+import card4        from './card-4.module.scss'
 
 
-import card1 from './card-1.module.scss'
-import card2 from './card-2.module.scss'
-import card4 from './card-4.module.scss'
 
+const dragStart = (e, props) => {
+    const params = {
+        id:    props.data.id,
+        count: props.count,
+    }
+
+    e.dataTransfer.setData("text/plain", JSON.stringify( params ));
+}
+
+const drop = (e, props) => {
+    e.preventDefault();
+    if (props.swapCards) {
+
+        console.log('dragon dropped', props);
+        const source = JSON.parse ( e.dataTransfer.getData("text") );
+
+        const params = {
+            sourcePosition: source.count,
+            sourceArticleId: source.id,
+            sourceIsSocial: 0,
+            
+            destinationPosition: props.count,
+            destinationArticleId: props.data.id,
+            destinationIsSocial: 0,
+        }
+        console.log(params);
+        props.swapCards(params);
+    }
+}
+
+
+const pin = (e, props) => {
+    e.stopPropagation();
+    console.log(props);
+    if (props.pinCard) {
+        const params = {
+            id: props.data.id,
+            position: props.count,
+            status: props.data.isPinned,
+            sourceIsSocial: 0,
+        }
+        props.pinCard(params);
+    }
+}
 
 
 const Card = props =>  {
         
     const styles = [];
-    // const cards = {};
+
     for (let i = 0; i < props.styles.length; i++) {
         let style = props.styles[i];
         if (style.indexOf('1') > -1 ) {
@@ -57,13 +104,18 @@ const Card = props =>  {
             </div>
     }
 
+    let draggable = false;
+    if (props.swapCards) {
+        draggable = true;
+    }
+
     return (
         <div onClick={() => props.cardHandler(count, panel)} className={cn(styles)}>
             <div  
-                className       = ""
-                data-id         = {props.data.id} 
-                data-guid       = {props.data.guid} 
-                data-position   = {props.data.position} 
+                onDragStart = {(e) => dragStart(e, props)}
+                onDragOver  = {(e) => {e.preventDefault();}}
+                draggable   = {draggable}
+                onDrop      = {(e) => drop(e, props)}
                 >
 
                 <article className={viewStyles}>
@@ -71,7 +123,7 @@ const Card = props =>  {
                         <picture>
                             <source media="(max-width: 767px) and (min-width: 501px)" srcSet={props.data.imageMedium} />
                             <source media="(max-width: 500px)" srcSet={props.data.imageSmall} />
-                            <img width={props.data.imgWidth} height={props.data.imgHeight} className="img-fluid" src={image.url} alt="" />
+                            <img draggable="false" width={props.data.imgWidth} height={props.data.imgHeight} className="img-fluid" src={image.url} alt="" />
                         </picture>
                     </figure>
                     
@@ -92,6 +144,9 @@ const Card = props =>  {
 
 
                 </article>
+
+                <Admin pin={pin} data={props}/>
+
             </div>
         </div>
     )

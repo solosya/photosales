@@ -26,6 +26,7 @@ panels.forEach((panel) => {
         {
             title: "cats and lego",
             date: "25th February 2019",
+            id: 7,
             images: [
                 {
                     id: 'j49fj3fgsdsgdf8rj',
@@ -54,6 +55,7 @@ panels.forEach((panel) => {
         {
             title: "Prince",
             date: "25th April 2010",
+            id: 8,
             images: [
                 {
                     id: '6e5hfdghs5dt',
@@ -81,6 +83,7 @@ panels.forEach((panel) => {
         {
             title: "David Bowie",
             date: "25th April 2014",
+            id: 9,
             images: [
                 {
                     id: 'j49fda4j38rj',
@@ -109,6 +112,7 @@ panels.forEach((panel) => {
         {
             title: "John Lennon",
             date: "25th April 2014",
+            id: 10,
             images: [
                 {
                     id: 'yuthfdj49fda4j38rj',
@@ -137,6 +141,7 @@ panels.forEach((panel) => {
         {
             title: "Nina Simone",
             date: "25th April 2014",
+            id: 11,
             images: [
                 {
                     id: 'vhfgb-ikj49fda4j38rj',
@@ -165,6 +170,7 @@ panels.forEach((panel) => {
         {
             title: "Kate Bush",
             date: "25th April 2014",
+            id: 12,
             images: [
                 {
                     id: 'jsfg-dsf-49fda4j38rj',

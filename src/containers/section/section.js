@@ -1,7 +1,10 @@
 // Libraries
 import React, {Component}   from 'react'
 import {connect}            from 'react-redux'
+import axios from 'axios'
+import qs from 'querystring'
 // import { Waypoint }         from 'react-waypoint'
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 //Components
 import Col                  from '../../components/layout/col'
@@ -17,8 +20,12 @@ import * as actionCreators  from '../../store/actions/actions'
 // API calls
 import {ArticleFeed}        from '../../sdk/feed'
 
+//Styles
+import 'react-notifications/lib/notifications.css';
+
+
 //Data
-// import {panels} from './data';
+import {panels} from './data';
 
 
 class Section extends Component {
@@ -39,22 +46,22 @@ class Section extends Component {
             this.section = this.props.section;
             this.getFeed();
         }
-        // this.getPanels();
+        this.getPanels();
         return;
     }
 
-    // getPanels = () => {
-    //     const panel = panels.filter((panel) => {
-    //         return panel.title === this.props.title;
-    //     });
+    getPanels = () => {
+        const panel = panels.filter((panel) => {
+            return panel.title === this.props.title;
+        });
 
-    //     if (panel.length > 0) {
-    //         this.setState({galleries: panel[0].feed}, () => {
-    //             console.log(this.state);
-    //         });
+        if (panel.length > 0) {
+            this.setState({galleries: panel[0].feed}, () => {
+                console.log(this.state);
+            });
 
-    //     }
-    // }
+        }
+    }
 
 
 
@@ -67,22 +74,26 @@ class Section extends Component {
             non_pinned : offset,
             blogInfo: true
         };
-        // console.log(options);
-        const search = new ArticleFeed(options);
+        const galleries = new ArticleFeed(options);
         
-        return search.fetch().then((r) => {
+        return galleries.fetch().then((r) => {
+            // console.log(r);
             let waypoint = true;
 
-            const title = r.data.blog.title;
+            const title = r.data.blog ? r.data.blog.title :  "section title";
             
             let galleries = r.data.articles.map((article) => {
                 const media = article.featuredMedia;
                 return {
-                    id       : article.articleId,
-                    date     : article.publishedDate,
-                    title    : article.title,
-                    content  : article.excerpt,
-                    hasMedia : article.hasMedia,
+                    id          : article.articleId,
+                    date        : article.publishedDate,
+                    title       : article.title,
+                    content     : article.excerpt,
+                    editUrl     : article.editUrl,
+                    hasMedia    : article.hasMedia,
+                    isPinned    : parseInt( article.isPinned ),
+                    pinnedAt    : parseInt( article.pinnedAt ),
+                    publishDate : article.publishDate,
                     images: [{
                         id       : media.id,
                         url      : media.media.url,
@@ -95,7 +106,6 @@ class Section extends Component {
                 }
             });
 
-            // console.log(galleries);
             
             // no more galleries but leave the ones that are there
             if (galleries.length === 0 && options.offset > 0) {
@@ -123,12 +133,47 @@ class Section extends Component {
 
             this.setState({galleries, waypoint, title});
         
-        }).catch(() => {
-            console.log("ERROR");
-            // this.setState({galleries: panels[1].feed[0].images});
+        }).catch((e) => {
+            console.log("ERROR", e);
+            this.setState({galleries: panels[1].feed[0].images});
         });
     }
 
+    swapCards = (params) => {
+        const original = [...this.state.galleries];
+        const updated  = [...this.state.galleries];
+
+        const gallery1 = updated[params.sourcePosition];
+        const gallery2 = updated[params.destinationPosition];
+        updated[params.sourcePosition] = gallery2;
+        updated[params.destinationPosition] = gallery1;
+        this.setState({galleries:updated}, () => {
+        });
+
+        axios.post('/home/swap-article', qs.stringify(params)).then((r) => {
+            NotificationManager.success('Galleries swapped', 'Success', 2000);
+        }).catch((e) => {
+            NotificationManager.error('Could not swap galleries', 'Error', 5000);
+            this.setState({galleries:original});
+        });
+
+    }
+
+    pinCard = (params) => {
+        const galleries = [...this.state.galleries];
+        const gallery = { ...galleries[params.position -1] };
+
+        axios.post('/home/pin-article', qs.stringify(params)).then((r) => {
+            gallery.isPinned = +!gallery.isPinned;
+            galleries[params.position -1] = gallery;
+
+            this.setState({galleries});
+            NotificationManager.success('Gallery pinned', 'Success', 2000);
+        }).catch((e) => {
+            NotificationManager.error('Could not pin gallery', 'Error', 5000);
+        });
+
+    }
 
     loadMore = () => {
         this.getFeed(this.cardCount);
@@ -153,6 +198,7 @@ class Section extends Component {
     //     });
     // }
 
+    
 
     render() {
         this.cardCount = 0;
@@ -163,7 +209,7 @@ class Section extends Component {
     
         return (
             <Container style={{minHeight:"600px"}}>
-    
+                <NotificationContainer/>
                 <Row key={this.props.title}  margin={this.props.margin || ""}>
                     <Col classes={["col-12"]}>
                         
@@ -186,9 +232,11 @@ class Section extends Component {
                                             <Col key={i} classes={["col-12", "col-md-3"]} marginBottom="30px">
                                                 <Card 
                                                     data        = {card} 
-                                                    count       = {this.cardCount++}
+                                                    count       = {++this.cardCount}
                                                     panel       = {this.props.title}
-                                                    cardHandler = {this.showGallery} 
+                                                    cardHandler = {this.showGallery}
+                                                    swapCards   = {this.swapCards}
+                                                    pinCard     = {this.pinCard}
                                                     styles      = {["card-1-mobile", "card-1-tablet", "card-1-desktop"]}
                                                 />
                                             </Col>
@@ -211,6 +259,8 @@ class Section extends Component {
                                             count       = {this.cardCount++}
                                             panel       = {this.props.title}
                                             cardHandler = {this.showGallery}
+                                            swapCards   = {this.swapCards}
+                                            pinCard     = {this.pinCard}
                                             styles      = {["card-1-mobile", "card-1-tablet", "card-1-desktop"]}
                                         />
 
@@ -221,9 +271,6 @@ class Section extends Component {
 
                         </Row>
     
-                        {/* {(this.state.waypoint && this.state.galleries.length > 0) &&
-                                <Waypoint onEnter={this.loadMore} />
-                            } */}
 
                         <Row margin="30px">
                             <Col classes={["col-12"]}>
