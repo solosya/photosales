@@ -52,16 +52,16 @@ const placeLineItemsIntoCart = (cart, discountItems) => {
     return JSON.parse(JSON.stringify( cart ));
 }
 
-const calculateTotal = (cart) => {
-    const flatCart = getLineItemsFromCart(cart)
-    const shop = new Shop(flatCart);
-    const total = shop.calculateTotal();
-    cart = placeLineItemsIntoCart(cart, total.cart);
-    return {
-        total:total.total,
-        finalCart: cart
-    }
-}
+// const calculateTotal = (cart) => {
+//     const flatCart = getLineItemsFromCart(cart)
+//     const shop = new Shop(flatCart);
+//     const total = shop.calculateTotal();
+//     cart = placeLineItemsIntoCart(cart, total.cart);
+//     return {
+//         total:total.total,
+//         finalCart: cart
+//     }
+// }
 
 
 export const login = (user, router) => {
@@ -229,19 +229,40 @@ export const fetchSaved = () => {
 export const addItemToCart = (product) => {
     return dispatch => {
         dispatch(add(product));
-        const cart = store.getState()['cart'];
-        setTimeout(() => {
-            dispatch(total(cart));
+        let cart = store.getState()['cart'];
+            
+        const flatCart = getLineItemsFromCart(cart)
+        axios.post('/api/shop/total', {"cart": flatCart} )
+        .then((r) => {
+            console.log(r);
+            cart = placeLineItemsIntoCart(cart, r.data.cart);
+    
+            dispatch({
+                type: TOTAL_CART,
+                total: r.data.total,
+                cart: cart
+            });
         });
+        
     }
 }
 
 export const updateCartItem = (product) => {
     return dispatch => {
         dispatch(update(product));
-        const cart = store.getState()['cart'];
-        setTimeout(() => {
-            dispatch(total(cart));
+        let cart = store.getState()['cart'];
+
+        const flatCart = getLineItemsFromCart(cart)
+        axios.post('/api/shop/total', {"cart": flatCart} )
+        .then((r) => {
+            console.log(r);
+            cart = placeLineItemsIntoCart(cart, r.data.cart);
+    
+            dispatch({
+                type: TOTAL_CART,
+                total: r.data.total,
+                cart: cart
+            });
         });
     }
 }
@@ -266,30 +287,11 @@ export const update = (product) => {
 
 
 export const total = (cart) => {
-    let {total, finalCart} = calculateTotal(cart);
-    console.log('calling the backend here');
-    // axios.post('/api/shop/total', {"cart": cart} )
-    // .then((r) => {
-    //     console.log(r);
-        
-    //     // let car =  {
-    //     //     type: TOTAL_CART,
-    //     //     total,
-    //     //     cart: finalCart
-    //     // }
-    //     // return car;
-    //     return {
-    //         type: TOTAL_CART,
-    //         total,
-    //         cart: cart
-
-    //     };
-    // });
 
     return {
         type: TOTAL_CART,
         total,
-        cart: finalCart
+        cart: cart
 
     };
 
