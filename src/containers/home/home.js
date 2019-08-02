@@ -85,7 +85,8 @@ class Home extends Component {
     }
 
     photoStatusHandler = (photoid) => {
-        return this.props.photoStatusHandler(photoid, this.props.favourites, this.props.cart);
+        console.log("PHOTO ID", photoid);
+        return this.props.photoStatusHandler(photoid);
     } 
 
 

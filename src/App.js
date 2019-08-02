@@ -52,20 +52,19 @@ class App extends Component {
     
     
     componentDidMount() {
-        console.log('fetching favourites');
         this.props.fetchFavourites();
     }
 
 
     linkHandler = (page) => {
-        console.log(page);
         if (page === false) return;
         if (typeof page === 'undefined') page = "";
         this.props.history.push(window.basePath + page);
     }
 
-    checkFavouriteStatus = (photoid, favourites) => {
-        const found = favourites.filter((item) => {
+    checkFavouriteStatus = (photoid) => {
+        
+        const found = this.props.favourites.filter((item) => {
             return photoid === item.id;
         });
         if (found.length > 0) {
@@ -74,8 +73,8 @@ class App extends Component {
         return false;
     }
 
-    checkCartStatus = (photoid, cart) => {
-        const found = cart.filter((item) => {
+    checkCartStatus = (photoid) => {
+        const found = this.props.cart.filter((item) => {
             return photoid === item.id;
         });
         if (found.length > 0) {
@@ -84,9 +83,9 @@ class App extends Component {
         return false;
     }
 
-    photoStatusHandler = (photoid, favourites, cartItems) => {
-        const favourite = this.checkFavouriteStatus(photoid, favourites);
-        const cart = this.checkCartStatus(photoid, cartItems);
+    photoStatusHandler = (photoid) => {
+        const favourite = this.checkFavouriteStatus(photoid);
+        const cart = this.checkCartStatus(photoid);
         return {favourite, cart};
     }
 
@@ -149,6 +148,7 @@ class App extends Component {
 const mapStateToProps = state => {
     return {
         favourites : state.favourites,
+        cart        : state.cart,
     }
 };
 

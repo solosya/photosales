@@ -58,18 +58,17 @@ class Index extends Component {
                     // panelData.push(panel)
                     // const panels = [...this.state.panels, panel];
                 });
-                console.log(feed);
                 return panelData.push(feed);
 
             });
 
             axios.all(panelData).then((results) => {
-                console.log(results);
+
                 // NEED TO ORDER PANELS
                 this.setState({
                     panels: results
                 }, () => {
-                    console.log(this.state.panels);
+                    // console.log(this.state.panels);
                 });
 
             });
@@ -93,7 +92,7 @@ class Index extends Component {
 
     getPanels = () => {
         this.setState({panels: panels}, () => {
-            console.log(this.state);
+            // console.log(this.state);
         });
     }
 

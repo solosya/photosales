@@ -17,7 +17,7 @@ class Favourites extends Component {
 
         const cards = this.props.favourites.map( (fav, i) => {
 
-            const {favourite, cart} = this.props.photoStatusHandler(fav.id, this.props.favourites, this.props.cart);
+            const {favourite, cart} = this.props.photoStatusHandler(fav.id);
             console.log(favourite, cart);
 
             const key = fav.title + fav.id;

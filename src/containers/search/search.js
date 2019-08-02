@@ -181,7 +181,7 @@ import {panels}             from '../section/data'
                                 
                                 {this.state.photos.map((photo, i) => {
                                     
-                                    const {favourite, cart} = this.props.photoStatusHandler(photo.id, this.props.favourites, this.props.cart);
+                                    const {favourite, cart} = this.props.photoStatusHandler(photo.id);
                                     this.cardCount++;
                                     
                                     return (

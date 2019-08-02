@@ -239,7 +239,7 @@ class Checkout extends Component {
 
 
     photoStatusHandler = (photoid) => {
-        return this.props.photoStatusHandler(photoid, this.props.favourites, this.props.cart);
+        return this.props.photoStatusHandler(photoid);
     } 
 
 

@@ -36,16 +36,18 @@ class Gallery extends Component {
             // const cloudinaryCore = new cloudinary.Cloudinary({cloud_name: 'cognitives'});
 
             const images = r.data.media.map((item) => {
+
                 // const url = cloudinaryCore.url(item.url, {
                 //     width: "580",
                 //     height: "384",
                 //     crop: "fit" 
     
                 // });
-                const {favourite, cart} = this.props.checkPhotoStatus(item.id);
+
+                const {favourite, cart} = this.props.checkPhotoStatus(item.media_id);
                 
                 return {
-                    id      : item.id,
+                    id      : item.media_id,
                     url     : item.path,
                     guid    : item.guid,
                     title   : item.title,

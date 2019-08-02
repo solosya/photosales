@@ -61,7 +61,7 @@ const pin = (e, props) => {
 
 
 const Card = props =>  {
-    console.log(props);
+
     const styles = [];
 
     for (let i = 0; i < props.styles.length; i++) {

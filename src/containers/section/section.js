@@ -55,7 +55,7 @@ class Section extends Component {
 
         if (panel.length > 0) {
             this.setState({galleries: panel[0].feed}, () => {
-                console.log(this.state);
+                // console.log(this.state);
             });
 
         }
