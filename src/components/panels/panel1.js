@@ -1,8 +1,8 @@
-import React                from 'react';
-import Row                  from '../../components/layout/row';
-import Col                  from '../../components/layout/col';
-import Card                 from '../../components/card/card.js'; 
-import Header               from '../../components/partials/section_header.js';
+import React                from 'react'
+import Row                  from '../../components/layout/row'
+import Col                  from '../../components/layout/col'
+import Card                 from '../../components/card/card.js';
+import Header               from '../../components/partials/section_header.js'
 
 const panel_1 = (props) => {
 
@@ -24,16 +24,19 @@ const panel_1 = (props) => {
 
                 <Row>
                     {props.cards.slice(0,3).map((card, i) => {
-                        return <Col key={i} classes={["col-12", "col-md-3"]}>
-                            <Card 
-                                cardHandler={props.cardHandler} 
-                                data={props.cards[cardCount]} 
-                                count={cardCount++}
-                                panel={props.title}
-                                styles = {["card-1-mobile", "card-1-tablet", "card-1-desktop"]}
-                                // styles="card-1-mobile card-1-tablet card-1-desktop"
-                            />
-                        </Col>
+
+                        return (
+                            <Col key={i} classes={["col-12", "col-md-3"]}>
+                                <Card 
+                                    data        = {props.cards[cardCount]} 
+                                    count       = {cardCount++}
+                                    panel       = {props.title}
+                                    styles      = {["card-1-mobile", "card-1-tablet", "card-1-desktop"]}
+                                    cardHandler = {props.cardHandler} 
+            
+                                />
+                            </Col>
+                        )
                     })}
                 </Row>
             

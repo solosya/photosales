@@ -136,6 +136,9 @@ const reducer = (state = intialState, action) => {
         case actionTypes.TOGGLE_FAVOURITE: {
 
             let favourites = [...state.favourites];
+            console.log("FAVOURITES", favourites);
+            console.log(action.photo);
+
             const loggedIn = state.isLoggedIn;
 
             const found = favourites.filter((item) => {
@@ -162,6 +165,8 @@ const reducer = (state = intialState, action) => {
 
         case actionTypes.TOGGLE_CART: {
             let cart = resetCartTotals([...state.cart]);
+            console.log("CART", cart);
+            console.log(action.photo);
 
             const found = cart.filter((item) => {
                 return action.photo.id !== item.id;
@@ -222,7 +227,7 @@ const reducer = (state = intialState, action) => {
             const photoIndex = findPhotoInCart(cart, { photoId: action.photoId });
             if (photoIndex > -1) {
                 const photo = JSON.parse(JSON.stringify( cart[photoIndex] ));
-                const index = findProductInCartItem(photo, { id: action.productId} );
+                const index = findProductInCartItem(photo, { id: action.productIndex} );
                 if (index !== -1) {
                     photo.lineItems.splice(index, 1);
                 }

@@ -21,41 +21,39 @@ const billing = (props) => {
                             medium
                         />
 
-                        <p>Fields marked with an * are required.</p>
-
                         <Row>
                             <Col classes={["col-md-6"]}>
-                                <FormLabel>First name*</FormLabel>
+                                <FormLabel>First name</FormLabel>
                                 <FormInput error={props.handleFindBillingErrors("firstname")} type="text" value={props.firstName} placeholder="First name" onChange={(e) => props.handleBillingForm(e.target.value, "firstname")} />
                                 <ErrorLabel active={props.handleFindBillingErrors("firstname")}>This field is required</ErrorLabel>
                                 
-                                <FormLabel>Email address*</FormLabel>
+                                <FormLabel>Email address</FormLabel>
                                 <FormInput error={props.handleFindBillingErrors("email")} type="email" value={props.email} placeholder="eg. johnsmith@gmail.com" onChange={(e) => props.handleBillingForm(e.target.value, "email")} />
                                 <ErrorLabel active={props.handleFindBillingErrors("email")}>This field is required</ErrorLabel>
 
-                                <FormLabel>Street address*</FormLabel>
+                                <FormLabel>Street address</FormLabel>
                                 <FormInput error={props.handleFindBillingErrors("address")} type="text" value={props.address} placeholder="Street address" onChange={(e) => props.handleBillingForm(e.target.value, "address")} />
                                 <ErrorLabel active={props.handleFindBillingErrors("address")}>This field is required</ErrorLabel>
 
-                                <FormLabel>State*</FormLabel>
+                                <FormLabel>State</FormLabel>
                                 <FormInput error={props.handleFindBillingErrors("state")} type="text" value={props.state} placeholder="State" onChange={(e) => props.handleBillingForm(e.target.value, "state")} />
                                 <ErrorLabel active={props.handleFindBillingErrors("state")}>This field is required</ErrorLabel>
 
                             </Col>
                             <Col classes={["col-md-6"]}>
-                                <FormLabel>Last name*</FormLabel>
+                                <FormLabel>Last name</FormLabel>
                                 <FormInput error={props.handleFindBillingErrors("lastname")} type="text" value={props.lastName} placeholder="Last name" onChange={(e) => props.handleBillingForm(e.target.value, "lastname")} />
                                 <ErrorLabel active={props.handleFindBillingErrors("lastname")}>This field is required</ErrorLabel>
 
-                                <FormLabel>Phone number*</FormLabel>
+                                <FormLabel>Phone number</FormLabel>
                                 <FormInput error={props.handleFindBillingErrors("phone")} type="text" value={props.phone} placeholder="Home or mobile" onChange={(e) => props.handleBillingForm(e.target.value, "phone")} />
                                 <ErrorLabel active={props.handleFindBillingErrors("phone")}>This field is required</ErrorLabel>
 
-                                <FormLabel>Suburb*</FormLabel>
+                                <FormLabel>Suburb</FormLabel>
                                 <FormInput error={props.handleFindBillingErrors("suburb")} type="text" value={props.suburb} placeholder="Suburb" onChange={(e) => props.handleBillingForm(e.target.value, "suburb")} />
                                 <ErrorLabel active={props.handleFindBillingErrors("suburb")}>This field is required</ErrorLabel>
 
-                                <FormLabel>Postcode*</FormLabel>
+                                <FormLabel>Postcode</FormLabel>
                                 <FormInput error={props.handleFindBillingErrors("postcode")} type="text" value={props.postcode} placeholder="Postcode" onChange={(e) => props.handleBillingForm(e.target.value, "postcode")} />
                                 <ErrorLabel active={props.handleFindBillingErrors("postcode")}>This field is required</ErrorLabel>
 

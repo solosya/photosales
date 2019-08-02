@@ -34,10 +34,6 @@ class Home extends Component {
         selectedGallery: null,
     }
     
-    componentDidMount = () => {
-        // console.log();
-        this.props.fetchFavourites();
-    }
     
     getFeed = (panel) => {
         const options = {
@@ -95,7 +91,6 @@ class Home extends Component {
 
     render() {
 
-
         const gallery = 
             <Modal 
                 width        = "954px" 
@@ -116,15 +111,17 @@ class Home extends Component {
             <Modal closeHandler={this.closeFavourites} children={ () => (
                 <Favourites 
                     favourites  = {this.props.favourites}
+                    cart        = {this.props.cart}
                     favHandler  = {this.props.toggleFavourite}
                     cartHandler = {this.props.toggleCart}
+                    photoStatusHandler = {this.photoStatusHandler}
                 />
             )} >   
             </Modal>
 
         const cartCount = (typeof this.props.cart !== 'undefined') ? this.props.cart.length : 0;
         const favCount = (typeof this.props.favourites !== 'undefined') ? this.props.favourites.length : 0;
-        // console.log("HOME RENDER", this.props.cart, cartCount);
+
         return (
             <React.Fragment>
                 
@@ -198,10 +195,10 @@ class Home extends Component {
 
 const mapStateToProps = state => {
     return {
-        favourites : state.favourites,
-        cart: state.cart,
-        isLoggedIn: state.isLoggedIn,
-        pageTitle: state.pageTitle
+        cart        : state.cart,
+        pageTitle   : state.pageTitle,
+        favourites  : state.favourites,
+        isLoggedIn  : state.isLoggedIn,
     }
 };
 

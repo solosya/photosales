@@ -1,21 +1,19 @@
 //Libraries
 import React, {Component}   from 'react'
-import axios                from 'axios';
+import axios                from 'axios'
+import cn                   from 'classnames'
 // import cloudinary           from 'cloudinary-core';
-import cn                   from 'classnames';
 
 //Components
-import ImageGallery from 'react-image-gallery';
-import Button       from '../../components/button/button';
-import FavIcon      from '../favourites/favIcon';
-
-import Blockspinner from '../spinners/BlockSpinner';
-
+import ImageGallery         from 'react-image-gallery'
+import Button               from '../../components/button/button'
+import FavIcon              from '../favourites/favIcon'
+import Blockspinner         from '../spinners/BlockSpinner'
 
 //Styles
-import styles       from './gallery.module.scss';
-import "react-image-gallery/styles/css/image-gallery.css";
-import "./image-gallery-overrides.scss";
+import styles               from './gallery.module.scss'
+import "react-image-gallery/styles/css/image-gallery.css"
+import "./image-gallery-overrides.scss"
 
 
 

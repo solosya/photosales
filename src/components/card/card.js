@@ -28,7 +28,6 @@ const drop = (e, props) => {
     e.preventDefault();
     if (props.swapCards) {
 
-        console.log('dragon dropped', props);
         const source = JSON.parse ( e.dataTransfer.getData("text") );
 
         const params = {
@@ -40,7 +39,7 @@ const drop = (e, props) => {
             destinationArticleId: props.data.id,
             destinationIsSocial: 0,
         }
-        console.log(params);
+
         props.swapCards(params);
     }
 }
@@ -48,7 +47,7 @@ const drop = (e, props) => {
 
 const pin = (e, props) => {
     e.stopPropagation();
-    console.log(props);
+
     if (props.pinCard) {
         const params = {
             id: props.data.id,
@@ -62,7 +61,7 @@ const pin = (e, props) => {
 
 
 const Card = props =>  {
-        
+    console.log(props);
     const styles = [];
 
     for (let i = 0; i < props.styles.length; i++) {
@@ -96,6 +95,13 @@ const Card = props =>  {
     const image = props.data.images && props.data.images.length > 0 ? props.data.images[0] : props.data;
     let buttons = null;
     
+
+    let admin = true;
+    if (typeof props.admin !== 'undefined' && props.admin === false) {
+        admin = false;
+    }
+
+
     if ( props.buttons ) {
         buttons = 
             <div className={buttonStyles}>
@@ -145,7 +151,7 @@ const Card = props =>  {
 
                 </article>
 
-                <Admin pin={pin} data={props}/>
+                {admin && <Admin pin={pin} data={{...props}}/> }
 
             </div>
         </div>

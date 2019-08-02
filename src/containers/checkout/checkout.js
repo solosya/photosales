@@ -1,28 +1,29 @@
 // Libraries
-import React, {Component}   from 'react';
-import {connect}                    from 'react-redux';
-import axios                        from 'axios';
-import {Elements, StripeProvider}   from 'react-stripe-elements';
-import TransitionGroup              from 'react-transition-group/TransitionGroup'; 
-import CSSTransition                from 'react-transition-group/CSSTransition'; 
+import React, {Component}           from 'react'
+import {connect}                    from 'react-redux'
+import axios                        from 'axios'
+import qs                           from 'qs'
+import {Elements, StripeProvider}   from 'react-stripe-elements'
+import TransitionGroup              from 'react-transition-group/TransitionGroup'
+import CSSTransition                from 'react-transition-group/CSSTransition'
 
 // Components
-import Row                  from '../../components/layout/row';
-import Col                  from '../../components/layout/col';
-import Container            from '../../components/layout/container';
-import Header               from '../../components/partials/section_header.js';
-import CardCart             from '../../components/card/cardCart.js'; 
-import Total                from '../../components/checkoutTotal';
-import Billing              from './billing';
-import Payment              from './payment';
-import Modal                from '../../components/modals/modal';
-import Favourites           from '../../components/favourites/favourites';
+import Row                  from '../../components/layout/row'
+import Col                  from '../../components/layout/col'
+import Container            from '../../components/layout/container'
+import Header               from '../../components/partials/section_header.js'
+import CardCart             from '../../components/card/cardCart.js'
+import Total                from '../../components/checkoutTotal'
+import Billing              from './billing'
+import Payment              from './payment'
+import Modal                from '../../components/modals/modal'
+import Favourites           from '../../components/favourites/favourites'
 
 // Actions
-import * as actionTypes     from '../../store/actions/actions';
-import * as actionCreators  from '../../store/actions/actions';
+import * as actionTypes     from '../../store/actions/actions'
+import * as actionCreators  from '../../store/actions/actions'
 
-import {products} from './data';
+import {products} from './data'
 
 class Checkout extends Component {
     
@@ -56,6 +57,8 @@ class Checkout extends Component {
 
     componentDidMount() {
         const self = this;
+
+        
         axios.all([this.getSiteDiscounts(), this.getSiteProducts()])
         .then(axios.spread(function (discount, products) {
             self.setState({
@@ -114,11 +117,12 @@ class Checkout extends Component {
 
 
     addLineItemToCart = (product) => {
+        console.log(product);
         this.props.addLineItemToCart( product );
     }
 
-    removeLineItemFromCart = (productId, photoId) => {
-        this.props.removeLineItemFromCart( productId, photoId );
+    removeLineItemFromCart = (productIndex, photoId) => {
+        this.props.removeLineItemFromCart( productIndex, photoId );
     }
 
     handleQuantity = (quantity, product) => {
@@ -127,7 +131,6 @@ class Checkout extends Component {
     }
 
     handleRemovePhoto = (photo) => {
-        console.log("REMOVING PHOTO", photo);
         this.props.toggleCart( photo );
     }
 
@@ -179,16 +182,35 @@ class Checkout extends Component {
             console.log(this.state.billingErrors);
         });
 
+        // if (billingErrors.length > 0) {
+        //     console.log('NOT DOING PAYENT');
+        //     return;
+        // }
 
 
-        if (billingErrors.length > 0) {
-            console.log('NOT DOING PAYENT');
-            return;
-        }
-        console.log('ALL GOOD!!');
 
+        console.log(this.props.cart);
+        const cart = actionCreators.getLineItemsFromCart(this.props.cart).map((c) => {
+            return {
+                id       : c.id,
+                photoId  : c.photoId,
+                category : c.category,
+                quantity : c.quantity,
+            }
+        });
+
+        console.log(cart);
         console.log('and the token is!!', token);
         console.log(this.state.billing);
+        const billing = this.state.billing;
+        axios.post('/api/shop/purchase', qs.stringify( {cart, billing})).then((r) => {
+            // axios.post('/api/shop/purchase', qs.stringify( {"stripeToken": token.id, cart})).then((r) => {
+                console.log(r);
+        }).catch((e) => {
+            console.log(e);
+        });
+
+
     }
 
 
@@ -215,6 +237,16 @@ class Checkout extends Component {
         return false;
     }
 
+
+    photoStatusHandler = (photoid) => {
+        return this.props.photoStatusHandler(photoid, this.props.favourites, this.props.cart);
+    } 
+
+
+
+
+
+
     render() {
         let purchases = null;
         let cards = null;
@@ -226,6 +258,8 @@ class Checkout extends Component {
                     favourites  = {this.props.favourites}
                     favHandler  = {this.props.toggleFavourite}
                     cartHandler = {this.props.toggleCart}
+                    photoStatusHandler = {this.photoStatusHandler}
+
                 />
             )} >   
             </Modal>
@@ -239,7 +273,6 @@ class Checkout extends Component {
             cards = this.props.cart.map( (product, i) => {
                 const key = product.title + product.id;
 
-                console.log(product);
                 const card =
                     <CSSTransition key={key}
                         timeout={400}
@@ -335,7 +368,7 @@ class Checkout extends Component {
                             <Row>
                                 <Col classes={["col-12"]}>
                                     <Total
-                                        total={this.props.total}
+                                        total={this.props.total / 100}
                                         borderTop
                                         >
                                     </Total>
@@ -389,11 +422,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        toggleCart:             (photo)     => dispatch(actionCreators.toggleCart(photo)),
-        updateCartItem:         (product)   => dispatch(actionCreators.updateCartItem(product)),
-        toggleFavourite:        (photo)     => dispatch(actionCreators.toggleFavourite(photo)),
-        addLineItemToCart:      (product)   => dispatch(actionCreators.addItemToCart(product)),
-        removeLineItemFromCart: (productId, photoId) => dispatch({type:actionTypes.REMOVE_ITEM_FROM_CART, productId, photoId}),
+        toggleCart:             (photo)     => dispatch( actionCreators.toggleCart(photo) ),
+        updateCartItem:         (product)   => dispatch( actionCreators.updateCartItem(product) ),
+        toggleFavourite:        (photo)     => dispatch( actionCreators.toggleFavourite(photo) ),
+        fetchFavourites :       ()          => dispatch( actionCreators.fetchSaved() ),
+        addLineItemToCart:      (product)   => dispatch( actionCreators.addItemToCart(product) ),
+        removeLineItemFromCart: (productIndex, photoId) => dispatch( {type:actionTypes.REMOVE_ITEM_FROM_CART, productIndex, photoId} ),
     }
 
 }

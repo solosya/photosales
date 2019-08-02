@@ -20,7 +20,7 @@ export const LOGIN_ON_REFRESH       = 'LOGIN_ON_REFRESH'
 export const REMOVE_ITEM_FROM_CART  = 'REMOVE_ITEM_FROM_CART'
 
 
-const getLineItemsFromCart = (cart) => {
+export const getLineItemsFromCart = (cart) => {
     const items = [];
     for (let i=0; i<cart.length; i++) {
         let cartItem = cart[i];
@@ -93,9 +93,9 @@ export const guest = (router) => {
 
 
 
-export const toggleFavourite = (photo) => {
+export const toggleFavourite = (p) => {
     // console.log("TIGGLIG", photo);
-    
+    const photo = {...p};
     const loggedIn = store.getState()['isLoggedIn'];
     const live = store.getState()['live'];
     // console.log(loggedIn);
@@ -136,9 +136,10 @@ export const toggleFavourite = (photo) => {
 }
 
 
-export const toggleCart = (photo) => {
+export const toggleCart = (p) => {
     // console.log("taglling", photo);
-    
+    const photo = {...p};
+
     return dispatch => {
 
         const loggedIn = store.getState()['isLoggedIn'];
@@ -183,6 +184,7 @@ export const fetchSaved = () => {
     return dispatch => {
         
         if (loggedIn) {
+            console.log('fetching from database!!');
             axios.get('/api/user/user-media').then((r) => {
                 // console.log("FAVOURITE FETCH SERVER", r.data.media);
     
@@ -208,7 +210,7 @@ export const fetchSaved = () => {
             });
 
         } else {
-            // console.log('getting saved from local');
+            console.log('getting saved from local');
             // Attempt to get cart and favourites from local storage
             const cartString = localStorage.getItem('cart');
             const favString  = localStorage.getItem('favourites');
@@ -216,6 +218,7 @@ export const fetchSaved = () => {
             const cart       =  cartString ? JSON.parse(cartString) : [];
             const favourites =  favString  ? JSON.parse(favString)  : [];
             const saved = cart.concat(favourites);
+            console.log(saved);
             if (saved.length === 0 ) return;
 
             dispatch({

@@ -58,7 +58,6 @@ const lineItem = (props) => {
     }
 
 
-    // console.log(props.options);
 
     const options = props.options.filter((item) => {
         return !item.disabled;
@@ -71,6 +70,9 @@ const lineItem = (props) => {
 
     let discountName = "";
 
+
+    let total = "";
+
     if (props.product) {
         if ( props.product.discountName ) {
             discountName = props.product.discountName ; 
@@ -78,8 +80,17 @@ const lineItem = (props) => {
         // if (props.product.priceTotalDiscount) {
         //     itemTotalDiscount = props.product.priceTotalDiscount;
         // }
+        console.log(props.product.priceTotal);
+        total = props.product.priceTotal / 100;
+        if ( isNaN(total) ) {
+            total = "";
+        }
+        console.log(total);
 
     }
+
+
+
 
     return (
         <div className={styles.lineItem} title={discountName}>
@@ -101,7 +112,7 @@ const lineItem = (props) => {
                 ? <p className={styles.price}>
                     {/* {props.product.priceTotalFull !== props.product.priceTotal ? <span className={styles.fullPrice}>${props.product.priceTotalFull} - </span>  : ""} */}
                     
-                    ${props.product.priceTotal} AUD
+                    ${total}
                  </p>
                 : null
             }

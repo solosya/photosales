@@ -36,11 +36,13 @@ class Index extends Component {
 
                         const media = article.featuredMedia;
                         return {
-                            id       : article.articleId,
-                            date     : article.publishedDate,
-                            title    : article.title,
-                            content  : article.excerpt,
-                            hasMedia : article.hasMedia,
+                            id          : article.articleId,
+                            date        : article.publishedDate,
+                            title       : article.title,
+                            content     : article.excerpt,
+                            editUrl     : article.editUrl,
+                            publishDate : article.publishDate,
+        
                             images: [{
                                 id       : media.id,
                                 url      : media.media.url,
@@ -56,7 +58,7 @@ class Index extends Component {
                     // panelData.push(panel)
                     // const panels = [...this.state.panels, panel];
                 });
-
+                console.log(feed);
                 return panelData.push(feed);
 
             });

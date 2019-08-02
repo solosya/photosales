@@ -56,29 +56,30 @@ class CardCart extends Component {
 
         product.quantity = 1;
         product.photoId = this.props.data.id;
-        product.productId = index;
+        product.productIndex = index;
         const menu = JSON.parse(JSON.stringify(this.state.products));
         const selectMenu = menu[category];
         selectMenu[index].disabled = true;
-
+        console.log('setting state');
         this.setState(prevState => ({
             products: {
                 ...prevState.products,
                 ...menu                    
             }
         }));
+        console.log('adding to cart');
 
         this.props.addLineItemToCart(product);
     }
 
 
-    removeItem = (e, category, productId, photoId ) => {
+    removeItem = (e, category, productIndex, photoId ) => {
 
         // enable the item in the menu
         const menu = JSON.parse(JSON.stringify(this.state.products));
         const selectMenu = menu[category];
         const menuIndex = selectMenu.findIndex((element) => {
-            return element.id === productId;
+            return element.id === productIndex;
         });
 
         selectMenu[menuIndex].disabled = false;
@@ -88,7 +89,7 @@ class CardCart extends Component {
                 ...menu                    
             }
         }), () => {
-            this.props.removeLineItemFromCart(productId, photoId);
+            this.props.removeLineItemFromCart(productIndex, photoId);
         });
     }
 
@@ -153,7 +154,7 @@ class CardCart extends Component {
                         index           = {i+1}
                         active          = {true}
                         options         = {digitalOptions}
-                        selectValue     = {digitalOptions[item.productId]}
+                        selectValue     = {digitalOptions[item.productIndex]}
                         product         = {item}
                         handleSelect    = {this.handleSelect}
                         handleQuantity  = {this.props.handleQuantity}
@@ -195,7 +196,7 @@ class CardCart extends Component {
                         index           = {i+1}
                         active          = {true}
                         options         = {printOptions}
-                        selectValue     = {printOptions[item.productId]}
+                        selectValue     = {printOptions[item.productIndex]}
                         product         = {item}
                         handleSelect    = {this.handleSelect}
                         handleQuantity  = {this.props.handleQuantity}
@@ -211,7 +212,7 @@ class CardCart extends Component {
         
         return (
             <div key={this.props.data.id} onClick={() => this.props.cardHandler(count, panel)} className={this.props.styles}>
-                <div  href                = "#" 
+                <div  href              = "#" 
                     className           = ""
                     data-id             = {this.props.data.id} 
                     data-guid           = {this.props.data.guid} 

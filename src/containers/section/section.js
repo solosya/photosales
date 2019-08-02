@@ -1,10 +1,10 @@
 // Libraries
 import React, {Component}   from 'react'
 import {connect}            from 'react-redux'
-import axios from 'axios'
-import qs from 'querystring'
+import axios                from 'axios'
+import qs                   from 'querystring'
 // import { Waypoint }         from 'react-waypoint'
-import {NotificationContainer, NotificationManager} from 'react-notifications';
+import {NotificationContainer, NotificationManager} from 'react-notifications'
 
 //Components
 import Col                  from '../../components/layout/col'
@@ -23,14 +23,12 @@ import {ArticleFeed}        from '../../sdk/feed'
 //Styles
 import 'react-notifications/lib/notifications.css';
 
-
 //Data
 import {panels} from './data';
 
 
 class Section extends Component {
 
-    
     state = {
         title: "",
         galleries: [],
@@ -68,7 +66,7 @@ class Section extends Component {
     getFeed = (offset = 0) => {
 
         const options = {
-            limit : 3,
+            limit : 12,
             urlid : this.section,
             offset,
             non_pinned : offset,
@@ -80,7 +78,7 @@ class Section extends Component {
             // console.log(r);
             let waypoint = true;
 
-            const title = r.data.blog ? r.data.blog.title :  "section title";
+            const title = r.data.blog ? r.data.blog.title :  "Section";
             
             let galleries = r.data.articles.map((article) => {
                 const media = article.featuredMedia;
@@ -90,7 +88,6 @@ class Section extends Component {
                     title       : article.title,
                     content     : article.excerpt,
                     editUrl     : article.editUrl,
-                    hasMedia    : article.hasMedia,
                     isPinned    : parseInt( article.isPinned ),
                     pinnedAt    : parseInt( article.pinnedAt ),
                     publishDate : article.publishDate,
@@ -183,20 +180,11 @@ class Section extends Component {
 
 
     showGallery = (index) => {
-        const gallery = this.state.galleries[index];
+        console.log(index);
+        const gallery = this.state.galleries[index -1];
         this.props.cardHandler(gallery);
     }
 
-    // loadMore = () => {
-    //     const panel = panels.filter((panel) => {
-    //         return panel.title === this.props.title;
-    //     });
-    //     const galleries = panel[0].feed;
-    //     const more = this.state.galleries.concat(galleries);
-    //     this.setState({galleries: more}, () => {
-    //         console.log(this.state);
-    //     });
-    // }
 
     
 

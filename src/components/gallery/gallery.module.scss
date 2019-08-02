@@ -58,6 +58,7 @@
         color: $greyish;
         overflow:hidden;
         @include flex-height(65px);
+        word-break: break-all;
     }
     &__photocaption {
         @include font-size(13);

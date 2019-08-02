@@ -1,5 +1,6 @@
 //Libraries
 import React, { Component }     from 'react'
+import { connect }              from 'react-redux'
 import { Route, Switch }        from 'react-router-dom'
 import { withRouter }           from 'react-router'
 import axios                    from 'axios'
@@ -10,19 +11,21 @@ import store                    from './store/store'
 import Login                    from './containers/login/login'
 import Checkout                 from './containers/checkout/checkout'
 import EnsureLoggedInContainer  from './containers/private'
+import EnsureLoggedOutContainer from './containers/ensureLoggedOut'
 
 //Actions
 import * as actionTypes         from './store/actions/actions'
+import * as actionCreators      from './store/actions/actions'
 
 //Styles
 import './app.scss';
 
 axios.defaults.baseURL = window.location.origin;
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-axios.defaults.headers.common['X-CSRF-Token']     = window.vigblat;
+axios.defaults.headers.common['X-CSRF-Token']     = window.csrfToken;
 axios.defaults.headers.post['Content-Type']       = 'application/x-www-form-urlencoded';
 axios.defaults.headers.get['Content-Type']        = 'application/x-www-form-urlencoded';
-delete window.vigblat;
+delete window.csrfToken;
 
 
 const urlPath = window.location.pathname.split("/");
@@ -46,9 +49,16 @@ if (window._appJsConfig) {
 
 
 class App extends Component {
+    
+    
+    componentDidMount() {
+        console.log('fetching favourites');
+        this.props.fetchFavourites();
+    }
 
 
     linkHandler = (page) => {
+        console.log(page);
         if (page === false) return;
         if (typeof page === 'undefined') page = "";
         this.props.history.push(window.basePath + page);
@@ -91,23 +101,24 @@ class App extends Component {
                     className="switch-wrapper"
                 >
                     <Route path={window.basePath + "/login"} render={ () => 
-                        <Login linkHandler={this.linkHandler} />
+                        <EnsureLoggedOutContainer>
+
+                            <Login  linkHandler={this.linkHandler} 
+                                    photoStatusHandler={this.photoStatusHandler}
+                            />
+                        </EnsureLoggedOutContainer>
                     } />
 
                     <Route path={window.basePath + "/checkout"} render={ () => 
                         <EnsureLoggedInContainer>
-                            <Checkout linkHandler={this.linkHandler}/> 
+                            <Checkout   linkHandler={this.linkHandler} 
+                                        photoStatusHandler={this.photoStatusHandler} 
+                            /> 
                         </EnsureLoggedInContainer> 
                     } />
 
-                    {/* <Route path={window.basePath + "/search"} render={ () => 
-                        <Search linkHandler={this.linkHandler}
-                                photoStatusHandler={this.photoStatusHandler} 
-                        />
-                    } /> */}
-
                     <Route path={window.basePath + "/search"} render={ () => 
-                        <Home linkHandler={this.linkHandler}
+                        <Home   linkHandler={this.linkHandler}
                                 photoStatusHandler={this.photoStatusHandler} 
                         />
                     } />
@@ -134,4 +145,19 @@ class App extends Component {
     }
 }
 
-export default withRouter(App);
+
+const mapStateToProps = state => {
+    return {
+        favourites : state.favourites,
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchFavourites : () => dispatch( actionCreators.fetchSaved() ),
+    }
+
+}
+
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)( App ) );

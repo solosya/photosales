@@ -17,6 +17,9 @@ class Favourites extends Component {
 
         const cards = this.props.favourites.map( (fav, i) => {
 
+            const {favourite, cart} = this.props.photoStatusHandler(fav.id, this.props.favourites, this.props.cart);
+            console.log(favourite, cart);
+
             const key = fav.title + fav.id;
             const card =
                 <CSSTransition key={key}
@@ -30,7 +33,10 @@ class Favourites extends Component {
                         cardHandler = {() => { return false;}}
                         favHandler  = {this.props.favHandler}
                         cartHandler = {this.props.cartHandler}
-                        favourite
+                        admin       = {false}
+                        favourite   = {favourite}
+                        cart        = {cart}
+                        buttons
                     ></Card>
             </CSSTransition>;
 

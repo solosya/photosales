@@ -102,8 +102,8 @@
         }
 
         &__heading {
-            @include flex-height(40px);
-            @include font-size(26);
+            @include flex-height(52px);
+            @include font-size(20);
             line-height:1.36;
         }
 

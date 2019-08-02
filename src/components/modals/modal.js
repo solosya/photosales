@@ -38,7 +38,7 @@ const Modal = styled.div`
 const Window = styled.div`
     margin: auto auto;
     width:880px;
-    height: 80%;
+    max-height: 80%;
     background:white;
     padding:30px 35px 30px 35px;
     border-radius:3px;
