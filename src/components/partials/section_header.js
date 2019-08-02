@@ -34,16 +34,31 @@ const sectionHeader = (props) => {
 
     if (props.cart) {
 
+
+        const favLabelStyles = [ styles['c-section-head__fav-label'] ];
+        if (props.favourites > 0) {
+            favLabelStyles.push( styles['c-section-head__fav-label--on'] );
+        }
+
+
+        const cartLabelStyles = [ styles['c-section-head__cart-label'] ];
+        if (props.cartItems > 0) {
+            cartLabelStyles.push( styles['c-section-head__cart-label--on'] );
+        }
+
         cart = 
             <div className={styles['c-section-head__buttons']}>
                 <div className={styles['c-section-head__favourite']} onClick={ props.favouritesHandler}>
                     <FavIcon on={props.favourites > 0} />
-                    <label>Favourites</label>
+                    <label className={cn(favLabelStyles)}>Favourites</label>
                 </div>
-                {/* <div className={favStyles} onClick={props.favouritesHandler}>Favourites</div> */}
+
                 <div className={styles['c-section-head__cart']} onClick={ () => props.linkHandler("/checkout/")}>
+                    <label className={styles['c-section-head__cart-count']}>{props.cartItems}</label>
                     <CheckoutIcon on={props.cartItems > 0} />
-                    <label>Checkout</label>
+
+                    
+                    <label className={cn(cartLabelStyles)}>Check out</label>
                 </div>
                 {/* <div onClick={props.checkoutLinkHandler} className={cartStyles}>{ props.cartItems} Check out</div> */}
             </div>;

@@ -11,9 +11,9 @@ const favIcon = (props) => {
 const Favourite = styled.div`
     background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOSIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE5IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiMwMDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTUuMzIgMS4yNGMxLjUzMyAwIDIuOTI1Ljg1MyAzLjYzIDIuMjI2YS42MzYuNjM2IDAgMCAwIC4yMTQuMjRjLjAxNi4wMS4wMy4wMi4wNTIuMDMybC4wMDEtLjAwMi4wMjQuMDEyYS41ODIuNTgyIDAgMCAwIC4yMTcuMDU3LjU5OS41OTkgMCAwIDAgLjU5My0uMzQ0QTQuMDc3IDQuMDc3IDAgMCAxIDEzLjY4IDEuMjRjMi4yNTUgMCA0LjA5IDEuODUxIDQuMDkgNC4xMjZhNC4xMjUgNC4xMjUgMCAwIDEtMS4xNDMgMi44Nkw5LjUgMTQuNTUyIDIuMzc2IDguMjNBNC4xMjggNC4xMjggMCAwIDEgMS4yMyA1LjM2N2MwLTIuMjc2IDEuODM0LTQuMTI3IDQuMDktNC4xMjdNMTMuNjggMEE1LjMxIDUuMzEgMCAwIDAgOS41IDIuMDQ1IDUuMzA3IDUuMzA3IDAgMCAwIDUuMzIgMEMyLjM4NSAwIDAgMi40MDcgMCA1LjM2N2MwIDEuNDA2LjUzNSAyLjczNiAxLjUwNyAzLjc0MmwuMDI2LjAyNCA3LjU2IDYuNzEyYS42MTIuNjEyIDAgMCAwIC44MTMgMGw3LjU1Mi02LjcwNC4wMTItLjAxLjAyMi0uMDIxQTUuMzYgNS4zNiAwIDAgMCAxOSA1LjM2OEMxOSAyLjQwNyAxNi42MTIgMCAxMy42OCAwIi8+Cjwvc3ZnPg==");
     background-repeat: no-repeat;
-    background-size:contain;
-    height:20px;
-    width:20px;
+    background-size:cover;
+    height:16px;
+    width:19px;
     cursor:pointer;
     transition: all 400ms ease;
     

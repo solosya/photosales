@@ -74,7 +74,30 @@
             }
         }
     }
+    &__cart-count {
+        @include font-size(15);
+        margin-right:11px;
+
+    }
     
+    &__cart-label {
+        @include font-size(15);
+        margin-left:10px;
+
+        &--on {
+            color:black;
+        }
+    }
+
+
+
+    &__fav-label {
+        @include font-size(15);
+        &--on {
+            color:black;
+        }
+    }
+
     &__cart {
         cursor:pointer;
         display:flex;
