@@ -97,7 +97,7 @@ class CardCart extends Component {
 
     render() {
         const count = this.props.count || 0;
-        const panel = this.props.panel || null;
+        // const panel = this.props.panel || null;
         const image = this.props.data.images && this.props.data.images.length > 0 ? this.props.data.images[0] : this.props.data;
 
         
@@ -211,7 +211,7 @@ class CardCart extends Component {
 
         
         return (
-            <div key={this.props.data.id} onClick={() => this.props.cardHandler(count, panel)} className={this.props.styles}>
+            <div key={this.props.data.id} className={this.props.styles}>
                 <div  href              = "#" 
                     className           = ""
                     data-id             = {this.props.data.id} 
@@ -224,7 +224,7 @@ class CardCart extends Component {
 
                     <article className="c-cards-view">
 
-                        <figure className='c-cards-view__media'>
+                        <figure className='c-cards-view__media' onClick={() => this.props.cardHandler(count)} >
                             <picture>
                                 <source media="(max-width: 767px) and (min-width: 501px)" srcSet={this.props.data.imageMedium} />
                                 <source media="(max-width: 500px)" srcSet={this.props.data.imageSmall} />

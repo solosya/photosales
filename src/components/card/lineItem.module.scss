@@ -4,6 +4,7 @@
     display:flex;
     min-width:100%;
     margin-bottom:10px;
+    align-items:center;
 }
 
 .delete {
@@ -31,6 +32,7 @@
 
 }
 .quantity { 
+    box-sizing: border-box;
     padding:5px;
     font-size:16px;
     width:55px;

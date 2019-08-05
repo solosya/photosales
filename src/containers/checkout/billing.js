@@ -72,7 +72,7 @@ const billing = (props) => {
                                 name="promotion" />
                         </div> */}
 
-                        <div style={{marginTop:'13px'}}> 
+                        <div style={{marginTop:'35px'}}> 
                             <Checkbox 
                                 label="I accept the Photo Sales licensing Agreement terms of use" 
                                 checked={props.licence} 

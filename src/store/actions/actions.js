@@ -5,7 +5,7 @@ import qs               from  'qs'
 // import { browserHistory } from 'react-router';
 
 //Comopnents
-import Shop             from '../../containers/checkout/shop'
+// import Shop             from '../../containers/checkout/shop'
 
 //Actions
 export const LOGIN                  = 'LOGIN'

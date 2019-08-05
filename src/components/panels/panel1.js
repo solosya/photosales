@@ -32,7 +32,7 @@ const panel_1 = (props) => {
                                     count       = {cardCount++}
                                     panel       = {props.title}
                                     styles      = {["card-1-mobile", "card-1-tablet", "card-1-desktop"]}
-                                    cardHandler = {props.cardHandler} 
+                                    cardHandler = {props.showGallery} 
             
                                 />
                             </Col>

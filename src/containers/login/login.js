@@ -1,11 +1,12 @@
 //Libraries
 import React, { Component } from 'react'
-import axios                from 'axios'
-import qs                   from  'qs'
-
-// import PropTypes            from 'prop-types'
 import {connect}            from 'react-redux'
 import {withRouter}         from 'react-router'
+import axios                from 'axios'
+import qs                   from 'qs'
+
+// import PropTypes            from 'prop-types'
+
 //Components
 import Card                 from '../../components/card/card.js'
 import Row                  from '../../components/layout/row'
@@ -85,20 +86,6 @@ class LoginPage extends Component {
         return (
             <Container>
         
-                <Row>
-                    <Col classes={["col-12"]}>
-                        <Header 
-                            title               = {this.props.pageTitle} 
-                            cartItems           = {this.props.cart.length}
-                            favourites          = {this.props.favourites.length}
-                            linkHandler         = {this.props.linkHandler}
-                            favouritesHandler   = {this.showFavourites}
-                            larger 
-                            cart
-                        />
-                    </Col>
-                </Row>
-
 
                 <Row>
                     <Col classes={["col-12", "col-lg-8"]}>

@@ -13,6 +13,17 @@ import Checkout                 from './containers/checkout/checkout'
 import EnsureLoggedInContainer  from './containers/private'
 import EnsureLoggedOutContainer from './containers/ensureLoggedOut'
 
+import Row                      from './components/layout/row'
+import Col                      from './components/layout/col'
+import Container                from './components/layout/container'
+import Modal                    from './components/modals/modal'
+import Header                   from './components/partials/section_header.js'
+import Gallery                  from './components/gallery/gallery'
+import Favourites               from './components/favourites/favourites'
+
+
+
+
 //Actions
 import * as actionTypes         from './store/actions/actions'
 import * as actionCreators      from './store/actions/actions'
@@ -50,7 +61,13 @@ if (window._appJsConfig) {
 
 class App extends Component {
     
-    
+    state = {
+        showGallery: false,
+        galleryType: 'article',
+        showFavourites : false,
+        selectedGallery: null,
+    }
+
     componentDidMount() {
         this.props.fetchFavourites();
     }
@@ -89,10 +106,114 @@ class App extends Component {
         return {favourite, cart};
     }
 
+    showGallery = (gallery) => {
+
+        const galleryType = gallery.galleryType === 'photo' ? 'photo' : 'article';
+        this.setState({
+            selectedGallery: gallery,
+            galleryType,
+            showGallery: true,
+            showFavourites : false
+        }, () => {
+            console.log(this.state);
+        });
+        document.body.setAttribute('style', 'overflow: hidden;height:100%;')
+    }
+
+    closeGallery = () => {
+        this.setState({
+            showGallery: false
+        });
+        document.body.removeAttribute('style', 'overflow: hidden;height:100%;')
+    }
+
+
+    showFavourites = () => {
+        if (this.props.favourites.length > 0) {
+            this.setState({
+                showFavourites : true,
+                showGallery: false,
+            }, () => {
+                console.log(this.state);
+            });
+            document.body.setAttribute('style', 'overflow: hidden;height:100%;')
+        }
+    }
+    closeFavourites = () => {
+        this.setState({
+            showFavourites: false
+        });
+        document.body.removeAttribute('style', 'overflow: hidden;height:100%;')
+    }
+
+
 
     render() {
+
+
+        const gallery = 
+            <Modal 
+                width        = "954px" 
+                height       = "575px" 
+                closeHandler = {this.closeGallery} 
+                children     = { () => (
+                    <Gallery 
+                        gallery          = {this.state.selectedGallery} 
+                        galleryType      = {this.state.galleryType}
+                        favouriteHandler = {this.props.toggleFavourite}
+                        checkPhotoStatus = {this.photoStatusHandler}
+                        cartHandler      = {this.props.toggleCart}
+                    />
+            )} >   
+            </Modal>
+
+        const favourites = 
+            <Modal closeHandler={this.closeFavourites} children={ () => (
+                <Favourites 
+                    favourites  = {this.props.favourites}
+                    cart        = {this.props.cart}
+                    favHandler  = {this.props.toggleFavourite}
+                    cartHandler = {this.props.toggleCart}
+                    showGallery = {this.showGallery}
+                    photoStatusHandler = {this.photoStatusHandler}
+                />
+            )} >   
+            </Modal>
+
+        const cartCount = (typeof this.props.cart !== 'undefined') ? this.props.cart.length : 0;
+        const favCount = (typeof this.props.favourites !== 'undefined') ? this.props.favourites.length : 0;
+
+
+
+
+
         return (
             <div style={{marginBottom: "60px"}}>
+
+
+                {this.state.showGallery     ? gallery : null}
+                {this.state.showFavourites  ? favourites : null}
+
+                <Container>
+                    
+                    <Row>
+                        <Col classes={["col-12"]}>
+                            <Header 
+                                title               = {this.props.pageTitle} 
+                                favourites          = {favCount}
+                                cartItems           = {cartCount}
+                                linkHandler         = {this.linkHandler}
+                                favouritesHandler   = {this.showFavourites}
+                                loggedIn            = {this.props.isLoggedIn}
+                                larger 
+                                cart
+                            />
+                        </Col>
+                    </Row>
+                </Container>
+
+
+
                 <Switch
                     atEnter={{ opacity: 0 }}
                     atLeave={{ opacity: 0 }}
@@ -101,10 +222,10 @@ class App extends Component {
                 >
                     <Route path={window.basePath + "/login"} render={ () => 
                         <EnsureLoggedOutContainer>
-
                             <Login  linkHandler={this.linkHandler} 
                                     photoStatusHandler={this.photoStatusHandler}
                             />
+
                         </EnsureLoggedOutContainer>
                     } />
 
@@ -112,6 +233,8 @@ class App extends Component {
                         <EnsureLoggedInContainer>
                             <Checkout   linkHandler={this.linkHandler} 
                                         photoStatusHandler={this.photoStatusHandler} 
+                                        showGallery = {this.showGallery}
+
                             /> 
                         </EnsureLoggedInContainer> 
                     } />
@@ -119,6 +242,7 @@ class App extends Component {
                     <Route path={window.basePath + "/search"} render={ () => 
                         <Home   linkHandler={this.linkHandler}
                                 photoStatusHandler={this.photoStatusHandler} 
+                                showGallery = {this.showGallery}
                         />
                     } />
 
@@ -127,12 +251,14 @@ class App extends Component {
                     <Route path={window.basePath + "/:section"} render={ () => 
                         <Home   linkHandler={this.linkHandler}
                                 photoStatusHandler={this.photoStatusHandler} 
+                                showGallery = {this.showGallery}
                             />
                         } />
                     
                     <Route path={window.basePath} render={ () => 
                         <Home   linkHandler={this.linkHandler} 
                                 photoStatusHandler={this.photoStatusHandler} 
+                                showGallery = {this.showGallery}
                             />
                         } />
 
@@ -149,12 +275,17 @@ const mapStateToProps = state => {
     return {
         favourites : state.favourites,
         cart        : state.cart,
+        pageTitle   : state.pageTitle,
+        isLoggedIn  : state.isLoggedIn,
+
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchFavourites : () => dispatch( actionCreators.fetchSaved() ),
+        toggleCart      : (photo) => dispatch( actionCreators.toggleCart(photo) ),
+        toggleFavourite : (photo) => dispatch( actionCreators.toggleFavourite(photo) ),
+        fetchFavourites : ()      => dispatch( actionCreators.fetchSaved() ),
     }
 
 }

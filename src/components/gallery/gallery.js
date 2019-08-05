@@ -30,63 +30,88 @@ class Gallery extends Component {
     }
 
     componentDidMount() {
-
-        
-        return axios.get('/api/article/get-article?articleId='+ this.props.id).then(r => {
-            // const cloudinaryCore = new cloudinary.Cloudinary({cloud_name: 'cognitives'});
-
-            const images = r.data.media.map((item) => {
-
-                // const url = cloudinaryCore.url(item.url, {
-                //     width: "580",
-                //     height: "384",
-                //     crop: "fit" 
+        console.log(this.props);
+        if ( typeof this.props.gallery.images !== 'undefined') {
+            return axios.get('/api/article/get-article?articleId='+ this.props.gallery.id).then(r => {
+                // const cloudinaryCore = new cloudinary.Cloudinary({cloud_name: 'cognitives'});
     
-                // });
-
-                const {favourite, cart} = this.props.checkPhotoStatus(item.media_id);
-                
-                return {
-                    id      : item.media_id,
-                    url     : item.path,
-                    guid    : item.guid,
-                    title   : item.title,
-                    width   : item.width,
-                    height  : item.height,
-                    caption : item.caption,
-
-                    cart,       //boolean to show if photo is in the cart
-                    favourite, // boolean to show if photo is in the favourites
-                    original: item.path, // needed for gallery
-                };
+                const images = r.data.media.map((item) => {
+    
+                    // const url = cloudinaryCore.url(item.url, {
+                    //     width: "580",
+                    //     height: "384",
+                    //     crop: "fit" 
+        
+                    // });
+    
+                    const {favourite, cart} = this.props.checkPhotoStatus(item.media_id);
+                    
+                    return {
+                        id      : item.media_id,
+                        url     : item.path,
+                        guid    : item.guid,
+                        title   : item.title,
+                        width   : item.width,
+                        height  : item.height,
+                        caption : item.caption,
+    
+                        cart,       //boolean to show if photo is in the cart
+                        favourite, // boolean to show if photo is in the favourites
+                        original: item.path, // needed for gallery
+                    };
+                });
+            
+            
+                this.setState({
+                    items: images,
+                    complete: true,
+                }, () => {
+                    console.log(this.state);
+                });
+            
+            
+            }).catch(() => {
+    
+                const items = this.props.gallery.images.map((item) => {
+                    const {favourite, cart} = this.props.checkPhotoStatus(item.id);
+                    
+                    return {
+                        ...item,
+                        caption:item.content,
+                        favourite,
+                        cart,
+                        original: item.url,
+                    };
+                });
+    
+                this.setState({ items });
+    
             });
-        
-        
-            this.setState({
-                items: images,
-                complete: true,
-            }, () => {
-                console.log(this.state);
-            });
-        
-        
-        }).catch(() => {
+        }
 
-            const items = this.props.gallery.images.map((item) => {
-                const {favourite, cart} = this.props.checkPhotoStatus(item.id);
-                
-                return {
-                    ...item,
-                    caption:item.content,
-                    favourite,
-                    cart,
-                    original: item.url,
-                };
-            });
 
-            this.setState({ items });
+        const photo = this.props.gallery;
+        const {favourite, cart} = this.props.checkPhotoStatus(photo.media_id);
+        const photoy = {
+            id      : photo.media_id,
+            url     : photo.path,
+            guid    : photo.guid,
+            title   : photo.title,
+            width   : photo.width,
+            height  : photo.height,
+            caption : photo.caption,
 
-        });
+            cart,       //boolean to show if photo is in the cart
+            favourite, // boolean to show if photo is in the favourites
+            original: photo.url, // needed for gallery
+        };
+
+        this.setState({ items: [photoy] });
+
+        // if ( this.props.galleryType === 'photo') { 
+        //     return axios.get('/api/article/get-article?articleId='+ this.props.gallery.id).then(r => {
+
+        // }
 
 
 
@@ -173,7 +198,7 @@ class Gallery extends Component {
                         <div className={styles.gallery__info}>
                             { currentItem ? 
                                 <>
-                                <h2 className={styles.gallery__phototitle}>{currentItem.title}</h2>
+                                {/* <h2 className={styles.gallery__phototitle}>{currentItem.title}</h2> */}
                                 <p className={styles.gallery__photocaption}>{currentItem.caption}</p>
                                 </>
                                 : null
@@ -188,8 +213,8 @@ class Gallery extends Component {
                         { currentItem ? 
                             <>
                             <p className={styles.gallery__metainfo}><span>Size</span> {currentItem.width} x {currentItem.height}</p>
-                            <p className={styles.gallery__metainfo}><span>Photographer</span> Name</p>
-                            <p className={styles.gallery__metainfo}><span>Date photo taken</span> date</p>
+                            {/* <p className={styles.gallery__metainfo}><span>Photographer</span> Name</p>
+                            <p className={styles.gallery__metainfo}><span>Date photo taken</span> date</p> */}
                             </>
                             : null
                         }

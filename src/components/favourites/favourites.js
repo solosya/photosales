@@ -12,14 +12,19 @@ import styles               from './favourites.module.scss';
 class Favourites extends Component {
 
 
-
+    showGallery = (index) => {
+        console.log(index);
+        const photo = this.props.favourites[index];
+        console.log(photo);
+        this.props.showGallery(photo);
+    }
     render() { 
 
         const cards = this.props.favourites.map( (fav, i) => {
 
             const {favourite, cart} = this.props.photoStatusHandler(fav.id);
-            console.log(favourite, cart);
 
+            
             const key = fav.title + fav.id;
             const card =
                 <CSSTransition key={key}
@@ -29,8 +34,9 @@ class Favourites extends Component {
                     <Card 
                         key         = {i}
                         data        = {fav}
+                        count       = {i}
                         styles      = {["card-2-mobile", "card-2-tablet", "card-2-desktop"]}
-                        cardHandler = {() => { return false;}}
+                        cardHandler = {this.showGallery}
                         favHandler  = {this.props.favHandler}
                         cartHandler = {this.props.cartHandler}
                         admin       = {false}

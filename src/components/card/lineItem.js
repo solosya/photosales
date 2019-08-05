@@ -1,6 +1,13 @@
+//Libraries
 import React   from 'react'
-import Select  from 'react-select';
-import styles  from './lineItem.module.scss';
+import Select  from 'react-select'
+
+//Components
+import Close   from '../closeIcon' 
+
+//Styles
+import styles  from './lineItem.module.scss'
+
 
 const lineItem = (props) => {
 
@@ -65,7 +72,8 @@ const lineItem = (props) => {
 
     let deleteButton = null;
     if (props.handleRemove) {
-        deleteButton = <p className={styles.delete} onClick={(e) => props.handleRemove(e, props.product.category, props.product.id, props.product.photoId)}>X</p>
+        deleteButton = <Close width="12px" height="12px" onClick={ (e) => props.handleRemove(e, props.product.category, props.product.id, props.product.photoId) } />
+        // deleteButton = <p className={styles.delete} onClick={(e) => props.handleRemove(e, props.product.category, props.product.id, props.product.photoId)}>X</p>
     }
 
     let discountName = "";
@@ -80,13 +88,13 @@ const lineItem = (props) => {
         // if (props.product.priceTotalDiscount) {
         //     itemTotalDiscount = props.product.priceTotalDiscount;
         // }
-        console.log(props.product.priceTotal);
+
         total = props.product.priceTotal / 100;
         if ( isNaN(total) ) {
             total = "";
         }
-        console.log(total);
 
+        
     }
 
 
@@ -108,6 +116,8 @@ const lineItem = (props) => {
                 : <div className={styles.quantityspacer}></div>
             }
             
+            {deleteButton}
+
             {props.product
                 ? <p className={styles.price}>
                     {/* {props.product.priceTotalFull !== props.product.priceTotal ? <span className={styles.fullPrice}>${props.product.priceTotalFull} - </span>  : ""} */}
@@ -116,7 +126,6 @@ const lineItem = (props) => {
                  </p>
                 : null
             }
-            {deleteButton}
 
             
         </div>

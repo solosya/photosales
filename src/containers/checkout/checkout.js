@@ -1,29 +1,30 @@
 // Libraries
 import React, {Component}           from 'react'
 import {connect}                    from 'react-redux'
-import axios                        from 'axios'
 import qs                           from 'qs'
-import {Elements, StripeProvider}   from 'react-stripe-elements'
-import TransitionGroup              from 'react-transition-group/TransitionGroup'
+import axios                        from 'axios'
 import CSSTransition                from 'react-transition-group/CSSTransition'
+import TransitionGroup              from 'react-transition-group/TransitionGroup'
+import {Elements, StripeProvider}   from 'react-stripe-elements'
 
 // Components
-import Row                  from '../../components/layout/row'
-import Col                  from '../../components/layout/col'
-import Container            from '../../components/layout/container'
-import Header               from '../../components/partials/section_header.js'
-import CardCart             from '../../components/card/cardCart.js'
-import Total                from '../../components/checkoutTotal'
-import Billing              from './billing'
-import Payment              from './payment'
-import Modal                from '../../components/modals/modal'
-import Favourites           from '../../components/favourites/favourites'
+import Row                          from '../../components/layout/row'
+import Col                          from '../../components/layout/col'
+import Modal                        from '../../components/modals/modal'
+import Total                        from '../../components/checkoutTotal'
+import Header                       from '../../components/partials/section_header.js'
+import Button                       from '../../components/button/button'
+import Payment                      from './payment'
+import Billing                      from './billing'
+import CardCart                     from '../../components/card/cardCart.js'
+import Container                    from '../../components/layout/container'
+
 
 // Actions
-import * as actionTypes     from '../../store/actions/actions'
-import * as actionCreators  from '../../store/actions/actions'
+import * as actionTypes             from '../../store/actions/actions'
+import * as actionCreators          from '../../store/actions/actions'
 
-import {products} from './data'
+import {products}                   from './data'
 
 class Checkout extends Component {
     
@@ -34,10 +35,10 @@ class Checkout extends Component {
             url: "www.picturebooth.com",
             guid: "b6d174e5-70d2-4274-900a-46632b9b3e56",
         },
+        showTerms: false,
         photos: null,
         purchaseCart: [],
         total: 0,
-        showFavourites : false,
         products: products,
         billing: {
             firstname   : "",
@@ -72,22 +73,6 @@ class Checkout extends Component {
 
 
 
-    showFavourites = () => {
-        if (this.props.favourites.length > 0) {
-            this.setState({
-                showFavourites : true,
-            });
-            document.body.setAttribute('style', 'overflow: hidden;')
-        }
-    }
-    closeFavourites = () => {
-        this.setState({
-            showFavourites: false
-        });
-        document.body.removeAttribute('style', 'overflow: hidden;')
-    }
-
-
 
     getSiteDiscounts() {
         return axios.get('/api/shop/discounts' );
@@ -96,9 +81,6 @@ class Checkout extends Component {
     getSiteProducts() {
         return axios.get('/api/shop/products' );
     }
-
-
-
 
 
     getCartItemIndex(product, cart) {
@@ -110,14 +92,7 @@ class Checkout extends Component {
         });
     }
 
-
-
-
-
-
-
     addLineItemToCart = (product) => {
-        console.log(product);
         this.props.addLineItemToCart( product );
     }
 
@@ -175,9 +150,15 @@ class Checkout extends Component {
 
     handlePayment = (token) => {
         const billingErrors = this.checkBillingErrors();
+        console.log(billingErrors);
+        let showTerms = false;
+        if ( billingErrors.indexOf('licence') === 0 && billingErrors.length ===1) {
+            showTerms = true;
+        }
 
         this.setState({
-            billingErrors
+            billingErrors,
+            showTerms
         }, () => {
             console.log(this.state.billingErrors);
         });
@@ -189,7 +170,6 @@ class Checkout extends Component {
 
 
 
-        console.log(this.props.cart);
         const cart = actionCreators.getLineItemsFromCart(this.props.cart).map((c) => {
             return {
                 id       : c.id,
@@ -199,9 +179,7 @@ class Checkout extends Component {
             }
         });
 
-        console.log(cart);
-        console.log('and the token is!!', token);
-        console.log(this.state.billing);
+
         const billing = this.state.billing;
         axios.post('/api/shop/purchase', qs.stringify( {cart, billing})).then((r) => {
             // axios.post('/api/shop/purchase', qs.stringify( {"stripeToken": token.id, cart})).then((r) => {
@@ -242,27 +220,33 @@ class Checkout extends Component {
         return this.props.photoStatusHandler(photoid);
     } 
 
-
-
-
-
+    showGallery = (index) => {
+        const photo = this.props.cart[index];
+        this.props.showGallery(photo);
+    }
+    termsHandler = () => {
+        this.setState({showTerms: false});
+    }
 
     render() {
         let purchases = null;
         let cards = null;
 
-
-        const favourites = 
-            <Modal closeHandler={this.closeFavourites} children={favourites => (
-                <Favourites 
-                    favourites  = {this.props.favourites}
-                    favHandler  = {this.props.toggleFavourite}
-                    cartHandler = {this.props.toggleCart}
-                    photoStatusHandler = {this.photoStatusHandler}
-
-                />
-            )} >   
+        const terms = 
+            <Modal 
+                width        = "500px" 
+                height       = "150px" 
+                closeHandler = {this.termsHandler} 
+                children     = { () => (
+                    <>
+                        <p style={{marginTop: '30px', textAlign:'center'}}>Please agree to the terms of use</p>
+                        <Button handler={this.termsHandler} classes={["button", "button--blue", "button--top-30", "button--center"]}>OKAY</Button>
+                    </>
+                )} >   
             </Modal>
+
+
+
 
 
 
@@ -281,8 +265,9 @@ class Checkout extends Component {
                         <CardCart  
                             key                     = {"Card"+i}
                             data                    = {product}
+                            count                   = {i}
                             styles                  = "card-3-mobile card-3-tablet card-3-desktop"
-                            cardHandler             = {() => { return false;}}
+                            cardHandler             = {this.showGallery}
                             favHandler              = {this.props.toggleFavourite}
                             products                = {this.state.products}
                             cartHandler             = {null}
@@ -315,33 +300,11 @@ class Checkout extends Component {
 
         return (
             <>
-                {this.state.showFavourites  ? favourites : null}
+
+                {this.state.showTerms && terms}
 
                 <Container>
         
-                    <Row>
-                        <Col classes={["col-12"]}>
-                            <Header 
-                                url                 = {this.state.blogData.url}
-                                title               = {this.state.blogData.title} 
-                                cartItems           = {this.props.cart.length}
-                                favourites          = {this.props.favourites.length}
-                                linkHandler         = {this.props.linkHandler}
-                                favouritesHandler   = {this.showFavourites}
-                                larger 
-                                cart
-                            />
-                        </Col>
-                    </Row>
-
-
-                    {/* { !this.props.isLoggedIn &&  <Login /> } */}
-
-
-
-
-
-
                     <Row>
                         <Col classes={["col-12", "col-lg-8"]}>
 

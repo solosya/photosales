@@ -105,8 +105,9 @@ class Index extends Component {
         if (panel) {
             selected = panel.feed[card];
         }
-
-        this.props.cardHandler(selected);
+        console.log('calling cardhandler');
+        console.log(this.props);
+        this.props.showGallery(selected);
     }
 
     render() {
@@ -120,7 +121,7 @@ class Index extends Component {
 
                     {panel.template === "panel1" &&
                         <PanelOne 
-                            cardHandler     = {this.showGallery} 
+                            showGallery     = {this.showGallery} 
                             title           = {panel.title} 
                             cards           = {panel.feed}
                             margin          = {margin}
@@ -130,7 +131,7 @@ class Index extends Component {
 
                     {panel.template === "panel2" &&
                         <PanelTwo 
-                            cardHandler     = {this.showGallery} 
+                            showGallery     = {this.showGallery} 
                             title           = {panel.title} 
                             cards           = {panel.feed}
                             margin          = {margin}
@@ -140,7 +141,7 @@ class Index extends Component {
 
                     {panel.template === "panel3" &&
                         <PanelThree 
-                            cardHandler     = {this.showGallery} 
+                            showGallery     = {this.showGallery} 
                             title           = {panel.title} 
                             cards           = {panel.feed}
                             margin          = {margin}

@@ -180,9 +180,8 @@ class Section extends Component {
 
 
     showGallery = (index) => {
-        console.log(index);
         const gallery = this.state.galleries[index -1];
-        this.props.cardHandler(gallery);
+        this.props.showGallery(gallery);
     }
 
 

@@ -10,7 +10,7 @@ import Card                 from '../../components/card/card.js'
 import Header               from '../../components/partials/section_header.js'
 import Container            from '../../components/layout/container'
 // import Button               from '../../components/button/button'
-import SearchField          from '../../components/search/search'
+// import SearchField          from '../../components/search/search'
 // import Modal                from '../../components/modals/modal'
 // import Gallery              from '../../components/gallery/gallery'
 // import Favourites           from '../../components/favourites/favourites'
@@ -79,11 +79,15 @@ import {panels}             from '../section/data'
                 return {
                     id        : media.id,
                     url       : media.cdn_path,
+                    path      : media.cdn_path,
                     guid      : media.guid,
                     type      : media.fileType,
                     width     : media.width,
                     height    : media.height,
                     filesize  : media.fileSize,
+                    title     : media.title,
+                    caption   : media.caption,
+                    galleryType: 'photo',
                 }
             });
                         
@@ -126,42 +130,24 @@ import {panels}             from '../section/data'
         this.performSearch(this.cardCount);
     }
 
+    showGallery = (index) => {
+        const photo = this.state.photos[index];
+        this.props.showGallery(photo);
+    }
+
+
+
 
     render() {
         this.cardCount = 0;
         
-        // const cartCount = (typeof this.props.cart       !== 'undefined') ? this.props.cart.length : 0;
-        // const favCount  = (typeof this.props.favourites !== 'undefined') ? this.props.favourites.length : 0;
 
         return (
 
 
             <>
 
-                {/* <Container>
-                    
-                    <Row>
-                        <Col classes={["col-12"]}>
-                            <Header 
-                                title               = {this.props.pageTitle} 
-                                favourites          = {favCount}
-                                cartItems           = {cartCount}
-                                linkHandler         = {this.props.linkHandler}
-                                favouritesHandler   = {this.showFavourites}
-                                loggedIn            = {this.props.isLoggedIn}
-                                larger 
-                                cart
-                            />
-                        </Col>
-                    </Row>
 
-                    <Row>
-                        <Col classes={["col-12", "col-md-9"]}>
-                            <SearchField searchHandler={this.searchResultsHandler} />
-                        </Col>
-                    </Row>
-
-                </Container> */}
 
 
 
@@ -182,14 +168,14 @@ import {panels}             from '../section/data'
                                 {this.state.photos.map((photo, i) => {
                                     
                                     const {favourite, cart} = this.props.photoStatusHandler(photo.id);
-                                    this.cardCount++;
                                     
                                     return (
                                         <Col key={i} classes={["col-12", "col-md-4"]} marginBottom="30px">
                                             <Card 
                                                 data        = {photo} 
                                                 panel       = {this.props.title}
-                                                cardHandler = {this.props.cardHandler}
+                                                count       = {this.cardCount++}
+                                                cardHandler = {this.showGallery}
                                                 favHandler  = {this.props.toggleFavourite}
                                                 cartHandler = {this.props.toggleCart}
                                                 styles      = {["card-4-mobile", "card-1-tablet", "card-4-desktop"]}
