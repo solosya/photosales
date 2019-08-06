@@ -98,6 +98,7 @@ class CardCart extends Component {
 
 
     render() {
+        // console.log("RENDERING");
         const count = this.props.count || 0;
         // const panel = this.props.panel || null;
         const image = this.props.data.images && this.props.data.images.length > 0 ? this.props.data.images[0] : this.props.data;
@@ -111,14 +112,25 @@ class CardCart extends Component {
             </div>
         }
 
-        const printOptions = this.state.products.print.map((prod, i) => {
-            return {value: prod.id, label: prod.label, category: "print", index: i, disabled: prod.disabled}
-        });
+        let printProductsExist = false;
+        let digitalProductsExist = false;
 
-        const digitalOptions = this.state.products.digital.map((prod, i) => {
-            return {value: prod.id, label: prod.label, category: "digital", index: i, disabled: prod.disabled}
-        });
-    
+        // console.log("WTF STATE", this.state);
+        let printOptions = [];
+        if (typeof this.state.products.print !== 'undefined') {
+            printProductsExist = true;
+            printOptions = this.state.products.print.map((prod, i) => {
+                return {value: prod.id, label: prod.label, category: "print", index: i, disabled: prod.disabled}
+            });
+        }
+
+        let digitalOptions = [];
+        if (typeof this.state.products.digital !== 'undefined') {
+            digitalProductsExist = true;
+            digitalOptions = this.state.products.digital.map((prod, i) => {
+                return {value: prod.id, label: prod.label, category: "digital", index: i, disabled: prod.disabled}
+            });
+        }
 
 
 
@@ -141,7 +153,8 @@ class CardCart extends Component {
                 return item.category === 'digital' ? true : false; 
             });
         }
-
+        // console.log("DIGITAL PRODUCTS", digitalProducts);
+        // console.log("this.state.products", this.state.products);
 
         const digitalItems = digitalProducts.map((item, i) => {
             if (item.category === 'digital') {
@@ -188,6 +201,11 @@ class CardCart extends Component {
                 return item.category === 'print' ? true : false; 
             });
         }
+
+        console.log("Print PRODUCTS", printProducts);
+
+
+
         const printItems = printProducts.map((item, i) => {
             if (item.category === 'print') {
 
@@ -256,7 +274,7 @@ class CardCart extends Component {
                                 <div className="c-cards-view__lineItems">
                                     
                                     {printItems}
-                                    {printProducts.length < this.state.products.print.length ? newPrintItem : null}
+                                    {printProductsExist && printProducts.length < this.state.products.print.length && newPrintItem }
 
                                 </div>
 
@@ -273,7 +291,7 @@ class CardCart extends Component {
                                 <div className="c-cards-view__lineItems">
                                     
                                     {digitalItems}
-                                    {digitalProducts.length < this.state.products.digital.length ? newDigitalItem : null}
+                                    {digitalProductsExist && digitalProducts.length < this.state.products.digital.length && newDigitalItem }
 
                                 </div>
                             </Flexrow>

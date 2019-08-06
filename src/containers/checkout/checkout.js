@@ -60,8 +60,8 @@ class Checkout extends Component {
         const self = this;
 
         
-        axios.all([this.getSiteDiscounts(), this.getSiteProducts()])
-        .then(axios.spread(function (discount, products) {
+        axios.all([this.getSiteProducts()])
+        .then(axios.spread(function (products) {
             self.setState({
                 products: products.data.data
             }, () => {
@@ -74,9 +74,9 @@ class Checkout extends Component {
 
 
 
-    getSiteDiscounts() {
-        return axios.get('/api/shop/discounts' );
-    }
+    // getSiteDiscounts() {
+    //     return axios.get('/api/shop/discounts' );
+    // }
 
     getSiteProducts() {
         return axios.get('/api/shop/products' );
@@ -253,9 +253,11 @@ class Checkout extends Component {
 
 
 
-        if (this.state.products) {
-            console.log('CHECKING FOR CARDCART', this.state.products);
+        if (this.state.products ) {
+            console.log('CHECKING FOR cart', this.props.cart);
+            console.log('CHECKING FOR products', this.state.products);
             cards = this.props.cart.map( (product, i) => {
+                console.log(product, i);
                 const key = product.title + product.id;
 
                 const card =
