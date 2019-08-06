@@ -116,7 +116,7 @@ const Card = props =>  {
     }
 
     return (
-        <div onClick={() => props.cardHandler(count, panel)} className={cn(styles)}>
+        <div onClick={() => { console.log('clicked');props.cardHandler(count, panel)}} className={cn(styles)}>
             <div  
                 onDragStart = {(e) => dragStart(e, props)}
                 onDragOver  = {(e) => {e.preventDefault();}}

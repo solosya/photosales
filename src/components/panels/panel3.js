@@ -42,7 +42,7 @@ const panel_3 = (props) => {
                     {props.cards.slice(4,7).map((card, i) => {
                         return <Col  key={i} classes={["col-12", "col-md-3"]}>
                             <Card 
-                                cardHandler={props.cardHandler} 
+                                cardHandler={props.showGallery} 
                                 data={card} 
                                 count={cardCount++}
                                 panel={props.title}
