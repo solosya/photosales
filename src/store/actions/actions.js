@@ -233,10 +233,10 @@ export const addItemToCart = (product) => {
     return dispatch => {
         dispatch(add(product));
         let cart = store.getState()['cart'];
-        console.log(cart);
+        // console.log(cart);
 
         const flatCart = getLineItemsFromCart(cart)
-        console.log(flatCart);
+        // console.log(flatCart);
         axios.post('/api/shop/total', {"cart": flatCart} )
         .then((r) => {
             console.log(r);

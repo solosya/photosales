@@ -39,7 +39,7 @@ class Checkout extends Component {
         photos: null,
         purchaseCart: [],
         total: 0,
-        products: {},
+        products: [],
         billing: {
             firstname   : "",
             lastname    : "",
@@ -65,7 +65,7 @@ class Checkout extends Component {
             self.setState({
                 products: products.data.data
             }, () => {
-                console.log(self.state);
+                // console.log(self.state);
             });
         }));
     }
@@ -93,7 +93,6 @@ class Checkout extends Component {
     }
 
     addLineItemToCart = (product) => {
-        // console.log("PRODUCT", product);
         this.props.addLineItemToCart( product );
     }
 
@@ -151,7 +150,7 @@ class Checkout extends Component {
 
     handlePayment = (token) => {
         const billingErrors = this.checkBillingErrors();
-        console.log(billingErrors);
+        // console.log(billingErrors);
         let showTerms = false;
         if ( billingErrors.indexOf('licence') === 0 && billingErrors.length ===1) {
             showTerms = true;
@@ -161,7 +160,7 @@ class Checkout extends Component {
             billingErrors,
             showTerms
         }, () => {
-            console.log(this.state.billingErrors);
+            // console.log(this.state.billingErrors);
         });
 
         // if (billingErrors.length > 0) {
@@ -184,9 +183,9 @@ class Checkout extends Component {
         const billing = this.state.billing;
         axios.post('/api/shop/purchase', qs.stringify( {cart, billing})).then((r) => {
             // axios.post('/api/shop/purchase', qs.stringify( {"stripeToken": token.id, cart})).then((r) => {
-                console.log(r);
+                // console.log(r);
         }).catch((e) => {
-            console.log(e);
+            // console.log(e);
         });
 
 
@@ -253,11 +252,11 @@ class Checkout extends Component {
 
 
 
-        if (this.state.products ) {
-            console.log('CHECKING FOR cart', this.props.cart);
-            console.log('CHECKING FOR products', this.state.products);
+        if (this.state.products.length > 0 ) {
+            // console.log('CHECKING FOR cart', this.props.cart);
+            // console.log('CHECKING FOR products', this.state.products);
             cards = this.props.cart.map( (product, i) => {
-                console.log(product, i);
+                // console.log(product, i);
                 const key = product.title + product.id;
 
                 const card =

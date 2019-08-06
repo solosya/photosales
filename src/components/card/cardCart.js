@@ -49,48 +49,46 @@ class CardCart extends Component {
         return n + (((mid-n)*2)+1) -1;
     }
 
+    getProductIndex(product) {
+
+        return this.state.products.findIndex((element) => {
+            return element.id === product.value;
+        });
+    }
 
 
     handleSelect = e => {
 
-        let {category, index} = e;
-        const product = {...this.state.products[category][index]};
+        const index = this.getProductIndex(e);
+
+        const products = [...this.state.products];
+        const product = {...products[index]};
 
         product.quantity = 1;
         product.photoId = this.props.data.id;
         product.productIndex = index;
-        const menu = JSON.parse(JSON.stringify(this.state.products));
-        const selectMenu = menu[category];
-        selectMenu[index].disabled = true;
-        // console.log('setting state');
-        this.setState(prevState => ({
-            products: {
-                ...prevState.products,
-                ...menu                    
-            }
-        }));
-        // console.log('adding to cart');
+        product.disabled = true;
+
+        products.splice(index, 1, product);
+
+        this.setState({products});
 
         this.props.addLineItemToCart(product);
     }
 
 
-    removeItem = (e, category, productIndex, photoId ) => {
+    removeItem = (e, productIndex, photoId ) => {
+        const index = this.getProductIndex({value: productIndex});
 
         // enable the item in the menu
-        const menu = JSON.parse(JSON.stringify(this.state.products));
-        const selectMenu = menu[category];
-        const menuIndex = selectMenu.findIndex((element) => {
-            return element.id === productIndex;
-        });
+        const products = [...this.state.products];
+        const product = {...products[index] };
+        product.disabled = false;
 
-        selectMenu[menuIndex].disabled = false;
-        this.setState(prevState => ({
-            products: {
-                ...prevState.products,
-                ...menu                    
-            }
-        }), () => {
+        products.splice(index, 1, product);
+
+        this.setState({ products }
+        , () => {
             this.props.removeLineItemFromCart(productIndex, photoId);
         });
     }
@@ -98,7 +96,7 @@ class CardCart extends Component {
 
 
     render() {
-        // console.log("RENDERING");
+        // console.log("RENDERING CARDCART");
         const count = this.props.count || 0;
         // const panel = this.props.panel || null;
         const image = this.props.data.images && this.props.data.images.length > 0 ? this.props.data.images[0] : this.props.data;
@@ -112,26 +110,27 @@ class CardCart extends Component {
             </div>
         }
 
-        let printProductsExist = false;
-        let digitalProductsExist = false;
 
         // console.log("WTF STATE", this.state);
-        let printOptions = [];
-        if (typeof this.state.products.print !== 'undefined') {
-            printProductsExist = true;
-            printOptions = this.state.products.print.map((prod, i) => {
-                return {value: prod.id, label: prod.label, category: "print", index: i, disabled: prod.disabled}
-            });
-        }
-
+        let printOptions   = [];
         let digitalOptions = [];
-        if (typeof this.state.products.digital !== 'undefined') {
-            digitalProductsExist = true;
-            digitalOptions = this.state.products.digital.map((prod, i) => {
-                return {value: prod.id, label: prod.label, category: "digital", index: i, disabled: prod.disabled}
+        if (this.state.products.length > 0) {
+            printOptions = this.state.products.filter((prod) => {
+                return prod.category === 'print';
+            }).map((prod) => {
+                return {value: prod.id, label: prod.label, category: prod.category, disabled: prod.disabled}
             });
+
+            digitalOptions = this.state.products.filter((prod) => {
+                return prod.category === 'digital';
+            }).map((prod) => {
+                return {value: prod.id, label: prod.label, category: prod.category, disabled: prod.disabled}
+            });
+
         }
 
+        // console.log("Print options", printOptions);
+        // console.log("Digital options", digitalOptions);
 
 
 
@@ -153,23 +152,19 @@ class CardCart extends Component {
                 return item.category === 'digital' ? true : false; 
             });
         }
-        // console.log("DIGITAL PRODUCTS", digitalProducts);
-        // console.log("this.state.products", this.state.products);
+        
+
 
         const digitalItems = digitalProducts.map((item, i) => {
             if (item.category === 'digital') {
 
-                const cartDiscount = this.props.handleGetCartItemDiscount(item);
-                if (cartDiscount) {
-                    item.priceTotal = cartDiscount;
-                }
                 return (
                     <LineItem
                         key             = {i} 
                         index           = {i+1}
                         active          = {true}
                         options         = {digitalOptions}
-                        selectValue     = {digitalOptions[item.productIndex]}
+                        selectValue     = {item}
                         product         = {item}
                         handleSelect    = {this.handleSelect}
                         handleQuantity  = {this.props.handleQuantity}
@@ -202,11 +197,13 @@ class CardCart extends Component {
             });
         }
 
-        console.log("Print PRODUCTS", printProducts);
+        // console.log("Print PRODUCTS", printProducts);
 
 
 
         const printItems = printProducts.map((item, i) => {
+
+
             if (item.category === 'print') {
 
 
@@ -274,7 +271,7 @@ class CardCart extends Component {
                                 <div className="c-cards-view__lineItems">
                                     
                                     {printItems}
-                                    {printProductsExist && printProducts.length < this.state.products.print.length && newPrintItem }
+                                    {printProducts.length < printOptions.length && newPrintItem }
 
                                 </div>
 
@@ -291,7 +288,7 @@ class CardCart extends Component {
                                 <div className="c-cards-view__lineItems">
                                     
                                     {digitalItems}
-                                    {digitalProductsExist && digitalProducts.length < this.state.products.digital.length && newDigitalItem }
+                                    {digitalProducts.length < digitalOptions.length && newDigitalItem }
 
                                 </div>
                             </Flexrow>

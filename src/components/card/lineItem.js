@@ -64,7 +64,7 @@ const lineItem = (props) => {
         
     }
 
-
+    // console.log('what are the props options?', props.options);
 
     const options = props.options.filter((item) => {
         return !item.disabled;
@@ -72,7 +72,7 @@ const lineItem = (props) => {
 
     let deleteButton = null;
     if (props.handleRemove) {
-        deleteButton = <Close width="12px" height="12px" onClick={ (e) => props.handleRemove(e, props.product.category, props.product.id, props.product.photoId) } />
+        deleteButton = <Close width="12px" height="12px" onClick={ (e) => props.handleRemove(e, props.product.id, props.product.photoId) } />
         // deleteButton = <p className={styles.delete} onClick={(e) => props.handleRemove(e, props.product.category, props.product.id, props.product.photoId)}>X</p>
     }
 
@@ -96,7 +96,6 @@ const lineItem = (props) => {
 
         
     }
-
 
 
 
