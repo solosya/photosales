@@ -24,7 +24,7 @@ import Container                    from '../../components/layout/container'
 import * as actionTypes             from '../../store/actions/actions'
 import * as actionCreators          from '../../store/actions/actions'
 
-import {products}                   from './data'
+// import {products}                   from './data'
 
 class Checkout extends Component {
     
@@ -39,7 +39,7 @@ class Checkout extends Component {
         photos: null,
         purchaseCart: [],
         total: 0,
-        products: products,
+        products: {},
         billing: {
             firstname   : "",
             lastname    : "",
@@ -93,6 +93,7 @@ class Checkout extends Component {
     }
 
     addLineItemToCart = (product) => {
+        // console.log("PRODUCT", product);
         this.props.addLineItemToCart( product );
     }
 
@@ -253,7 +254,7 @@ class Checkout extends Component {
 
 
         if (this.state.products) {
-            
+            console.log('CHECKING FOR CARDCART', this.state.products);
             cards = this.props.cart.map( (product, i) => {
                 const key = product.title + product.id;
 

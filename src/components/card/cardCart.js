@@ -27,7 +27,9 @@ class CardCart extends Component {
         lineItems: this.props.lineItems || []
     }
 
-
+    // componentDidMount() {
+    //     console.log("MOUNTED", this.state);
+    // }
     handleCheckbox = e => {
         const status = {...this.state.productStatus};
         status[e.target.name] = e.target.checked;
@@ -60,14 +62,14 @@ class CardCart extends Component {
         const menu = JSON.parse(JSON.stringify(this.state.products));
         const selectMenu = menu[category];
         selectMenu[index].disabled = true;
-        console.log('setting state');
+        // console.log('setting state');
         this.setState(prevState => ({
             products: {
                 ...prevState.products,
                 ...menu                    
             }
         }));
-        console.log('adding to cart');
+        // console.log('adding to cart');
 
         this.props.addLineItemToCart(product);
     }
