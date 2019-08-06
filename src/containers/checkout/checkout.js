@@ -106,7 +106,7 @@ class Checkout extends Component {
     }
 
     handleRemovePhoto = (photo) => {
-        this.props.toggleCart( photo );
+        this.props.removePhotoFromCheckout(photo);
     }
 
 
@@ -392,6 +392,7 @@ const mapDispatchToProps = dispatch => {
         toggleFavourite:        (photo)     => dispatch( actionCreators.toggleFavourite(photo) ),
         fetchFavourites :       ()          => dispatch( actionCreators.fetchSaved() ),
         addLineItemToCart:      (product)   => dispatch( actionCreators.addItemToCart(product) ),
+        removePhotoFromCheckout:(product)   => dispatch( actionCreators.removePhotoFromCheckout(product) ),
         removeLineItemFromCart: (productIndex, photoId) => dispatch( {type:actionTypes.REMOVE_ITEM_FROM_CART, productIndex, photoId} ),
     }
 

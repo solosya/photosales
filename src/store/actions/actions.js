@@ -137,7 +137,7 @@ export const toggleFavourite = (p) => {
 
 
 export const toggleCart = (p) => {
-    // console.log("taglling", photo);
+
     const photo = {...p};
 
     return dispatch => {
@@ -165,6 +165,9 @@ export const toggleCart = (p) => {
                     });
                 }
             });
+
+
+        // not logged in    
         } else {
             // use local storage
             photo.saveType = 'cart';
@@ -252,6 +255,98 @@ export const addItemToCart = (product) => {
     }
 }
 
+
+export const removeItemFromCart = (product) => {
+    return dispatch => {
+        dispatch(remove(product));
+        let cart = store.getState()['cart'];
+        // console.log(cart);
+
+        const flatCart = getLineItemsFromCart(cart)
+        // console.log(flatCart);
+        axios.post('/api/shop/total', {"cart": flatCart} )
+        .then((r) => {
+            console.log(r);
+            cart = placeLineItemsIntoCart(cart, r.data.cart);
+            console.log(cart);
+            dispatch({
+                type: TOTAL_CART,
+                total: r.data.total,
+                cart: cart
+            });
+        });
+        
+    }
+}
+
+
+export const addPhotoToCheckout = (product) => {
+
+
+
+}
+
+
+
+
+export const removePhotoFromCheckout = (p) => {
+
+    const photo = {...p};
+
+    return dispatch => {
+
+        const loggedIn = store.getState()['isLoggedIn'];
+        const live = store.getState()['live'];
+
+        if (loggedIn) {
+    
+            axios.post('/api/user/follow-media', qs.stringify({"guid": photo.guid, "type": 'cart'})).then((r) => {
+                console.log("TOGGLING CART", r);
+                if (r.data.success === 1) {
+                    dispatch({
+                        type: TOGGLE_CART,
+                        photo: photo
+                    });
+
+                    let cart = store.getState()['cart'];
+                    const flatCart = getLineItemsFromCart(cart)
+                    axios.post('/api/shop/total', {"cart": flatCart} )
+                    .then((r) => {
+                        console.log(r);
+                        cart = placeLineItemsIntoCart(cart, r.data.cart);
+                
+                        dispatch({
+                            type: TOTAL_CART,
+                            total: r.data.total,
+                            cart: cart
+                        });
+                    });
+                }
+            }).catch(() => {
+                // use local storage
+                if (!live ) { // this is just for local dev in local npm server
+                    photo.saveType = 'cart';
+                    dispatch({
+                        type: TOGGLE_CART,
+                        photo: photo
+                    });
+                }
+            });
+
+
+        // not logged in    
+        } else {
+            // use local storage
+            photo.saveType = 'cart';
+            dispatch({
+                type: TOGGLE_CART,
+                photo: photo
+            });
+        }
+    }
+
+}
+
 export const updateCartItem = (product) => {
     return dispatch => {
         dispatch(update(product));
@@ -275,12 +370,22 @@ export const updateCartItem = (product) => {
 
 
 export const add = (product) => {
-    let car =  {
+    let cat =  {
         type: ADD_ITEM_TO_CART,
         product
     }
-    return car;
+    return cat;
 }
+
+export const remove = (product) => {
+    let cat =  {
+        type: REMOVE_ITEM_FROM_CART,
+        product
+    }
+    return cat;
+}
+
+
 
 export const update = (product) => {
     let car =  {

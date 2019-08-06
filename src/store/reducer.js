@@ -1,5 +1,5 @@
 import * as actionTypes from './actions/actions'
-import Shop from '../containers/checkout/shop'
+// import Shop from '../containers/checkout/shop'
 // import {favourites, cart} from '../containers/checkout/data';
 
 const intialState = {
@@ -33,20 +33,20 @@ const reducer = (state = intialState, action) => {
         return index;
     }
 
-    const getLineItemsFromCart = (cart) => {
-        const items = [];
-        for (let i=0; i<cart.length; i++) {
-            let cartItem = cart[i];
+    // const getLineItemsFromCart = (cart) => {
+    //     const items = [];
+    //     for (let i=0; i<cart.length; i++) {
+    //         let cartItem = cart[i];
 
-            if (typeof cartItem.lineItems != 'undefined') {
-                for (let j=0; j<cartItem.lineItems.length; j++) {
-                    let photo = cartItem.lineItems[j];
-                    items.push(photo);
-                }
-            }
-        }
-        return items;
-    }
+    //         if (typeof cartItem.lineItems != 'undefined') {
+    //             for (let j=0; j<cartItem.lineItems.length; j++) {
+    //                 let photo = cartItem.lineItems[j];
+    //                 items.push(photo);
+    //             }
+    //         }
+    //     }
+    //     return items;
+    // }
 
     const resetCartTotals = (cart) => {
         for (let i=0; i<cart.length; i++) {
@@ -61,35 +61,35 @@ const reducer = (state = intialState, action) => {
         return cart;
     }
 
-    const placeLineItemsIntoCart = (cart, discountItems) => {
-        for (let i=0; i<discountItems.length; i++) {
-            let discountedItem = discountItems[i];
-            discounts:
-            for (let j=0; j<cart.length; j++) {
-                let originalPhoto = cart[j];
-                for (let k=0; k<originalPhoto.lineItems.length; k++) {
-                    let originalItem = originalPhoto.lineItems[k];
-                    if (originalItem.id === discountedItem.id && originalItem.photoId === discountedItem.photoId) {
-                        originalPhoto.lineItems[k] = discountedItem;
-                        break discounts;
-                    }
-                }
-            }
-        }
-        return JSON.parse(JSON.stringify( cart ));
-    }
+    // const placeLineItemsIntoCart = (cart, discountItems) => {
+    //     for (let i=0; i<discountItems.length; i++) {
+    //         let discountedItem = discountItems[i];
+    //         discounts:
+    //         for (let j=0; j<cart.length; j++) {
+    //             let originalPhoto = cart[j];
+    //             for (let k=0; k<originalPhoto.lineItems.length; k++) {
+    //                 let originalItem = originalPhoto.lineItems[k];
+    //                 if (originalItem.id === discountedItem.id && originalItem.photoId === discountedItem.photoId) {
+    //                     originalPhoto.lineItems[k] = discountedItem;
+    //                     break discounts;
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     return JSON.parse(JSON.stringify( cart ));
+    // }
 
 
-    const calculateTotal = (cart) => {
-        const flatCart = getLineItemsFromCart(cart)
-        const shop = new Shop(flatCart);
-        const total = shop.calculateTotal();
-        cart = placeLineItemsIntoCart(cart, total.cart);
-        return {
-            total,
-            finalCart: cart
-        }
-    }
+    // const calculateTotal = (cart) => {
+    //     const flatCart = getLineItemsFromCart(cart)
+    //     const shop = new Shop(flatCart);
+    //     const total = shop.calculateTotal();
+    //     cart = placeLineItemsIntoCart(cart, total.cart);
+    //     return {
+    //         total,
+    //         finalCart: cart
+    //     }
+    // }
 
 
     switch (action.type) {
@@ -136,8 +136,6 @@ const reducer = (state = intialState, action) => {
         case actionTypes.TOGGLE_FAVOURITE: {
 
             let favourites = [...state.favourites];
-            console.log("FAVOURITES", favourites);
-            console.log(action.photo);
 
             const loggedIn = state.isLoggedIn;
 
@@ -165,8 +163,8 @@ const reducer = (state = intialState, action) => {
 
         case actionTypes.TOGGLE_CART: {
             let cart = resetCartTotals([...state.cart]);
-            console.log("CART", cart);
-            console.log(action.photo);
+
+            const loggedIn = state.isLoggedIn;
 
             const found = cart.filter((item) => {
                 return action.photo.id !== item.id;
@@ -178,14 +176,14 @@ const reducer = (state = intialState, action) => {
                 cart.push(action.photo);
             }
 
-            var {total, finalCart} = calculateTotal(cart);
-            
-            localStorage.setItem('cart', JSON.stringify(finalCart));
+            if (!loggedIn) {
+                console.log('adding to local storage');
+                localStorage.setItem('cart', JSON.stringify(cart));
+            }
 
             return {
                 ...state,
-                cart: finalCart,
-                total: total.total
+                cart,
             }
         }
 
@@ -208,7 +206,6 @@ const reducer = (state = intialState, action) => {
                 }
 
                 cart[photoIndex] = photo;
-                // let {total, finalCart} = calculateTotal(cart);
 
                 return {
                     ...state,
@@ -233,12 +230,13 @@ const reducer = (state = intialState, action) => {
                 }
 
                 cart[photoIndex] = photo;
-                let {total, finalCart} = calculateTotal(cart);
+                // let {total, finalCart} = calculateTotal(cart);
 
                 return {
                     ...state,
-                    total: total.total,
-                    cart: finalCart
+                    cart
+                    // total: total.total,
+                    // cart: finalCart
                 };
             }
 
