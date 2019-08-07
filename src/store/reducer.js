@@ -25,8 +25,8 @@ const reducer = (state = intialState, action) => {
         if (typeof photo.lineItems === 'undefined') {
             return -1;
         }
-        const index = photo.lineItems.findIndex((photo) => {
-            return photo.id === product.id;
+        const index = photo.lineItems.findIndex((item) => {
+            return item.id === product.id;
         });
         return index;
     }
@@ -177,10 +177,13 @@ const reducer = (state = intialState, action) => {
         case actionTypes.REMOVE_ITEM_FROM_CART: {
             let cart = resetCartTotals([...state.cart]);
 
-            const photoIndex = findPhotoInCart(cart, { photoId: action.photoId });
+            const photoIndex = findPhotoInCart(cart, { photoId: action.product.photoId });
+
             if (photoIndex > -1) {
                 const photo = JSON.parse(JSON.stringify( cart[photoIndex] ));
-                const index = findProductInCartItem(photo, { id: action.productIndex} );
+                const index = findProductInCartItem(photo, action.product );
+
+                
                 if (index !== -1) {
                     photo.lineItems.splice(index, 1);
                 }

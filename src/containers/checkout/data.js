@@ -244,93 +244,89 @@ export const Discounts = [
 
 ];
 
-export const products = {
-    print: [
-        {
-            id: 3,
-            label: '6" x 4" ($5, additional copies $2)',
-            price : 5,
-            priceTotal: 5,
-            priceTotalFull: 5,
-            discount: [],
-            category: 'print',
-        },
-        {
-            id: 4,
-            label: '7" x 5" ($7, additional copies $2)',
-            price : 7,
-            priceTotal: 7,
-            priceTotalFull: 7,
-            discount: [],
-            category: 'print',
+export const products = [
+    {
+        id: 3,
+        label: '6" x 4" ($5, additional copies $2)',
+        price : 5,
+        priceTotal: 5,
+        priceTotalFull: 5,
+        discount: [],
+        category: 'print',
+    },
+    {
+        id: 4,
+        label: '7" x 5" ($7, additional copies $2)',
+        price : 7,
+        priceTotal: 7,
+        priceTotalFull: 7,
+        discount: [],
+        category: 'print',
 
-        },
-        {
-            id: 5,
-            label: '8" x 6" ($7, additional copies $2)',
-            price : 7,
-            priceTotal: 7,
-            priceTotalFull: 7,
-            discount: [],
-            category: 'print',
+    },
+    {
+        id: 5,
+        label: '8" x 6" ($7, additional copies $2)',
+        price : 7,
+        priceTotal: 7,
+        priceTotalFull: 7,
+        discount: [],
+        category: 'print',
 
-        },
-        {
-            id: 6,
-            label: '12" x 8" ($15, additional copies $10)',
-            price : 15,
-            priceTotal: 15,
-            priceTotalFull: 15,
-            discount: [],
-            category: 'print',
-        },
-        {
-            id: 7,
-            label: '14" x 11" ($25, additional copies $20)',
-            price : 25,
-            priceTotal: 25,
-            priceTotalFull: 25,
-            discount: [],
-            category: 'print',
-        },
-        {
-            id: 8,
-            label: '18" x 12" ($30, additional copies $25)',
-            price : 30,
-            priceTotal: 30,
-            priceTotalFull: 30,
-            discount: [],
-            category: 'print',
-        },
-        {
-            id: 9,
-            label: '36" x 24" ($55, additional copies $50)',
-            price : 55,
-            priceTotal: 55,
-            priceTotalFull: 55,
-            discount: [],
-            category: 'print',
-        }
-    ],
-    digital: [
-        {
-            id: 22,
-            label: 'Personal or single use',
-            price :  20, // original price per item
-            priceTotal: 20, // accumulated total with discount
-            priceTotalFull: 20, // accumulated total without discount
-            category: 'digital',
-        },
-        {
-            id: 33,
-            label: 'Commercial use',
-            price : 50,
-            priceTotal: 50,
-            priceTotalFull: 50,
-            category: 'digital',
-        },
-    ]
-}
+    },
+    {
+        id: 6,
+        label: '12" x 8" ($15, additional copies $10)',
+        price : 15,
+        priceTotal: 15,
+        priceTotalFull: 15,
+        discount: [],
+        category: 'print',
+    },
+    {
+        id: 7,
+        label: '14" x 11" ($25, additional copies $20)',
+        price : 25,
+        priceTotal: 25,
+        priceTotalFull: 25,
+        discount: [],
+        category: 'print',
+    },
+    {
+        id: 8,
+        label: '18" x 12" ($30, additional copies $25)',
+        price : 30,
+        priceTotal: 30,
+        priceTotalFull: 30,
+        discount: [],
+        category: 'print',
+    },
+    {
+        id: 9,
+        label: '36" x 24" ($55, additional copies $50)',
+        price : 55,
+        priceTotal: 55,
+        priceTotalFull: 55,
+        discount: [],
+        category: 'print',
+    },
+    {
+        id: 22,
+        label: 'Personal or single use',
+        price :  20, // original price per item
+        priceTotal: 20, // accumulated total with discount
+        priceTotalFull: 20, // accumulated total without discount
+        category: 'digital',
+    },
+    {
+        id: 33,
+        label: 'Commercial use',
+        price : 50,
+        priceTotal: 50,
+        priceTotalFull: 50,
+        category: 'digital',
+    },
+];
 
 // export const favourites = [
 //     {

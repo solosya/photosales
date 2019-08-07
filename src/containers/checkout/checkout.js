@@ -21,10 +21,10 @@ import Container                    from '../../components/layout/container'
 
 
 // Actions
-import * as actionTypes             from '../../store/actions/actions'
+// import * as actionTypes             from '../../store/actions/actions'
 import * as actionCreators          from '../../store/actions/actions'
 
-// import {products}                   from './data'
+import {products}                   from './data'
 
 class Checkout extends Component {
     
@@ -59,7 +59,8 @@ class Checkout extends Component {
     componentDidMount() {
         const self = this;
 
-        
+        self.setState({products});
+
         axios.all([this.getSiteProducts()])
         .then(axios.spread(function (products) {
             self.setState({
@@ -101,8 +102,10 @@ class Checkout extends Component {
     }
 
     handleQuantity = (quantity, product) => {
+
         product.quantity = +quantity;
         this.props.updateCartItem( product );
+    
     }
 
     handleRemovePhoto = (photo) => {
@@ -393,7 +396,8 @@ const mapDispatchToProps = dispatch => {
         fetchFavourites :       ()          => dispatch( actionCreators.fetchSaved() ),
         addLineItemToCart:      (product)   => dispatch( actionCreators.addItemToCart(product) ),
         removePhotoFromCheckout:(product)   => dispatch( actionCreators.removePhotoFromCheckout(product) ),
-        removeLineItemFromCart: (productIndex, photoId) => dispatch( {type:actionTypes.REMOVE_ITEM_FROM_CART, productIndex, photoId} ),
+        removeLineItemFromCart: (product)   => dispatch( actionCreators.removeItemFromCart(product) ),
+        // removeLineItemFromCart: (productIndex, photoId) => dispatch( {type:actionTypes.REMOVE_ITEM_FROM_CART, productIndex, photoId} ),
     }
 
 }

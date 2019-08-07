@@ -29,7 +29,6 @@ const panel_3 = (props) => {
                                 data={card} 
                                 count={cardCount++}
                                 panel={props.title}
-                                // styles="card-1-mobile card-1-tablet card-1-desktop"
                                 styles = {["card-1-mobile", "card-1-tablet", "card-1-desktop"]}
                             />
                         </Col>
@@ -47,7 +46,6 @@ const panel_3 = (props) => {
                                 count={cardCount++}
                                 panel={props.title}
                                 styles = {["card-1-mobile", "card-1-tablet", "card-1-desktop"]}
-                                // styles="card-1-mobile card-1-tablet card-1-desktop"
                             />
                         </Col>
                     })}

@@ -19,6 +19,7 @@ export const UPDATE_CART_ITEM       = 'UPDATE_CART_ITEM'
 export const LOGIN_ON_REFRESH       = 'LOGIN_ON_REFRESH'
 export const REMOVE_ITEM_FROM_CART  = 'REMOVE_ITEM_FROM_CART'
 
+var quantityRequest = null;
 
 export const getLineItemsFromCart = (cart) => {
     const items = [];
@@ -94,17 +95,17 @@ export const guest = (router) => {
 
 
 export const toggleFavourite = (p) => {
-    // console.log("TIGGLIG", photo);
+
     const photo = {...p};
     const loggedIn = store.getState()['isLoggedIn'];
     const live = store.getState()['live'];
-    // console.log(loggedIn);
+
     if (loggedIn) {
 
         return dispatch => {
     
             axios.post('/api/user/follow-media', qs.stringify({"guid": photo.guid, "type": 'favourite'})).then((r) => {
-                console.log(r);
+                // console.log(r);
                 if (r.data.success === 1) {
                     dispatch({
                         type: TOGGLE_FAVOURITE,
@@ -148,7 +149,7 @@ export const toggleCart = (p) => {
         if (loggedIn) {
     
             axios.post('/api/user/follow-media', qs.stringify({"guid": photo.guid, "type": 'cart'})).then((r) => {
-                console.log("TOGGLING CART", r);
+
                 if (r.data.success === 1) {
                     dispatch({
                         type: TOGGLE_CART,
@@ -187,7 +188,7 @@ export const fetchSaved = () => {
     return dispatch => {
         
         if (loggedIn) {
-            console.log('fetching from database!!');
+
             axios.get('/api/user/user-media').then((r) => {
                 // console.log("FAVOURITE FETCH SERVER", r.data.media);
     
@@ -213,7 +214,7 @@ export const fetchSaved = () => {
             });
 
         } else {
-            console.log('getting saved from local');
+
             // Attempt to get cart and favourites from local storage
             const cartString = localStorage.getItem('cart');
             const favString  = localStorage.getItem('favourites');
@@ -221,7 +222,6 @@ export const fetchSaved = () => {
             const cart       =  cartString ? JSON.parse(cartString) : [];
             const favourites =  favString  ? JSON.parse(favString)  : [];
             const saved = cart.concat(favourites);
-            console.log(saved);
             if (saved.length === 0 ) return;
 
             dispatch({
@@ -236,15 +236,13 @@ export const addItemToCart = (product) => {
     return dispatch => {
         dispatch(add(product));
         let cart = store.getState()['cart'];
-        // console.log(cart);
 
         const flatCart = getLineItemsFromCart(cart)
-        // console.log(flatCart);
+
         axios.post('/api/shop/total', {"cart": flatCart} )
         .then((r) => {
-            console.log(r);
+            // console.log(r);
             cart = placeLineItemsIntoCart(cart, r.data.cart);
-            console.log(cart);
             dispatch({
                 type: TOTAL_CART,
                 total: r.data.total,
@@ -257,18 +255,18 @@ export const addItemToCart = (product) => {
 
 
 export const removeItemFromCart = (product) => {
+
     return dispatch => {
         dispatch(remove(product));
         let cart = store.getState()['cart'];
-        // console.log(cart);
 
-        const flatCart = getLineItemsFromCart(cart)
-        // console.log(flatCart);
+        const flatCart = getLineItemsFromCart(cart);
+
         axios.post('/api/shop/total', {"cart": flatCart} )
         .then((r) => {
-            console.log(r);
+            // console.log(r);
             cart = placeLineItemsIntoCart(cart, r.data.cart);
-            console.log(cart);
+
             dispatch({
                 type: TOTAL_CART,
                 total: r.data.total,
@@ -301,7 +299,7 @@ export const removePhotoFromCheckout = (p) => {
         if (loggedIn) {
     
             axios.post('/api/user/follow-media', qs.stringify({"guid": photo.guid, "type": 'cart'})).then((r) => {
-                console.log("TOGGLING CART", r);
+
                 if (r.data.success === 1) {
                     dispatch({
                         type: TOGGLE_CART,
@@ -312,7 +310,7 @@ export const removePhotoFromCheckout = (p) => {
                     const flatCart = getLineItemsFromCart(cart)
                     axios.post('/api/shop/total', {"cart": flatCart} )
                     .then((r) => {
-                        console.log(r);
+                        // console.log(r);
                         cart = placeLineItemsIntoCart(cart, r.data.cart);
                 
                         dispatch({
@@ -352,18 +350,28 @@ export const updateCartItem = (product) => {
         dispatch(update(product));
         let cart = store.getState()['cart'];
 
-        const flatCart = getLineItemsFromCart(cart)
-        axios.post('/api/shop/total', {"cart": flatCart} )
-        .then((r) => {
-            console.log(r);
-            cart = placeLineItemsIntoCart(cart, r.data.cart);
-    
-            dispatch({
-                type: TOTAL_CART,
-                total: r.data.total,
-                cart: cart
+
+        // updating a cart item is mainly for adding quantity.
+        // Users can click quantity spinner quickly and repeatedly to get 
+        // to their value so don't want to check total on every click.
+        clearTimeout(quantityRequest);
+
+        quantityRequest = setTimeout(() => {
+            const flatCart = getLineItemsFromCart(cart)
+            axios.post('/api/shop/total', {"cart": flatCart} )
+            .then((r) => {
+                // console.log(r);
+                cart = placeLineItemsIntoCart(cart, r.data.cart);
+        
+                dispatch({
+                    type: TOTAL_CART,
+                    total: r.data.total,
+                    cart: cart
+                });
             });
-        });
+
+        }, 400);
+
     }
 }
 

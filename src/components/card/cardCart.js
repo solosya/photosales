@@ -27,9 +27,7 @@ class CardCart extends Component {
         lineItems: this.props.lineItems || []
     }
 
-    // componentDidMount() {
-    //     console.log("MOUNTED", this.state);
-    // }
+
     handleCheckbox = e => {
         const status = {...this.state.productStatus};
         status[e.target.name] = e.target.checked;
@@ -89,16 +87,15 @@ class CardCart extends Component {
 
         this.setState({ products }
         , () => {
-            this.props.removeLineItemFromCart(productIndex, photoId);
+            product.productIndex = index;
+            this.props.removeLineItemFromCart(product);
         });
     }
 
 
 
     render() {
-        // console.log("RENDERING CARDCART");
         const count = this.props.count || 0;
-        // const panel = this.props.panel || null;
         const image = this.props.data.images && this.props.data.images.length > 0 ? this.props.data.images[0] : this.props.data;
 
         
@@ -111,7 +108,6 @@ class CardCart extends Component {
         }
 
 
-        // console.log("WTF STATE", this.state);
         let printOptions   = [];
         let digitalOptions = [];
         if (this.state.products.length > 0) {
@@ -129,8 +125,6 @@ class CardCart extends Component {
 
         }
 
-        // console.log("Print options", printOptions);
-        // console.log("Digital options", digitalOptions);
 
 
 
@@ -197,8 +191,8 @@ class CardCart extends Component {
             });
         }
 
-        // console.log("Print PRODUCTS", printProducts);
 
+        
 
 
         const printItems = printProducts.map((item, i) => {

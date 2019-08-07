@@ -89,7 +89,7 @@ const lineItem = (props) => {
         //     itemTotalDiscount = props.product.priceTotalDiscount;
         // }
 
-        total = props.product.priceTotal / 100;
+        total = (props.product.priceTotal / 100).toFixed(2);
         if ( isNaN(total) ) {
             total = "";
         }
