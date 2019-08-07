@@ -24,7 +24,7 @@ import Container                    from '../../components/layout/container'
 // import * as actionTypes             from '../../store/actions/actions'
 import * as actionCreators          from '../../store/actions/actions'
 
-import {products}                   from './data'
+// import {products}                   from './data'
 
 class Checkout extends Component {
     
@@ -59,7 +59,7 @@ class Checkout extends Component {
     componentDidMount() {
         const self = this;
 
-        self.setState({products});
+        // self.setState({products});
 
         axios.all([this.getSiteProducts()])
         .then(axios.spread(function (products) {
