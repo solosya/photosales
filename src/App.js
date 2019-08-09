@@ -10,6 +10,7 @@ import Home                     from './containers/home/home'
 import store                    from './store/store'
 import Login                    from './containers/login/login'
 import Checkout                 from './containers/checkout/checkout'
+import Receipt                  from './containers/receipt/receipt'
 import EnsureLoggedInContainer  from './containers/private'
 import EnsureLoggedOutContainer from './containers/ensureLoggedOut'
 
@@ -247,6 +248,13 @@ class App extends Component {
                     } />
 
 
+                    <Route path={window.basePath + "/thanks"} render={ () => 
+                        <Receipt    linkHandler={this.linkHandler} 
+                                    photoStatusHandler={this.photoStatusHandler} 
+                                    showGallery = {this.showGallery}
+                            />
+                        } />
+
 
                     <Route path={window.basePath + "/:section"} render={ () => 
                         <Home   linkHandler={this.linkHandler}
@@ -255,6 +263,10 @@ class App extends Component {
                             />
                         } />
                     
+
+
+
+
                     <Route path={window.basePath} render={ () => 
                         <Home   linkHandler={this.linkHandler} 
                                 photoStatusHandler={this.photoStatusHandler} 

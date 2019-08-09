@@ -6,6 +6,7 @@ import axios                        from 'axios'
 import CSSTransition                from 'react-transition-group/CSSTransition'
 import TransitionGroup              from 'react-transition-group/TransitionGroup'
 import {Elements, StripeProvider}   from 'react-stripe-elements'
+import { Redirect, withRouter }     from 'react-router-dom';
 
 // Components
 import Row                          from '../../components/layout/row'
@@ -21,7 +22,6 @@ import Container                    from '../../components/layout/container'
 
 
 // Actions
-// import * as actionTypes             from '../../store/actions/actions'
 import * as actionCreators          from '../../store/actions/actions'
 
 // import {products}                   from './data'
@@ -29,15 +29,10 @@ import * as actionCreators          from '../../store/actions/actions'
 class Checkout extends Component {
     
     state = {
-        networkData: null,
-        blogData: {
-            title: "Photo sales",
-            url: "www.picturebooth.com",
-            guid: "b6d174e5-70d2-4274-900a-46632b9b3e56",
-        },
         showTerms: false,
         photos: null,
         purchaseCart: [],
+        purchaseStatus: false,
         total: 0,
         products: [],
         billing: {
@@ -73,11 +68,6 @@ class Checkout extends Component {
 
 
 
-
-
-    // getSiteDiscounts() {
-    //     return axios.get('/api/shop/discounts' );
-    // }
 
     getSiteProducts() {
         return axios.get('/api/shop/products' );
@@ -152,6 +142,7 @@ class Checkout extends Component {
     }
 
     handlePayment = (token) => {
+
         const billingErrors = this.checkBillingErrors();
         // console.log(billingErrors);
         let showTerms = false;
@@ -171,6 +162,7 @@ class Checkout extends Component {
         //     return;
         // }
 
+        this.setState({purchaseStatus: 'pending'});
 
 
         const cart = actionCreators.getLineItemsFromCart(this.props.cart).map((c) => {
@@ -184,11 +176,14 @@ class Checkout extends Component {
 
 
         const billing = this.state.billing;
-        axios.post('/api/shop/purchase', qs.stringify( {cart, billing})).then((r) => {
+        return axios.post('/api/shop/purchase', qs.stringify( {cart, billing})).then((r) => {
+            console.log(r);
+
+            this.setState({purchaseStatus: 'complete'});
             // axios.post('/api/shop/purchase', qs.stringify( {"stripeToken": token.id, cart})).then((r) => {
                 // console.log(r);
         }).catch((e) => {
-            // console.log(e);
+            console.log(e);
         });
 
 
@@ -232,6 +227,14 @@ class Checkout extends Component {
     }
 
     render() {
+
+
+        if ( this.state.purchaseStatus === 'complete' ) {
+            return <Redirect to={window.basePath + "/thanks?order=666"} />
+        } 
+
+
+
         let purchases = null;
         let cards = null;
 
@@ -256,10 +259,8 @@ class Checkout extends Component {
 
 
         if (this.state.products.length > 0 ) {
-            // console.log('CHECKING FOR cart', this.props.cart);
-            // console.log('CHECKING FOR products', this.state.products);
             cards = this.props.cart.map( (product, i) => {
-                // console.log(product, i);
+
                 const key = product.title + product.id;
 
                 const card =
@@ -272,13 +273,13 @@ class Checkout extends Component {
                             data                    = {product}
                             count                   = {i}
                             styles                  = "card-3-mobile card-3-tablet card-3-desktop"
-                            cardHandler             = {this.showGallery}
-                            favHandler              = {this.props.toggleFavourite}
                             products                = {this.state.products}
+                            favHandler              = {this.props.toggleFavourite}
+                            cardHandler             = {this.showGallery}
                             cartHandler             = {null}
-                            removeLineItemFromCart  = {this.removeLineItemFromCart}
-                            addLineItemToCart       = {this.addLineItemToCart}
                             handleQuantity          = {this.handleQuantity}
+                            addLineItemToCart       = {this.addLineItemToCart}
+                            removeLineItemFromCart  = {this.removeLineItemFromCart}
                             
                             // discounts applied in this cart should update the discount
                             // ammount in the child component, so add a function to the child,
@@ -291,6 +292,7 @@ class Checkout extends Component {
                 
                 return card;
             });
+            console.log(cards);
 
             // purchases = this.state.purchaseCart.map((item, i) => {
             //     return (
@@ -363,7 +365,7 @@ class Checkout extends Component {
 
                     <StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">
                         <Elements>
-                            <Payment handleSubmit={this.handlePayment}/>
+                            <Payment handleSubmit={this.handlePayment} status={this.state.purchaseStatus} />
                         </Elements>
                     </StripeProvider>
 
@@ -402,5 +404,5 @@ const mapDispatchToProps = dispatch => {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Checkout);
+export default withRouter( connect(mapStateToProps, mapDispatchToProps)(Checkout) );
 
