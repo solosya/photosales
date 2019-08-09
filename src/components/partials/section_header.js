@@ -53,7 +53,7 @@ const sectionHeader = (props) => {
                     <label className={cn(favLabelStyles)}>Favourites</label>
                 </div>
 
-                <div className={styles['c-section-head__cart']} onClick={ () => props.linkHandler("/checkout/")}>
+                <div className={styles['c-section-head__cart']} onClick={ () => props.linkHandler("/checkout")}>
                     <label className={styles['c-section-head__cart-count']}>{props.cartItems}</label>
                     <CheckoutIcon on={props.cartItems > 0} />
 

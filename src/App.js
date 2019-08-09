@@ -30,7 +30,7 @@ import * as actionCreators      from './store/actions/actions'
 
 //Styles
 import './app.scss';
-
+console.log(window.location);
 axios.defaults.baseURL = window.location.origin;
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 axios.defaults.headers.common['X-CSRF-Token']     = window.csrfToken;
@@ -185,7 +185,7 @@ class App extends Component {
 
 
 
-
+        // return null;
 
         return (
             <div style={{marginBottom: "60px"}}>

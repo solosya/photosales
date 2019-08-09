@@ -1,8 +1,9 @@
 //Libraries
 import React, {Component}   from 'react'
 import axios                from 'axios'
+import qs                   from 'qs'
 import cn                   from 'classnames'
-// import cloudinary           from 'cloudinary-core';
+import cloudinary           from 'cloudinary-core'
 
 //Components
 import ImageGallery         from 'react-image-gallery'
@@ -30,20 +31,28 @@ class Gallery extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props);
+
         if ( typeof this.props.gallery.images !== 'undefined') {
-            return axios.get('/api/article/get-article?articleId='+ this.props.gallery.id).then(r => {
-                // const cloudinaryCore = new cloudinary.Cloudinary({cloud_name: 'cognitives'});
+            const articleParams = {
+                articleId: this.props.gallery.id,
+                mediaWidth: '580',
+                mediaHeight: '385',
+                mediaWatermark: 'true'
+            };
+
+            return axios.get('/api/article/get-article?' + qs.stringify(articleParams)).then(r => {
+                
+                const cloudinaryCore = new cloudinary.Cloudinary({cloud_name: 'cognitives'});
     
                 const images = r.data.media.map((item) => {
-    
-                    // const url = cloudinaryCore.url(item.url, {
-                    //     width: "580",
-                    //     height: "384",
-                    //     crop: "fit" 
+
+                    const url = cloudinaryCore.url(item.path, {
+                        width: "580",
+                        height: "384",
+                        crop: "fit" 
         
-                    // });
-    
+                    });
+
                     const {favourite, cart} = this.props.checkPhotoStatus(item.media_id);
                     
                     return {
@@ -57,7 +66,7 @@ class Gallery extends Component {
     
                         cart,       //boolean to show if photo is in the cart
                         favourite, // boolean to show if photo is in the favourites
-                        original: item.path, // needed for gallery
+                        original: url, // needed for gallery
                     };
                 });
             
