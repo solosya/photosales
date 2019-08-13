@@ -57,7 +57,8 @@ if (window._appJsConfig) {
         hasAccess:  (true === (window._appJsConfig.userHasBlogAccess === 1)),
         live: true,
         pageTitle: window.pageTitle,
-        stripeKey: window.stripePublic
+        stripeKey: window.stripePublic,
+        env: window.env
     });
 }
 
@@ -191,7 +192,7 @@ class App extends Component {
         // return null;
 
         return (
-            <div style={{marginBottom: "60px"}}>
+            <div style={{marginBottom: "60px"}} data-env={this.props.env}>
 
 
                 {this.state.showGallery     ? gallery : null}
@@ -287,11 +288,11 @@ class App extends Component {
 
 const mapStateToProps = state => {
     return {
-        favourites : state.favourites,
+        favourites  : state.favourites,
         cart        : state.cart,
         pageTitle   : state.pageTitle,
         isLoggedIn  : state.isLoggedIn,
-
+        env         : state.env,
     }
 };
 

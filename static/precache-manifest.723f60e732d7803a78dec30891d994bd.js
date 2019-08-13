@@ -20,7 +20,7 @@ self.__precacheManifest = [
     "url": "/js/runtime~main.js"
   },
   {
-    "revision": "35834d4f3da7a98cda59",
+    "revision": "a808be43e56fa7067015",
     "url": "/js/main.chunk.js"
   },
   {
@@ -32,7 +32,7 @@ self.__precacheManifest = [
     "url": "/index.html"
   },
   {
-    "revision": "35834d4f3da7a98cda59",
+    "revision": "a808be43e56fa7067015",
     "url": "/css/main.chunk.css"
   },
   {

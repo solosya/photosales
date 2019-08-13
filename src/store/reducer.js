@@ -8,7 +8,8 @@ const intialState = {
     favourites  : [],
     isLoggedIn  : false,
     pageTitle   : "Photo Sales",
-    stripeKey   : null
+    stripeKey   : null,
+    env         : '',
 }
 
 
@@ -68,7 +69,8 @@ const reducer = (state = intialState, action) => {
                 isLoggedIn: action.isLoggedIn,
                 hasAccess: action.hasAccess,
                 stripeKey: action.stripeKey,
-                pageTitle: action.pageTitle
+                pageTitle: action.pageTitle,
+                env      : action.env
             }
 
             return newState;
