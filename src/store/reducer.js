@@ -7,7 +7,8 @@ const intialState = {
     guest       : false,
     favourites  : [],
     isLoggedIn  : false,
-    pageTitle   : "Photo Sales"
+    pageTitle   : "Photo Sales",
+    stripeKey   : null
 }
 
 
@@ -61,11 +62,16 @@ const reducer = (state = intialState, action) => {
         }
 
         case actionTypes.LOGIN_ON_REFRESH: {
-            return {
+
+            const newState = {
                 ...state,
                 isLoggedIn: action.isLoggedIn,
-                hasAccess: action.hasAccess
+                hasAccess: action.hasAccess,
+                stripeKey: action.stripeKey,
+                pageTitle: action.pageTitle
             }
+
+            return newState;
         }
         case actionTypes.FETCH_SAVED: {
 

@@ -12,6 +12,7 @@ import Admin        from './admin'
 import card1        from './card-1.module.scss'
 import card2        from './card-2.module.scss'
 import card4        from './card-4.module.scss'
+import card5        from './card-5.module.scss'
 
 
 
@@ -78,17 +79,21 @@ const Card = props =>  {
             styles.push(card4[style]);
             // cards['4'] = true;
         }
+        if (style.indexOf('5') > -1 ) {
+            styles.push(card5[style]);
+            // cards['4'] = true;
+        }
     };
 
-    const viewStyles =          cn([card1["c-cards-view"],              card2["c-cards-view"],              card4["c-cards-view"]]);
-    const containerStyles =     cn([card1["c-cards-view__container"],   card2["c-cards-view__container"],   card4["c-cards-view__container"]]);
-    const mediaStyles =         cn([card1["c-cards-view__media"],       card2["c-cards-view__media"],       card4["c-cards-view__media"]]);
-    const buttonStyles =        cn([card1["c-cards-view__buttons"],     card2["c-cards-view__buttons"],     card4["c-cards-view__buttons"]]);
-    const categoryStyles =      cn([card1["c-cards-view__category"],    card2["c-cards-view__category"],    card4["c-cards-view__category"]]);
-    const headingStyles =       cn([card1["c-cards-view__heading"],     card2["c-cards-view__heading"],     card4["c-cards-view__heading"]]);
-    const descriptionStyles =   cn([card1["c-cards-view__description"], card2["c-cards-view__description"], card4["c-cards-view__description"]]);
-    const authorStyles =        cn([card1["c-cards-view__author"],      card2["c-cards-view__author"],      card4["c-cards-view__author"]]);
-    const timeStyles =          cn([card1["c-cards-view_time"],         card2["c-cards-view_time"],         card4["c-cards-view_time"]]);
+    const viewStyles =          cn([card1["c-cards-view"],              card2["c-cards-view"],              card4["c-cards-view"],                 card5["c-cards-view"]]);
+    const containerStyles =     cn([card1["c-cards-view__container"],   card2["c-cards-view__container"],   card4["c-cards-view__container"],      card5["c-cards-view__container"]]);
+    const mediaStyles =         cn([card1["c-cards-view__media"],       card2["c-cards-view__media"],       card4["c-cards-view__media"],          card5["c-cards-view__media"]]);
+    const buttonStyles =        cn([card1["c-cards-view__buttons"],     card2["c-cards-view__buttons"],     card4["c-cards-view__buttons"],        card5["c-cards-view__buttons"]]);
+    const categoryStyles =      cn([card1["c-cards-view__category"],    card2["c-cards-view__category"],    card4["c-cards-view__category"],       card5["c-cards-view__category"]]);
+    const headingStyles =       cn([card1["c-cards-view__heading"],     card2["c-cards-view__heading"],     card4["c-cards-view__heading"],        card5["c-cards-view__heading"]]);
+    const descriptionStyles =   cn([card1["c-cards-view__description"], card2["c-cards-view__description"], card4["c-cards-view__description"],    card5["c-cards-view__description"]]);
+    const authorStyles =        cn([card1["c-cards-view__author"],      card2["c-cards-view__author"],      card4["c-cards-view__author"],         card5["c-cards-view__author"]]);
+    const timeStyles =          cn([card1["c-cards-view_time"],         card2["c-cards-view_time"],         card4["c-cards-view_time"],            card5["c-cards-view_time"]]);
 
     const count = props.count || 0;
     const panel = props.panel || null;
@@ -114,7 +119,7 @@ const Card = props =>  {
     if (props.swapCards) {
         draggable = true;
     }
-
+    console.log(props.data);
     return (
         <div onClick={() => { console.log('clicked');props.cardHandler(count, panel)}} className={cn(styles)}>
             <div  
@@ -143,9 +148,9 @@ const Card = props =>  {
 
                         <div className={descriptionStyles}><Dotdotdot clamp={3}>{props.data.content}</Dotdotdot></div>
                     
-                        <div className={authorStyles}>
+                        {/* <div className={authorStyles}>
                             <div className={timeStyles}>{props.data.publishDate}</div>
-                        </div>
+                        </div> */}
                     </div>
 
 

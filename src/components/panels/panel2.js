@@ -22,9 +22,9 @@ const panel_1 = (props) => {
 
             <Col classes={["col-12"]}>
 
-                <Row>
+                <Row data-panel="panel2">
                     {props.cards.slice(0,4).map((card, i) => {
-                        return <Col key={i} classes={["col-12", "col-md-3"]}>
+                        return <Col key={i} classes={["col-12", "col-md-6", "col-lg-3"]}>
                             <Card 
                                 cardHandler={props.showGallery} 
                                 data={card} 

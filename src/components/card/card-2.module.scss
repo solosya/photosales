@@ -70,7 +70,15 @@
     @include card-2-base();
     margin-left: 0;
     margin-right: 0;
-    
+    &:not(:last-child) {
+        margin-bottom:20px;
+        padding-bottom:20px;
+        border-bottom: 1px solid rgba($greyish, 0.8);
+    }
+
+
+
+
     .c-cards-view {
         height: 160px;
 
@@ -135,15 +143,6 @@
 .card-2-desktop {
 
     @media #{$desktop-up} {
-
-        &:not(:last-child) {
-            margin-bottom:20px;
-            padding-bottom:20px;
-            border-bottom: 1px solid rgba($greyish, 0.8);
-        }
-
-
-
         @include card-2-tablet-base();
     }
 }

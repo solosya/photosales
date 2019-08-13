@@ -5,7 +5,7 @@
     margin-left: -20px;
     margin-right: -20px;
 
-
+    background:pink;
     .c-cards-view {
         @include flex-direction(row, horizontal);
         box-shadow:none;
@@ -90,6 +90,12 @@
 
 
 @mixin card-3-tablet-base {
+    &:not(:last-child) {
+        margin-bottom:20px;
+        padding-bottom:20px;
+        border-bottom: 1px solid rgba($greyish, 0.8);
+    }
+
     @include card-3-base();
     margin-left: 0;
     margin-right: 0;
@@ -97,8 +103,8 @@
     .c-cards-view {
 
         &__media {
-            @include flex-height(160px);
-            @include flex-width(240px);
+            @include flex-height(138px);
+            @include flex-width(186px);
             margin-right: 36px;
 
             img {
@@ -154,16 +160,37 @@
     }
 
 }
-.card-3-desktop {
 
-    @media #{$desktop-up} {
-        &:not(:last-child) {
-            margin-bottom:20px;
-            padding-bottom:20px;
-            border-bottom: 1px solid rgba($greyish, 0.8);
-        }
+.card-3-desktop {
+    @media #{$desktop} {
+        @include card-3-tablet-base();
+        // .c-cards-view {
+
+        //     &__media {
+        //         @include flex-height(160px);
+        //         @include flex-width(240px);
+        //         margin-right: 36px;
+        //     }
+        // }
+    }
+}
+
+.card-3-desktop-lg {
+
+    @media #{$desktop-lg} {
     
         @include card-3-tablet-base();
+        
+        .c-cards-view {
+
+            &__media {
+                @include flex-height(160px);
+                @include flex-width(240px);
+                margin-right: 36px;
+            }
+        }
+
+
     }
 }
 

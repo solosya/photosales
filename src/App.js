@@ -31,7 +31,7 @@ import * as actionCreators      from './store/actions/actions'
 
 //Styles
 import './app.scss';
-console.log(window.location);
+
 axios.defaults.baseURL = window.location.origin;
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 axios.defaults.headers.common['X-CSRF-Token']     = window.csrfToken;
@@ -50,12 +50,14 @@ if (urlPath[1] === 'page') {
 
 
 if (window._appJsConfig) {
+
     store.dispatch({
         type: actionTypes.LOGIN_ON_REFRESH, 
         isLoggedIn: (true === (window._appJsConfig.isUserLoggedIn === 1)), 
         hasAccess:  (true === (window._appJsConfig.userHasBlogAccess === 1)),
         live: true,
-        pageTitle: window.pageTitle
+        pageTitle: window.pageTitle,
+        stripeKey: window.stripePublic
     });
 }
 

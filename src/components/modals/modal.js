@@ -43,8 +43,17 @@ const Window = styled.div`
     padding:30px 35px 30px 35px;
     border-radius:3px;
     overflow:auto;
+    
+    @media screen and (min-width : 768px) and (max-width : 991px) {
+        max-width:90%;
+    }
+
+
     @media screen and (max-width :767px) {
         width:auto;
+        max-width:90%;
+        padding:20px 18px 20px 18px;
+
     }
 
     ${props => props.width && css`

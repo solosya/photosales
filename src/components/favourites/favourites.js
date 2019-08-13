@@ -35,7 +35,7 @@ class Favourites extends Component {
                         key         = {i}
                         data        = {fav}
                         count       = {i}
-                        styles      = {["card-2-mobile", "card-2-tablet", "card-2-desktop"]}
+                        styles      = {["card-5-mobile", "card-2-tablet", "card-2-desktop"]}
                         cardHandler = {this.showGallery}
                         favHandler  = {this.props.favHandler}
                         cartHandler = {this.props.cartHandler}

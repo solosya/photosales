@@ -18,11 +18,12 @@
         }
 
         &__heading {
-            margin:0;
-            @include flex-height(25px);
-            @include font-size(18);
-            margin-bottom:10px;
-            font-weight: $weightMedium;
+            display:none;
+            // margin:0;
+            // @include flex-height(25px);
+            // @include font-size(18);
+            // margin-bottom:10px;
+            // font-weight: $weightMedium;
         }
         &__description {
             @include font-size(13);
@@ -70,8 +71,18 @@
     @include card-2-base();
     margin-left: 0;
     margin-right: 0;
-    
+    background:red;
+    // &:not(:last-child) {
+    //     margin-bottom:20px;
+    //     padding-bottom:20px;
+    //     border-bottom: 1px solid rgba($greyish, 0.8);
+    // }
+
+
+
+
     .c-cards-view {
+        background:green;
         height: 160px;
 
         &__media {
@@ -133,17 +144,7 @@
 
 }
 .card-2-desktop {
-
     @media #{$desktop-up} {
-
-        &:not(:last-child) {
-            margin-bottom:20px;
-            padding-bottom:20px;
-            border-bottom: 1px solid rgba($greyish, 0.8);
-        }
-
-
-
         @include card-2-tablet-base();
     }
 }

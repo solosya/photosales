@@ -33,6 +33,7 @@ class Checkout extends Component {
         photos: null,
         purchaseCart: [],
         purchaseStatus: false,
+        errorMessage: "",
         total: 0,
         products: [],
         billing: {
@@ -142,7 +143,10 @@ class Checkout extends Component {
     }
 
     handlePayment = (token) => {
-
+        console.log("Stripe token", token);
+        if (typeof token === 'undefined') {
+            return;
+        }
         const billingErrors = this.checkBillingErrors();
         // console.log(billingErrors);
         let showTerms = false;
@@ -176,14 +180,18 @@ class Checkout extends Component {
 
 
         const billing = this.state.billing;
-        return axios.post('/api/shop/purchase', qs.stringify( {cart, billing})).then((r) => {
+        return axios.post('/api/shop/purchase', qs.stringify( {stripeToken: token.id, cart, billing})).then((r) => {
             console.log(r);
 
             this.setState({purchaseStatus: 'complete'});
             // axios.post('/api/shop/purchase', qs.stringify( {"stripeToken": token.id, cart})).then((r) => {
                 // console.log(r);
         }).catch((e) => {
-            console.log(e);
+            this.setState({
+                purchaseStatus: 'error',
+                errorMessage: e.response.data
+            });
+            console.log(e, e.response);
         });
 
 
@@ -272,7 +280,7 @@ class Checkout extends Component {
                             key                     = {"Card"+i}
                             data                    = {product}
                             count                   = {i}
-                            styles                  = "card-3-mobile card-3-tablet card-3-desktop"
+                            styles                  = "card-3-mobile card-3-tablet card-3-desktop card-3-desktop-lg"
                             products                = {this.state.products}
                             favHandler              = {this.props.toggleFavourite}
                             cardHandler             = {this.showGallery}
@@ -292,7 +300,7 @@ class Checkout extends Component {
                 
                 return card;
             });
-            console.log(cards);
+            // console.log(cards);
 
             // purchases = this.state.purchaseCart.map((item, i) => {
             //     return (
@@ -303,8 +311,6 @@ class Checkout extends Component {
             // });
         }
 
-
-
         return (
             <>
 
@@ -313,7 +319,7 @@ class Checkout extends Component {
                 <Container>
         
                     <Row>
-                        <Col classes={["col-12", "col-lg-8"]}>
+                        <Col classes={["col-12", "col-md-12", "col-lg-8"]}>
 
                             <Row>
                                 <Col classes={["col-12"]}>
@@ -363,9 +369,13 @@ class Checkout extends Component {
                     />
 
 
-                    <StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">
+                    <StripeProvider apiKey={this.props.stripeKey}>
                         <Elements>
-                            <Payment handleSubmit={this.handlePayment} status={this.state.purchaseStatus} />
+                            <Payment 
+                                handleSubmit={this.handlePayment} 
+                                status={this.state.purchaseStatus} 
+                                error={this.state.errorMessage}
+                            />
                         </Elements>
                     </StripeProvider>
 
@@ -386,7 +396,8 @@ const mapStateToProps = state => {
         cart: state.cart,
         total: state.total,
         isLoggedIn: state.isLoggedIn,
-        pageTitle: state.pageTitle
+        pageTitle: state.pageTitle,
+        stripeKey: state.stripeKey
     }
 };
 

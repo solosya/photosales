@@ -201,6 +201,7 @@ export const fetchSaved = () => {
                         width    : m.width,
                         height   : m.height,
                         caption  : m.caption,
+                        content  : m.caption,
                         saveType : m.type, //cart or favourite
                     }
                 });
@@ -241,7 +242,7 @@ export const addItemToCart = (product) => {
 
         axios.post('/api/shop/total', {"cart": flatCart} )
         .then((r) => {
-            // console.log(r);
+            console.log(r);
             cart = placeLineItemsIntoCart(cart, r.data.cart);
             dispatch({
                 type: TOTAL_CART,
@@ -264,7 +265,7 @@ export const removeItemFromCart = (product) => {
 
         axios.post('/api/shop/total', {"cart": flatCart} )
         .then((r) => {
-            // console.log(r);
+            console.log(r);
             cart = placeLineItemsIntoCart(cart, r.data.cart);
 
             dispatch({
@@ -310,7 +311,7 @@ export const removePhotoFromCheckout = (p) => {
                     const flatCart = getLineItemsFromCart(cart)
                     axios.post('/api/shop/total', {"cart": flatCart} )
                     .then((r) => {
-                        // console.log(r);
+                        console.log(r);
                         cart = placeLineItemsIntoCart(cart, r.data.cart);
                 
                         dispatch({
@@ -360,7 +361,7 @@ export const updateCartItem = (product) => {
             const flatCart = getLineItemsFromCart(cart)
             axios.post('/api/shop/total', {"cart": flatCart} )
             .then((r) => {
-                // console.log(r);
+                console.log(r);
                 cart = placeLineItemsIntoCart(cart, r.data.cart);
         
                 dispatch({

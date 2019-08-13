@@ -22,11 +22,11 @@ const panel_1 = (props) => {
 
             <Col classes={["col-12"]}>
 
-                <Row>
+                <Row data-panel="panel1">
                     {props.cards.slice(0,3).map((card, i) => {
 
                         return (
-                            <Col key={i} classes={["col-12", "col-md-3"]}>
+                            <Col key={i} classes={["col-12", "col-md-4"]}>
                                 <Card 
                                     data        = {props.cards[cardCount]} 
                                     count       = {cardCount++}

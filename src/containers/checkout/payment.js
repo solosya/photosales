@@ -45,6 +45,7 @@ class Payment extends Component {
 
                             {this.props.status === 'pending' && <RippleSpinner />}
                             {this.props.status !== 'pending' && <Button handler={this.submit} classes={["button", "button--red", "button--top-30"]}>Complete purchase</Button>}
+                            {this.props.status === 'error' && <p style={{marginTop:'20px',color:'red'}}>{this.props.error}</p>}
 
                         </Col>
                     </Row>

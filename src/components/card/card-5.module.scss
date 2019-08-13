@@ -1,11 +1,12 @@
 @import "./card";
 
-@mixin card-4-base() {
-    margin-left: -20px;
-    margin-right: -20px;
+@mixin card-5-base() {
+    // margin-left: -20px;
+    // margin-right: -20px;
 
     .c-cards-view {
         @include flex-direction(column, vertical);
+        box-shadow:none;
         background: $white;
 
 
@@ -15,16 +16,19 @@
         }
 
         &__category {
-            margin-bottom: 11px;
         }
 
         &__heading {
+            display:none;
             @include flex-height(53px);
             @include font-size(20);
             margin:0;
         }
         &__description {
-            display:none;
+            @include flex-height(62px);
+            @include font-size(13);
+
+            // display:none;
         }
 
         &__time {
@@ -36,7 +40,7 @@
             @include flex-direction(column, vertical);
             @include align-items(center);
             // @include justify-content(center);
-            top:45px;
+            top:15px;
             right:10px;
             max-height:60px;
             // margin-top: 13px;
@@ -85,16 +89,28 @@
     }
 }
 
-.card-4-mobile {
+.card-5-mobile {
     @media #{$mobile} {
-        @include card-4-base();
+        @include card-5-base();
         margin-bottom:30px;
+
+        .c-cards-view {
+
+            border-bottom:1px solid $greyish;
+
+            &__container {
+                padding: 17px 50px 30px 0;
+                position:relative;
+            }
+    
+        }
+
     }
 }
 
 
-@mixin card-4-tablet-base {
-    @include card-4-base();
+@mixin card-5-tablet-base {
+    @include card-5-base();
     margin-left: 0;
     margin-right: 0;
     
@@ -157,16 +173,16 @@
 
 }
 
-.card-4-tablet {
+.card-5-tablet {
     @media #{$tablet} {
-        @include card-4-tablet-base();
+        @include card-5-tablet-base();
     }
 }
-.card-4-desktop {
+.card-5-desktop {
     background:red;
     @media #{$desktop-up} {
 
-        @include card-4-tablet-base();
+        @include card-5-tablet-base();
     }
 }
 

@@ -1,6 +1,7 @@
 //Libraries
 import React   from 'react'
 import Select  from 'react-select'
+import styled  from 'styled-components'
 
 //Components
 import Close   from '../closeIcon' 
@@ -101,7 +102,8 @@ const lineItem = (props) => {
 
     return (
         <div className={styles.lineItem} title={discountName}>
-            <div style={{minWidth: '280px'}}>
+            {/* <div style={{minWidth: '280px'}}> */}
+            <Pulldown>
                 <Select 
                     styles      = {customStyles} 
                     isDisabled  = {props.active} 
@@ -109,7 +111,9 @@ const lineItem = (props) => {
                     value       = {props.selectValue}
                     options     = {options}
                 />
-            </div>
+
+            </Pulldown>
+            {/* </div> */}
             {props.product && props.product.category === 'print'
                 ? <input className={styles.quantity} type="number" min="1" value={props.product.quantity} placeholder="Qty" onChange={(e) => props.handleQuantity(e.target.value,  props.product)} />
                 : <div className={styles.quantityspacer}></div>
@@ -130,5 +134,39 @@ const lineItem = (props) => {
         </div>
 )
 }
+
+
+const Pulldown = styled.div`
+
+
+    /* desktop-lg */
+    @media screen and (min-width : 1130px) {
+        width:280px;
+    }
+
+
+    /* desktop */
+    @media screen and (min-width : 992px) and (max-width : 1329px) {
+        max-width:90%;
+    }
+
+    /* tablet */
+    @media screen and (min-width : 768px) and (max-width : 991px) {
+        max-width:90%;
+    }
+
+    /* mobile */
+    @media screen and (max-width :767px) {
+        width:auto;
+        max-width:90%;
+        padding:20px 18px 20px 18px;
+
+    }
+
+
+    width:100px;
+`
+
+
 
 export default lineItem
