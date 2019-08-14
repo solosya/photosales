@@ -4,6 +4,25 @@
         height:100%;
         .image-gallery-slide-wrapper {
             height:100%;
+
+
+            // singl image in gallery does not have swipe style
+            .image-gallery-slides {
+                height:100%;
+                .image-gallery-slide {
+                    height:100%;
+                    .image-gallery-image {
+                        height:100%;
+                    
+                        > img {
+                            height:100%;
+                            object-fit:cover;
+                        }
+                    }
+                }
+            }
+
+            // multlipe images in gallery have swipe
             .image-gallery-swipe {
                 height:100%;
                 .image-gallery-slides {
