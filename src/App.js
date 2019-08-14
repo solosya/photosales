@@ -235,11 +235,13 @@ class App extends Component {
                     } />
 
                     <Route path={window.basePath + "/checkout"} render={ () => 
+                        <EnsureLoggedInContainer>
                             <Checkout   linkHandler={this.linkHandler} 
                                         photoStatusHandler={this.photoStatusHandler} 
                                         showGallery = {this.showGallery}
 
                             /> 
+                        </EnsureLoggedInContainer>
                     } />
 
                     <Route path={window.basePath + "/search"} render={ () => 
