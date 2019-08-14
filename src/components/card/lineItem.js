@@ -6,8 +6,6 @@ import styled  from 'styled-components'
 //Components
 import Close   from '../closeIcon' 
 
-//Styles
-import styles  from './lineItem.module.scss'
 
 
 const lineItem = (props) => {
@@ -92,7 +90,7 @@ const lineItem = (props) => {
 
         total = (props.product.priceTotal / 100).toFixed(2);
         if ( isNaN(total) ) {
-            total = "";
+            total = "2552.30";
         }
 
         
@@ -101,7 +99,7 @@ const lineItem = (props) => {
 
 
     return (
-        <div className={styles.lineItem} title={discountName}>
+        <LineItem title={discountName}>
             {/* <div style={{minWidth: '280px'}}> */}
             <Pulldown>
                 <Select 
@@ -115,56 +113,104 @@ const lineItem = (props) => {
             </Pulldown>
             {/* </div> */}
             {props.product && props.product.category === 'print'
-                ? <input className={styles.quantity} type="number" min="1" value={props.product.quantity} placeholder="Qty" onChange={(e) => props.handleQuantity(e.target.value,  props.product)} />
-                : <div className={styles.quantityspacer}></div>
+                ? <QuantityInput type="number" min="1" value={props.product.quantity} placeholder="Qty" onChange={(e) => props.handleQuantity(e.target.value,  props.product)} />
+                : <Spacer />
             }
             
             {deleteButton}
 
             {props.product
-                ? <p className={styles.price}>
-                    {/* {props.product.priceTotalFull !== props.product.priceTotal ? <span className={styles.fullPrice}>${props.product.priceTotalFull} - </span>  : ""} */}
-                    
+                ? <Price>
+                    {/* {props.product.priceTotalFull !== props.product.priceTotal ? <FullPrice >${props.product.priceTotalFull} - </FullPrice>  : ""} */}
                     ${total}
-                 </p>
+                  </Price>
                 : null
             }
 
             
-        </div>
+        </LineItem>
 )
 }
 
 
 const Pulldown = styled.div`
 
-
     /* desktop-lg */
-    @media screen and (min-width : 1130px) {
+    @media screen and (min-width : 1200px) {
         width:280px;
     }
 
-
     /* desktop */
-    @media screen and (min-width : 992px) and (max-width : 1329px) {
+    @media screen and (min-width : 992px) and (max-width : 1199px) {
+        width:200px;
         max-width:90%;
     }
 
     /* tablet */
     @media screen and (min-width : 768px) and (max-width : 991px) {
+        width:218px;
         max-width:90%;
     }
 
     /* mobile */
     @media screen and (max-width :767px) {
-        width:auto;
+        width:65%;
         max-width:90%;
-        padding:20px 18px 20px 18px;
+    }
+    width:100px;
+`
 
+
+const LineItem = styled.div`
+    display:flex;
+    min-width:100%;
+    margin-bottom:10px;
+    align-items:center;
+`
+
+
+const FullPrice = styled.span`
+    color:red;
+    font-weight:bold;
+    text-decoration: line-through;
+`
+
+const Price = styled.p`
+    font-family: "Roboto";
+    flex-grow: 1;
+    text-align:right;
+    margin:0;
+    height:41px;
+    font-size: 18px;
+    line-height: 41px;
+`
+const QuantityInput = styled.input`
+    box-sizing: border-box;
+    padding:5px;
+    font-size:16px;
+    width:55px;
+    height:45px;
+    margin:0 10px;
+    text-align:center;
+    border: 1px solid #e7e7e7;
+    &:focus {
+        outline: none;
+    }
+    @media screen and (min-width : 768px) and (max-width : 991px) {
+        width:45px;
+    }
+
+    /* mobile */
+    @media screen and (max-width :767px) {
+        width:50px;
     }
 
 
-    width:100px;
+`
+
+const Spacer = styled.div`
+    width:47px;
+    margin: 0 10px;
 `
 
 

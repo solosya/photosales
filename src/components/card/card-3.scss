@@ -2,12 +2,17 @@
 @import "./card";
 
 @mixin card-3-base() {
-    margin-left: -20px;
-    margin-right: -20px;
+    margin-bottom: 30px;
+    
+    &:not(:last-child) {
+        margin-bottom:20px;
+        padding-bottom:20px;
+        border-bottom: 1px solid rgba($greyish, 0.8);
+    }
 
-    background:pink;
+    // background:pink;
     .c-cards-view {
-        @include flex-direction(row, horizontal);
+        @include flex-direction(column, vertical);
         box-shadow:none;
         // background: red;
         height:auto;
@@ -16,11 +21,13 @@
         &__container {
             padding: 0;
             width:100%;
-            // background:yellow;
+        }
+        &__media {
+            img {
+                height:100%;
+            }
         }
 
-        &__category {
-        }
 
         &__heading {
             margin:0;
@@ -40,13 +47,6 @@
             margin-top: 13px;
         }
 
-        &__lineItems {
-            @include flexbox();
-            @include flex-direction(column, vertical);
-            @include justify-content(center);
-            width:100%;
-            // margin-bottom:10px;
-        }
 
         &__photo-top {
             @include flexbox();
@@ -90,68 +90,60 @@
 
 
 @mixin card-3-tablet-base {
-    &:not(:last-child) {
-        margin-bottom:20px;
-        padding-bottom:20px;
-        border-bottom: 1px solid rgba($greyish, 0.8);
-    }
 
     @include card-3-base();
     margin-left: 0;
     margin-right: 0;
     
     .c-cards-view {
-
+        @include flex-direction(row, horizontal);
+        box-shadow:none;
+        height:auto;
+    
+        
+    
         &__media {
             @include flex-height(138px);
             @include flex-width(186px);
-            margin-right: 36px;
-
-            img {
-                height: 100%;
-            }
-
+            margin-right: 18px;
         }
-
-        &__category {
-        }
-
+    
+    
         &__heading {
+            margin:0;
+            @include flex-height(25px);
+            @include font-size(18);
+            margin-bottom:10px;
+            font-weight: $weightMedium;
         }
         &__description {
+            @include font-size(13);
+            line-height: 1.54;
             @include flex-height(60px);
+            color: $greyish;
         }
-
-
-        &.without-image {
-
-            .c-cards-view {
-                &__container {
-                    padding: 30px;
-                }
-                &__category {
-                }
-        
-                &__heading {
-                    margin-bottom: 10px;
-                }
-                &__description {
-                    margin-top: 5px;
-                    // @include flex-height(225px);
-                    @include font-size(15);
-                    line-height: 1.9;
-                }
-        
-                &__author {
-                    margin-top:35px;
-                }
-
-
-            }
+    
+        &__time {
+            margin-top: 13px;
         }
-
+    
+        &__lineItems {
+            @include flexbox();
+            @include flex-direction(column, vertical);
+            @include justify-content(center);
+            width:100%;
+        }
+    
+        &__photo-top {
+            @include flexbox();
+            @include flex-direction(row, horizontal);
+        }
+        &__close {
+            width:20px;
+            height:20px;
+        }
+    
     }
-
 }
 
 .card-3-tablet {
@@ -164,14 +156,13 @@
 .card-3-desktop {
     @media #{$desktop} {
         @include card-3-tablet-base();
-        // .c-cards-view {
-
-        //     &__media {
-        //         @include flex-height(160px);
-        //         @include flex-width(240px);
-        //         margin-right: 36px;
-        //     }
-        // }
+        .c-cards-view {
+            // &__media {
+            //     @include flex-height(160px);
+            //     @include flex-width(240px);
+            //     margin-right: 36px;
+            // }
+        }
     }
 }
 

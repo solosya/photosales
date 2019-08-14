@@ -119,7 +119,7 @@ const Card = props =>  {
     if (props.swapCards) {
         draggable = true;
     }
-    console.log(props.data);
+
     return (
         <div onClick={() => { console.log('clicked');props.cardHandler(count, panel)}} className={cn(styles)}>
             <div  

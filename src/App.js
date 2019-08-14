@@ -60,6 +60,7 @@ if (window._appJsConfig) {
         stripeKey: window.stripePublic,
         env: window.env
     });
+    
 }
 
 
@@ -158,7 +159,7 @@ class App extends Component {
         const gallery = 
             <Modal 
                 width        = "954px" 
-                height       = "575px" 
+                // height       = "575px" 
                 closeHandler = {this.closeGallery} 
                 children     = { () => (
                     <Gallery 
@@ -234,13 +235,11 @@ class App extends Component {
                     } />
 
                     <Route path={window.basePath + "/checkout"} render={ () => 
-                        <EnsureLoggedInContainer>
                             <Checkout   linkHandler={this.linkHandler} 
                                         photoStatusHandler={this.photoStatusHandler} 
                                         showGallery = {this.showGallery}
 
                             /> 
-                        </EnsureLoggedInContainer> 
                     } />
 
                     <Route path={window.basePath + "/search"} render={ () => 

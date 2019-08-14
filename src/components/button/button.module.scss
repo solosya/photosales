@@ -34,6 +34,15 @@
         display: block;
     }
 
+
+    &--mobile-block {
+        @media #{$mobile} {
+            width: $viewportSize;
+            display: block;
+        }
+    }
+
+
     &--center {
         margin-left:auto;
         margin-right:auto;

@@ -10,7 +10,7 @@ import PanelThree           from '../../components/panels/panel3'
 
 //Data
 import {panels} from './data';
-
+// console.log(panels);
 class Index extends Component {
         state = {
             panels: [],
@@ -41,14 +41,18 @@ class Index extends Component {
                             title       : article.title,
                             content     : article.excerpt,
                             editUrl     : article.editUrl,
-                            publishDate : article.publishDate,
-        
-                            images: [{
+                            isPinned    : parseInt( article.isPinned ),
+                            pinnedAt    : parseInt( article.pinnedAt ),
+
+                            images: [{ // featured media only
                                 id       : media.id,
                                 url      : media.media.url,
+                                guid     : media.guid,
                                 type     : media.fileType,
+                                title    : media.title,
                                 width    : media.width,
                                 height   : media.height,
+                                caption  : media.caption,
                                 filesize : media.fileSize,
                             }]
                         }
@@ -81,6 +85,7 @@ class Index extends Component {
 
 
         }).catch(() => {
+            console.log('getting panels');
             this.getPanels();
         });
 
@@ -101,7 +106,7 @@ class Index extends Component {
         const panel = this.state.panels.find((panel) => {
             return panel.title === panelName;
         });
-
+        console.log(panel);
         if (panel) {
             selected = panel.feed[card];
         }

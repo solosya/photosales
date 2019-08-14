@@ -71,7 +71,7 @@ class LoginPage extends Component {
                 <Card 
                     key         = {i}
                     data        = {product}
-                    styles      = {["card-2-mobile", "card-2-tablet", "card-2-desktop"]}
+                    styles      = {["card-5-mobile", "card-2-tablet", "card-2-desktop"]}
                     cardHandler = {() => { return false;}}
                     favHandler  = {this.props.favHandler}
                     cartHandler = {this.props.cartHandler}
@@ -88,7 +88,7 @@ class LoginPage extends Component {
         
 
                 <Row>
-                    <Col classes={["col-12", "col-lg-8"]}>
+                    <Col classes={["col-12", "col-md-12", "col-lg-10", "col-xl-8"]}>
 
                         <Row>
                             <Col classes={["col-12"]}>

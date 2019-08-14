@@ -24,7 +24,7 @@ import Container                    from '../../components/layout/container'
 // Actions
 import * as actionCreators          from '../../store/actions/actions'
 
-// import {products}                   from './data'
+import {products}                   from './data'
 
 class Checkout extends Component {
     
@@ -54,7 +54,6 @@ class Checkout extends Component {
 
     componentDidMount() {
         const self = this;
-
         // self.setState({products});
 
         axios.all([this.getSiteProducts()])
@@ -64,7 +63,11 @@ class Checkout extends Component {
             }, () => {
                 // console.log(self.state);
             });
-        }));
+        })).catch(() => {
+            if (self.props.env === "" ) { // will be dev
+                self.setState({ products });
+            }
+        });
     }
 
 
@@ -264,8 +267,6 @@ class Checkout extends Component {
 
 
 
-
-
         if (this.state.products.length > 0 ) {
             cards = this.props.cart.map( (product, i) => {
 
@@ -397,7 +398,8 @@ const mapStateToProps = state => {
         total: state.total,
         isLoggedIn: state.isLoggedIn,
         pageTitle: state.pageTitle,
-        stripeKey: state.stripeKey
+        stripeKey: state.stripeKey,
+        env: state.env
     }
 };
 

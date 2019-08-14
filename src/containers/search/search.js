@@ -170,7 +170,7 @@ import {panels}             from '../section/data'
                                     const {favourite, cart} = this.props.photoStatusHandler(photo.id);
                                     
                                     return (
-                                        <Col key={i} classes={["col-12", "col-md-4"]} marginBottom="30px">
+                                        <Col key={i} classes={["col-12", "col-md-6", "col-lg-4"]} marginBottom="30px">
                                             <Card 
                                                 data        = {photo} 
                                                 panel       = {this.props.title}
@@ -178,7 +178,7 @@ import {panels}             from '../section/data'
                                                 cardHandler = {this.showGallery}
                                                 favHandler  = {this.props.toggleFavourite}
                                                 cartHandler = {this.props.toggleCart}
-                                                styles      = {["card-4-mobile", "card-1-tablet", "card-4-desktop"]}
+                                                styles      = {["card-4-mobile", "card-4-tablet", "card-4-desktop"]}
                                                 favourite   = {favourite}
                                                 cart        = {cart}
                                                 buttons

@@ -15,7 +15,7 @@ const flexrow = (props) => {
 const Brow = styled.div`
     position:relative;
     display: flex;
-    flex-direction:horizontal;
+    flex-direction:row;
     align-items:start;
     vertical-align:middle;
     
@@ -23,7 +23,15 @@ const Brow = styled.div`
         border-top: 1px solid #595859;
         padding-top: 10px;
         margin-top:33px;
-    `}
+    `}    
+    
+    /* mobile */
+    @media screen and (max-width :767px) {
+        flex-direction:column;
+        webkit-flex-direction:column;
+    }
+
+
 
 `
 export default flexrow

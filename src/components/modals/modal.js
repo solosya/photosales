@@ -45,7 +45,8 @@ const Window = styled.div`
     overflow:auto;
     
     @media screen and (min-width : 768px) and (max-width : 991px) {
-        max-width:90%;
+        max-width:80%;
+        height:auto;
     }
 
 

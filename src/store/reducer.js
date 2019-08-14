@@ -8,7 +8,7 @@ const intialState = {
     favourites  : [],
     isLoggedIn  : false,
     pageTitle   : "Photo Sales",
-    stripeKey   : null,
+    stripeKey   : "pk_test_iwtlTrCiV2h43DlBnHnPiyy6",
     env         : '',
 }
 

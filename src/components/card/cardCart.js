@@ -1,12 +1,14 @@
 
 // Libraries
-import React, {Component}   from 'react';
-import Dotdotdot            from 'react-dotdotdot';
-import cn                   from 'classnames';
+import React, {Component}   from 'react'
+import Dotdotdot            from 'react-dotdotdot'
+import cn                   from 'classnames'
+import styled               from 'styled-components'
+
 // Components
-import Checkbox             from '../form/checkbox';
-import Flexrow              from '../layout/flexrow';
-import LineItem             from './lineItem';
+import Checkbox             from '../form/checkbox'
+import Flexrow              from '../layout/flexrow'
+import LineItem             from './lineItem'
 // import FavIcon              from '../favourites/favIcon';
 
 // Styles
@@ -253,21 +255,20 @@ class CardCart extends Component {
                         
                         <div className="c-cards-view__container">
                             <div className="c-cards-view__photo-top">
-                                <h2 className="c-cards-view__heading"><Dotdotdot clamp={2}>{ this.props.data.title}</Dotdotdot></h2>
+                                <h2 className="c-cards-view__heading"><Dotdotdot clamp={2}>{ this.props.data.caption}</Dotdotdot></h2>
                                 {favourite ? favourite : null}
                             </div>
 
                             
                             <Flexrow>
-                                <div style={{width:'100px', marginTop:'13px'}}> 
+                                <ProductCategory> 
                                     <Checkbox label="Print" checked={this.state.productStatus.print} name="print" onChange={this.handleCheckbox} />
-                                </div>
-                                <div className="c-cards-view__lineItems">
-                                    
+                                </ProductCategory>
+
+                                <LineItems>
                                     {printItems}
                                     {printProducts.length < printOptions.length && newPrintItem }
-
-                                </div>
+                                </LineItems>
 
                             </Flexrow>
                             
@@ -276,15 +277,16 @@ class CardCart extends Component {
 
 
                             <Flexrow>
-                                <div style={{width:'100px', marginTop:'13px'}}> 
+                                <ProductCategory> 
                                     <Checkbox label="Digital" checked={this.state.productStatus.digital} name="digital" onChange={this.handleCheckbox} />
-                                </div>
-                                <div className="c-cards-view__lineItems">
+                                </ProductCategory>
+
+                                <LineItems>
                                     
                                     {digitalItems}
                                     {digitalProducts.length < digitalOptions.length && newDigitalItem }
 
-                                </div>
+                                </LineItems>
                             </Flexrow>
 
 
@@ -301,7 +303,23 @@ class CardCart extends Component {
 }
 
 
+const ProductCategory = styled.div`
+    width: 100px;
+    margin-top: 13px;
 
+    /* mobile */
+    @media screen and (max-width :767px) {
+        margin-bottom:7px;
+    }
+`
+
+
+const LineItems = styled.div`
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    width:100%;
+`
 
 export default CardCart;
 

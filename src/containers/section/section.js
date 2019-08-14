@@ -75,7 +75,7 @@ class Section extends Component {
         const galleries = new ArticleFeed(options);
         
         return galleries.fetch().then((r) => {
-            // console.log(r);
+
             let waypoint = true;
 
             const title = r.data.blog ? r.data.blog.title :  "Section";
@@ -91,13 +91,15 @@ class Section extends Component {
                     isPinned    : parseInt( article.isPinned ),
                     pinnedAt    : parseInt( article.pinnedAt ),
                     publishDate : article.publishDate,
-                    images: [{
+                    images: [{ // featured media only
                         id       : media.id,
                         url      : media.media.url,
                         guid     : media.guid,
                         type     : media.fileType,
+                        title    : media.title,
                         width    : media.width,
                         height   : media.height,
+                        caption  : media.caption,
                         filesize : media.fileSize,
                     }]
                 }
@@ -216,7 +218,7 @@ class Section extends Component {
                                     {panel.map((card, i) => {
                                         return (
                                     
-                                            <Col key={i} classes={["col-12", "col-md-3"]} marginBottom="30px">
+                                            <Col key={i} classes={["col-12", "col-md-6", "col-lg-3"]} marginBottom="30px">
                                                 <Card 
                                                     data        = {card} 
                                                     count       = {++this.cardCount}

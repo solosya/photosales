@@ -4,6 +4,7 @@ import axios                from 'axios'
 import qs                   from 'qs'
 import cn                   from 'classnames'
 import cloudinary           from 'cloudinary-core'
+import styled               from 'styled-components'
 
 //Components
 import ImageGallery         from 'react-image-gallery'
@@ -59,6 +60,7 @@ class Gallery extends Component {
                         id      : item.media_id,
                         url     : item.path,
                         guid    : item.guid,
+                        type    : item.fileType,
                         title   : item.title,
                         width   : item.width,
                         height  : item.height,
@@ -83,10 +85,10 @@ class Gallery extends Component {
     
                 const items = this.props.gallery.images.map((item) => {
                     const {favourite, cart} = this.props.checkPhotoStatus(item.id);
-                    
+                    console.log(item);
                     return {
                         ...item,
-                        caption:item.content,
+                        caption:item.caption,
                         favourite,
                         cart,
                         original: item.url,
@@ -180,13 +182,13 @@ class Gallery extends Component {
 
             
 
-            <div className={styles.gallery}>
-                <h1 className={styles.gallery__title} >{this.props.gallery.title}</h1>
+            <GalleryWindow>
+                <Title>{this.props.gallery.title}</Title>
                 
-                <div className={styles.gallery__container}>
+                <GalleryContainer>
 
-                    <div className={styles.gallery__left}>
-                        <div className={styles.gallery__imagecontainer}>
+                    <div>
+                        <ImageContainer>
                             <ImageGallery 
                                 items                   = {this.state.items} 
                                 onSlide                 = {this.gallerySelect}
@@ -196,55 +198,175 @@ class Gallery extends Component {
                                 showPlayButton          = {false}
                                 showFullscreenButton    = {false}
                             />
-                        </div>
+                        </ImageContainer>
                     </div>
 
 
 
-                    <div className={styles.gallery__right}>
-                        <FavIcon grey onClick={ this.toggleFavourite} on={currentItem.favourite} />
+                    <GalleryRight>
 
-                        <div className={styles.gallery__info}>
+                        <FavContainer>
+                            <FavIcon grey onClick={ this.toggleFavourite} on={currentItem.favourite} />
+                        </FavContainer>
+
+                        <Info>
                             { currentItem ? 
-                                <>
-                                {/* <h2 className={styles.gallery__phototitle}>{currentItem.title}</h2> */}
-                                <p className={styles.gallery__photocaption}>{currentItem.caption}</p>
-                                </>
+                                <Caption>{currentItem.caption}</Caption>
                                 : null
                             }
 
-                            <Button handler={this.toggleCart} classes={["button", "button--red", "button--top-30"]}>{cartButtonText}</Button>
+                            <Button handler={this.toggleCart} classes={["button", "button--red", "button--top-30", "button--mobile-block"]}>{cartButtonText}</Button>
  
-                        </div>
+                        </Info>
 
 
-                        <div className={styles.gallery__meta}>
-                        { currentItem ? 
-                            <>
-                            <p className={styles.gallery__metainfo}><span>Size</span> {currentItem.width} x {currentItem.height}</p>
-                            {/* <p className={styles.gallery__metainfo}><span>Photographer</span> Name</p>
-                            <p className={styles.gallery__metainfo}><span>Date photo taken</span> date</p> */}
-                            </>
-                            : null
-                        }
-                        </div>
+                        <MetaInfoContainer>
+                            { currentItem ? 
+                                <MetaInfo><span>Size</span> {currentItem.width} x {currentItem.height}</MetaInfo>
+                                : null
+                            }
+                        </MetaInfoContainer>
 
 
-                    </div>
+                    </GalleryRight>
 
 
 
 
-                </div>
+                </GalleryContainer>
     
     
-            </div>
+            </GalleryWindow>
 
         )
     }
 
 
 }
+
+const GalleryWindow = styled.div`
+    height: 100%;
+    display:flex;
+    flex-direction: column;
+`
+
+const GalleryContainer = styled.div`
+    display:flex;
+    flex-grow: 1;
+
+    /* mobile */
+    @media screen and (max-width :767px) {
+        flex-direction: column;
+    }
+
+`
+const FavContainer = styled.div`
+    /* mobile */
+    @media screen and (max-width :767px) {
+        position:absolute;
+        right:0;
+        top:20px;
+    }
+
+`
+
+const Title = styled.h1`
+    margin:0;
+    margin-bottom:20px;
+    font-size: 28px;
+`
+
+const MetaInfoContainer = styled.div`
+
+
+`
+
+
+const ImageContainer = styled.div`
+    background:pink;
+    height: 384px;
+    width:580px;
+
+    /* tablet */
+    @media screen and (min-width : 768px) and (max-width : 991px) {
+        width:380px;
+    }
+
+    /* mobile */
+    @media screen and (max-width :767px) {
+        width:100%;
+        /* height:auto; */
+    }
+
+
+`
+
+
+const GalleryRight = styled.div`
+    margin-left: 20px;
+    padding-left: 20px;
+    border-left: 1px solid #e7e7e7;
+    /* mobile */
+    @media screen and (max-width :767px) {
+        position:relative;
+        border:none;
+        margin:0;
+        padding:0;
+    }
+
+
+`
+const Info = styled.div`
+    margin-top: 40px;
+    border-bottom: 1px solid #e7e7e7;
+    padding-bottom: 30px;
+
+    /* mobile */
+    @media screen and (max-width :767px) {
+        margin-top:20px;
+    }
+
+`
+
+const MetaInfo = styled.p`
+    margin-top: 12px;
+    font-size:12px;
+    color:rgba(89, 88, 89, 0.7);
+    font-weight:500;
+    letter-spacing: 0.5px;
+    > span {
+        color:black;
+        font-weight:700;
+        letter-spacing: normal;
+    }
+
+`
+
+const Caption = styled.p`
+    margin:0;
+    font-size: 20px;
+    font-weight: 300;
+    color: #595859;
+    line-height: 1.4;
+    height: 235px;
+    max-height:235px;
+	min-height: 235px;
+    overflow:hidden;
+
+    /* mobile */
+    @media screen and (max-width :767px) {
+        font-size: 18px;
+
+        padding-right:50px;
+        height: 104px;
+        max-height:104px;
+        min-height: 104px;
+
+    }
+
+
+
+`
 
 
 
