@@ -9,11 +9,13 @@ import styled               from 'styled-components'
 import Checkbox             from '../form/checkbox'
 import Flexrow              from '../layout/flexrow'
 import LineItem             from './lineItem'
+import Close                from '../../components/closeIcon' 
 // import FavIcon              from '../favourites/favIcon';
 
 // Styles
 import './card-3.scss';
-import close from '../../styles/close.module.scss';
+// import close from '../../styles/close.module.scss';
+//Components
 
 
 
@@ -105,7 +107,7 @@ class CardCart extends Component {
 
         if ( this.props.favourite ) {
             favourite = <div className="c-cards-view__buttons">
-                <div onClick={() => this.props.handleRemovePhoto(this.props.data)} className={cn([close.close, "c-cards-view__close"])}></div>
+                <Close width="22px" height="22px"  onClick={() => this.props.handleRemovePhoto(this.props.data)}></Close>
             </div>
         }
 
@@ -266,8 +268,8 @@ class CardCart extends Component {
                                 </ProductCategory>
 
                                 <LineItems>
-                                    {printItems}
-                                    {printProducts.length < printOptions.length && newPrintItem }
+                                    { printItems }
+                                    { printProducts.length < printOptions.length && newPrintItem }
                                 </LineItems>
 
                             </Flexrow>
