@@ -89,7 +89,7 @@
     }
 }
 
-.card-5-mobile {
+.ps-card-5-mobile {
     @media #{$mobile} {
         @include card-5-base();
         margin-bottom:30px;
@@ -173,12 +173,12 @@
 
 }
 
-.card-5-tablet {
+.ps-card-5-tablet {
     @media #{$tablet} {
         @include card-5-tablet-base();
     }
 }
-.card-5-desktop {
+.ps-card-5-desktop {
     background:red;
     @media #{$desktop-up} {
 

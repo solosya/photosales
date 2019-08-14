@@ -24,12 +24,6 @@ import * as actionCreators  from '../../store/actions/actions'
 
 class Home extends Component {
 
-    // state = {
-    //     showGallery: false,
-    //     showFavourites : false,
-    //     selectedGallery: null,
-    // }
-    
     
     getFeed = (panel) => {
         const options = {
@@ -59,10 +53,10 @@ class Home extends Component {
         return (
             <React.Fragment>
                 
-                <Container>
+                <Container data-container="container">
     
                     <Row>
-                        <Col classes={["col-12", "col-md-9"]}>
+                        <Col classes={["ps-col-12", "ps-col-md-9"]}>
                             <Search searchHandler={this.searchResultsHandler} />
                         </Col>
                     </Row>

@@ -39,6 +39,7 @@ const Window = styled.div`
     margin: auto auto;
     width:880px;
     max-height: 80%;
+    min-height:300px;
     background:white;
     padding:30px 35px 30px 35px;
     border-radius:3px;

@@ -226,7 +226,7 @@ class Section extends Component {
                                                     cardHandler = {this.showGallery}
                                                     swapCards   = {this.swapCards}
                                                     pinCard     = {this.pinCard}
-                                                    styles      = {["card-1-mobile", "card-1-tablet", "card-1-desktop"]}
+                                                    styles      = {["ps-card-1-mobile", "ps-card-1-tablet", "ps-card-1-desktop"]}
                                                 />
                                             </Col>
                                         )
@@ -250,7 +250,7 @@ class Section extends Component {
                                             cardHandler = {this.showGallery}
                                             swapCards   = {this.swapCards}
                                             pinCard     = {this.pinCard}
-                                            styles      = {["card-1-mobile", "card-1-tablet", "card-1-desktop"]}
+                                            styles      = {["ps-card-1-mobile", "ps-card-1-tablet", "ps-card-1-desktop"]}
                                         />
 
                                     </Col>

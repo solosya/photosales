@@ -81,7 +81,7 @@
     }
 }
 
-.card-3-mobile {
+.ps-card-3-mobile {
     @media #{$mobile} {
         @include card-3-base();
 
@@ -146,14 +146,14 @@
     }
 }
 
-.card-3-tablet {
+.ps-card-3-tablet {
     @media #{$tablet} {
         @include card-3-tablet-base();
     }
 
 }
 
-.card-3-desktop {
+.ps-card-3-desktop {
     @media #{$desktop} {
         @include card-3-tablet-base();
         .c-cards-view {
@@ -164,7 +164,7 @@
     }
 }
 
-.card-3-desktop-lg {
+.ps-card-3-desktop-lg {
 
     @media #{$desktop-lg} {
     

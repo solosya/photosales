@@ -85,7 +85,7 @@
     }
 }
 
-.card-4-mobile {
+.ps-card-4-mobile {
     @media #{$mobile} {
         @include card-4-base();
         margin-bottom:30px;
@@ -157,12 +157,12 @@
 
 }
 
-.card-4-tablet {
+.ps-card-4-tablet {
     @media #{$tablet} {
         @include card-4-tablet-base();
     }
 }
-.card-4-desktop {
+.ps-card-4-desktop {
     background:red;
     @media #{$desktop-up} {
 

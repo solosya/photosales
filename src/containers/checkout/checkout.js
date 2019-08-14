@@ -281,7 +281,7 @@ class Checkout extends Component {
                             key                     = {"Card"+i}
                             data                    = {product}
                             count                   = {i}
-                            styles                  = "card-3-mobile card-3-tablet card-3-desktop card-3-desktop-lg"
+                            styles                  = "ps-card-3-mobile ps-card-3-tablet ps-card-3-desktop ps-card-3-desktop-lg"
                             products                = {this.state.products}
                             favHandler              = {this.props.toggleFavourite}
                             cardHandler             = {this.showGallery}

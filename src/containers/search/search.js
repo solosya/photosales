@@ -178,7 +178,7 @@ import {panels}             from '../section/data'
                                                 cardHandler = {this.showGallery}
                                                 favHandler  = {this.props.toggleFavourite}
                                                 cartHandler = {this.props.toggleCart}
-                                                styles      = {["card-4-mobile", "card-4-tablet", "card-4-desktop"]}
+                                                styles      = {["ps-card-4-mobile", "ps-card-4-tablet", "ps-card-4-desktop"]}
                                                 favourite   = {favourite}
                                                 cart        = {cart}
                                                 buttons
