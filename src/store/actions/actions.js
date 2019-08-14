@@ -36,16 +36,19 @@ export const getLineItemsFromCart = (cart) => {
 }
 
 const placeLineItemsIntoCart = (cart, discountItems) => {
+    console.log(cart, discountItems);
     for (let i=0; i<discountItems.length; i++) {
         let discountedItem = discountItems[i];
         discounts:
         for (let j=0; j<cart.length; j++) {
             let originalPhoto = cart[j];
-            for (let k=0; k<originalPhoto.lineItems.length; k++) {
-                let originalItem = originalPhoto.lineItems[k];
-                if (originalItem.id === discountedItem.id && originalItem.photoId === discountedItem.photoId) {
-                    originalPhoto.lineItems[k] = discountedItem;
-                    break discounts;
+            if (typeof originalPhoto.lineItems !== 'undefined') {
+                for (let k=0; k<originalPhoto.lineItems.length; k++) {
+                    let originalItem = originalPhoto.lineItems[k];
+                    if (originalItem.id === discountedItem.id && originalItem.photoId === discountedItem.photoId) {
+                        originalPhoto.lineItems[k] = discountedItem;
+                        break discounts;
+                    }
                 }
             }
         }

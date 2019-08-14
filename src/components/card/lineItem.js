@@ -90,7 +90,7 @@ const lineItem = (props) => {
 
         total = (props.product.priceTotal / 100).toFixed(2);
         if ( isNaN(total) ) {
-            total = "2552.30";
+            total = "";
         }
 
         

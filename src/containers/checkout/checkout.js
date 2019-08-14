@@ -88,6 +88,7 @@ class Checkout extends Component {
     }
 
     addLineItemToCart = (product) => {
+        console.log('ADDING LINE ITEM TO CART', product);
         this.props.addLineItemToCart( product );
     }
 
@@ -245,6 +246,9 @@ class Checkout extends Component {
         } 
 
 
+        console.log("TOTAL IN CHECKOUT", this.props.total);
+        const cartTotal = this.props.total / 100;
+
 
         let purchases = null;
         let cards = null;
@@ -345,7 +349,7 @@ class Checkout extends Component {
                             <Row>
                                 <Col classes={["col-12"]}>
                                     <Total
-                                        total={this.props.total / 100}
+                                        total={cartTotal}
                                         borderTop
                                         >
                                     </Total>
