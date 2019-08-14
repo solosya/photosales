@@ -2,7 +2,6 @@
 // Libraries
 import React, {Component}   from 'react'
 import Dotdotdot            from 'react-dotdotdot'
-import cn                   from 'classnames'
 import styled               from 'styled-components'
 
 // Components

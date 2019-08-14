@@ -33,6 +33,7 @@ class Checkout extends Component {
         photos: null,
         purchaseCart: [],
         purchaseStatus: false,
+        orderNumber: false,
         errorMessage: "",
         total: 0,
         products: [],
@@ -88,7 +89,6 @@ class Checkout extends Component {
     }
 
     addLineItemToCart = (product) => {
-        console.log('ADDING LINE ITEM TO CART', product);
         this.props.addLineItemToCart( product );
     }
 
@@ -147,12 +147,11 @@ class Checkout extends Component {
     }
 
     handlePayment = (token) => {
-        console.log("Stripe token", token);
         if (typeof token === 'undefined') {
             return;
         }
         const billingErrors = this.checkBillingErrors();
-        // console.log(billingErrors);
+
         let showTerms = false;
         if ( billingErrors.indexOf('licence') === 0 && billingErrors.length ===1) {
             showTerms = true;
@@ -165,10 +164,9 @@ class Checkout extends Component {
             // console.log(this.state.billingErrors);
         });
 
-        // if (billingErrors.length > 0) {
-        //     console.log('NOT DOING PAYENT');
-        //     return;
-        // }
+        if (billingErrors.length > 0) {
+            return;
+        }
 
         this.setState({purchaseStatus: 'pending'});
 
@@ -186,14 +184,26 @@ class Checkout extends Component {
         const billing = this.state.billing;
         return axios.post('/api/shop/purchase', qs.stringify( {stripeToken: token.id, cart, billing})).then((r) => {
             console.log(r);
-
-            this.setState({purchaseStatus: 'complete'});
+            if (r.data.order !== 'false') {
+                this.setState({
+                    purchaseStatus: 'complete',
+                    orderNumber: r.data.order
+                });
+            } else {
+                this.setState({
+                    purchaseStatus: 'error',
+                    errorMessage: "There was an error processing your payment",
+                    orderNumber: false
+                });
+    
+            }
             // axios.post('/api/shop/purchase', qs.stringify( {"stripeToken": token.id, cart})).then((r) => {
                 // console.log(r);
         }).catch((e) => {
             this.setState({
                 purchaseStatus: 'error',
-                errorMessage: e.response.data
+                errorMessage: e.response.data,
+                orderNumber: false
             });
             console.log(e, e.response);
         });
@@ -241,8 +251,8 @@ class Checkout extends Component {
     render() {
 
 
-        if ( this.state.purchaseStatus === 'complete' ) {
-            return <Redirect to={window.basePath + "/thanks?order=666"} />
+        if ( this.state.purchaseStatus === 'complete' && this.state.orderNumber !== false) {
+            return <Redirect to={window.basePath + "/thanks?order=" + this.state.orderNumber} />
         } 
 
 

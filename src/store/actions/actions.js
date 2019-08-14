@@ -36,7 +36,7 @@ export const getLineItemsFromCart = (cart) => {
 }
 
 const placeLineItemsIntoCart = (cart, discountItems) => {
-    console.log(cart, discountItems);
+
     for (let i=0; i<discountItems.length; i++) {
         let discountedItem = discountItems[i];
         discounts:

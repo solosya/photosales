@@ -38,18 +38,13 @@ class Receipt extends Component {
         if (this.state.order === null ) return <h1>no order info yet</h1>
 
 
-        console.log(this.state);
         const printPhotos = this.state.order.items.filter((photo) => {
-            console.log(photo);
             return photo.text_field1 === 'print';
         });
 
         const digitalPhotos = this.state.order.items.filter((photo) => {
-            console.log(photo);
             return photo.text_field1 === 'digital';
         });
-        console.log(digitalPhotos);
-        console.log(printPhotos);
 
 
         const print = printPhotos.map((p) => {
@@ -100,9 +95,9 @@ class Receipt extends Component {
     }
 }
 
-const Delivery = styled.p`
-    font-weight:600;
-`
+// const Delivery = styled.p`
+//     font-weight:600;
+// `
 const Total = styled.p`
     font-size:18px;
     font-weight:700;

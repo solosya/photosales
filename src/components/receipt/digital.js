@@ -9,7 +9,7 @@ const digital = (props) => {
             <Title>{props.data.photo.title}</Title>
             <Attribute>Digital download</Attribute>
             <Attribute>Cost: {props.data.price}</Attribute>
-            <Attribute>Click to download: {props.data.photo.path}</Attribute>
+            <Attribute><a href={props.data.photo.path} rel="noopener noreferrer" target="_blank"> Click to download </a></Attribute>
         </Photo>
     )
 }

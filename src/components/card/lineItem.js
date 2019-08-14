@@ -169,11 +169,11 @@ const LineItem = styled.div`
 `
 
 
-const FullPrice = styled.span`
-    color:red;
-    font-weight:bold;
-    text-decoration: line-through;
-`
+// const FullPrice = styled.span`
+//     color:red;
+//     font-weight:bold;
+//     text-decoration: line-through;
+// `
 
 const Price = styled.p`
     font-family: "Roboto";
