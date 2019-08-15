@@ -85,7 +85,6 @@ class Gallery extends Component {
     
                 const items = this.props.gallery.images.map((item) => {
                     const {favourite, cart} = this.props.checkPhotoStatus(item.id);
-                    console.log(item);
                     return {
                         ...item,
                         caption:item.caption,
@@ -244,6 +243,23 @@ class Gallery extends Component {
 
 }
 
+    /* desktop-lg */
+    // @media screen and (min-width : 1200px) {
+    //     width:280px;
+    // }
+
+    /* desktop */
+    // @media screen and (min-width : 992px) and (max-width : 1199px) {
+    //     width:200px;
+    //     max-width:90%;
+    // }
+
+    /* tablet */
+    // @media screen and (min-width : 768px) and (max-width : 991px) {
+    //     width:218px;
+    //     max-width:90%;
+    // }
+
 const GalleryWindow = styled.div`
     height: 100%;
     display:flex;
@@ -254,6 +270,12 @@ const GalleryContainer = styled.div`
     display:flex;
     flex-grow: 1;
 
+
+    /* tablet */
+    @media screen and (min-width : 768px) and (max-width : 991px) {
+        flex-direction: column;
+    }
+
     /* mobile */
     @media screen and (max-width :767px) {
         flex-direction: column;
@@ -261,6 +283,14 @@ const GalleryContainer = styled.div`
 
 `
 const FavContainer = styled.div`
+
+    /* tablet */
+    @media screen and (min-width : 768px) and (max-width : 991px) {
+        position:absolute;
+        right:0;
+        top:20px;
+    }
+
     /* mobile */
     @media screen and (max-width :767px) {
         position:absolute;
@@ -287,9 +317,10 @@ const ImageContainer = styled.div`
     height: 384px;
     width:580px;
 
+
     /* tablet */
     @media screen and (min-width : 768px) and (max-width : 991px) {
-        width:380px;
+        width:100%;
     }
 
     /* mobile */
@@ -306,6 +337,18 @@ const GalleryRight = styled.div`
     margin-left: 20px;
     padding-left: 20px;
     border-left: 1px solid #e7e7e7;
+
+
+    /* tablet */
+    @media screen and (min-width : 768px) and (max-width : 991px) {
+        position:relative;
+        border:none;
+        margin:0;
+        padding:0;
+    }
+
+
+
     /* mobile */
     @media screen and (max-width :767px) {
         position:relative;
@@ -320,6 +363,12 @@ const Info = styled.div`
     margin-top: 40px;
     border-bottom: 1px solid #e7e7e7;
     padding-bottom: 30px;
+
+    /* tablet */
+    @media screen and (min-width : 768px) and (max-width : 991px) {
+        margin-top:20px;
+    }
+
 
     /* mobile */
     @media screen and (max-width :767px) {
@@ -353,15 +402,25 @@ const Caption = styled.p`
 	min-height: 235px;
     overflow:hidden;
 
+
+    /* tablet */
+    @media screen and (min-width : 768px) and (max-width : 991px) {
+        font-size: 18px;
+        padding-right:50px;
+        max-height:104px;
+        height:auto;
+        min-height: auto;
+
+    }
+
+
     /* mobile */
     @media screen and (max-width :767px) {
         font-size: 18px;
-
         padding-right:50px;
         height: 104px;
         max-height:104px;
         min-height: 104px;
-
     }
 
 

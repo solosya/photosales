@@ -1,8 +1,6 @@
 //Libraries
 import React, {Component}   from 'react'
-// import {withRouter}         from 'react-router'
-// import axios                from 'axios'
-// import qs                   from  'qs'
+import styled               from 'styled-components'
 import cn                   from 'classnames'
 // import Datepicker           from '../datepicker/datepicker'
 import moment               from 'moment'
@@ -10,8 +8,6 @@ import moment               from 'moment'
 //Components
 import Button               from '../button/button'
 
-//Utils
-// import {ArticleFeed}        from '../../sdk/feed'
 
 //Styles
 import styles               from './search.module.scss'
@@ -91,59 +87,52 @@ class Search extends Component {
     render() {
 
         return (
-            <div className={styles.search}>
-                <div className="">
-                    <input onKeyPress={this.keyPressed} value={this.props.search} onChange={(e) => this.search(e.target.value)} type="search" className={cn( formstyles['c-form__input'], formstyles['c-form__input--bordered'])} name="search" id="search" placeholder="Search" />
-                    <span className={styles["search__icon"]}></span>
-                </div>
-
-
-                {/* <div className={styles.search__dates}>
-
-                    <Datepicker 
-                        index    = {1} 
-                        toggle   = {this.toggleCalander}
-                        today    = {this.state.calanderDates.today}
-                        date     = {this.state.dates.published}
-                        lastweek = {this.state.calanderDates.lastWeek}
-                        handler  = {this.calanderSelect} 
-                        status   = {this.state.calanders[0] ? "active" : null} label="Date published" 
-                    />
-
-                    <p className={styles.search__label}>Date photo taken</p>
-
-                    <Datepicker 
-                        index    = {2} 
-                        toggle   = {this.toggleCalander}
-                        today    = {this.state.calanderDates.today}
-                        date     = {this.state.dates.taken.start}
-                        lastweek = {this.state.calanderDates.lastWeek}
-                        handler  = {this.calanderSelect} 
-                        status   = {this.state.calanders[1] ? "active" : null} label="Date range from" 
-                    />
-
-
-                    <Datepicker 
-                        index    = {3} 
-                        toggle   = {this.toggleCalander}
-                        today    = {this.state.calanderDates.today}
-                        date     = {this.state.dates.taken.end}
-                        lastweek = {this.state.calanderDates.lastWeek}
-                        handler  = {this.calanderSelect} 
-                        status   = {this.state.calanders[2] ? "active" : null} label="To" 
-                    />
-
-
-                </div> */}
-
-                <Button handler={() => this.props.searchHandler(this.state.search) } classes={["button", "button--red", "button--top-30"]}>SEARCH</Button>
-
-            </div>
-
+            <SearchContainer data="searchcontainer">
+                <SearchInput onKeyPress={this.keyPressed} value={this.props.search} onChange={(e) => this.search(e.target.value)} type="search"  name="search" id="search" placeholder="Search" />
+                <SearchIcon />
+                <Button handler={() => this.props.searchHandler(this.state.search) } classes={["button", "button--red"]}>SEARCH</Button>
+            </SearchContainer>
         )
     }
 }
 
+const  SearchContainer = styled.div`
+    position:relative;
+    display: flex;
+    height:40px;
+    margin-bottom:80px;
+`
+
+const SearchInput = styled.input`
+    
+    width:100%;
+    padding: 0 0 0 12px;
+    outline:0;
+    font-size: 16px;
+    transition: all .3s ease-out;
+    -o-transition: all .3s ease-out;
+    -ms-transition: all .3s ease-out;
+    -moz-transition: all .3s ease-out;
+    -webkit-transition: all .3s ease-out;
+    line-height:40px;
+    height:40px;
+    border: 1px solid #e7e7e7;
+    margin-right:20px;
+
+`
+
+const SearchIcon = styled.div`
+    position: absolute;
+    top: 8px;
+    right: 150px;
+    display:block;
+    height: 24px;
+    width: 24px;
+    /* background: url('/images/search-icon.svg'); */
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNiIgaGVpZ2h0PSIyNiIgdmlld0JveD0iMCAwIDI2IDI2Ij4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlPSIjNTk1ODU5IiBzdHJva2Utd2lkdGg9IjIiPgogICAgICAgIDxwYXRoIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgZD0iTTE4LjE3NiAxOC4xODRsNi43OTcgNi43OTgiLz4KICAgICAgICA8cGF0aCBkPSJNMjEuMTg3IDExLjA0N2MwIDUuNTMyLTQuNTIgMTAuMDE3LTEwLjA5NCAxMC4wMTdTMSAxNi41NzkgMSAxMS4wNDdDMSA1LjUxNSA1LjUxOSAxLjAzIDExLjA5MyAxLjAzYzUuNTc1IDAgMTAuMDk0IDQuNDg1IDEwLjA5NCAxMC4wMTd6Ii8+CiAgICA8L2c+Cjwvc3ZnPgo=");
+    background-size:contain;
+    background-repeat: no-repeat;
+`
 
 export default Search
 

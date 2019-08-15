@@ -101,16 +101,16 @@ const Card = props =>  {
     let buttons = null;
     
 
-    let admin = true;
-    if (typeof props.admin !== 'undefined' && props.admin === false) {
-        admin = false;
+    let admin = false;
+    if (typeof props.admin !== 'undefined' && props.admin === true) {
+        admin = true;
     }
 
 
     if ( props.buttons ) {
         buttons = 
             <div className={buttonStyles}>
-                <FavIcon  onClick={(e) => {e.stopPropagation();props.favHandler(props.data)}}  grey on={props.favourite} style={{marginBottom:'10px'}} ></FavIcon>
+                <FavIcon  onClick={(e) => {e.stopPropagation();props.favHandler(props.data)}}  grey on={props.favourite}></FavIcon>
                 <CartIcon onClick={(e) => {e.stopPropagation();props.cartHandler(props.data)}} grey on={props.cart}></CartIcon>
             </div>
     }

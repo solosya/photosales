@@ -106,12 +106,11 @@ class Index extends Component {
         const panel = this.state.panels.find((panel) => {
             return panel.title === panelName;
         });
-        console.log(panel);
+
         if (panel) {
             selected = panel.feed[card];
         }
-        console.log('calling cardhandler');
-        console.log(this.props);
+
         this.props.showGallery(selected);
     }
 
@@ -131,6 +130,7 @@ class Index extends Component {
                             cards           = {panel.feed}
                             margin          = {margin}
                             linkHandler     = {this.props.linkHandler}
+                            admin           = {this.props.admin}
                         /> 
                     }
 
@@ -141,6 +141,7 @@ class Index extends Component {
                             cards           = {panel.feed}
                             margin          = {margin}
                             linkHandler     = {this.props.linkHandler}
+                            admin           = {this.props.admin}
                         /> 
                     }
 
@@ -151,6 +152,7 @@ class Index extends Component {
                             cards           = {panel.feed}
                             margin          = {margin}
                             linkHandler     = {this.props.linkHandler}
+                            admin           = {this.props.admin}
                         /> 
                     }
 

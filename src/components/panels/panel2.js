@@ -26,12 +26,13 @@ const panel_1 = (props) => {
                     {props.cards.slice(0,4).map((card, i) => {
                         return <Col key={i} classes={["col-12", "col-md-6", "col-lg-3"]}>
                             <Card 
-                                cardHandler={props.showGallery} 
-                                data={card} 
-                                count={cardCount++}
-                                panel={props.title}
+                                data   = {card} 
+                                count  = {cardCount++}
+                                panel  = {props.title}
+                                admin  = {props.admin}
                                 styles = {["ps-card-1-mobile", "ps-card-1-tablet", "ps-card-1-desktop"]}
-                            />
+                                cardHandler={props.showGallery} 
+                                />
                         </Col>
                     })}
                 </Row>

@@ -172,16 +172,18 @@ import {panels}             from '../section/data'
                                     return (
                                         <Col key={i} classes={["col-12", "col-md-6", "col-lg-4"]} marginBottom="30px">
                                             <Card 
+                                                cart        = {cart}
                                                 data        = {photo} 
                                                 panel       = {this.props.title}
                                                 count       = {this.cardCount++}
-                                                cardHandler = {this.showGallery}
-                                                favHandler  = {this.props.toggleFavourite}
-                                                cartHandler = {this.props.toggleCart}
+                                                admin       = {this.props.admin}
                                                 styles      = {["ps-card-4-mobile", "ps-card-4-tablet", "ps-card-4-desktop"]}
                                                 favourite   = {favourite}
-                                                cart        = {cart}
-                                                buttons
+                                                favHandler  = {this.props.toggleFavourite}
+                                                cardHandler = {this.showGallery}
+                                                cartHandler = {this.props.toggleCart}
+                                
+                                                buttons // show cart and fav buttons
                                             />
                                         </Col>
                                     )
@@ -216,7 +218,8 @@ const mapStateToProps = state => {
         favourites : state.favourites,
         cart: state.cart,
         isLoggedIn: state.isLoggedIn,
-        pageTitle: state.pageTitle
+        pageTitle: state.pageTitle,
+        admin: state.admin
     }
 };
 

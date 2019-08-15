@@ -32,8 +32,8 @@ const panel_1 = (props) => {
                                     count       = {cardCount++}
                                     panel       = {props.title}
                                     styles      = {["ps-card-1-mobile", "ps-card-1-tablet", "ps-card-1-desktop"]}
-                                    cardHandler = {props.showGallery} 
-            
+                                    cardHandler = {props.showGallery}
+                                    admin       = {props.admin}
                                 />
                             </Col>
                         )

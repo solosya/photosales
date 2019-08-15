@@ -7,6 +7,7 @@ const intialState = {
     guest       : false,
     favourites  : [],
     isLoggedIn  : false,
+    admin       : false,
     pageTitle   : "Photo Sales",
     stripeKey   : "pk_test_iwtlTrCiV2h43DlBnHnPiyy6",
     env         : '',

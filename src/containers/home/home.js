@@ -56,7 +56,7 @@ class Home extends Component {
                 <Container data-container="container">
     
                     <Row>
-                        <Col classes={["ps-col-12", "ps-col-md-9"]}>
+                        <Col classes={["col-12", "col-md-9"]} data-search="searchCol">
                             <Search searchHandler={this.searchResultsHandler} />
                         </Col>
                     </Row>
@@ -69,9 +69,9 @@ class Home extends Component {
 
                     <Route path={window.basePath + "/search"} render={ () => 
                         <SearchContainer 
-                                linkHandler        = {this.linkHandler}
-                                showGallery        = {this.props.showGallery} 
-                                photoStatusHandler = {this.photoStatusHandler} 
+                            linkHandler        = {this.linkHandler}
+                            showGallery        = {this.props.showGallery} 
+                            photoStatusHandler = {this.photoStatusHandler} 
                         />
                     } />
 
@@ -82,6 +82,7 @@ class Home extends Component {
                             section     = {this.props.match.params.section}
                             showGallery = {this.props.showGallery} 
                             linkHandler = {this.props.linkHandler}
+                            admin       = {this.props.admin}
                         /> 
                     } />
 
@@ -90,6 +91,7 @@ class Home extends Component {
                             showGallery = {this.props.showGallery} 
                             linkHandler = {this.props.linkHandler} 
                             feedHandler = {this.getFeed}
+                            admin       = {this.props.admin}
                         />
                     } />
                     
@@ -110,6 +112,7 @@ const mapStateToProps = state => {
         pageTitle   : state.pageTitle,
         favourites  : state.favourites,
         isLoggedIn  : state.isLoggedIn,
+        admin       : state.admin
     }
 };
 
