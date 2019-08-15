@@ -2,13 +2,11 @@
 import store            from '../store'
 import axios            from 'axios'
 import qs               from  'qs'
-// import { browserHistory } from 'react-router';
 
-//Comopnents
-// import Shop             from '../../containers/checkout/shop'
 
 //Actions
 export const LOGIN                  = 'LOGIN'
+export const CLEAR_CART             = 'CLEAR_CART'
 export const TOTAL_CART             = 'TOTAL_CART'
 export const FETCH_SAVED            = 'FETCH_SAVED'
 export const TOGGLE_CART            = 'TOGGLE_CART'
@@ -180,6 +178,16 @@ export const toggleCart = (p) => {
                 photo: photo
             });
         }
+    }
+}
+
+
+export const clearCart = (cart) => {
+    return dispatch => {
+        dispatch({
+            type: CLEAR_CART,
+            cart,
+        });
     }
 }
 

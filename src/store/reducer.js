@@ -126,6 +126,19 @@ const reducer = (state = intialState, action) => {
             }
         }
 
+        case actionTypes.CLEAR_CART: {
+            const localCart = localStorage.getItem('cart');
+            
+            if (localCart !== null) {
+                localStorage.removeItem('cart');
+            }
+            
+            return {
+                ...state,
+                cart : []
+            }
+        }
+
 
         case actionTypes.TOGGLE_CART: {
             let cart = resetCartTotals([...state.cart]);

@@ -197,15 +197,16 @@ class Checkout extends Component {
                 });
     
             }
-            // axios.post('/api/shop/purchase', qs.stringify( {"stripeToken": token.id, cart})).then((r) => {
-                // console.log(r);
+
+            this.props.clearCart(cart);
+
         }).catch((e) => {
+            console.log(e, e.response);
             this.setState({
                 purchaseStatus: 'error',
                 errorMessage: e.response.data,
                 orderNumber: false
             });
-            console.log(e, e.response);
         });
 
 
@@ -256,7 +257,6 @@ class Checkout extends Component {
         } 
 
 
-        console.log("TOTAL IN CHECKOUT", this.props.total);
         const cartTotal = this.props.total / 100;
 
 
@@ -419,6 +419,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        clearCart:              (cart)      => dispatch( actionCreators.clearCart(cart) ),
         toggleCart:             (photo)     => dispatch( actionCreators.toggleCart(photo) ),
         updateCartItem:         (product)   => dispatch( actionCreators.updateCartItem(product) ),
         toggleFavourite:        (photo)     => dispatch( actionCreators.toggleFavourite(photo) ),
