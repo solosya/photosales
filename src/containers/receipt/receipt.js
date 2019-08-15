@@ -13,6 +13,9 @@ import Print                from '../../components/receipt/print'
 import CategoryHeader       from '../../components/receipt/categoryHeader'
 import OrderTitle           from '../../components/receipt/orderTitle'
 import OrderNumber          from '../../components/receipt/orderNumber'
+import RippleSpinner        from '../../components/spinners/RippleSpinner'
+
+
 class Receipt extends Component {
     
     state = {
@@ -22,9 +25,9 @@ class Receipt extends Component {
     componentDidMount() {
         const params = new URLSearchParams(this.props.location.search);
         const orderNumber = params.get('order'); // bar
-        console.log(orderNumber);
+
         return axios.get('/api/order?number=' + orderNumber ).then((order) => {
-            console.log(order);
+
             this.setState({order: order.data});
         }).catch(() => {
             console.log("error getting order");
@@ -35,8 +38,12 @@ class Receipt extends Component {
     
     
     render() {
-        if (this.state.order === null ) return <h1>no order info yet</h1>
 
+        if (this.state.order === null ) return (
+            <SpinnerContainer>
+                <RippleSpinner width="80px" height="80px" />
+            </SpinnerContainer>
+        )
 
         const printPhotos = this.state.order.items.filter((photo) => {
             return photo.text_field1 === 'print';
@@ -95,9 +102,14 @@ class Receipt extends Component {
     }
 }
 
-// const Delivery = styled.p`
-//     font-weight:600;
-// `
+
+const SpinnerContainer = styled.div`
+    display:flex;
+    justify-content:center;
+    margin-top:60px;
+`
+
+
 const Total = styled.p`
     font-size:18px;
     font-weight:700;

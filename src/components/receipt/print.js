@@ -2,14 +2,21 @@ import React from 'react'
 import styled from 'styled-components'
 
 
-
 const print = (props) => {
+
+    let cost = props.data.price;
+
+    if (!isNaN( props.data.price ) && props.data.price > 0 ) {
+        cost = (props.data.price/100).toFixed(2);
+    }
+    
+    console.log(props.data);
     return (
         <Photo>
-            <Title>{props.data.photo.title}</Title>
-            <Attribute>Size: {props.data.name}</Attribute>
+            <Title>{props.data.photo.caption}</Title>
+            <Attribute>Size: {props.data.text_field2}</Attribute>
             <Attribute>Quantity: {props.data.quantity}</Attribute>
-            <Attribute>Cost: {props.data.price}</Attribute>
+            <Attribute>Cost: ${cost}</Attribute>
         </Photo>
     )
 }

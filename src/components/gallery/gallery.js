@@ -10,7 +10,8 @@ import styled               from 'styled-components'
 import ImageGallery         from 'react-image-gallery'
 import Button               from '../../components/button/button'
 import FavIcon              from '../favourites/favIcon'
-import Blockspinner         from '../spinners/BlockSpinner'
+// import Blockspinner         from '../spinners/BlockSpinner'
+import RippleSpinner        from '../spinners/RippleSpinner'
 
 //Styles
 import styles               from './gallery.module.scss'
@@ -169,8 +170,13 @@ class Gallery extends Component {
 
 
     render() {
+        
+        if (this.state.items.length === 0 && !this.state.complete) return (
+            <SpinnerContainer>
+                <RippleSpinner width="70px" height="70px" />
+            </SpinnerContainer>
+        );
 
-        if (this.state.items.length === 0 && !this.state.complete) return <Blockspinner />;
         if (this.state.items.length === 0 && this.state.complete) return <div>No images to display</div>;
 
         const currentItem = this.state.items[this.state.current];
@@ -423,10 +429,15 @@ const Caption = styled.p`
         min-height: 104px;
     }
 
-
-
 `
 
+const SpinnerContainer = styled.div`
+    position:relative;
+    display:flex;
+    justify-content:center;
+    /* height: 100px;
+    width: 100px; */
+`
 
 
 export default Gallery;

@@ -9,10 +9,12 @@ import axios                    from 'axios'
 import Home                     from './containers/home/home'
 import store                    from './store/store'
 import Login                    from './containers/login/login'
+import Admin                    from './containers/admin/admin'
 import Checkout                 from './containers/checkout/checkout'
 import Receipt                  from './containers/receipt/receipt'
-import EnsureLoggedInContainer  from './containers/private'
+import EnsureLoggedInContainer  from './containers/ensureLoggedIn'
 import EnsureLoggedOutContainer from './containers/ensureLoggedOut'
+import EnsureAdminContainer     from './containers/ensureAdmin'
 
 import Row                      from './components/layout/row'
 import Col                      from './components/layout/col'
@@ -54,7 +56,7 @@ if (window._appJsConfig) {
     store.dispatch({
         type: actionTypes.LOGIN_ON_REFRESH, 
         isLoggedIn: (true === (window._appJsConfig.isUserLoggedIn === 1)), 
-        hasAccess:  (true === (window._appJsConfig.userHasBlogAccess === 1)),
+        admin:  (true === (window._appJsConfig.userHasBlogAccess === 1)),
         live: true,
         pageTitle: window.pageTitle,
         stripeKey: window.stripePublic,
@@ -225,12 +227,22 @@ class App extends Component {
                     atActive={{ opacity: 1 }}
                     className="switch-wrapper"
                 >
+
+
+                    <Route path={window.basePath + "/admin"} render={ () => 
+                        <EnsureAdminContainer>
+                            <Admin  linkHandler={this.linkHandler} 
+                                    photoStatusHandler={this.photoStatusHandler}
+                            />
+                        </EnsureAdminContainer>
+                    } />
+
+
                     <Route path={window.basePath + "/login"} render={ () => 
                         <EnsureLoggedOutContainer>
                             <Login  linkHandler={this.linkHandler} 
                                     photoStatusHandler={this.photoStatusHandler}
                             />
-
                         </EnsureLoggedOutContainer>
                     } />
 

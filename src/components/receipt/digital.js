@@ -4,11 +4,20 @@ import styled from 'styled-components'
 
 
 const digital = (props) => {
+
+    let cost = props.data.price;
+
+    if (!isNaN( props.data.price ) && props.data.price > 0 ) {
+        cost = (props.data.price/100).toFixed(2);
+    }
+
+
+
     return (
         <Photo>
-            <Title>{props.data.photo.title}</Title>
+            <Title>{props.data.photo.caption}</Title>
             <Attribute>Digital download</Attribute>
-            <Attribute>Cost: {props.data.price}</Attribute>
+            <Attribute>Cost: ${cost}</Attribute>
             <Attribute><a href={props.data.photo.path} rel="noopener noreferrer" target="_blank"> Click to download </a></Attribute>
         </Photo>
     )

@@ -7,14 +7,14 @@ const modal = (props) => {
     
     return (
 
-        <Modal id={props.name}> 
-            <Window id="dialog" {...props}> 
-                <Container> 
-                    <Header> 
+        <Modal id={props.name} data-dom="Top"> 
+            <Window id="dialog" {...props}  data-dom="window"> 
+                <Container  data-dom="container"> 
+                    <Header  data-dom="header"> 
                         <Title>{props.title}</Title> 
                         <Close onClick={props.closeHandler}></Close> 
                     </Header> 
-                    <ContentWindow id="dialogContent">
+                    <ContentWindow id="dialogContent"  data-dom="contentWindow">
                         {props.children()}
                     </ContentWindow> 
                 </Container> 
@@ -39,7 +39,7 @@ const Window = styled.div`
     margin: auto auto;
     width:880px;
     max-height: 80%;
-    min-height:300px;
+    /* min-height:300px; */
     background:white;
     padding:30px 35px 30px 35px;
     border-radius:3px;

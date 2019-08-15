@@ -71,12 +71,12 @@ const placeLineItemsIntoCart = (cart, discountItems) => {
 export const login = (user, router) => {
     return dispatch => {
         axios.post('/api/auth/login', qs.stringify({"username": user.username, "password": user.password})).then((r) => {
-            // console.log(r);
+            console.log(r);
             if (r.data.success === 1) {
                 dispatch({
                     type: LOGIN_ON_REFRESH,
                     isLoggedIn: true,
-                    hasAccess: true,
+                    // admin: true,
                 });
                 router.push(window.basePath + '/checkout');
             }

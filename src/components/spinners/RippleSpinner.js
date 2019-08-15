@@ -1,9 +1,9 @@
 import React from 'react'
-import styled, { keyframes } from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
 
-const RippleSpinner = () => {
+const RippleSpinner = (props) => {
     return (
-        <Ripple>
+        <Ripple {...props}>
             <div></div>
             <div></div>
         </Ripple>    
@@ -27,18 +27,26 @@ const ripple = keyframes`
 const Ripple = styled.div`
     width: 2.6rem;
     height: 2.6rem;
-    margin: 2rem;
+    position: relative;
+    
+    ${props => props.width && css`
+        width: ${props.width}
+    `}
+    ${props => props.height && css`
+        height: ${props.height}
+    `}
+
 
     div {
         position: absolute;
-        width: 2rem;
-        height: 2rem;
+        width: 90%;
+        height: 90%;
         border-radius: 50%;
         border: 0.3rem solid #979fd0;
         animation: 1.5s ${ripple} infinite;
 
         &:nth-child(2) {
-        animation-delay: 0.5s;
+            animation-delay: 0.5s;
         }
     }
 `

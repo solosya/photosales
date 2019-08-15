@@ -68,7 +68,7 @@ const reducer = (state = intialState, action) => {
             const newState = {
                 ...state,
                 isLoggedIn: action.isLoggedIn,
-                hasAccess: action.hasAccess,
+                admin: action.admin,
                 stripeKey: action.stripeKey,
                 pageTitle: action.pageTitle,
                 env      : action.env
