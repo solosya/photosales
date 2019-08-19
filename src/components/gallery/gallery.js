@@ -3,7 +3,7 @@ import React, {Component}   from 'react'
 import axios                from 'axios'
 import qs                   from 'qs'
 import cn                   from 'classnames'
-import cloudinary           from 'cloudinary-core'
+// import cloudinary           from 'cloudinary-core'
 import styled               from 'styled-components'
 
 //Components
@@ -18,7 +18,8 @@ import styles               from './gallery.module.scss'
 import "react-image-gallery/styles/css/image-gallery.css"
 import "./image-gallery-overrides.scss"
 
-
+//Utils
+import {imageSet}           from '../../utils/image'
 
 class Gallery extends Component {
     state = {
@@ -32,28 +33,43 @@ class Gallery extends Component {
         this.setState({current: data});
     }
 
-    componentDidMount() {
 
+    componentDidMount() {
+        let images = [];
+        console.log(this.props.gallery);
         if ( typeof this.props.gallery.images !== 'undefined') {
             const articleParams = {
                 articleId: this.props.gallery.id,
-                mediaWidth: '580',
-                mediaHeight: '385',
-                mediaWatermark: 'true'
+                media: [
+                    {
+                        width: '580',
+                        height: '385',
+                        watermark: true
+                    },
+                    {
+                        width: '603',
+                        height: '384',
+                        watermark: true
+                    },
+                    {
+                        width: '500',
+                        watermark: true
+                    }
+                ]
             };
 
             return axios.get('/api/article/get-article?' + qs.stringify(articleParams)).then(r => {
                 
-                const cloudinaryCore = new cloudinary.Cloudinary({cloud_name: 'cognitives'});
+                // const cloudinaryCore = new cloudinary.Cloudinary({cloud_name: 'cognitives'});
     
-                const images = r.data.media.map((item) => {
+                images = r.data.media.map((item) => {
 
-                    const url = cloudinaryCore.url(item.path, {
-                        width: "580",
-                        height: "384",
-                        crop: "fit" 
+                    // const url = cloudinaryCore.url(item.path, {
+                    //     width: "580",
+                    //     height: "384",
+                    //     crop: "fit" 
         
-                    });
+                    // });
 
                     const {favourite, cart} = this.props.checkPhotoStatus(item.media_id);
                     
@@ -69,10 +85,11 @@ class Gallery extends Component {
     
                         cart,       //boolean to show if photo is in the cart
                         favourite, // boolean to show if photo is in the favourites
-                        original: url, // needed for gallery
+                        original: item.path[0], // needed for gallery
+                        imageSet: imageSet(item.path.slice(1))
+
                     };
                 });
-            
             
                 this.setState({
                     items: images,
@@ -82,27 +99,30 @@ class Gallery extends Component {
                 });
             
             
-            }).catch(() => {
+            }).catch((e) => {
     
-                const items = this.props.gallery.images.map((item) => {
-                    const {favourite, cart} = this.props.checkPhotoStatus(item.id);
-                    return {
-                        ...item,
-                        caption:item.caption,
-                        favourite,
-                        cart,
-                        original: item.url,
-                    };
-                });
+                // const items = this.props.gallery.images.map((item) => {
+                //     const {favourite, cart} = this.props.checkPhotoStatus(item.id);
+                //     return {
+                //         ...item,
+                //         caption:item.caption,
+                //         favourite,
+                //         cart,
+                //         original: item.url,
+                //     };
+                // });
     
-                this.setState({ items });
+                // this.setState({ items });
     
             });
         }
 
 
+
+        // If gallery showing single photo from favourites/cart instead of article gallery
         const photo = this.props.gallery;
-        const {favourite, cart} = this.props.checkPhotoStatus(photo.media_id);
+
+        const {favourite, cart} = this.props.checkPhotoStatus(photo.id);
         const photoy = {
             id      : photo.media_id,
             url     : photo.path,
@@ -114,15 +134,15 @@ class Gallery extends Component {
 
             cart,       //boolean to show if photo is in the cart
             favourite, // boolean to show if photo is in the favourites
-            original: photo.url, // needed for gallery
+            original: photo.url[0], // needed for gallery
+            imageSet: photo.imageSet
         };
 
-        this.setState({ items: [photoy] });
-
-        // if ( this.props.galleryType === 'photo') { 
-        //     return axios.get('/api/article/get-article?articleId='+ this.props.gallery.id).then(r => {
-
-        // }
+        this.setState({ 
+            items: [photoy] 
+        }, () => {
+            console.log(this.state);
+        });
 
 
 

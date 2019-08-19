@@ -50,7 +50,7 @@ export class Feed {
         }
     
         if (this.options.search) {
-            // console.log('THIS IS A SEARCH')
+            console.log('THIS IS A SEARCH')
             let refinedSearch = this.options.search;
             requestData['s'] = refinedSearch;
             url = '/api/search';
@@ -60,6 +60,10 @@ export class Feed {
         if (this.options.mediaSearch) {
             // console.log('THIS IS A MEDIA SEARCH')
             requestData['keyword'] = this.options.mediaSearch;
+            if (this.options.media) {
+                requestData['media'] = this.options.media;
+            }
+
             url = '/api/search/media';
             requestType = 'get';
         }
@@ -86,7 +90,8 @@ export class ArticleFeed extends Feed {
             'urlid'             :   options.urlid       || null,
             'search'            :   options.searchterm  || null,
             'mediaSearch'       :   options.mediaSearch || null,
-            "blogInfo"          :   options.blogInfo    || false,
+            'blogInfo'          :   options.blogInfo    || false,
+            'media'             :   options.media       || null,
             'limit'             :   options.limit,
         };
     }

@@ -120,6 +120,15 @@ const Card = props =>  {
         draggable = true;
     }
 
+    const imageUrl = [].concat(image.url);
+    if (typeof imageUrl[1] === 'undefined') {
+        imageUrl.push(imageUrl[0]);
+        imageUrl.push(imageUrl[0]);
+    }
+    if (typeof imageUrl[2] === 'undefined') {
+        imageUrl.push(imageUrl[1]);
+    }
+
     return (
         <div onClick={() => { console.log('clicked');props.cardHandler(count, panel)}} className={cn(styles)}>
             <div  
@@ -132,9 +141,9 @@ const Card = props =>  {
                 <article className={viewStyles}>
                     <figure className={mediaStyles}>
                         <picture>
-                            <source media="(max-width: 767px) and (min-width: 501px)" srcSet={props.data.imageMedium} />
-                            <source media="(max-width: 500px)" srcSet={props.data.imageSmall} />
-                            <img draggable="false" width={props.data.imgWidth} height={props.data.imgHeight} className="img-fluid" src={image.url} alt="" />
+                            <source media="(max-width: 500px)" srcSet={imageUrl[2]} />
+                            <source media="(min-width: 501px) and (max-width: 767px)" srcSet={imageUrl[1]} />
+                            <img draggable="false" src={imageUrl[0]} alt={image.caption} />
                         </picture>
                     </figure>
                     

@@ -18,6 +18,8 @@ import Container            from '../../components/layout/container'
 //Actions
 import * as actionCreators  from '../../store/actions/actions'
 
+//Utils
+import {imageSet}           from '../../utils/image'
 
 // API calls
 import {ArticleFeed}        from '../../sdk/feed'
@@ -68,18 +70,33 @@ import {panels}             from '../section/data'
             offset,
             limit : 3,
             mediaSearch: this.keyword,
+            media : [
+                {
+                    width: '580',
+                    height: '385',
+                    watermark: true
+                },
+                {
+                    width: '603',
+                    height: '384',
+                    watermark: true
+                },
+                {
+                    width: '500',
+                    watermark: false
+                }
+            ]
         };
 
         const search = new ArticleFeed(options);
         
         return search.fetch().then((r) => {
             let waypoint = true;
-            // console.log(r.data);
+            console.log(r.data);
             let photos = r.data.media.map((media) => {
                 return {
                     id        : media.id,
-                    url       : media.cdn_path,
-                    path      : media.cdn_path,
+                    url       : media.path,
                     guid      : media.guid,
                     type      : media.fileType,
                     width     : media.width,
@@ -87,10 +104,12 @@ import {panels}             from '../section/data'
                     filesize  : media.fileSize,
                     title     : media.title,
                     caption   : media.caption,
+                    imageSet  : imageSet(media.path.slice(1)),
+                    original  : media.path[0], // needed for gallery
                     galleryType: 'photo',
                 }
             });
-                        
+            console.log(photos);
             // no more photos but leave the ones that are there
             if (photos.length === 0 && options.offset > 0) {
                 this.setState({waypoint: false});
@@ -121,7 +140,7 @@ import {panels}             from '../section/data'
             this.setState({photos, waypoint});
         
         }).catch(() => {
-            this.setState({photos: panels[1].feed[0].images});
+            // this.setState({photos: panels[1].feed[0].images});
         });
     }
 
@@ -166,7 +185,7 @@ import {panels}             from '../section/data'
                             <Row>
                                 
                                 {this.state.photos.map((photo, i) => {
-                                    
+                                    console.log(photo);
                                     const {favourite, cart} = this.props.photoStatusHandler(photo.id);
                                     
                                     return (

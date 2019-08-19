@@ -1,7 +1,7 @@
 //Libraries
 import React, {Component}   from 'react'
 import styled               from 'styled-components'
-import cn                   from 'classnames'
+// import cn                   from 'classnames'
 // import Datepicker           from '../datepicker/datepicker'
 import moment               from 'moment'
 
@@ -10,8 +10,8 @@ import Button               from '../button/button'
 
 
 //Styles
-import styles               from './search.module.scss'
-import formstyles           from '../../styles/form.module.scss'
+// import styles               from './search.module.scss'
+// import formstyles           from '../../styles/form.module.scss'
 
 
 class Search extends Component {

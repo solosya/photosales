@@ -94,7 +94,7 @@ const Close = styled.div`
     position:absolute;
     top:0;
     right:0;
-
+    z-index:99999;
     width: 35px;
     height: 35px;
 

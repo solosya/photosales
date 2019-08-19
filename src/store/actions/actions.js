@@ -200,8 +200,25 @@ export const fetchSaved = () => {
         
         if (loggedIn) {
 
-            axios.get('/api/user/user-media').then((r) => {
-                // console.log("FAVOURITE FETCH SERVER", r.data.media);
+            const media = [
+                {
+                    width: '580',
+                    height: '385',
+                    watermark: true
+                },
+                {
+                    width: '603',
+                    height: '384',
+                    watermark: true
+                },
+                {
+                    width: '500',
+                    watermark: false
+                }
+            ];
+
+
+            axios.get('/api/user/user-media?' + qs.stringify({media})).then((r) => {
     
                 const media = r.data.media.map((m) => {
                     return {
