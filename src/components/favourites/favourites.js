@@ -13,9 +13,7 @@ class Favourites extends Component {
 
 
     showGallery = (index) => {
-        console.log(index);
         const photo = this.props.favourites[index];
-        console.log(photo);
         this.props.showGallery(photo);
     }
     render() { 

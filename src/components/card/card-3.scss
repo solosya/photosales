@@ -21,6 +21,7 @@
         &__container {
             padding: 0;
             width:100%;
+            position:relative;
         }
         &__media {
             img {
@@ -114,6 +115,7 @@
             @include flex-height(45px);
             @include font-size(18);
             margin-bottom:10px;
+            margin-right:50px;
             font-weight: $weightMedium;
         }
         &__description {
@@ -160,7 +162,7 @@
             &__heading {
                 @include flex-height(25px);
             }
-            }
+        }
     }
 }
 

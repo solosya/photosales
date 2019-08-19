@@ -3,6 +3,10 @@ import styles           from './sectionheader.module.scss';
 import cn               from 'classnames';
 import FavIcon          from '../favourites/favIcon';
 import CheckoutIcon     from '../CartIcon';
+import Row                  from '../../components/layout/row'
+import Col                  from '../../components/layout/col'
+
+// import Container            from '../../components/layout/container'
 
 
 const sectionHeader = (props) => {
@@ -58,7 +62,7 @@ const sectionHeader = (props) => {
                     <CheckoutIcon on={props.cartItems > 0} />
 
                     
-                    <label className={cn(cartLabelStyles)}>Check out</label>
+                    <label className={cn(cartLabelStyles)}>Checkout</label>
                 </div>
                 {/* <div onClick={props.checkoutLinkHandler} className={cartStyles}>{ props.cartItems} Check out</div> */}
             </div>;
@@ -69,7 +73,7 @@ const sectionHeader = (props) => {
         <div className={cn(styles['c-section-head'], styles[isLoggedIn])}>
 
             <div className={styles['c-section-head__title-container']}>
-                    <h1 onClick={()=> props.linkHandler(props.linkUrl)} className={titleStyles}>{props.title}</h1>
+                <h1 onClick={()=> props.linkHandler(props.linkUrl)} className={titleStyles}>{props.title}</h1>
                 { cart } 
             </div>
 

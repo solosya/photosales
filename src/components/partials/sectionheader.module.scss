@@ -7,6 +7,10 @@
     &__title-container {
         display: flex;
         position:relative;
+        justify-content: space-between;
+        @media #{$mobile} {
+            flex-direction:column;
+        }
     }
     
     &__loggedin {
@@ -27,8 +31,11 @@
         @include font-size(32);
         color: $blue;
         font-weight: $weightBold;
-        padding-bottom: 8px;
         color:$greyish;
+
+        @media #{$mobile} {
+            border-bottom: 1px solid $darkergrey;
+        }
 
         &--40 {
             @include font-size(40);
@@ -51,9 +58,17 @@
 
     &__buttons {
         display:flex;
-        position:absolute;
-        bottom:10px;
-        right:0;
+        margin-top:5px;
+
+        @media #{$mobile} {
+            padding-top:10px;
+            align-self:flex-end;
+            margin-bottom:10px;
+        }
+
+        // position:absolute;
+        // bottom:10px;
+        // right:0;
     }
 
     &__favourite {

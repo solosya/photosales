@@ -111,6 +111,18 @@ class CardCart extends Component {
         }
 
 
+        const imageUrl = [].concat(image.url);
+        if (typeof imageUrl[1] === 'undefined') {
+            imageUrl.push(imageUrl[0]);
+            imageUrl.push(imageUrl[0]);
+        }
+        if (typeof imageUrl[2] === 'undefined') {
+            imageUrl.push(imageUrl[1]);
+        }
+    
+
+
+
         let printOptions   = [];
         let digitalOptions = [];
         if (this.state.products.length > 0) {
@@ -226,30 +238,22 @@ class CardCart extends Component {
         
         return (
             <div key={this.props.data.id} className={this.props.styles}>
-                <div  href              = "#" 
-                    className           = ""
+                <div    
                     data-id             = {this.props.data.id} 
                     data-guid           = {this.props.data.guid} 
-                    data-position       = {this.props.data.position} 
-                    data-social         = {this.props.data.social}
-                    data-article-image  = {this.props.data.articleImg} 
-                    data-article-text   = {this.props.data.title}
                     >
 
                     <article className="c-cards-view">
 
                         <figure className='c-cards-view__media' onClick={() => this.props.cardHandler(count)} >
                             <picture>
-                                <source media="(max-width: 767px) and (min-width: 501px)" srcSet={this.props.data.imageMedium} />
-                                <source media="(max-width: 500px)" srcSet={this.props.data.imageSmall} />
+                                <source media="(max-width: 500px)" srcSet={imageUrl[2]} />
+                                <source media="(min-width: 501px) and (max-width: 767px)" srcSet={imageUrl[1]} />
 
                                 { this.props.data.lazyload === false
-                                    ?  <img width={this.props.data.imgWidth} height={this.props.data.imgHeight} className="img-fluid" src={image.url} alt="" />
-                                    :  <img width={this.props.data.imgWidth} height={this.props.data.imgHeight} className="img-fluid" src={image.url} data-original={this.props.data.articleImg} alt="" />
+                                    ?  <img  className="img-fluid" src={imageUrl[0]} alt={image.caption} />
+                                    :  <img  className="img-fluid" src={imageUrl[0]} data-original={imageUrl[0]} alt={image.caption} />
                                 }
-
-                                <div className="video-icon"></div>
-
                             </picture>
 
                         </figure>
