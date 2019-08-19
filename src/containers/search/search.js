@@ -25,7 +25,7 @@ import {imageSet}           from '../../utils/image'
 import {ArticleFeed}        from '../../sdk/feed'
 
 //Data
-import {panels}             from '../section/data'
+// import {panels}             from '../section/data'
 
  class Search extends Component {
     
@@ -92,7 +92,7 @@ import {panels}             from '../section/data'
         
         return search.fetch().then((r) => {
             let waypoint = true;
-            console.log(r.data);
+
             let photos = r.data.media.map((media) => {
                 return {
                     id        : media.id,
@@ -109,7 +109,7 @@ import {panels}             from '../section/data'
                     galleryType: 'photo',
                 }
             });
-            console.log(photos);
+
             // no more photos but leave the ones that are there
             if (photos.length === 0 && options.offset > 0) {
                 this.setState({waypoint: false});
@@ -185,7 +185,7 @@ import {panels}             from '../section/data'
                             <Row>
                                 
                                 {this.state.photos.map((photo, i) => {
-                                    console.log(photo);
+
                                     const {favourite, cart} = this.props.photoStatusHandler(photo.id);
                                     
                                     return (

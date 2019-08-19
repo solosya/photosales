@@ -9,16 +9,14 @@ import PanelTwo             from '../../components/panels/panel2'
 import PanelThree           from '../../components/panels/panel3'
 
 //Data
-import {panels} from './data';
-// console.log(panels);
+// import {panels} from './data';
+
 class Index extends Component {
         state = {
             panels: [],
         }
 
     componentDidMount () {
-        // this.getPanels();
-        // return;
 
         this.getThemeConfig().then( (r) => {
 
@@ -31,7 +29,9 @@ class Index extends Component {
             pagePanels.sections.map( (panel, i) => {
                 
                 const feed = this.props.feedHandler(panel).then( r => {
-                    
+
+                    panel.title = r.data.blog ? r.data.blog.title : panel.title;
+
                     panel.feed = r.data.articles.map(article => {
 
                         const media = article.featuredMedia;
@@ -59,8 +59,7 @@ class Index extends Component {
                     });
 
                     return panel;
-                    // panelData.push(panel)
-                    // const panels = [...this.state.panels, panel];
+
                 });
                 return panelData.push(feed);
 
@@ -68,25 +67,14 @@ class Index extends Component {
 
             axios.all(panelData).then((results) => {
 
-                // NEED TO ORDER PANELS
-                this.setState({
-                    panels: results
-                }, () => {
-                    // console.log(this.state.panels);
-                });
+
+                this.setState({panels: results});
 
             });
 
-            // this.setState({
-            //     panels: panelData
-            // }, () => {
-            //     console.log(this.state.panels);
-            // });
-
 
         }).catch(() => {
-            console.log('getting panels');
-            this.getPanels();
+            // this.setState({panels});
         });
 
     }
@@ -95,11 +83,6 @@ class Index extends Component {
         return axios.get('/api/theme/get-config');
     }
 
-    getPanels = () => {
-        this.setState({panels: panels}, () => {
-            // console.log(this.state);
-        });
-    }
 
     showGallery = (card, panelName) => {
         let selected = null;
@@ -125,8 +108,9 @@ class Index extends Component {
 
                     {panel.template === "panel1" &&
                         <PanelOne 
-                            showGallery     = {this.showGallery} 
-                            title           = {panel.title} 
+                            showGallery     = {this.showGallery}
+                            title           = {panel.title}
+                            blog            = {panel.blog}
                             cards           = {panel.feed}
                             margin          = {margin}
                             linkHandler     = {this.props.linkHandler}
@@ -136,8 +120,9 @@ class Index extends Component {
 
                     {panel.template === "panel2" &&
                         <PanelTwo 
-                            showGallery     = {this.showGallery} 
-                            title           = {panel.title} 
+                            showGallery     = {this.showGallery}
+                            title           = {panel.title}
+                            blog            = {panel.blog}
                             cards           = {panel.feed}
                             margin          = {margin}
                             linkHandler     = {this.props.linkHandler}
@@ -147,8 +132,9 @@ class Index extends Component {
 
                     {panel.template === "panel3" &&
                         <PanelThree 
-                            showGallery     = {this.showGallery} 
-                            title           = {panel.title} 
+                            showGallery     = {this.showGallery}
+                            title           = {panel.title}
+                            blog            = {panel.blog}
                             cards           = {panel.feed}
                             margin          = {margin}
                             linkHandler     = {this.props.linkHandler}

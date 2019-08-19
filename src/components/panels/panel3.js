@@ -14,7 +14,7 @@ const panel_3 = (props) => {
             <Col classes={["col-12"]}>
                 <Header 
                     linkHandler = {props.linkHandler} 
-                    linkUrl     = { "/"+ props.title.toLowerCase().replace(/\s/g, "-")+ "/" }
+                    linkUrl     = { "/"+ props.blog.toLowerCase().replace(/\s/g, "-")+ "/" }
                     title       = {props.title} 
                 />
             </Col>

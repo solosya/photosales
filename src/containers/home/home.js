@@ -30,7 +30,8 @@ class Home extends Component {
             offset          : 0,
             limit           : panel.artilceCount,
             urlid           : panel.blog,
-            non_pinned      : 0
+            non_pinned      : 0,
+            blogInfo        : true
         };
         const Feed = new ArticleFeed(options);
         return Feed.fetch();

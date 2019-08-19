@@ -19,7 +19,7 @@ import card5        from './card-5.module.scss'
 const dragStart = (e, props) => {
     const params = {
         id:    props.data.id,
-        count: props.count,
+        count: props.count + 1,
     }
 
     e.dataTransfer.setData("text/plain", JSON.stringify( params ));
@@ -36,7 +36,7 @@ const drop = (e, props) => {
             sourceArticleId: source.id,
             sourceIsSocial: 0,
             
-            destinationPosition: props.count,
+            destinationPosition: props.count + 1,
             destinationArticleId: props.data.id,
             destinationIsSocial: 0,
         }
@@ -151,7 +151,7 @@ const Card = props =>  {
 
                         <div className={categoryStyles}>{ props.data.category }</div>
                                                     
-                        <h2 className={headingStyles}><Dotdotdot clamp={2}>{ props.data.title}</Dotdotdot></h2>
+                        <h2 className={headingStyles}><Dotdotdot clamp={2}>{ props.data.title} </Dotdotdot></h2>
 
                         {buttons ? buttons : null}
 

@@ -24,7 +24,7 @@ import {ArticleFeed}        from '../../sdk/feed'
 import 'react-notifications/lib/notifications.css';
 
 //Data
-import {panels} from './data';
+// import {panels} from './data';
 
 
 class Section extends Component {
@@ -44,22 +44,22 @@ class Section extends Component {
             this.section = this.props.section;
             this.getFeed();
         }
-        this.getPanels();
+        // this.getPanels();
         return;
     }
 
-    getPanels = () => {
-        const panel = panels.filter((panel) => {
-            return panel.title === this.props.title;
-        });
+    // getPanels = () => {
+    //     const panel = panels.filter((panel) => {
+    //         return panel.title === this.props.title;
+    //     });
 
-        if (panel.length > 0) {
-            this.setState({galleries: panel[0].feed}, () => {
-                // console.log(this.state);
-            });
+    //     if (panel.length > 0) {
+    //         this.setState({galleries: panel[0].feed}, () => {
+    //             // console.log(this.state);
+    //         });
 
-        }
-    }
+    //     }
+    // }
 
 
 
@@ -105,7 +105,7 @@ class Section extends Component {
                 }
             });
 
-            
+
             // no more galleries but leave the ones that are there
             if (galleries.length === 0 && options.offset > 0) {
                 this.setState({waypoint: false});
@@ -134,7 +134,7 @@ class Section extends Component {
         
         }).catch((e) => {
             console.log("ERROR", e);
-            this.setState({galleries: panels[1].feed[0].images});
+            // this.setState({galleries: panels[1].feed[0].images});
         });
     }
 
@@ -142,10 +142,15 @@ class Section extends Component {
         const original = [...this.state.galleries];
         const updated  = [...this.state.galleries];
 
-        const gallery1 = updated[params.sourcePosition];
-        const gallery2 = updated[params.destinationPosition];
-        updated[params.sourcePosition] = gallery2;
-        updated[params.destinationPosition] = gallery1;
+        const Source = params.sourcePosition - 1;
+        const Dest   = params.destinationPosition - 1;
+
+        const gallery1 = updated[Source];
+        const gallery2 = updated[Dest];
+
+        updated[Source] = gallery2;
+        updated[Dest] = gallery1;
+        
         this.setState({galleries:updated}, () => {
         });
 
@@ -182,7 +187,7 @@ class Section extends Component {
 
 
     showGallery = (index) => {
-        const gallery = this.state.galleries[index -1];
+        const gallery = this.state.galleries[index];
         this.props.showGallery(gallery);
     }
 
@@ -221,7 +226,7 @@ class Section extends Component {
                                             <Col key={i} classes={["col-12", "col-md-6", "col-lg-3"]} marginBottom="30px">
                                                 <Card 
                                                     data        = {card} 
-                                                    count       = {++this.cardCount}
+                                                    count       = {this.cardCount++}
                                                     panel       = {this.props.title}
                                                     cardHandler = {this.showGallery}
                                                     swapCards   = {this.swapCards}
@@ -236,7 +241,7 @@ class Section extends Component {
                         })}
     
                             
-                        <Row margin="30px" style={{backgroundColor:"orange"}}>
+                        <Row margin="30px">
                             
                             { bottomGalleries.map( (card, i) => {
 
@@ -260,13 +265,13 @@ class Section extends Component {
 
                         </Row>
     
-
-                        <Row margin="30px">
-                            <Col classes={["col-12"]}>
-                                <Button handler={this.loadMore} classes={["button", "button--red", "button--top-30"]}>Load more {this.cardCount}</Button>
-                            </Col>
-                        </Row>
-
+                        {this.state.galleries.length > 0 && this.state.waypoint &&
+                            <Row margin="30px">
+                                <Col classes={["col-12"]}>
+                                    <Button handler={this.loadMore} classes={["button", "button--red", "button--top-30"]} data-count={this.cardCount}>Load more</Button>
+                                </Col>
+                            </Row>
+                        }
 
 
                     </Col>

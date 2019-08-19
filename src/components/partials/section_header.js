@@ -3,10 +3,6 @@ import styles           from './sectionheader.module.scss';
 import cn               from 'classnames';
 import FavIcon          from '../favourites/favIcon';
 import CheckoutIcon     from '../CartIcon';
-import Row                  from '../../components/layout/row'
-import Col                  from '../../components/layout/col'
-
-// import Container            from '../../components/layout/container'
 
 
 const sectionHeader = (props) => {
