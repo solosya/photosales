@@ -16,7 +16,7 @@ import {BrowserRouter} from 'react-router-dom';
 //     }
 // }
 
-
+console.log('loading the app');
 const elem = document.getElementById('photo-sales');
 
 ReactDOM.render(

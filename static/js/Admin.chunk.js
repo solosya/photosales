@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[1],{178:function(e,n,t){"use strict";t.r(n);var a=t(3),c=t(10),r=t(7),u=t(5),i=t(6),o=t(0),p=t.n(o),s=function(e){function n(){return Object(a.a)(this,n),Object(r.a)(this,Object(u.a)(n).apply(this,arguments))}return Object(i.a)(n,e),Object(c.a)(n,[{key:"render",value:function(){return p.a.createElement("div",null,"I AM AN ADMIN!!!")}}]),n}(o.Component);n.default=s}}]);
+//# sourceMappingURL=Admin.chunk.js.map

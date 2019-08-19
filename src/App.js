@@ -9,7 +9,8 @@ import axios                    from 'axios'
 import Home                     from './containers/home/home'
 import store                    from './store/store'
 import Login                    from './containers/login/login'
-import Admin                    from './containers/admin/admin'
+import DynamicImport            from './containers/dynamicImport'
+// import Admin                    from './containers/admin/admin'
 import Checkout                 from './containers/checkout/checkout'
 import Receipt                  from './containers/receipt/receipt'
 import EnsureLoggedInContainer  from './containers/ensureLoggedIn'
@@ -26,7 +27,6 @@ import Favourites               from './components/favourites/favourites'
 
 
 
-
 //Actions
 import * as actionTypes         from './store/actions/actions'
 import * as actionCreators      from './store/actions/actions'
@@ -34,6 +34,7 @@ import * as actionCreators      from './store/actions/actions'
 //Styles
 import './app.scss';
 
+console.log('running app');
 axios.defaults.baseURL = window.location.origin;
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 axios.defaults.headers.common['X-CSRF-Token']     = window.csrfToken;
@@ -64,6 +65,15 @@ if (window._appJsConfig) {
     });
     
 }
+
+
+const Admin = (props) => (
+    <DynamicImport load={() => import(/* webpackChunkName: "Admin" */ './containers/admin/admin')}>
+        {(Component) => Component === null
+            ? <h1>loading...</h1>
+            : <Component {...props} />  }
+    </DynamicImport>
+)
 
 
 class App extends Component {

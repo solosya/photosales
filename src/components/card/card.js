@@ -146,17 +146,17 @@ const Card = props =>  {
                             <img draggable="false" src={imageUrl[0]} alt={image.caption} />
                         </picture>
                     </figure>
-                    
+
                     <div className={containerStyles}>
 
                         <div className={categoryStyles}>{ props.data.category }</div>
-                                                    
+
                         <h2 className={headingStyles}><Dotdotdot clamp={2}>{ props.data.title} </Dotdotdot></h2>
 
                         {buttons ? buttons : null}
 
                         <div className={descriptionStyles}><Dotdotdot clamp={3}>{props.data.content}</Dotdotdot></div>
-                    
+
                         {/* <div className={authorStyles}>
                             <div className={timeStyles}>{props.data.publishDate}</div>
                         </div> */}
