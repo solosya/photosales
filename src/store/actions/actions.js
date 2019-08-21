@@ -389,7 +389,7 @@ export const updateCartItem = (product) => {
             const flatCart = getLineItemsFromCart(cart)
             axios.post('/api/shop/total', {"cart": flatCart} )
             .then((r) => {
-                console.log(r);
+                // console.log(r);
                 cart = placeLineItemsIntoCart(cart, r.data.cart);
         
                 dispatch({

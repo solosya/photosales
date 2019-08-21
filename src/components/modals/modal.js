@@ -3,17 +3,21 @@ import styled, {css} from 'styled-components';
 
 const modal = (props) => {
 
-
+    let header = true;
+    if (typeof props.header !== 'undefined' && props.header === false) {
+        header = false;
+    }
     
     return (
 
         <Modal id={props.name} data-dom="Top"> 
             <Window id="dialog" {...props}  data-dom="window"> 
                 <Container  data-dom="container"> 
-                    <Header  data-dom="header"> 
+                    {header && <Header  data-dom="header"> 
                         <Title>{props.title}</Title> 
                         <Close onClick={props.closeHandler}></Close> 
-                    </Header> 
+                    </Header>
+                    } 
                     <ContentWindow id="dialogContent"  data-dom="contentWindow">
                         {props.children()}
                     </ContentWindow> 
@@ -45,12 +49,13 @@ const Window = styled.div`
     border-radius:3px;
     overflow:auto;
     
+    /* tablet */
     @media screen and (min-width : 768px) and (max-width : 991px) {
         max-width:80%;
         height:auto;
     }
 
-
+    /* mobile */
     @media screen and (max-width :767px) {
         width:auto;
         max-width:90%;

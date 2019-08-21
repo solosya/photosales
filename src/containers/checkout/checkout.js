@@ -20,7 +20,6 @@ import Billing                      from './billing'
 import CardCart                     from '../../components/card/cardCart.js'
 import Container                    from '../../components/layout/container'
 
-
 // Actions
 import * as actionCreators          from '../../store/actions/actions'
 
@@ -257,20 +256,18 @@ class Checkout extends Component {
         } 
 
 
-        const cartTotal = this.props.total / 100;
-
-
         let purchases = null;
         let cards = null;
 
         const terms = 
             <Modal 
                 width        = "500px" 
-                height       = "150px" 
-                closeHandler = {this.termsHandler} 
+                // height       = "150px" 
+                closeHandler = {this.termsHandler}
+                header       = {false}
                 children     = { () => (
                     <>
-                        <p style={{marginTop: '30px', textAlign:'center'}}>Please agree to the terms of use</p>
+                        <p style={{textAlign:'center'}}>Please agree to the terms of use</p>
                         <Button handler={this.termsHandler} classes={["button", "button--blue", "button--top-30", "button--center"]}>OKAY</Button>
                     </>
                 )} >   
@@ -359,7 +356,7 @@ class Checkout extends Component {
                             <Row>
                                 <Col classes={["col-12"]}>
                                     <Total
-                                        total={cartTotal}
+                                        total={this.props.total}
                                         borderTop
                                         >
                                     </Total>

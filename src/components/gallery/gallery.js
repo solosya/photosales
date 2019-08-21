@@ -49,7 +49,7 @@ class Gallery extends Component {
                     {
                         width: '603',
                         height: '384',
-                        watermark: true
+                        watermark: false
                     },
                     {
                         width: '500',
