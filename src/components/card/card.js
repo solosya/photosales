@@ -2,6 +2,7 @@
 import React        from 'react'
 import Dotdotdot    from 'react-dotdotdot'
 import cn           from 'classnames'
+import cloudinary   from 'cloudinary-core'
 
 //Components
 import FavIcon      from '../favourites/favIcon'
@@ -120,7 +121,9 @@ const Card = props =>  {
         draggable = true;
     }
 
-    const imageUrl = [].concat(image.url);
+
+
+    let imageUrl = [].concat(image.url);
     if (typeof imageUrl[1] === 'undefined') {
         imageUrl.push(imageUrl[0]);
         imageUrl.push(imageUrl[0]);
@@ -129,8 +132,26 @@ const Card = props =>  {
         imageUrl.push(imageUrl[1]);
     }
 
+    // const cloudinaryCore = new cloudinary.Cloudinary({cloud_name: 'cognitives'});
+    if (typeof image.path !== 'undefined' && image.path !== null && image.path) {
+        const url = image.path.replace('/upload/', '/upload/c_fill,dpr_auto,f_auto,fl_lossy,g_faces:auto,q_auto,w_500/');
+
+        // const url = cloudinaryCore.url(image.path, {
+        //     width: "580",
+        //     height: "384",
+        //     crop: "fit" 
+        // });
+
+        imageUrl = [url, url, url];
+    }
+
+
+
+
+
+
     return (
-        <div onClick={() => { console.log('clicked');props.cardHandler(count, panel)}} className={cn(styles)}>
+        <div onClick={() => { props.cardHandler(count, panel)}} className={cn(styles)}>
             <div  
                 onDragStart = {(e) => dragStart(e, props)}
                 onDragOver  = {(e) => {e.preventDefault();}}

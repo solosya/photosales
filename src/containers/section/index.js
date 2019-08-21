@@ -29,7 +29,6 @@ class Index extends Component {
             pagePanels.sections.map( (panel, i) => {
                 
                 const feed = this.props.feedHandler(panel).then( r => {
-
                     panel.title = r.data.blog ? r.data.blog.title : panel.title;
 
                     panel.feed = r.data.articles.map(article => {
@@ -47,6 +46,7 @@ class Index extends Component {
                             images: [{ // featured media only
                                 id       : media.id,
                                 url      : media.media.url,
+                                path     : media.path,
                                 guid     : media.guid,
                                 type     : media.fileType,
                                 title    : media.title,
