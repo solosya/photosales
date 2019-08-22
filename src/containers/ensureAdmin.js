@@ -5,9 +5,6 @@ import { connect }              from 'react-redux';
 class EnsureAdminContainer extends Component {
 
     render() {
-        console.log('ensuring admin');
-        console.log(this.props.isLoggedIn, this.props.admin);
-        
         if (this.props.isLoggedIn && this.props.admin) {
             return this.props.children;
         } 

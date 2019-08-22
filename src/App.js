@@ -122,7 +122,7 @@ class App extends Component {
             showGallery: true,
             showFavourites : false
         }, () => {
-            console.log(this.state);
+            // console.log(this.state);
         });
         document.body.setAttribute('style', 'overflow: hidden;height:100%;')
     }
@@ -141,7 +141,7 @@ class App extends Component {
                 showFavourites : true,
                 showGallery: false,
             }, () => {
-                console.log(this.state);
+                // console.log(this.state);
             });
             document.body.setAttribute('style', 'overflow: hidden;height:100%;')
         }

@@ -30,7 +30,7 @@ class Receipt extends Component {
 
             this.setState({order: order.data});
         }).catch(() => {
-            console.log("error getting order");
+            // console.log("error getting order");
         });
 
     }

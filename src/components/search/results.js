@@ -11,7 +11,6 @@ import Container            from '../../components/layout/container'
 import Button               from '../../components/button/button'
 
 const results = (props) => {
-    console.log("RESULTS", props);
 
     return (
         <Container>

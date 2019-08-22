@@ -36,7 +36,7 @@ class Gallery extends Component {
 
     componentDidMount() {
         let images = [];
-        console.log(this.props.gallery);
+
         if ( typeof this.props.gallery.images !== 'undefined') {
             const articleParams = {
                 articleId: this.props.gallery.id,
@@ -95,7 +95,7 @@ class Gallery extends Component {
                     items: images,
                     complete: true,
                 }, () => {
-                    console.log(this.state);
+                    // console.log(this.state);
                 });
             
             
@@ -141,7 +141,7 @@ class Gallery extends Component {
         this.setState({ 
             items: [photoy] 
         }, () => {
-            console.log(this.state);
+            // console.log(this.state);
         });
 
 

@@ -23,7 +23,7 @@ class Shop {
             self.setState({
                 products: products.data.data
             }, () => {
-                console.log(self.state);
+                // console.log(self.state);
             });
         }));
     }
@@ -116,7 +116,6 @@ class Shop {
                             ...discount,
                             products: winningProducts
                         }
-                        console.log("CURRENT DISCOUNT", currentDiscount);
                     }
                 } 
                 

@@ -10,7 +10,6 @@ const print = (props) => {
         cost = (props.data.price/100).toFixed(2);
     }
     
-    console.log(props.data);
     return (
         <Photo>
             <Title>{props.data.photo.caption}</Title>

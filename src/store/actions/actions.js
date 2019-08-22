@@ -69,7 +69,7 @@ const placeLineItemsIntoCart = (cart, discountItems) => {
 export const login = (user, router) => {
     return dispatch => {
         axios.post('/api/auth/login', qs.stringify({"username": user.username, "password": user.password})).then((r) => {
-            console.log(r);
+            // console.log(r);
             if (r.data.success === 1) {
                 dispatch({
                     type: LOGIN_ON_REFRESH,
@@ -270,7 +270,7 @@ export const addItemToCart = (product) => {
 
         axios.post('/api/shop/total', {"cart": flatCart} )
         .then((r) => {
-            console.log(r);
+            // console.log(r);
             cart = placeLineItemsIntoCart(cart, r.data.cart);
             dispatch({
                 type: TOTAL_CART,
@@ -293,7 +293,7 @@ export const removeItemFromCart = (product) => {
 
         axios.post('/api/shop/total', {"cart": flatCart} )
         .then((r) => {
-            console.log(r);
+            // console.log(r);
             cart = placeLineItemsIntoCart(cart, r.data.cart);
 
             dispatch({
@@ -339,7 +339,7 @@ export const removePhotoFromCheckout = (p) => {
                     const flatCart = getLineItemsFromCart(cart)
                     axios.post('/api/shop/total', {"cart": flatCart} )
                     .then((r) => {
-                        console.log(r);
+                        // console.log(r);
                         cart = placeLineItemsIntoCart(cart, r.data.cart);
                 
                         dispatch({
@@ -389,7 +389,7 @@ export const updateCartItem = (product) => {
             const flatCart = getLineItemsFromCart(cart)
             axios.post('/api/shop/total', {"cart": flatCart} )
             .then((r) => {
-                console.log(r);
+                // console.log(r);
                 cart = placeLineItemsIntoCart(cart, r.data.cart);
         
                 dispatch({

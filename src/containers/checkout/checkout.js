@@ -183,7 +183,7 @@ class Checkout extends Component {
 
         const billing = this.state.billing;
         return axios.post('/api/shop/purchase', qs.stringify( {stripeToken: token.id, cart, billing})).then((r) => {
-            console.log(r);
+            // console.log(r);
             if (r.data.order !== 'false') {
                 this.setState({
                     purchaseStatus: 'complete',
@@ -201,7 +201,7 @@ class Checkout extends Component {
             this.props.clearCart(cart);
 
         }).catch((e) => {
-            console.log(e, e.response);
+            // console.log(e, e.response);
             this.setState({
                 purchaseStatus: 'error',
                 errorMessage: e.response.data,

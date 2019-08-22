@@ -50,7 +50,6 @@ export class Feed {
         }
     
         if (this.options.search) {
-            console.log('THIS IS A SEARCH')
             let refinedSearch = this.options.search;
             requestData['s'] = refinedSearch;
             url = '/api/search';
