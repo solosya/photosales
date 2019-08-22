@@ -94,6 +94,7 @@ class Section extends Component {
                     images: [{ // featured media only
                         id       : media.id,
                         url      : media.media.url,
+                        path     : media.path,
                         guid     : media.guid,
                         type     : media.fileType,
                         title    : media.title,
