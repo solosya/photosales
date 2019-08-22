@@ -63,7 +63,6 @@ const lineItem = (props) => {
         
     }
 
-    // console.log('what are the props options?', props.options);
 
     const options = props.options.filter((item) => {
         return !item.disabled;
@@ -77,9 +76,8 @@ const lineItem = (props) => {
 
     let discountName = "";
 
-
     let total = "";
-
+    
     if (props.product) {
         if ( props.product.discountName ) {
             discountName = props.product.discountName ; 
@@ -88,14 +86,12 @@ const lineItem = (props) => {
         //     itemTotalDiscount = props.product.priceTotalDiscount;
         // }
 
-        total = (props.product.priceTotal / 100).toFixed(2);
+        total = isNaN(props.product.priceTotal) ? "" : (props.product.priceTotal / 100).toFixed(2);
+
         if ( isNaN(total) ) {
             total = "";
         }
-
-        
     }
-
 
 
     return (
@@ -121,7 +117,6 @@ const lineItem = (props) => {
 
             {props.product
                 ? <Price>
-                    {/* {props.product.priceTotalFull !== props.product.priceTotal ? <FullPrice >${props.product.priceTotalFull} - </FullPrice>  : ""} */}
                     ${total}
                   </Price>
                 : null

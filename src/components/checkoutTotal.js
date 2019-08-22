@@ -1,18 +1,39 @@
-import React from 'react'
-import styled from 'styled-components';
-import Flexrow  from '../components/layout/flexrow';
+import React                 from 'react'
+import styled, {css}         from 'styled-components'
+import RippleSpinner         from '../components/spinners/RippleSpinner'
+
 
 const checkoutTotal = (props) => {
 
-    const total = typeof props.total === 'number' ? +props.total.toFixed(2) : props.total;
+    
+    let total = isNaN(props.total) ? "" : (props.total / 100).toFixed(2);
+    if ( isNaN(total) ) {
+        total = "";
+    }
 
     return (
-        <Flexrow {...props}>
+        <Row {...props}>
             <Label>Total</Label>
-            <Price>${total} AUD</Price>
-        </Flexrow>
+            { total !== "" ? <Price>${total} AUD</Price> : <RippleSpinner /> }
+            
+        </Row>
     )
 }
+
+const Row = styled.div`
+    position:relative;
+    display: flex;
+    flex-direction:row;
+    align-items:start;
+    vertical-align:middle;
+    
+    ${props => props.borderTop && css`
+        border-top: 1px solid #595859;
+        padding-top: 10px;
+        margin-top:33px;
+    `}    
+
+`
 
 const Label = styled.h2`
     font-family: 'Roboto';

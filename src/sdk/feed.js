@@ -68,7 +68,7 @@ export class Feed {
         }
 
 
-        console.log(requestType, url + "?" +  qs.stringify( requestData ) );
+        // console.log(requestType, url + "?" +  qs.stringify( requestData ) );
         return axios[requestType](url + "?" + qs.stringify( requestData ) );
     }
 }

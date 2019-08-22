@@ -43,7 +43,7 @@ const reducer = (state = intialState, action) => {
             if (typeof cartItem.lineItems != 'undefined') {
                 for (let j=0; j<cartItem.lineItems.length; j++) {
                     let photo = cartItem.lineItems[j];
-                    photo.priceTotal = photo.price;
+                    photo.priceTotal = NaN;
                 }
             }
         }
@@ -187,7 +187,7 @@ const reducer = (state = intialState, action) => {
 
                 return {
                     ...state,
-                    total:0,
+                    total:NaN,
                     cart
                 };
             }
@@ -232,12 +232,12 @@ const reducer = (state = intialState, action) => {
 
                 if (index > -1) {
                     cart[photoIndex].lineItems[index] = action.product;
-                    cart[photoIndex].lineItems[index].priceTotal = 'p';
+                    cart[photoIndex].lineItems[index].priceTotal = NaN;
                 } 
 
                 return {
                     ...state,
-                    total:'p',
+                    total:NaN,
                     cart
                 };
             }

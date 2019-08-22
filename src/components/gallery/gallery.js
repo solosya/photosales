@@ -42,14 +42,14 @@ class Gallery extends Component {
                 articleId: this.props.gallery.id,
                 media: [
                     {
-                        width: '580',
+                        // width: '580',
                         height: '385',
                         watermark: true
                     },
                     {
-                        width: '603',
+                        // width: '603',
                         height: '384',
-                        watermark: true
+                        watermark: false
                     },
                     {
                         width: '500',
@@ -57,6 +57,7 @@ class Gallery extends Component {
                     }
                 ]
             };
+
 
             return axios.get('/api/article/get-article?' + qs.stringify(articleParams)).then(r => {
                 
