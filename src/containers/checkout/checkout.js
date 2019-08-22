@@ -249,12 +249,11 @@ class Checkout extends Component {
     }
 
     render() {
-
-
+        
         if ( this.state.purchaseStatus === 'complete' && this.state.orderNumber !== false) {
             return <Redirect to={window.basePath + "/thanks?order=" + this.state.orderNumber} />
         } 
-
+        
 
         let purchases = null;
         let cards = null;

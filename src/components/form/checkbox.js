@@ -12,7 +12,7 @@ const Checkbox = ({ className, checked, ...props }) => (
                 </Icon>
             </StyledCheckbox>
         </CheckboxContainer>
-        {props.label ? <Label> {props.label} </Label> : "" }
+        {props.label ? <Label dangerouslySetInnerHTML={{__html: props.label}} ></Label> : "" }
     </label>
 )
 

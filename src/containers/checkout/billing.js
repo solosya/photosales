@@ -9,6 +9,9 @@ import styled, {css} from 'styled-components';
 
 const billing = (props) => {
 
+    const agreement = window.location.origin + '/photo-sales-usage-policy';
+    const agreementUrl = 'I accept the Photo Sales Licensing Agreement <a href=' + agreement + ' target="_blank"> terms of use</a>';
+
     return (
         <Row margin="50px">
             <Col classes={["col-12", "col-lg-8"]}>
@@ -92,7 +95,7 @@ const billing = (props) => {
 
                         <div style={{marginTop:'35px'}}> 
                             <Checkbox 
-                                label="I accept the Photo Sales licensing Agreement terms of use" 
+                                label={agreementUrl} 
                                 checked={props.licence} 
                                 onChange={() => props.handleBillingForm(props.licence, "licence")}
                                 name="promotion" />
