@@ -64,6 +64,9 @@ class Receipt extends Component {
         });
 
 
+        const deliveryLink = window.location.origin + '/photo-sales-orders';
+        const faqLink      = window.location.origin + '/faq';
+        const contactLink  = window.location.origin + '/contact-us';
 
         return (
             <Container>
@@ -78,7 +81,7 @@ class Receipt extends Component {
                         <OrderNumber>{this.state.order.order_number}</OrderNumber>
                         <Contact>
                             Order information will be sent to {this.state.order.email} <br />
-                            <strong>Click here for photo reprint delivery times. </strong>
+                            <strong><a style={{color:"black"}} href={deliveryLink} target="_blank" rel="noopener noreferrer" >Click here for photo reprint delivery times.</a></strong>
                         </Contact>
 
 
@@ -88,10 +91,13 @@ class Receipt extends Component {
                         {digi}
                         
 
-                        <Total>Total ${(this.state.order.total/100).toFixed(2)}</Total>
+                        <Total>Total ${(this.state.order.total/100).toFixed(2)} (incl. GST)</Total>
 
 
-                        <Contact>If you have any questions about your order please visit the <a href="#">Photo Sales FAQ</a> page or <a href="#">contact us here.</a></Contact>
+
+                        <Contact>If you have any questions about your order please visit the 
+                                <a href={faqLink} target="_blank" rel="noopener noreferrer"> FAQ</a> page or 
+                                <a href={contactLink} rel="noopener noreferrer"> contact us here.</a></Contact>
                     </Col>
 
 

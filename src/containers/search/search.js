@@ -197,6 +197,7 @@ import {ArticleFeed}        from '../../sdk/feed'
                                                 count       = {this.cardCount++}
                                                 admin       = {this.props.admin}
                                                 styles      = {["ps-card-4-mobile", "ps-card-4-tablet", "ps-card-4-desktop"]}
+                                                cardType    = "photo" // cards rendered from search are a single photo, elsewhere an article
                                                 favourite   = {favourite}
                                                 favHandler  = {this.props.toggleFavourite}
                                                 cardHandler = {this.showGallery}

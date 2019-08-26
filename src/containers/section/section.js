@@ -167,7 +167,7 @@ class Section extends Component {
     pinCard = (params) => {
         const galleries = [...this.state.galleries];
         const gallery = { ...galleries[params.position -1] };
-
+        
         axios.post('/home/pin-article', qs.stringify(params)).then((r) => {
             gallery.isPinned = +!gallery.isPinned;
             galleries[params.position -1] = gallery;
@@ -232,6 +232,7 @@ class Section extends Component {
                                                     cardHandler = {this.showGallery}
                                                     swapCards   = {this.swapCards}
                                                     pinCard     = {this.pinCard}
+                                                    admin       = {true}
                                                     styles      = {["ps-card-1-mobile", "ps-card-1-tablet", "ps-card-1-desktop"]}
                                                 />
                                             </Col>
@@ -256,6 +257,7 @@ class Section extends Component {
                                             cardHandler = {this.showGallery}
                                             swapCards   = {this.swapCards}
                                             pinCard     = {this.pinCard}
+                                            admin       = {true}
                                             styles      = {["ps-card-1-mobile", "ps-card-1-tablet", "ps-card-1-desktop"]}
                                         />
 
