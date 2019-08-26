@@ -104,7 +104,7 @@ const Card = props =>  {
     
 
     let admin = false;
-    console.log(props);
+
     if (typeof props.admin !== 'undefined' && props.admin === true) {
         admin = true;
     }
@@ -114,8 +114,8 @@ const Card = props =>  {
         content = props.data.caption
     }
 
-    console.log(content);
 
+    
     if ( props.buttons ) {
         buttons = 
             <div className={buttonStyles}>

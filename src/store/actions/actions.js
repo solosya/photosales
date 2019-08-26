@@ -219,7 +219,7 @@ export const fetchSaved = () => {
 
 
             axios.get('/api/user/user-media?' + qs.stringify({media})).then((r) => {
-                console.log(r);
+
                 const media = r.data.media.map((m) => {
                     return {
                         id       : m.id,
