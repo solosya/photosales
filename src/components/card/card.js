@@ -2,7 +2,7 @@
 import React        from 'react'
 import Dotdotdot    from 'react-dotdotdot'
 import cn           from 'classnames'
-// import cloudinary   from 'cloudinary-core'
+import cloudinary   from 'cloudinary-core'
 
 //Components
 import FavIcon      from '../favourites/favIcon'
@@ -49,12 +49,11 @@ const drop = (e, props) => {
 
 const pin = (e, props) => {
     e.stopPropagation();
-    console.log('pinning card');
-    console.log(props);
+
     if (props.pinCard) {
         const params = {
             id: props.data.id,
-            position: props.count,
+            position: props.count +1, //count is zero based, pinned isn't
             status: props.data.isPinned,
             sourceIsSocial: 0,
         }
@@ -104,18 +103,11 @@ const Card = props =>  {
     
 
     let admin = false;
-
     if (typeof props.admin !== 'undefined' && props.admin === true) {
         admin = true;
     }
 
-    let content = props.data.content
-    if (typeof props.cardType !== "undefined" && props.cardType === 'photo') {
-        content = props.data.caption
-    }
 
-
-    
     if ( props.buttons ) {
         buttons = 
             <div className={buttonStyles}>
@@ -143,8 +135,17 @@ const Card = props =>  {
     // const cloudinaryCore = new cloudinary.Cloudinary({cloud_name: 'cognitives'});
     if (typeof image.path !== 'undefined' && image.path !== null && image.path) {
         const url = image.path.replace('/upload/', '/upload/c_fill,dpr_auto,f_auto,fl_lossy,g_faces:auto,q_auto,w_500/');
+
+        // const url = cloudinaryCore.url(image.path, {
+        //     width: "580",
+        //     height: "384",
+        //     crop: "fit" 
+        // });
+
         imageUrl = [url, url, url];
     }
+
+
 
 
 
@@ -175,7 +176,7 @@ const Card = props =>  {
 
                         {buttons ? buttons : null}
 
-                        <div className={descriptionStyles}><Dotdotdot clamp={3}>{content}</Dotdotdot></div>
+                        <div className={descriptionStyles}><Dotdotdot clamp={3}>{props.data.content}</Dotdotdot></div>
                     
                         {/* <div className={authorStyles}>
                             <div className={timeStyles}>{props.data.publishDate}</div>

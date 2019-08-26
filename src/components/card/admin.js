@@ -9,12 +9,12 @@ const admin = (props) => {
         <div className="btn_overlay articleMenu">
             
             {/* HIDE BUTTON */}
-            <button title           = "Hide" 
+            {/* <button title           = "Hide" 
                     className       = "btnhide social-tooltip HideBlogArticle" 
                     type            = "button" 
                 >
                 <i className        = "fa fa-eye-slash"></i><span className="u-display-none">Hide</span>
-            </button>
+            </button> */}
 
 
 
@@ -29,19 +29,17 @@ const admin = (props) => {
             </button>
             
         
-
-            
-
             {/* PIN BUTTON */}
-            <button onClick     = {(e) => props.pin(e, props.data)}
-                    title       = "Pin" 
-                    className   = {`btnhide social-tooltip PinArticleBtn ${pinStyle}`}
-                    type        = "button" 
-                >
-                <i className    = "fa fa-thumb-tack"></i><span className="u-display-none">Pin</span>
-            </button>
-
-        </div>    
+            {props.data.pinCard &&
+                <button onClick     = {(e) => props.pin(e, props.data)}
+                        title       = "Pin" 
+                        className   = {`btnhide social-tooltip PinArticleBtn ${pinStyle}`}
+                        type        = "button" 
+                    >
+                    <i className    = "fa fa-thumb-tack"></i><span className="u-display-none">Pin</span>
+                </button>
+            }
+        </div>   
     )
 }
 

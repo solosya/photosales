@@ -31,6 +31,7 @@ class Section extends Component {
 
     state = {
         title: "",
+        blogGuid: null,
         galleries: [],
         waypoint: true,
     }
@@ -79,7 +80,8 @@ class Section extends Component {
             let waypoint = true;
 
             const title = r.data.blog ? r.data.blog.title :  "Section";
-            
+            const blogGuid = r.data.blog ? r.data.blog.guid :  null;
+
             let galleries = r.data.articles.map((article) => {
                 const media = article.featuredMedia;
                 return {
@@ -131,7 +133,7 @@ class Section extends Component {
                 galleries = this.state.galleries.concat(galleries);
             }
 
-            this.setState({galleries, waypoint, title});
+            this.setState({galleries, waypoint, title, blogGuid});
         
         }).catch((e) => {
             console.log("ERROR", e);
@@ -148,10 +150,12 @@ class Section extends Component {
 
         const gallery1 = updated[Source];
         const gallery2 = updated[Dest];
-
+        
         updated[Source] = gallery2;
         updated[Dest] = gallery1;
         
+        params['sourceBlogGuid'] = params['destinationBlogGuid'] = this.state.blogGuid;
+
         this.setState({galleries:updated}, () => {
         });
 
@@ -167,13 +171,15 @@ class Section extends Component {
     pinCard = (params) => {
         const galleries = [...this.state.galleries];
         const gallery = { ...galleries[params.position -1] };
-        
+        params['blogGuid'] = this.state.blogGuid;
         axios.post('/home/pin-article', qs.stringify(params)).then((r) => {
             gallery.isPinned = +!gallery.isPinned;
             galleries[params.position -1] = gallery;
 
             this.setState({galleries});
-            NotificationManager.success('Gallery pinned', 'Success', 2000);
+
+            const pinnedText = gallery.isPinned ? "pinned" : "unpinned";
+            NotificationManager.success('Gallery ' + pinnedText, 'Success', 2000);
         }).catch((e) => {
             NotificationManager.error('Could not pin gallery', 'Error', 5000);
         });
