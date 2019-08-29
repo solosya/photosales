@@ -134,7 +134,7 @@ const Card = props =>  {
 
     // const cloudinaryCore = new cloudinary.Cloudinary({cloud_name: 'cognitives'});
     if (typeof image.path !== 'undefined' && image.path !== null && image.path) {
-        const url = image.path.replace('/upload/', '/upload/c_fill,dpr_auto,f_auto,fl_lossy,g_faces:auto,q_auto,w_500/');
+        const url = image.path.replace('/upload/', '/upload/c_fill,dpr_auto,f_auto,fl_lossy,g_faces:auto,q_auto,w_500,h_340/');
 
         // const url = cloudinaryCore.url(image.path, {
         //     width: "580",
