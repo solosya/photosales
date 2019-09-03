@@ -146,7 +146,7 @@ const Card = props =>  {
     }
 
 
-
+    const content = props.data.content || props.data.caption
 
 
 
@@ -176,7 +176,7 @@ const Card = props =>  {
 
                         {buttons ? buttons : null}
 
-                        <div className={descriptionStyles}><Dotdotdot clamp={3}>{props.data.content}</Dotdotdot></div>
+                        <div className={descriptionStyles}><Dotdotdot clamp={3}>{content}</Dotdotdot></div>
                     
                         {/* <div className={authorStyles}>
                             <div className={timeStyles}>{props.data.publishDate}</div>
