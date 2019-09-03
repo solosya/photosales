@@ -68,7 +68,7 @@ import {ArticleFeed}        from '../../sdk/feed'
 
         const options = {
             offset,
-            limit : 3,
+            limit : 15,
             mediaSearch: this.keyword,
             media : [
                 {

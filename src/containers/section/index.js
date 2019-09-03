@@ -42,6 +42,7 @@ class Index extends Component {
                             editUrl     : article.editUrl,
                             isPinned    : parseInt( article.isPinned ),
                             pinnedAt    : parseInt( article.pinnedAt ),
+                            publishDate : article.publishDate,
 
                             images: [{ // featured media only
                                 id       : media.id,
