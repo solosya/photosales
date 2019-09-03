@@ -70,6 +70,7 @@ import {ArticleFeed}        from '../../sdk/feed'
             offset,
             limit : 15,
             mediaSearch: this.keyword,
+            blogid: window.searchid,
             media : [
                 {
                     width: '580',

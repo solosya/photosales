@@ -102,7 +102,8 @@ class Index extends Component {
 
         return this.state.panels.map( (panel, i) => {
 
-            const margin = i > 0 ? "70px": null;
+            // const margin = i > 0 ? "70px": null;
+            const margin = "70px";
 
             return (
                 <Container key={i}>

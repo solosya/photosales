@@ -53,7 +53,7 @@ class Home extends Component {
         return (
             <React.Fragment>
                 
-                <Container data-container="container">
+                {/* <Container data-container="container">
     
                     <Row>
                         <Col classes={["col-12", "col-md-9"]} data-search="searchCol">
@@ -61,7 +61,7 @@ class Home extends Component {
                         </Col>
                     </Row>
     
-                </Container>
+                </Container> */}
 
 
                 <Switch>
