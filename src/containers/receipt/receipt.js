@@ -27,7 +27,9 @@ class Receipt extends Component {
         const orderNumber = params.get('order'); // bar
 
         return axios.get('/api/order?number=' + orderNumber ).then((order) => {
-
+            for (let item of order.data.items) {
+                item.photo.url = item.photo.path.replace('/upload/', '/upload/c_fill,dpr_auto,f_auto,fl_lossy,g_faces:auto,q_auto,w_500,h_340/');
+            }
             this.setState({order: order.data});
         }).catch(() => {
             // console.log("error getting order");
@@ -44,7 +46,7 @@ class Receipt extends Component {
                 <RippleSpinner width="80px" height="80px" />
             </SpinnerContainer>
         )
-
+        
         const printPhotos = this.state.order.items.filter((photo) => {
             return photo.text_field1 === 'print';
         });

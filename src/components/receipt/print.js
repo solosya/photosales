@@ -13,7 +13,7 @@ const print = (props) => {
     return (
         <Photo>
             <Title>{props.data.photo.caption}</Title>
-            <Attribute>Size: {props.data.text_field2}</Attribute>
+            <Attribute><a href={props.data.photo.url} target="_blank" >Size: {props.data.text_field2}</a></Attribute>
             <Attribute>Quantity: {props.data.quantity}</Attribute>
             <Attribute>Cost: ${cost}</Attribute>
         </Photo>
@@ -32,6 +32,12 @@ const Attribute = styled.p`
     font-size: 15px;
     font-weight: 400;
     margin-top:4px;
+    > a {
+        color:#595859;
+        &:hover {
+            cursor: auto;
+        }
+    }
 `
 
 
