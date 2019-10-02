@@ -62,6 +62,8 @@ export class Feed {
             if (this.options.media) {
                 requestData['media'] = this.options.media;
             }
+            requestData['tags'] = this.options.tags;
+            requestData['network'] = this.options.network;
 
             url = '/api/search/media';
             requestType = 'get';
@@ -91,6 +93,8 @@ export class ArticleFeed extends Feed {
             'mediaSearch'       :   options.mediaSearch || null,
             'blogInfo'          :   options.blogInfo    || false,
             'media'             :   options.media       || null,
+            'tags'              :   options.tags        || null,
+            'network'           :   options.network     || null,
             'limit'             :   options.limit,
         };
     }

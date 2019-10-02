@@ -32,7 +32,9 @@ import {ArticleFeed}        from '../../sdk/feed'
 
     state = {
         photos: [],
-        waypoint: true
+        waypoint: true,
+        tags: "extensis,extensis_purchase_allowed",
+        network: "source",
     }
 
     cardCount = 0;
@@ -69,6 +71,8 @@ import {ArticleFeed}        from '../../sdk/feed'
         const options = {
             offset,
             limit : 15,
+            tags : this.state.tags, 
+            network : this.state.network, 
             mediaSearch: this.keyword,
             blogid: window.searchid,
             media : [
