@@ -34,7 +34,7 @@ import {ArticleFeed}        from '../../sdk/feed'
         photos: [],
         waypoint: true,
         tags: "extensis,extensis_purchase_allowed",
-        network: "source",
+        // network: "source",
     }
 
     cardCount = 0;
