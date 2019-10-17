@@ -15,7 +15,9 @@ const panel_3 = (props) => {
                 <Header 
                     linkHandler = {props.linkHandler} 
                     linkUrl     = { "/"+ props.blog.toLowerCase().replace(/\s/g, "-")+ "/" }
-                    title       = {props.title} 
+                    title       = {props.title}
+                    panel       = {true}
+
                 />
             </Col>
 

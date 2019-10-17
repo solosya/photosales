@@ -14,6 +14,7 @@ import Col                  from '../../components/layout/col'
 import Search               from '../../components/search/search'
 import Container            from '../../components/layout/container'
 import SearchContainer      from '../search/search'
+// import ContactText          from '../../components/partials/contact'
 
 //Helpers
 import {ArticleFeed}        from '../../sdk/feed'
@@ -57,6 +58,7 @@ class Home extends Component {
     
                     <Row>
                         <Col classes={["col-12", "col-md-9"]} data-search="searchCol">
+                            {/* <ContactText /> */}
                             <Search searchHandler={this.searchResultsHandler} />
                         </Col>
                     </Row>
