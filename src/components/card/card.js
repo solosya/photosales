@@ -2,7 +2,7 @@
 import React        from 'react'
 import Dotdotdot    from 'react-dotdotdot'
 import cn           from 'classnames'
-import cloudinary   from 'cloudinary-core'
+// import cloudinary   from 'cloudinary-core'
 
 //Components
 import FavIcon      from '../favourites/favIcon'
@@ -103,6 +103,7 @@ const Card = props =>  {
     
 
     let admin = false;
+    
     if (typeof props.admin !== 'undefined' && props.admin === true) {
         admin = true;
     }

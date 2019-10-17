@@ -9,6 +9,8 @@ import Col                  from '../../components/layout/col'
 import Card                 from '../../components/card/card.js'
 import Header               from '../../components/partials/section_header.js'
 import Container            from '../../components/layout/container'
+import Spinner              from '../../components/spinners/RippleSpinner'
+
 // import Button               from '../../components/button/button'
 // import SearchField          from '../../components/search/search'
 // import Modal                from '../../components/modals/modal'
@@ -33,8 +35,9 @@ import {ArticleFeed}        from '../../sdk/feed'
     state = {
         photos: [],
         waypoint: true,
-        tags: "extensis,extensis_purchase_allowed",
-        // network: "source",
+        tags: "photosales",
+        network: "source",
+        searchStatus: null
     }
 
     cardCount = 0;
@@ -63,6 +66,7 @@ import {ArticleFeed}        from '../../sdk/feed'
 
 
     performSearch = (offset = 0) => {
+        this.setState({searchStatus: 'searching'});
 
         if (offset === 0) {
             this.setState({photos: []});
@@ -124,7 +128,8 @@ import {ArticleFeed}        from '../../sdk/feed'
             // first search and no photos so remove all
             if (photos.length === 0) {
                 this.setState({
-                    waypoint: false
+                    waypoint: false,
+                    searchStatus: null
                 });
                 return;
             }
@@ -142,7 +147,7 @@ import {ArticleFeed}        from '../../sdk/feed'
 
             
 
-            this.setState({photos, waypoint});
+            this.setState({photos, waypoint, searchStatus:null});
         
         }).catch(() => {
             // this.setState({photos: panels[1].feed[0].images});
@@ -184,6 +189,23 @@ import {ArticleFeed}        from '../../sdk/feed'
                                 linkUrl     = { false }
                                 title       = "Search results" />
                         </Col>
+
+                        {this.state.photos.length < 1 && this.state.searchStatus === 'searching' &&
+                            <Col classes={["col-12"]}>
+                                <div style={{margin: 'auto', marginTop:'20px', width: '50px' }}>
+                                    <Spinner />
+                                </div>
+                            </Col>
+                        }
+
+                        {this.state.photos.length < 1 && this.state.searchStatus !== 'searching' &&
+                            <Col classes={["col-12"]}>
+                                <div style={{margin: 'auto', marginTop:'20px', width: '50px' }}>
+                                    No search results
+                                </div>
+                            </Col>
+                        }
+
 
 
                         <Col classes={["col-12"]}>
