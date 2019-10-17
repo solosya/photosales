@@ -28,7 +28,8 @@ const admin = (props) => {
                 <i className    = "fa fa-edit"></i><span className="u-display-none">Edit</span>
             </button>
             
-        
+
+
             {/* PIN BUTTON */}
             {props.data.pinCard &&
                 <button onClick     = {(e) => props.pin(e, props.data)}
