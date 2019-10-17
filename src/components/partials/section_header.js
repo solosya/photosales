@@ -3,7 +3,7 @@ import styles           from './sectionheader.module.scss';
 import cn               from 'classnames';
 import FavIcon          from '../favourites/favIcon';
 import CheckoutIcon     from '../CartIcon';
-
+import Styled           from 'styled-components'
 
 const sectionHeader = (props) => {
 
@@ -70,6 +70,9 @@ const sectionHeader = (props) => {
 
             <div className={styles['c-section-head__title-container']}>
                 <h1 onClick={()=> props.linkHandler(props.linkUrl)} className={titleStyles}>{props.title}</h1>
+                { props.panel && 
+                    <ViewAll onClick={()=> props.linkHandler(props.linkUrl)}>View all</ViewAll>
+                }
                 { cart } 
             </div>
 
@@ -77,5 +80,16 @@ const sectionHeader = (props) => {
         </div>
     )
 }
+
+
+const ViewAll = Styled.p`
+    font-size: 18px;
+    font-weight: 500;
+    position: relative;
+    top: 13px;
+    &:hover {
+        cursor:pointer;
+    }
+`
 
 export default sectionHeader;

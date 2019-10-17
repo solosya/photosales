@@ -200,8 +200,8 @@ import {ArticleFeed}        from '../../sdk/feed'
 
                         {this.state.photos.length < 1 && this.state.searchStatus !== 'searching' &&
                             <Col classes={["col-12"]}>
-                                <div style={{margin: 'auto', marginTop:'20px', width: '50px' }}>
-                                    No search results
+                                <div style={{margin: 'auto', marginTop:'20px', width: '250px' }}>
+                                    No images match this search term
                                 </div>
                             </Col>
                         }
