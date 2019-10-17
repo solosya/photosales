@@ -157,7 +157,6 @@ class App extends Component {
 
     render() {
 
-
         const gallery = 
             <Modal 
                 width        = "954px" 
@@ -170,6 +169,7 @@ class App extends Component {
                         favouriteHandler = {this.props.toggleFavourite}
                         checkPhotoStatus = {this.photoStatusHandler}
                         cartHandler      = {this.props.toggleCart}
+                        admin            = {this.props.admin}
                     />
             )} >   
             </Modal>
@@ -305,6 +305,7 @@ const mapStateToProps = state => {
         cart        : state.cart,
         pageTitle   : state.pageTitle,
         isLoggedIn  : state.isLoggedIn,
+        admin       : state.admin,
         env         : state.env,
     }
 };

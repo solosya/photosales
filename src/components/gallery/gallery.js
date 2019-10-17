@@ -191,7 +191,7 @@ class Gallery extends Component {
 
 
     render() {
-        
+
         if (this.state.items.length === 0 && !this.state.complete) return (
             <SpinnerContainer>
                 <RippleSpinner width="70px" height="70px" />
@@ -225,9 +225,11 @@ class Gallery extends Component {
                                 showFullscreenButton    = {false}
                             />
                         </ImageContainer>
+
+                        {this.props.admin &&
+                            <Edit href={`/admin/asset/media/edit?guid=${currentItem.guid}`} target="_blank">Edit in asset manager</Edit>
+                        }
                     </div>
-
-
 
                     <GalleryRight>
 
@@ -359,6 +361,11 @@ const ImageContainer = styled.div`
 
 `
 
+const Edit = styled.a`
+    float: left;
+    margin-top: 10px;
+    font-style: italic;
+`
 
 const GalleryRight = styled.div`
     margin-left: 20px;

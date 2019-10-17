@@ -51,4 +51,4 @@ const Ripple = styled.div`
     }
 `
 
-export default RippleSpinner
+export default RippleSpinner;
