@@ -38,6 +38,7 @@ class Home extends Component {
         return Feed.fetch();
     }
 
+    
     searchResultsHandler = (term) => {
         this.props.history.push(window.basePath + '/search?for=' + term);
     }
