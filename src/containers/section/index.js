@@ -27,8 +27,11 @@ class Index extends Component {
             let panelData = [];
 
             pagePanels.sections.map( (panel, i) => {
-                
+
+                if (typeof panel.active !== 'undefined' && panel.active === false ) return;
+
                 const feed = this.props.feedHandler(panel).then( r => {
+
                     panel.title = r.data.blog ? r.data.blog.title : panel.title;
 
                     panel.feed = r.data.articles.map(article => {
@@ -61,7 +64,10 @@ class Index extends Component {
 
                     return panel;
 
+                }).catch(() => {
+                    return false;
                 });
+
                 return panelData.push(feed);
 
             });
@@ -75,7 +81,7 @@ class Index extends Component {
 
 
         }).catch(() => {
-            // this.setState({panels});
+            console.log('Index error panels/feeds');
         });
 
     }
@@ -102,7 +108,8 @@ class Index extends Component {
 
         return this.state.panels.map( (panel, i) => {
 
-            // const margin = i > 0 ? "70px": null;
+            if (panel === false) return null;
+
             const margin = "70px";
 
             return (

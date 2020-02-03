@@ -50,9 +50,9 @@ if (urlPath[1] === 'page') {
     window.basePath = '/' + urlPath[1] || 'photos';
 }
 
-console.log(window._appJsConfig);
+
 if (window._appJsConfig) {
-    console.log('dispatching', window.pageTitle);
+
     store.dispatch({
         type: actionTypes.LOGIN_ON_REFRESH, 
         isLoggedIn: (true === (window._appJsConfig.isUserLoggedIn === 1)), 
