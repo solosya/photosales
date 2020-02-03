@@ -26,7 +26,7 @@
 
         &__heading {
             margin:0;
-            @include flex-height(22px);
+            // @include flex-height(22px);
             @include font-size(13);
             margin-bottom:10px;
             font-weight: $weightRegular;
