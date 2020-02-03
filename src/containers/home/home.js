@@ -35,6 +35,7 @@ class Home extends Component {
             blogInfo        : true
         };
         const Feed = new ArticleFeed(options);
+
         return Feed.fetch();
     }
 

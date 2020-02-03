@@ -11,6 +11,9 @@
 
 
         &__container {
+            display:flex;
+            @include flex-direction(column, vertical);
+
             padding: 0;
         }
 
@@ -23,16 +26,20 @@
 
         &__heading {
             margin:0;
-            @include flex-height(25px);
-            @include font-size(18);
+            // @include flex-height(22px);
+            @include font-size(13);
             margin-bottom:10px;
-            font-weight: $weightMedium;
+            font-weight: $weightRegular;
+            color:#b2b2b2;
+            order:2;
         }
         &__description {
-            @include font-size(13);
+            @include font-size(16);
             line-height: 1.54;
-            @include flex-height(62px);
-            color: $greyish;
+            @include flex-height(72px);
+            color: black;
+            order:1;
+            margin-right:70px;
         }
 
         &__time {

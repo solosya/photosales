@@ -71,7 +71,9 @@ export class Feed {
 
 
         // console.log(requestType, url + "?" +  qs.stringify( requestData ) );
-        return axios[requestType](url + "?" + qs.stringify( requestData ) );
+        return axios[requestType](url + "?" + qs.stringify( requestData ) ).catch(() => {
+            console.log('Error in feed');
+        });
     }
 }
 
