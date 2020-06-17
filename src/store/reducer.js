@@ -158,7 +158,6 @@ const reducer = (state = intialState, action) => {
             if (!loggedIn) {
                 localStorage.setItem('cart', JSON.stringify(cart));
             }
-
             return {
                 ...state,
                 cart,

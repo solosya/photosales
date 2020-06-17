@@ -1,7 +1,5 @@
 //Libraries
 import React, {Component}   from 'react'
-import axios                from 'axios'
-import qs                   from 'qs'
 import cn                   from 'classnames'
 // import cloudinary           from 'cloudinary-core'
 import styled               from 'styled-components'
@@ -19,7 +17,9 @@ import "react-image-gallery/styles/css/image-gallery.css"
 import "./image-gallery-overrides.scss"
 
 //Utils
-import {imageSet}           from '../../utils/image'
+import {processImages}      from '../../utils/image'
+import getGallery           from '../../sdk/getGallery'
+
 
 class Gallery extends Component {
     state = {
@@ -38,60 +38,10 @@ class Gallery extends Component {
         let images = [];
 
         if ( typeof this.props.gallery.images !== 'undefined') {
-            const articleParams = {
-                articleId: this.props.gallery.id,
-                media: [
-                    {
-                        // width: '580',
-                        height: '385',
-                        watermark: true
-                    },
-                    {
-                        // width: '603',
-                        height: '384',
-                        watermark: false
-                    },
-                    {
-                        width: '500',
-                        watermark: true
-                    }
-                ]
-            };
 
-
-            return axios.get('/api/article/get-article?' + qs.stringify(articleParams)).then(r => {
+            return getGallery(this.props.gallery.id).then(r => {
                 
-                // const cloudinaryCore = new cloudinary.Cloudinary({cloud_name: 'cognitives'});
-    
-                images = r.data.media.map((item) => {
-
-                    // const url = cloudinaryCore.url(item.path, {
-                    //     width: "580",
-                    //     height: "384",
-                    //     crop: "fit" 
-        
-                    // });
-
-                    const {favourite, cart} = this.props.checkPhotoStatus(item.media_id);
-                    
-                    return {
-                        id      : item.media_id,
-                        url     : item.path,
-                        guid    : item.guid,
-                        type    : item.fileType,
-                        title   : item.title,
-                        width   : item.width,
-                        height  : item.height,
-                        caption : item.caption,
-    
-                        cart,       //boolean to show if photo is in the cart
-                        favourite, // boolean to show if photo is in the favourites
-                        original: item.path[0], // needed for gallery
-                        imageSet: imageSet(item.path.slice(1))
-
-                    };
-                });
-            
+                images = processImages(r.data.media, this.props.checkPhotoStatus);
                 this.setState({
                     items: images,
                     complete: true,
@@ -101,32 +51,33 @@ class Gallery extends Component {
             
             
             }).catch((e) => {
+                const items = this.props.gallery.images.map((item) => {
+                    const {favourite, cart} = this.props.checkPhotoStatus(item.id);
+                    return {
+                        ...item,
+                        caption:item.caption,
+                        favourite,
+                        cart,
+                        original: item.url,
+                    };
+                });
     
-                // const items = this.props.gallery.images.map((item) => {
-                //     const {favourite, cart} = this.props.checkPhotoStatus(item.id);
-                //     return {
-                //         ...item,
-                //         caption:item.caption,
-                //         favourite,
-                //         cart,
-                //         original: item.url,
-                //     };
-                // });
-    
-                // this.setState({ items });
+                this.setState({ items });
     
             });
-        }
 
+        }
 
 
         // If gallery showing single photo from favourites/cart instead of article gallery
         const photo = this.props.gallery;
 
         const {favourite, cart} = this.props.checkPhotoStatus(photo.id);
+        const url = typeof photo.url != 'string' ? photo.url[0] : photo.url;
+
         const photoy = {
             id      : photo.media_id,
-            url     : photo.path,
+            url     : photo.path || url,
             guid    : photo.guid,
             title   : photo.title,
             width   : photo.width,
@@ -135,7 +86,7 @@ class Gallery extends Component {
 
             cart,       //boolean to show if photo is in the cart
             favourite, // boolean to show if photo is in the favourites
-            original: photo.url[0], // needed for gallery
+            original: url, // needed for gallery
             imageSet: photo.imageSet
         };
 
@@ -150,6 +101,7 @@ class Gallery extends Component {
     }
 
     toggleFavourite =() => {
+
         const items = [...this.state.items];
         const currentItem = items[this.state.current];
         currentItem.favourite = !currentItem.favourite;

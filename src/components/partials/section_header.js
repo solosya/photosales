@@ -66,12 +66,16 @@ const sectionHeader = (props) => {
 
 
     return (
+        
         <div className={cn(styles['c-section-head'], styles[isLoggedIn])}>
 
             <div className={styles['c-section-head__title-container']}>
                 <h1 onClick={()=> props.linkHandler(props.linkUrl)} className={titleStyles}>{props.title}</h1>
                 { props.panel && 
-                    <ViewAll onClick={()=> props.linkHandler(props.linkUrl)}>View all</ViewAll>
+                    <ViewAll href={props.linkUrl} onClick={(e) => {
+                        e.preventDefault();
+                        props.linkHandler(props.linkUrl)}
+                    }>View all</ViewAll>
                 }
                 { cart } 
             </div>
@@ -82,14 +86,13 @@ const sectionHeader = (props) => {
 }
 
 
-const ViewAll = Styled.p`
+const ViewAll = Styled.a`
     font-size: 18px;
     font-weight: 500;
     position: relative;
     top: 13px;
-    &:hover {
-        cursor:pointer;
-    }
+    text-decoration:none;
+    color:#595859;
 `
 
 export default sectionHeader;

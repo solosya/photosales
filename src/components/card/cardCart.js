@@ -99,7 +99,7 @@ class CardCart extends Component {
 
     render() {
         const count = this.props.count || 0;
-        console.log(this.props);
+
         const image = this.props.data.images && this.props.data.images.length > 0 ? this.props.data.images[0] : this.props.data;
 
         

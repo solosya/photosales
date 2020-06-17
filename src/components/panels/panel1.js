@@ -34,6 +34,7 @@ const panel_1 = (props) => {
                                     panel       = {props.title}
                                     styles      = {["ps-card-1-mobile", "ps-card-1-tablet", "ps-card-1-desktop"]}
                                     cardHandler = {props.showGallery}
+                                    linkHandler = {props.linkHandler} 
                                     admin       = {props.admin}
                                 />
                             </Col>

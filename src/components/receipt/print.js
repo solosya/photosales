@@ -13,7 +13,7 @@ const print = (props) => {
     return (
         <Photo>
             <Title>{props.data.photo.caption}</Title>
-            <Attribute><a href={props.data.photo.url} target="_blank" >Size: {props.data.text_field2}</a></Attribute>
+            <Attribute><a href={props.data.photo.url} target="_blank" rel="noopener noreferrer">Size: {props.data.text_field2}</a></Attribute>
             <Attribute>Quantity: {props.data.quantity}</Attribute>
             <Attribute>Cost: ${cost}</Attribute>
         </Photo>

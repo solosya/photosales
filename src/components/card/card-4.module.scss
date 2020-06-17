@@ -99,9 +99,10 @@
         }
 
         &__description {
-            @include flex-height(65px);
-            @include font-size(18);
+            @include flex-height(53px);
+            @include font-size(20);
             line-height:1.26;
+            margin-bottom:15px;
         }
 
 

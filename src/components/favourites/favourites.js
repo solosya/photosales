@@ -16,6 +16,7 @@ class Favourites extends Component {
         const photo = this.props.favourites[index];
         this.props.showGallery(photo);
     }
+
     render() { 
 
         const cards = this.props.favourites.map( (fav, i) => {
@@ -40,6 +41,7 @@ class Favourites extends Component {
                         admin       = {false}
                         favourite   = {favourite}
                         cart        = {cart}
+                        galleryButtons = {false}
                         buttons
                     ></Card>
             </CSSTransition>;

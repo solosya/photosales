@@ -115,7 +115,6 @@ import {ArticleFeed}        from '../../sdk/feed'
                     caption   : media.caption,
                     imageSet  : imageSet(media.path.slice(1)),
                     original  : media.path[0], // needed for gallery
-                    galleryType: 'photo',
                 }
             });
 
@@ -229,7 +228,8 @@ import {ArticleFeed}        from '../../sdk/feed'
                                                 favHandler  = {this.props.toggleFavourite}
                                                 cardHandler = {this.showGallery}
                                                 cartHandler = {this.props.toggleCart}
-                                
+                                                viewAllButton = {false}
+
                                                 buttons // show cart and fav buttons
                                             />
                                         </Col>
