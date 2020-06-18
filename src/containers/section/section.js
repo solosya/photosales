@@ -236,6 +236,7 @@ class Section extends Component {
                                                     count       = {this.cardCount++}
                                                     panel       = {this.props.title}
                                                     cardHandler = {this.showGallery}
+                                                    linkHandler = {this.props.linkHandler} 
                                                     swapCards   = {this.swapCards}
                                                     pinCard     = {this.pinCard}
                                                     admin       = {true}
@@ -261,6 +262,7 @@ class Section extends Component {
                                             count       = {this.cardCount++}
                                             panel       = {this.props.title}
                                             cardHandler = {this.showGallery}
+                                            linkHandler = {this.props.linkHandler} 
                                             swapCards   = {this.swapCards}
                                             pinCard     = {this.pinCard}
                                             admin       = {true}

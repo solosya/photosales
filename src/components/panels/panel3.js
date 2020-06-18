@@ -33,6 +33,7 @@ const panel_3 = (props) => {
                                 panel={props.title}
                                 admin = {props.admin}
                                 styles = {["ps-card-1-mobile", "ps-card-1-tablet", "ps-card-1-desktop"]}
+                                linkHandler = {props.linkHandler} 
                             />
                         </Col>
                     })}
@@ -50,6 +51,7 @@ const panel_3 = (props) => {
                                 panel={props.title}
                                 admin = {props.admin}
                                 styles = {["ps-card-1-mobile", "ps-card-1-tablet", "ps-card-1-desktop"]}
+                                linkHandler = {props.linkHandler} 
                             />
                         </Col>
                     })}
