@@ -40,11 +40,12 @@ class SingleGallery extends Component {
 
         let photos = [];
         return getGallery(this.props.galleryId).then(r => {
-
+            const title = r.data.title || "";
             photos = processImages(r.data.media, this.props.checkPhotoStatus, "photo");
 
             this.setState({
                 photos,
+                title,
                 complete: true,
             }, () => {
                 // console.log(this.state);
@@ -52,19 +53,22 @@ class SingleGallery extends Component {
         
         
         }).catch((e) => {
+            console.log(this.state);
+            // if (this.state.env === 'dev') {
 
-            const photos = panels[0].feed[0].images.map((item) => {
-                const {favourite, cart} = this.props.checkPhotoStatus(item.id);
-                return {
-                    ...item,
-                    caption:item.caption,
-                    favourite,
-                    cart,
-                    original: item.url,
-                };
-            });
-            const title = panels[0].feed[0].title;
-            this.setState({ photos, title });
+                const photos = panels[0].feed[0].images.map((item) => {
+                    const {favourite, cart} = this.props.checkPhotoStatus(item.id);
+                    return {
+                        ...item,
+                        caption:item.caption,
+                        favourite,
+                        cart,
+                        original: item.url,
+                    };
+                });
+                const title = panels[0].feed[0].title;
+                this.setState({ photos, title });
+            // }
 
         });
     }
@@ -163,6 +167,7 @@ const mapStateToProps = state => {
         cart: state.cart,
         // isLoggedIn: state.isLoggedIn,
         // pageTitle: state.pageTitle
+        env: state.env,
     }
 };
 
