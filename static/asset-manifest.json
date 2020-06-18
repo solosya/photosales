@@ -8,9 +8,9 @@
   "runtime~main.js": "/js/runtime~main.js",
   "runtime~main.js.map": "/js/runtime~main.js.map",
   "media/notifications.css": "/media/notification.5bee74ca.svg",
-  "css/1.chunk.css.map": "/css/1.chunk.css.map",
   "css/main.chunk.css.map": "/css/main.chunk.css.map",
+  "css/1.chunk.css.map": "/css/1.chunk.css.map",
   "index.html": "/index.html",
-  "precache-manifest.c7317a340552cb968ba4b255df2c4498.js": "/precache-manifest.c7317a340552cb968ba4b255df2c4498.js",
+  "precache-manifest.f6348f7c6cac5452e18452f491093777.js": "/precache-manifest.f6348f7c6cac5452e18452f491093777.js",
   "service-worker.js": "/service-worker.js"
 }

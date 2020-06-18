@@ -6,18 +6,19 @@ const getGallery = (id) => {
     const articleParams = {
         articleId: id,
         media: [
-            {
-                width: '580',
+            { //desktop
+                // width: '580',
                 height: '385',
                 watermark: true
             },
-            {
+            { //tablet
                 // width: '603',
                 height: '384',
                 watermark: false
             },
-            {
+            { // mobile
                 width: '500',
+                height: '540',
                 watermark: true
             }
         ]
