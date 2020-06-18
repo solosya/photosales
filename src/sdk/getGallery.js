@@ -7,7 +7,7 @@ const getGallery = (id) => {
         articleId: id,
         media: [
             {
-                // width: '580',
+                width: '580',
                 height: '385',
                 watermark: true
             },

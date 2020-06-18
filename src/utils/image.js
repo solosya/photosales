@@ -24,6 +24,7 @@ export const processImages = (images, checkStatus) => {
         return {
             id      : item.media_id,
             url     : item.path,
+            // path    : item.path,
             guid    : item.guid,
             type    : item.fileType,
             title   : item.title,
