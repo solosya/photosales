@@ -79,7 +79,7 @@ class Gallery extends Component {
             id      : photo.media_id,
             url     : photo.path || url,
             guid    : photo.guid,
-            title   : photo.title,
+            title   : "", // the title on a single photo is often the filename so remove
             width   : photo.width,
             height  : photo.height,
             caption : photo.caption,
