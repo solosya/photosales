@@ -9,7 +9,7 @@
         position:relative;
         justify-content: space-between;
         @media #{$mobile} {
-            flex-direction:column;
+            // flex-direction:column;
         }
     }
     
@@ -34,7 +34,7 @@
         color:$greyish;
 
         @media #{$mobile} {
-            border-bottom: 1px solid $darkergrey;
+            // border-bottom: 1px solid $darkergrey;
         }
 
         &--40 {

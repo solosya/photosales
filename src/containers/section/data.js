@@ -26,7 +26,7 @@ panels.forEach((panel) => {
         {
             id: 7,
             date: "25th February 2019",
-            title: "cats and lego",
+            title: "cats and lego and a mouse and things",
             content: "Cats and dogs living together",
             editUrl: "editurl",
             isPinned: 1,
@@ -70,7 +70,7 @@ panels.forEach((panel) => {
         },
         {
             id: 8,
-            title: "Prince",
+            title: "Prince doing singing and dancing very well thank you very much",
             date: "25th April 2010",
             content: "Cats and dogs living together",
             editUrl: "editurl",
