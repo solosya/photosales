@@ -70,6 +70,8 @@ class Gallery extends Component {
 
 
         // If gallery showing single photo from favourites/cart instead of article gallery
+        const title = this.props.gallery.title;
+        this.props.gallery.title = "";
         const photo = this.props.gallery;
 
         const {favourite, cart} = this.props.checkPhotoStatus(photo.id);
@@ -79,7 +81,7 @@ class Gallery extends Component {
             id      : photo.media_id,
             url     : photo.path || url,
             guid    : photo.guid,
-            title   : "", // the title on a single photo is often the filename so remove
+            title   : title, // the title on a single photo is often the filename so remove
             width   : photo.width,
             height  : photo.height,
             caption : photo.caption,
@@ -154,7 +156,7 @@ class Gallery extends Component {
 
         const currentItem = this.state.items[this.state.current];
         const cartButtonText = currentItem.cart ? "REMOVE FROM CART": "ADD TO CART" ;
-
+        console.log(this.props.gallery);
 
         return (
 
