@@ -12,7 +12,7 @@ const getGallery = (id) => {
                 watermark: true
             },
             { //tablet
-                // width: '603',
+                width: '580',
                 height: '384',
                 watermark: false
             },
