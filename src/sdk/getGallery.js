@@ -18,7 +18,7 @@ const getGallery = (id) => {
             },
             { // mobile
                 width: '500',
-                height: '540',
+                height: '400',
                 watermark: true
             }
         ]
