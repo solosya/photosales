@@ -33,6 +33,17 @@ panels.forEach((panel) => {
             pinnedAt: 2,
             images: [
                 {
+                    id: 'j49fj3ffsdafsdgsdsgdf8rj',
+                    guid: 'fadsffhgfghg',
+                    type: 'jpeg',
+                    title: "Plant",
+                    width: '509',
+                    height: '1200',
+                    fileSize: '1024',
+                    caption: "Vivamus at vesti , tempus eges bulum ante, ac dapibus velit. In tristique est ac dui ornare, tempus egesmauris blandit.  so that i can see it's wokring and then celebrate a job well done",
+                    url: "https://res.cloudinary.com/cognitives/image/upload/ljmveksnjas1tiqywvtl"
+                },
+                {
                     id: 'j49fj3fgsdsgdf8rj',
                     guid: 'jkd93jds8984jk39399ikdkd',
                     type: 'jpeg',

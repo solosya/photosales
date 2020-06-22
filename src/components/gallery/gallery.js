@@ -38,8 +38,8 @@ class Gallery extends Component {
         let images = [];
 
         if ( typeof this.props.gallery.images !== 'undefined') {
-
-            return getGallery(this.props.gallery.id).then(r => {
+                                                //    ⬇︎ don't crop
+            return getGallery(this.props.gallery.id, false).then(r => {
                 
                 images = processImages(r.data.media, this.props.checkPhotoStatus);
                 this.setState({

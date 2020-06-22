@@ -1,7 +1,7 @@
 import axios        from  'axios'
 import qs           from  'qs'
 
-const getGallery = (id) => {
+const getGallery = (id, crop = true) => {
 
     const articleParams = {
         articleId: id,
@@ -12,12 +12,12 @@ const getGallery = (id) => {
                 watermark: true
             },
             { //tablet
-                width: '580',
+                width: crop ? '580' : 0,
                 height: '384',
                 watermark: false
             },
             { // mobile
-                width: '500',
+                width: crop ? '500' : 0,
                 height: '400',
                 watermark: true
             }
