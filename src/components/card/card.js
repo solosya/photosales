@@ -3,6 +3,7 @@ import React        from 'react'
 import Dotdotdot    from 'react-dotdotdot'
 import cn           from 'classnames'
 // import cloudinary   from 'cloudinary-core'
+import styled       from 'styled-components'
 
 //Components
 import FavIcon      from '../favourites/favIcon'
@@ -93,22 +94,35 @@ const Card = props =>  {
     const categoryStyles =      cn([card1["c-cards-view__category"],    card2["c-cards-view__category"],    card4["c-cards-view__category"],       card5["c-cards-view__category"]]);
     const headingStyles =       cn([card1["c-cards-view__heading"],     card2["c-cards-view__heading"],     card4["c-cards-view__heading"],        card5["c-cards-view__heading"]]);
     const descriptionStyles =   cn([card1["c-cards-view__description"], card2["c-cards-view__description"], card4["c-cards-view__description"],    card5["c-cards-view__description"]]);
+    const viewButtonStyles =    cn([card1["c-cards-view__view-buttons"], card2["c-cards-view__view-buttons"], card4["c-cards-view__view-buttons"],    card5["c-cards-view__view-buttons"]]);
     // const authorStyles =        cn([card1["c-cards-view__author"],      card2["c-cards-view__author"],      card4["c-cards-view__author"],         card5["c-cards-view__author"]]);
     // const timeStyles =          cn([card1["c-cards-view_time"],         card2["c-cards-view_time"],         card4["c-cards-view_time"],            card5["c-cards-view_time"]]);
 
     const count = props.count || 0;
     const panel = props.panel || null;
     const image = props.data.images && props.data.images.length > 0 ? props.data.images[0] : props.data;
-    let buttons = null;
-    
 
+
+    // we can turn the quick view and view all gallery buttons off per card
+    let galleryButtons = true;
+    if ( typeof props.galleryButtons !== 'undefined' && props.galleryButtons === false) {
+        galleryButtons = false;
+    }
+
+    // If gallery buttons are enabled, we sometimes don't want the view all (gallery page/search page)
+    let viewAllButton = true;
+    if ( typeof props.viewAllButton !== 'undefined' && props.viewAllButton === false) {
+        viewAllButton = false;
+    }
+
+    // Admin lest a user pin and swap cards
     let admin = false;
-    
     if (typeof props.admin !== 'undefined' && props.admin === true) {
         admin = true;
     }
 
-
+    // Shopping cart and favourite buttons
+    let buttons = null;
     if ( props.buttons ) {
         buttons = 
             <div className={buttonStyles}>
@@ -152,7 +166,8 @@ const Card = props =>  {
 
 
     return (
-        <div onClick={() => { props.cardHandler(count, panel)}} className={cn(styles)}>
+        // if gallery buttons are included then the click event should do nothing
+        <div className={cn(styles)} onClick={() => { !galleryButtons && props.cardHandler(count, panel)}}>
             <div  
                 onDragStart = {(e) => dragStart(e, props)}
                 onDragOver  = {(e) => {e.preventDefault();}}
@@ -178,7 +193,15 @@ const Card = props =>  {
                         {buttons ? buttons : null}
 
                         <div className={descriptionStyles}><Dotdotdot clamp={3}>{content}</Dotdotdot></div>
-                    
+                        
+                        {galleryButtons && 
+                            <div className={viewButtonStyles}>
+                                <Quickview onClick={() => { props.cardHandler(count, panel)}} >Quick view</Quickview>
+                                {viewAllButton &&
+                                    <Viewall onClick={()=> props.linkHandler("/single-gallery/" + props.data.id)}>View All</Viewall>
+                                }
+                            </div>
+                        }
                         {/* <div className={authorStyles}>
                             <div className={timeStyles}>{props.data.publishDate}</div>
                         </div> */}
@@ -193,5 +216,42 @@ const Card = props =>  {
         </div>
     )
 }
+
+
+const Quickview = styled.button`
+    height:35px;
+    width: 103px;
+    background-color:#4a90e2;
+    text-transform:uppercase;
+    border:none;
+    color:white;
+    font-size: 11px;
+    &:hover {
+        cursor: pointer
+    }
+    &:focus{
+        outline:0;
+        background-color:#7a90e2;
+
+    }
+`
+
+const Viewall = styled.button`
+    height:35px;
+    width: 103px;
+    border: 1px solid #4a90e2;
+    text-transform:uppercase;
+    background-color:white;
+    color:#4a90e2;
+    font-size: 11px;
+    font-weight:400;
+    &:hover {
+        cursor: pointer
+    }
+    &:focus{
+        outline:0;
+    }
+`
+
 
 export default Card;

@@ -8,18 +8,19 @@ import PanelOne             from '../../components/panels/panel1'
 import PanelTwo             from '../../components/panels/panel2'
 import PanelThree           from '../../components/panels/panel3'
 
+// import devFeed              from '../../store/devData/feed'        
+
 //Data
-// import {panels} from './data';
+import {panels} from './data';
 
 class Index extends Component {
-        state = {
-            panels: [],
-        }
+    state = {
+        panels: [],
+    }
 
     componentDidMount () {
 
         this.getThemeConfig().then( (r) => {
-
             const pages = r.data.data.page;
             const pagePanels = pages.photos || null;
             if (!pagePanels) return;
@@ -28,7 +29,9 @@ class Index extends Component {
 
             pagePanels.sections.map( (panel, i) => {
 
-                if (typeof panel.active !== 'undefined' && panel.active === false ) return;
+                if (typeof panel.active !== 'undefined' && panel.active === false ) {
+                    return false;
+                }
 
                 const feed = this.props.feedHandler(panel).then( r => {
 
@@ -73,15 +76,14 @@ class Index extends Component {
             });
 
             axios.all(panelData).then((results) => {
-
-
                 this.setState({panels: results});
-
             });
 
 
-        }).catch(() => {
+        }).catch((e) => {
+            // console.log(e);
             console.log('Index error panels/feeds');
+            this.setState({panels: panels});
         });
 
     }

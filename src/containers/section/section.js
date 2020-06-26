@@ -24,7 +24,7 @@ import {ArticleFeed}        from '../../sdk/feed'
 import 'react-notifications/lib/notifications.css';
 
 //Data
-// import {panels} from './data';
+import {panels} from './data';
 
 
 class Section extends Component {
@@ -137,7 +137,9 @@ class Section extends Component {
         
         }).catch((e) => {
             console.log("ERROR", e);
-            // this.setState({galleries: panels[1].feed[0].images});
+            if (this.state.env === 'dev') {
+                this.setState({galleries: panels[1].feed[0].images});
+            }
         });
     }
 
@@ -236,6 +238,7 @@ class Section extends Component {
                                                     count       = {this.cardCount++}
                                                     panel       = {this.props.title}
                                                     cardHandler = {this.showGallery}
+                                                    linkHandler = {this.props.linkHandler} 
                                                     swapCards   = {this.swapCards}
                                                     pinCard     = {this.pinCard}
                                                     admin       = {true}
@@ -261,6 +264,7 @@ class Section extends Component {
                                             count       = {this.cardCount++}
                                             panel       = {this.props.title}
                                             cardHandler = {this.showGallery}
+                                            linkHandler = {this.props.linkHandler} 
                                             swapCards   = {this.swapCards}
                                             pinCard     = {this.pinCard}
                                             admin       = {true}
@@ -296,9 +300,10 @@ class Section extends Component {
 const mapStateToProps = state => {
     return {
         favourites : state.favourites,
-        // cart: state.cart,
+        cart: state.cart,
         // isLoggedIn: state.isLoggedIn,
         // pageTitle: state.pageTitle
+        env: state.env
     }
 };
 

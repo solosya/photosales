@@ -75,6 +75,7 @@ class LoginPage extends Component {
                     cardHandler = {() => { return false;}}
                     favHandler  = {this.props.favHandler}
                     cartHandler = {this.props.cartHandler}
+                    galleryButtons = {false}
                     favourite
                 ></Card>
 

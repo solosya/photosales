@@ -14,3 +14,28 @@ export const imageSet = images => {
     });
     return photos;
 }
+
+
+export const processImages = (images, checkStatus) => {
+    return images.map((item) => {
+
+        const {favourite, cart} = checkStatus(item.media_id);
+        
+        return {
+            id      : item.media_id,
+            url     : item.path,
+            // path    : item.path,
+            guid    : item.guid,
+            type    : item.fileType,
+            title   : item.title,
+            width   : item.width,
+            height  : item.height,
+            caption : item.caption,
+            cart,       //boolean to show if photo is in the cart
+            favourite, // boolean to show if photo is in the favourites
+            original: item.path[0], // needed for gallery
+            imageSet: imageSet(item.path.slice(1)),
+            // galleryType: galleryType,
+        };
+    });
+}

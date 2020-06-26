@@ -2,9 +2,9 @@
 
 
 .c-cards-view {
-    &:hover {
-        cursor:pointer;
-    }
+    // &:hover {
+    //     cursor:pointer;
+    // }
     
     @include flexbox();
     height: 100%;
@@ -107,6 +107,31 @@
         @include flex-direction(row, horizontal);
         
     }
+
+
+    &__view-buttons {
+        @include flexbox();
+        @include flex-direction(row, horizontal);
+        @include justify-content(space-between);
+        flex-wrap:wrap;
+        margin-top:10px;
+        // top:22px;
+        // right:10px;
+        // height:46px;
+        // max-height:60px;
+        // margin-top: 13px;
+        >button {
+            margin-top:4px;
+            @media #{$desktop-small} {
+                flex-grow:1;
+            }
+            @media #{$tablet} {
+                flex-grow:1;
+            }
+
+        }
+    }
+
 
     // &__favourite {
     //     @include flex-width(20px);

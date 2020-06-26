@@ -141,7 +141,6 @@ export const toggleFavourite = (p) => {
 export const toggleCart = (p) => {
 
     const photo = {...p};
-
     return dispatch => {
 
         const loggedIn = store.getState()['isLoggedIn'];
@@ -173,6 +172,7 @@ export const toggleCart = (p) => {
         } else {
             // use local storage
             photo.saveType = 'cart';
+
             dispatch({
                 type: TOGGLE_CART,
                 photo: photo

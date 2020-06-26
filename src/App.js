@@ -50,7 +50,6 @@ if (urlPath[1] === 'page') {
     window.basePath = '/' + urlPath[1] || 'photos';
 }
 
-
 if (window._appJsConfig) {
 
     store.dispatch({
@@ -87,7 +86,6 @@ class App extends Component {
     }
 
     checkFavouriteStatus = (photoid) => {
-        
         const found = this.props.favourites.filter((item) => {
             return photoid === item.id;
         });
@@ -114,24 +112,22 @@ class App extends Component {
     }
 
     showGallery = (gallery) => {
-
-        const galleryType = gallery.galleryType === 'photo' ? 'photo' : 'article';
         this.setState({
             selectedGallery: gallery,
-            galleryType,
             showGallery: true,
             showFavourites : false
         }, () => {
             // console.log(this.state);
         });
-        document.body.setAttribute('style', 'overflow: hidden;height:100%;')
+        document.body.setAttribute('style', 'overflow: hidden;')
     }
 
     closeGallery = () => {
         this.setState({
             showGallery: false
         });
-        document.body.removeAttribute('style', 'overflow: hidden;height:100%;')
+        document.body.removeAttribute('style', 'overflow: hidden;')
+
     }
 
 
@@ -143,14 +139,14 @@ class App extends Component {
             }, () => {
                 // console.log(this.state);
             });
-            document.body.setAttribute('style', 'overflow: hidden;height:100%;')
+            document.body.setAttribute('style', 'overflow: hidden;')
         }
     }
     closeFavourites = () => {
         this.setState({
             showFavourites: false
         });
-        document.body.removeAttribute('style', 'overflow: hidden;height:100%;')
+        document.body.removeAttribute('style', 'overflow: hidden;')
     }
 
 
@@ -165,7 +161,7 @@ class App extends Component {
                 children     = { () => (
                     <Gallery 
                         gallery          = {this.state.selectedGallery} 
-                        galleryType      = {this.state.galleryType}
+                        // galleryType      = {this.state.galleryType}
                         favouriteHandler = {this.props.toggleFavourite}
                         checkPhotoStatus = {this.photoStatusHandler}
                         cartHandler      = {this.props.toggleCart}
@@ -240,42 +236,52 @@ class App extends Component {
 
                     <Route path={window.basePath + "/login"} render={ () => 
                         <EnsureLoggedOutContainer>
-                            <Login  linkHandler={this.linkHandler} 
-                                    photoStatusHandler={this.photoStatusHandler}
+                            <Login  linkHandler         = {this.linkHandler} 
+                                    photoStatusHandler  = {this.photoStatusHandler}
                             />
                         </EnsureLoggedOutContainer>
                     } />
 
                     <Route path={window.basePath + "/checkout"} render={ () => 
                         <EnsureLoggedInContainer>
-                            <Checkout   linkHandler={this.linkHandler} 
-                                        photoStatusHandler={this.photoStatusHandler} 
-                                        showGallery = {this.showGallery}
+                            <Checkout   linkHandler         = {this.linkHandler} 
+                                        photoStatusHandler  = {this.photoStatusHandler} 
+                                        showGallery         = {this.showGallery}
 
                             /> 
                         </EnsureLoggedInContainer>
                     } />
 
                     <Route path={window.basePath + "/search"} render={ () => 
-                        <Home   linkHandler={this.linkHandler}
-                                photoStatusHandler={this.photoStatusHandler} 
-                                showGallery = {this.showGallery}
+                        <Home   linkHandler         = {this.linkHandler}
+                                photoStatusHandler  = {this.photoStatusHandler} 
+                                showGallery         = {this.showGallery}
                         />
                     } />
 
 
                     <Route path={window.basePath + "/thanks"} render={ () => 
-                        <Receipt    linkHandler={this.linkHandler} 
-                                    photoStatusHandler={this.photoStatusHandler} 
-                                    showGallery = {this.showGallery}
+                        <Receipt    linkHandler         = {this.linkHandler} 
+                                    photoStatusHandler  = {this.photoStatusHandler} 
+                                    showGallery         = {this.showGallery}
+                            />
+                        } />
+
+
+                    <Route path={window.basePath + "/single-gallery/:id"} render={ () => 
+                        <Home   linkHandler         = {this.linkHandler}
+                                checkPhotoStatus    = {this.photoStatusHandler}
+                                showGallery         = {this.showGallery}
+                                gallery             = {this.state.selectedGallery} 
+
                             />
                         } />
 
 
                     <Route path={window.basePath + "/:section"} render={ () => 
-                        <Home   linkHandler={this.linkHandler}
-                                photoStatusHandler={this.photoStatusHandler} 
-                                showGallery = {this.showGallery}
+                        <Home   linkHandler         = {this.linkHandler}
+                                photoStatusHandler  = {this.photoStatusHandler} 
+                                showGallery         = {this.showGallery}
                             />
                         } />
                     
@@ -284,9 +290,9 @@ class App extends Component {
 
 
                     <Route path={window.basePath} render={ () => 
-                        <Home   linkHandler={this.linkHandler} 
-                                photoStatusHandler={this.photoStatusHandler} 
-                                showGallery = {this.showGallery}
+                        <Home   linkHandler         = {this.linkHandler} 
+                                photoStatusHandler  = {this.photoStatusHandler} 
+                                showGallery         = {this.showGallery}
                             />
                         } />
 

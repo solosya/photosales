@@ -58,6 +58,7 @@ const Window = styled.div`
     /* mobile */
     @media screen and (max-width :767px) {
         width:auto;
+        min-width:90%;
         max-width:90%;
         padding:20px 18px 20px 18px;
 

@@ -11,7 +11,7 @@
 
 
         &__container {
-            padding: 30px 25px 30px 25px;
+            padding: 15px 20px 15px 20px;
         }
 
         &__category {
@@ -52,23 +52,6 @@
             }
         }
 
-        &.social {
-
-            .social-icon {
-                @include size(30px);
-
-                &:before {
-                    @include font-size(13);
-                    line-height: 32px;
-                }
-            }
-
-            &.without-image {
-                .c-cards-view__container {
-                    padding-top: 40px;
-                }
-            }
-        }
 
     }
 }
@@ -110,35 +93,6 @@
 
         &__description {
             display:none;
-        }
-
-
-        &.without-image {
-
-            .c-cards-view {
-                &__container {
-                    padding: 30px;
-                }
-                &__category {
-                    margin-bottom: 50px;
-                }
-        
-                &__heading {
-                    margin-bottom: 10px;
-                }
-                &__description {
-                    margin-top: 5px;
-                    @include flex-height(225px);
-                    @include font-size(15);
-                    line-height: 1.9;
-                }
-        
-                &__author {
-                    margin-top:35px;
-                }
-
-
-            }
         }
 
     }

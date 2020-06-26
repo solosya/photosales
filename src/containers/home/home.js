@@ -7,6 +7,7 @@ import {Route, Switch}      from 'react-router-dom'
 //Routes
 import Index                from '../section/index'
 import Section              from '../section/section'
+import SingleGallery        from '../section/singlegallery'
 
 //Components
 import Row                  from '../../components/layout/row'
@@ -79,9 +80,19 @@ class Home extends Component {
                         />
                     } />
 
+                    <Route path={window.basePath + "/single-gallery/:id"} render={() => {
+                        return <SingleGallery {...this.state}
+                            galleryId   = {this.props.match.params.id}
+                            gallery     = {this.props.gallery}
+                            showGallery = {this.props.showGallery} 
+                            linkHandler = {this.props.linkHandler}
+                            admin       = {this.props.admin}
+                            checkPhotoStatus    = {this.props.checkPhotoStatus}
+                        /> 
+                    } }/>
 
 
-                    <Route path={window.basePath + "/:section"} render={(props) => 
+                    <Route path={window.basePath + "/:section"} render={() => 
                         <Section {...this.state}
                             section     = {this.props.match.params.section}
                             showGallery = {this.props.showGallery} 
@@ -90,7 +101,7 @@ class Home extends Component {
                         /> 
                     } />
 
-                    <Route path={window.basePath} render={(props) => 
+                    <Route path={window.basePath} render={() => 
                         <Index {...this.state} 
                             showGallery = {this.props.showGallery} 
                             linkHandler = {this.props.linkHandler} 

@@ -32,6 +32,7 @@
             font-weight: $weightRegular;
             color:#b2b2b2;
             order:2;
+            margin-top:15px;
         }
         &__description {
             @include font-size(16);
@@ -86,33 +87,7 @@
 
 
         &__description {
-            @include flex-height(60px);
-        }
-
-
-        &.without-image {
-
-            .c-cards-view {
-                &__container {
-                    padding: 30px;
-                }
-        
-                &__heading {
-                    margin-bottom: 10px;
-                }
-                &__description {
-                    margin-top: 5px;
-                    // @include flex-height(225px);
-                    @include font-size(15);
-                    line-height: 1.9;
-                }
-        
-                &__author {
-                    margin-top:35px;
-                }
-
-
-            }
+            @include flex-height(70px);
         }
 
     }
