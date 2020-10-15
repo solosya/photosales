@@ -72,7 +72,7 @@ class Receipt extends Component {
 
 
         const digi = digitalPhotos.map((p) => {
-            return <Digital data={p} />
+            return <Digital color={color} data={p} />
         });
 
 
