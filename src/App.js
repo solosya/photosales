@@ -59,7 +59,8 @@ if (window._appJsConfig) {
         live: true,
         pageTitle: window.pageTitle,
         stripeKey: window.stripePublic,
-        env: window.env
+        env: window.env,
+        themeColor: window.themeColor || "#213f9e"
     });
     
 }

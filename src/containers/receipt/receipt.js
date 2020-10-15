@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
+import {connect}            from 'react-redux'
+
 import { withRouter }       from 'react-router'
-import styled               from 'styled-components'
+import styled, {css}        from 'styled-components'
 
 import axios                from 'axios'
 
@@ -19,7 +21,7 @@ import RippleSpinner        from '../../components/spinners/RippleSpinner'
 class Receipt extends Component {
     
     state = {
-        order: null
+        order: null,
     }
     
     componentDidMount() {
@@ -47,6 +49,14 @@ class Receipt extends Component {
             </SpinnerContainer>
         )
         
+        // #007bff
+        let color = false;
+        if (this.props.themeColor) {
+            color = this.props.themeColor;
+        }
+    
+
+
         const printPhotos = this.state.order.items.filter((photo) => {
             return photo.text_field1 === 'print';
         });
@@ -87,9 +97,9 @@ class Receipt extends Component {
                         </Contact>
 
 
-                        {print.length > 0 && <CategoryHeader>Prints</CategoryHeader>}
+                        {print.length > 0 && <CategoryHeader color={this.props.themeColor}>Prints</CategoryHeader>}
                         {print}
-                        {digi.length > 0 && <CategoryHeader>Digital downloads</CategoryHeader>}
+                        {digi.length > 0 && <CategoryHeader color={this.props.themeColor}>Digital downloads</CategoryHeader>}
                         {digi}
                         
 
@@ -98,8 +108,9 @@ class Receipt extends Component {
 
 
                         <Contact>If you have any questions about your order please visit the 
-                                <a href={faqLink} target="_blank" rel="noopener noreferrer"> FAQ</a> page or 
-                                <a href={contactLink} rel="noopener noreferrer"> contact us here.</a></Contact>
+                            <Link color={color} href={faqLink} target="_blank" rel="noopener noreferrer"> FAQ</Link> page or 
+                            <Link color={color} href={contactLink} rel="noopener noreferrer"> contact us here.</Link>
+                        </Contact>
                     </Col>
 
 
@@ -132,5 +143,17 @@ const Contact = styled.p`
     line-height:1.67;
 `
 
+const Link = styled.a`
+    ${props => props.color && css`
+        color: ${props.color};
+    `}
+`
 
-export default withRouter(Receipt);
+const mapStateToProps = state => {
+    return {
+        themeColor: state.themeColor
+    }
+};
+
+
+export default withRouter( connect(mapStateToProps)(Receipt) );
