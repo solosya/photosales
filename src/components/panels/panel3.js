@@ -10,13 +10,16 @@ const panel_3 = (props) => {
 
     return (
 
-        <Row key={props.title}  margin={props.margin || ""}>
+        <Row key={props.title}  margin={props.margin || ""} data-panel="Panel 3">
             <Col classes={["col-12"]}>
                 <Header 
                     linkHandler = {props.linkHandler} 
                     linkUrl     = { "/"+ props.blog.toLowerCase().replace(/\s/g, "-")+ "/" }
                     title       = {props.title}
                     panel       = {true}
+                    fontSize    = '23px'
+                    fontWeight  = '300'
+                    marginBottom= '7px'
 
                 />
             </Col>

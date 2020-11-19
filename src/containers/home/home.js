@@ -62,7 +62,7 @@ class Home extends Component {
                     <Row>
                         <Col classes={["col-12", "col-md-9"]} data-search="searchCol">
                             {/* <ContactText /> */}
-                            <Search searchHandler={this.searchResultsHandler} />
+                            <Search color={this.props.color} searchHandler={this.searchResultsHandler} />
                         </Col>
                     </Row>
     
@@ -127,6 +127,7 @@ const mapStateToProps = state => {
         pageTitle   : state.pageTitle,
         favourites  : state.favourites,
         isLoggedIn  : state.isLoggedIn,
+        color       : state.themeColor,
         admin       : state.admin
     }
 };

@@ -3,7 +3,7 @@ import styles           from './sectionheader.module.scss';
 import cn               from 'classnames';
 import FavIcon          from '../favourites/favIcon';
 import CheckoutIcon     from '../CartIcon';
-import Styled           from 'styled-components'
+import Styled, {css}    from 'styled-components'
 
 const sectionHeader = (props) => {
 
@@ -11,16 +11,31 @@ const sectionHeader = (props) => {
 
     
     const titleStyleArr = [styles['c-section-head__title']];
-    if (props.larger) {
-        titleStyleArr.push(styles["c-section-head__title--40"]);
-    }
-    if (props.medium) {
-        titleStyleArr.push(styles["c-section-head__title--30"]);
+    let fontSize = '28px';
+    let fontWeight = '400';
+    let fontColor = null;
+    let margin = null;
+
+
+    if (props.marginBottom) {
+        margin = props.marginBottom;
     }
 
-    if (props.thin) {
-        titleStyleArr.push(styles["c-section-head__title--light"]);
+    if (props.fontColor) {
+        fontColor = props.fontColor;
     }
+    if (props.fontSize) {
+        fontSize = props.fontSize;
+        // titleStyleArr.push(styles["c-section-head__title--40"]);
+    }
+    if (props.fontWeight) {
+        fontWeight = props.fontWeight;
+        // titleStyleArr.push(styles["c-section-head__title--30"]);
+    }
+    // if (props.panel) {
+    //     // titleStyleArr.push(styles["c-section-head__title--23"]);
+    // }
+
 
     if (props.loggedIn && props.loggedIn === true) {
         isLoggedIn = "c-section-head__loggedin";
@@ -66,11 +81,20 @@ const sectionHeader = (props) => {
 
 
     return (
-        
+
         <div className={cn(styles['c-section-head'], styles[isLoggedIn])}>
 
             <div className={styles['c-section-head__title-container']}>
-                <h1 onClick={()=> props.linkHandler(props.linkUrl)} className={titleStyles}>{props.title}</h1>
+                <Title  
+                    onClick={()=> props.linkHandler(props.linkUrl)}  
+                    color={fontColor}
+                    size={fontSize}
+                    weight={fontWeight}
+                    margin={margin}
+                >
+                    {props.title}</Title>
+
+                {/* <h1 onClick={()=> props.linkHandler(props.linkUrl)} className={titleStyles}>{props.title}</h1> */}
                 { props.panel && 
                     <ViewAll href={props.linkUrl} onClick={(e) => {
                         e.preventDefault();
@@ -85,14 +109,36 @@ const sectionHeader = (props) => {
     )
 }
 
+const Title = Styled.h1`
+    font-family: 'Roboto';
+    cursor:pointer;
+    margin:0;
+    font-size: 28px;
+    font-weight: 500;
+
+    ${props => props.color && css`
+        color: ${props.color};
+    `}
+    ${props => props.size && css`
+        font-size: ${props.size};
+    `}
+    ${props => props.weight && css`
+        font-weight: ${props.weight};
+    `}
+    ${props => props.margin && css`
+        margin-bottom: ${props.margin};
+    `}
+
+`
 
 const ViewAll = Styled.a`
-    font-size: 18px;
+    font-size: 12px;
     font-weight: 500;
     position: relative;
     top: 13px;
     text-decoration:none;
-    color:#595859;
+    color:#5f5f5f;
+    text-transform: uppercase;
 `
 
 export default sectionHeader;

@@ -25,13 +25,6 @@
 
 
     &__title {
-        font-family: $base-font-family;
-        cursor:pointer;
-        margin:0;
-        @include font-size(32);
-        color: $blue;
-        font-weight: $weightBold;
-        color:$greyish;
 
         @media #{$mobile} {
             // border-bottom: 1px solid $darkergrey;
@@ -43,8 +36,15 @@
 
         &--30 {
             @include font-size(30);
-
         }
+
+        &--23 {
+            @include font-size(23);
+            font-weight: 400;
+            margin-bottom:7px;
+        }
+
+
         &--light {
             font-weight: $weightLight;
         }

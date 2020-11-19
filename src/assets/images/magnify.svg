@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 27 27">
+    <defs>
+        <filter id="j3otz66cga" width="137.5%" height="137.5%" x="-20.8%" y="-20.8%" filterUnits="objectBoundingBox">
+            <feOffset dy="1" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation=".5"/>
+            <feColorMatrix in="shadowBlurOuter1" result="shadowMatrixOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0959353147 0"/>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+        <filter id="moh84y5m4b" width="236.4%" height="236.4%" x="-68.2%" y="-68.2%" filterUnits="objectBoundingBox">
+            <feOffset dy="1" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="1"/>
+            <feColorMatrix in="shadowBlurOuter1" result="shadowMatrixOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.211511145 0"/>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <g stroke="#FFF">
+            <g>
+                <g>
+                    <g>
+                        <g stroke-width="1.92">
+                            <g filter="url(#j3otz66cga)" transform="translate(-1366 -800) translate(104 501) translate(884 78) translate(380 222)">
+                                <path stroke-linecap="round" d="M16.489 16.496L23.014 23.022"/>
+                                <path d="M19.38 9.645c0 5.311-4.339 9.616-9.69 9.616-5.352 0-9.69-4.305-9.69-9.616C0 4.335 4.338.03 9.69.03c5.351 0 9.69 4.305 9.69 9.616z"/>
+                            </g>
+                        </g>
+                        <g stroke-linecap="round" stroke-width="1.8" filter="url(#moh84y5m4b)" transform="translate(-1366 -800) translate(104 501) translate(884 78) translate(380 222) translate(5 4)">
+                            <path d="M5.089 0L5.089 10.303M0 4.977L10.303 4.977"/>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

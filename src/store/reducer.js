@@ -9,12 +9,12 @@ const intialState = {
     isLoggedIn  : false,
     admin       : false,
     pageTitle   : "Photo Sales",
-    themeColor  : "",
+    themeColor  : "#0e215d",
     stripeKey   : "pk_test_iwtlTrCiV2h43DlBnHnPiyy6",
     env         : '',
 }
 
-
+// 
 
 const reducer = (state = intialState, action) => {
 

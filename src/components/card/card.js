@@ -182,6 +182,9 @@ const Card = props =>  {
                             <source media="(min-width: 501px) and (max-width: 767px)" srcSet={imageUrl[1]} />
                             <img draggable="false" src={imageUrl[0]} alt={image.caption} />
                         </picture>
+                        <ZoomContainer>
+                            <Zoom onClick={() => { props.cardHandler(count, panel)}} />
+                        </ZoomContainer>
                     </figure>
                     
                     <div className={containerStyles}>
@@ -196,7 +199,7 @@ const Card = props =>  {
                         
                         {galleryButtons && 
                             <div className={viewButtonStyles}>
-                                <Quickview onClick={() => { props.cardHandler(count, panel)}} >Quick view</Quickview>
+                                {/* <Quickview onClick={() => { props.cardHandler(count, panel)}} >Quick view</Quickview> */}
                                 {viewAllButton &&
                                     <Viewall onClick={()=> props.linkHandler("/single-gallery/" + props.data.id)}>View All</Viewall>
                                 }
@@ -217,6 +220,32 @@ const Card = props =>  {
     )
 }
 
+
+const ZoomContainer = styled.div`
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    height:41px;
+    width:41px;
+    background: rgba(54,53,53,.7);
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    &:hover {
+        background: rgba(54,53,53,.6);
+        cursor:pointer;
+    }
+`
+
+const Zoom = styled.div`
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNyIgaGVpZ2h0PSIyNyIgdmlld0JveD0iMCAwIDI3IDI3Ij4KICAgIDxkZWZzPgogICAgICAgIDxmaWx0ZXIgaWQ9Imozb3R6NjZjZ2EiIHdpZHRoPSIxMzcuNSUiIGhlaWdodD0iMTM3LjUlIiB4PSItMjAuOCUiIHk9Ii0yMC44JSIgZmlsdGVyVW5pdHM9Im9iamVjdEJvdW5kaW5nQm94Ij4KICAgICAgICAgICAgPGZlT2Zmc2V0IGR5PSIxIiBpbj0iU291cmNlQWxwaGEiIHJlc3VsdD0ic2hhZG93T2Zmc2V0T3V0ZXIxIi8+CiAgICAgICAgICAgIDxmZUdhdXNzaWFuQmx1ciBpbj0ic2hhZG93T2Zmc2V0T3V0ZXIxIiByZXN1bHQ9InNoYWRvd0JsdXJPdXRlcjEiIHN0ZERldmlhdGlvbj0iLjUiLz4KICAgICAgICAgICAgPGZlQ29sb3JNYXRyaXggaW49InNoYWRvd0JsdXJPdXRlcjEiIHJlc3VsdD0ic2hhZG93TWF0cml4T3V0ZXIxIiB2YWx1ZXM9IjAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAuMDk1OTM1MzE0NyAwIi8+CiAgICAgICAgICAgIDxmZU1lcmdlPgogICAgICAgICAgICAgICAgPGZlTWVyZ2VOb2RlIGluPSJzaGFkb3dNYXRyaXhPdXRlcjEiLz4KICAgICAgICAgICAgICAgIDxmZU1lcmdlTm9kZSBpbj0iU291cmNlR3JhcGhpYyIvPgogICAgICAgICAgICA8L2ZlTWVyZ2U+CiAgICAgICAgPC9maWx0ZXI+CiAgICAgICAgPGZpbHRlciBpZD0ibW9oODR5NW00YiIgd2lkdGg9IjIzNi40JSIgaGVpZ2h0PSIyMzYuNCUiIHg9Ii02OC4yJSIgeT0iLTY4LjIlIiBmaWx0ZXJVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giPgogICAgICAgICAgICA8ZmVPZmZzZXQgZHk9IjEiIGluPSJTb3VyY2VBbHBoYSIgcmVzdWx0PSJzaGFkb3dPZmZzZXRPdXRlcjEiLz4KICAgICAgICAgICAgPGZlR2F1c3NpYW5CbHVyIGluPSJzaGFkb3dPZmZzZXRPdXRlcjEiIHJlc3VsdD0ic2hhZG93Qmx1ck91dGVyMSIgc3RkRGV2aWF0aW9uPSIxIi8+CiAgICAgICAgICAgIDxmZUNvbG9yTWF0cml4IGluPSJzaGFkb3dCbHVyT3V0ZXIxIiByZXN1bHQ9InNoYWRvd01hdHJpeE91dGVyMSIgdmFsdWVzPSIwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwLjIxMTUxMTE0NSAwIi8+CiAgICAgICAgICAgIDxmZU1lcmdlPgogICAgICAgICAgICAgICAgPGZlTWVyZ2VOb2RlIGluPSJzaGFkb3dNYXRyaXhPdXRlcjEiLz4KICAgICAgICAgICAgICAgIDxmZU1lcmdlTm9kZSBpbj0iU291cmNlR3JhcGhpYyIvPgogICAgICAgICAgICA8L2ZlTWVyZ2U+CiAgICAgICAgPC9maWx0ZXI+CiAgICA8L2RlZnM+CiAgICA8ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgICAgIDxnIHN0cm9rZT0iI0ZGRiI+CiAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgPGc+CiAgICAgICAgICAgICAgICAgICAgPGc+CiAgICAgICAgICAgICAgICAgICAgICAgIDxnIHN0cm9rZS13aWR0aD0iMS45MiI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZyBmaWx0ZXI9InVybCgjajNvdHo2NmNnYSkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xMzY2IC04MDApIHRyYW5zbGF0ZSgxMDQgNTAxKSB0cmFuc2xhdGUoODg0IDc4KSB0cmFuc2xhdGUoMzgwIDIyMikiPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRoIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgZD0iTTE2LjQ4OSAxNi40OTZMMjMuMDE0IDIzLjAyMiIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRoIGQ9Ik0xOS4zOCA5LjY0NWMwIDUuMzExLTQuMzM5IDkuNjE2LTkuNjkgOS42MTYtNS4zNTIgMC05LjY5LTQuMzA1LTkuNjktOS42MTZDMCA0LjMzNSA0LjMzOC4wMyA5LjY5LjAzYzUuMzUxIDAgOS42OSA0LjMwNSA5LjY5IDkuNjE2eiIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgICAgICAgICAgICAgIDxnIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSIxLjgiIGZpbHRlcj0idXJsKCNtb2g4NHk1bTRiKSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTEzNjYgLTgwMCkgdHJhbnNsYXRlKDEwNCA1MDEpIHRyYW5zbGF0ZSg4ODQgNzgpIHRyYW5zbGF0ZSgzODAgMjIyKSB0cmFuc2xhdGUoNSA0KSI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBkPSJNNS4wODkgMEw1LjA4OSAxMC4zMDNNMCA0Ljk3N0wxMC4zMDMgNC45NzciLz4KICAgICAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgPC9nPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+Cg==');
+    background-repeat: no-repeat;
+    background-size:cover;
+    height: 24px;
+    width: 24px;
+    margin-top: 2px;
+    margin-left: 3px;
+`
 
 const Quickview = styled.button`
     height:35px;
@@ -239,10 +268,12 @@ const Quickview = styled.button`
 const Viewall = styled.button`
     height:35px;
     width: 103px;
-    border: 1px solid #4a90e2;
+    /* border: 1px solid #4a90e2; */
+    border: 1px solid black;
     text-transform:uppercase;
     background-color:white;
-    color:#4a90e2;
+    /* color:#4a90e2; */
+    color:black;
     font-size: 11px;
     font-weight:400;
     &:hover {

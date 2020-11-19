@@ -10,7 +10,7 @@ const panel_1 = (props) => {
 
     return (
 
-        <Row key={props.title} margin={props.margin || ""}>
+        <Row key={props.title} margin={props.margin || ""} data-panel="Panel 1">
 
             <Col classes={["col-12"]}>
                 <Header 
@@ -18,6 +18,11 @@ const panel_1 = (props) => {
                     linkUrl     = { "/"+ props.blog.toLowerCase().replace(/\s/g, "-") }
                     title       = {props.title}
                     panel       = {true}
+                    // fontColor   = {this.props.color}
+                    fontSize    = '23px'
+                    fontWeight  = '300'
+                    marginBottom= '7px'
+
                 />
             </Col>
 

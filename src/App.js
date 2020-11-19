@@ -60,7 +60,9 @@ if (window._appJsConfig) {
         pageTitle: window.pageTitle,
         stripeKey: window.stripePublic,
         env: window.env,
-        themeColor: window.themeColor || "#213f9e"
+        themeColor: window.themeColor || "#213f9e",
+        fontserif: window.sansfont || "#213f9e",
+        fontsans: window.seriffont || "#213f9e"
     });
     
 }
@@ -209,7 +211,9 @@ class App extends Component {
                                 linkHandler         = {this.linkHandler}
                                 favouritesHandler   = {this.showFavourites}
                                 loggedIn            = {this.props.isLoggedIn}
-                                larger 
+                                fontColor           = {this.props.color}
+                                fontSize            = '28px'
+                                fontWeight          = '500'
                                 cart
                             />
                         </Col>
@@ -312,6 +316,7 @@ const mapStateToProps = state => {
         cart        : state.cart,
         pageTitle   : state.pageTitle,
         isLoggedIn  : state.isLoggedIn,
+        color       : state.themeColor,
         admin       : state.admin,
         env         : state.env,
     }

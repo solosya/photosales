@@ -1,6 +1,6 @@
 //Libraries
 import React, {Component}   from 'react'
-import styled               from 'styled-components'
+import styled, {css}        from 'styled-components'
 // import cn                   from 'classnames'
 // import Datepicker           from '../datepicker/datepicker'
 import moment               from 'moment'
@@ -8,7 +8,7 @@ import moment               from 'moment'
 //Components
 import Button               from '../button/button'
 
-
+import {HEX2RGB, Darken}    from '../../utils/color';
 //Styles
 // import styles               from './search.module.scss'
 // import formstyles           from '../../styles/form.module.scss'
@@ -85,16 +85,58 @@ class Search extends Component {
     }
 
     render() {
-
+        const colour = HEX2RGB(this.props.color);
+        let darkerColor = this.props.color;
+        const darker = Darken(colour, 20);
+        if (darker) {
+            darkerColor = `rgb( ${darker.join(', ')} )`;
+        }
+        
         return (
             <SearchContainer data="searchcontainer">
                 <SearchInput onKeyPress={this.keyPressed} value={this.props.search} onChange={(e) => this.search(e.target.value)} type="search"  name="search" id="search" placeholder="Search" />
                 <SearchIcon />
-                <Button handler={() => this.props.searchHandler(this.state.search) } classes={["button", "button--red"]}>SEARCH</Button>
+                <Buttonn handler={() => this.props.searchHandler(this.state.search) } color={this.props.color} hover={darkerColor}>SEARCH</Buttonn>
+                {/* <Button handler={() => this.props.searchHandler(this.state.search) } color={this.props.color} classes={["button", "button--red"]}>SEARCH</Button> */}
             </SearchContainer>
         )
     }
 }
+
+const Buttonn = styled.button`
+    font-family: 'Roboto';
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+    padding: 10px 14px;
+    display: inline-block;
+    border: 1px solid rgba(0,0,0, 0);
+    font-size: 12px;
+    line-height: 1.5;
+    min-width: 120px;
+    text-align: center;
+    height: 40px;
+    outline:0;
+    text-transform: uppercase;
+    color:white;
+    &:focus {
+        outline:none;
+    }
+    ${props => props.color && css`
+        background-color: ${props.color};
+    `}
+
+    ${props => props.hover && css`
+        &:hover {
+            background-color: ${props.hover};
+        }
+    `}
+
+
+`
+
+
 
 const  SearchContainer = styled.div`
     position:relative;

@@ -112,7 +112,7 @@
     &__view-buttons {
         @include flexbox();
         @include flex-direction(row, horizontal);
-        @include justify-content(space-between);
+        @include justify-content(flex-end);
         flex-wrap:wrap;
         margin-top:10px;
         // top:22px;
