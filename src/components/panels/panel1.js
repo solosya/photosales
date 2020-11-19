@@ -20,7 +20,7 @@ const panel_1 = (props) => {
                     panel       = {true}
                     // fontColor   = {this.props.color}
                     fontSize    = '23px'
-                    fontWeight  = '300'
+                    fontWeight  = '400'
                     marginBottom= '7px'
 
                 />

@@ -18,7 +18,7 @@ const panel_3 = (props) => {
                     title       = {props.title}
                     panel       = {true}
                     fontSize    = '23px'
-                    fontWeight  = '300'
+                    fontWeight  = '400'
                     marginBottom= '7px'
 
                 />
