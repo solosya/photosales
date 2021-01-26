@@ -112,7 +112,8 @@ class Index extends Component {
 
             if (panel === false) return null;
 
-            const margin = "70px";
+            // first panel doens't have top margin
+            let margin = (i>0) ? "70px": null;
 
             return (
                 <Container key={i}>
