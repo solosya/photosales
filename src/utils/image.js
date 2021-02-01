@@ -31,6 +31,7 @@ export const processImages = (images, checkStatus) => {
             width   : item.width,
             height  : item.height,
             caption : item.caption,
+            networkId: item.sourceNetwork_id,
             cart,       //boolean to show if photo is in the cart
             favourite, // boolean to show if photo is in the favourites
             original: item.path[0], // needed for gallery

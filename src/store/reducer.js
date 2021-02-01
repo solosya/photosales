@@ -9,6 +9,7 @@ const intialState = {
     isLoggedIn  : false,
     admin       : false,
     pageTitle   : "Photo Sales",
+    networkId   : null,
     themeColor  : "#0e215d",
     stripeKey   : "pk_test_iwtlTrCiV2h43DlBnHnPiyy6",
     env         : '',
@@ -73,6 +74,7 @@ const reducer = (state = intialState, action) => {
                 stripeKey: action.stripeKey,
                 pageTitle: action.pageTitle,
                 env      : action.env,
+                networkId: action.networkId,
                 themeColor: action.themeColor
             }
 

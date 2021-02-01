@@ -16,6 +16,7 @@ export const TOGGLE_FAVOURITE       = 'TOGGLE_FAVOURITE'
 export const UPDATE_CART_ITEM       = 'UPDATE_CART_ITEM'
 export const LOGIN_ON_REFRESH       = 'LOGIN_ON_REFRESH'
 export const REMOVE_ITEM_FROM_CART  = 'REMOVE_ITEM_FROM_CART'
+export const FIX_NETWORK_ID         = 'FIX_NETWORK_ID'
 
 var quantityRequest = null;
 
@@ -307,11 +308,7 @@ export const removeItemFromCart = (product) => {
 }
 
 
-export const addPhotoToCheckout = (product) => {
 
-
-
-}
 
 
 
@@ -404,7 +401,30 @@ export const updateCartItem = (product) => {
     }
 }
 
+export const fixNetworkId = (id, networkId) => {
+    // console.log("in the action creator", networkId);
+    // console.log(id);
 
+    return dispatch => {
+
+        axios.post('/admin/api/v3/media/save-media', {
+            "action": "update",
+            "guid": id,
+            "sourceNetworkId": networkId
+        } )
+        .then((r) => {
+            // console.log(r);
+            // cart = placeLineItemsIntoCart(cart, r.data.cart);
+    
+            dispatch({
+                type: FIX_NETWORK_ID,
+                // total: r.data,
+            });
+        });
+    }
+
+
+}
 
 export const add = (product) => {
     let cat =  {

@@ -60,6 +60,7 @@ if (window._appJsConfig) {
         pageTitle: window.pageTitle,
         stripeKey: window.stripePublic,
         env: window.env,
+        networkId: window.networkId || null,
         themeColor: window.themeColor || "#213f9e",
         fontserif: window.sansfont || "#213f9e",
         fontsans: window.seriffont || "#213f9e"
@@ -106,6 +107,11 @@ class App extends Component {
             return true;
         }
         return false;
+    }
+
+    fixNetworkIssue = (photoid) => {
+        this.props.fixNetwork(photoid, this.props.networkId);
+        return true;
     }
 
     photoStatusHandler = (photoid) => {
@@ -163,10 +169,12 @@ class App extends Component {
                 closeHandler = {this.closeGallery} 
                 children     = { () => (
                     <Gallery 
-                        gallery          = {this.state.selectedGallery} 
+                        gallery          = {this.state.selectedGallery}
+                        networkId        = {this.props.networkId}
                         // galleryType      = {this.state.galleryType}
                         favouriteHandler = {this.props.toggleFavourite}
                         checkPhotoStatus = {this.photoStatusHandler}
+                        fixNetwork       = {this.fixNetworkIssue}
                         cartHandler      = {this.props.toggleCart}
                         admin            = {this.props.admin}
                     />
@@ -316,6 +324,7 @@ const mapStateToProps = state => {
         cart        : state.cart,
         pageTitle   : state.pageTitle,
         isLoggedIn  : state.isLoggedIn,
+        networkId   : state.networkId,
         color       : state.themeColor,
         admin       : state.admin,
         env         : state.env,
@@ -327,6 +336,7 @@ const mapDispatchToProps = dispatch => {
         toggleCart      : (photo) => dispatch( actionCreators.toggleCart(photo) ),
         toggleFavourite : (photo) => dispatch( actionCreators.toggleFavourite(photo) ),
         fetchFavourites : ()      => dispatch( actionCreators.fetchSaved() ),
+        fixNetwork      : (photo, networkId) => dispatch( actionCreators.fixNetworkId(photo, networkId) ),
     }
 
 }

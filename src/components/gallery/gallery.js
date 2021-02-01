@@ -209,7 +209,9 @@ class Gallery extends Component {
                             }
                         </MetaInfoContainer>
 
-
+                        {this.props.admin &&
+                            <NetworkFix onClick={() => this.props.fixNetwork(currentItem.guid)}>Fix network id ({this.props.networkId} - {currentItem.networkId})</NetworkFix>
+                        }
                     </GalleryRight>
 
 
@@ -316,10 +318,18 @@ const ImageContainer = styled.div`
 `
 
 const Edit = styled.a`
-    float: left;
+    /* float: left; */
+    display:block;
     margin-top: 10px;
     font-style: italic;
 `
+const NetworkFix = styled.p` 
+    font-size: 11px;
+    color:#dedede;
+    cursor: pointer;
+    margin-top:10px;
+`
+
 
 const GalleryRight = styled.div`
     margin-left: 20px;
