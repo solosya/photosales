@@ -31,7 +31,7 @@ export const HEX2RGB = (hex) => {
 }
 
 export const Darken = (rgb, amount) => {
-    console.log(rgb);
+
     if (!rgb) return rgb;
     const dark = rgb.map((c) => {
         let color = c - amount;

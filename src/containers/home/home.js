@@ -42,6 +42,7 @@ class Home extends Component {
 
     
     searchResultsHandler = (term) => {
+        console.log('searching...');
         this.props.history.push(window.basePath + '/search?for=' + term);
     }
 

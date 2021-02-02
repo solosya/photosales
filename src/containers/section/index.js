@@ -7,6 +7,7 @@ import Container            from '../../components/layout/container'
 import PanelOne             from '../../components/panels/panel1'
 import PanelTwo             from '../../components/panels/panel2'
 import PanelThree           from '../../components/panels/panel3'
+import PanelFour            from '../../components/panels/panel4'
 
 // import devFeed              from '../../store/devData/feed'        
 
@@ -144,6 +145,17 @@ class Index extends Component {
 
                     {panel.template === "panel3" &&
                         <PanelThree 
+                            showGallery     = {this.showGallery}
+                            title           = {panel.title}
+                            blog            = {panel.blog}
+                            cards           = {panel.feed}
+                            margin          = {margin}
+                            linkHandler     = {this.props.linkHandler}
+                            admin           = {this.props.admin}
+                        /> 
+                    }
+                    {panel.template === "panel4" &&
+                        <PanelFour 
                             showGallery     = {this.showGallery}
                             title           = {panel.title}
                             blog            = {panel.blog}

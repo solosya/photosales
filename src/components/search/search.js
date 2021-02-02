@@ -77,8 +77,9 @@ class Search extends Component {
     }
 
     keyPressed = (e) => {
-        // console.log(this.props);
-        // console.log(this.state);
+
+        console.log(this.props);
+        console.log(this.state);
         if (e.key === "Enter") {
             this.props.searchHandler(this.state.search)
         }
@@ -96,7 +97,7 @@ class Search extends Component {
             <SearchContainer data="searchcontainer">
                 <SearchInput onKeyPress={this.keyPressed} value={this.props.search} onChange={(e) => this.search(e.target.value)} type="search"  name="search" id="search" placeholder="Search" />
                 <SearchIcon />
-                <Buttonn handler={() => this.props.searchHandler(this.state.search) } color={this.props.color} hover={darkerColor}>SEARCH</Buttonn>
+                <Buttonn onClick={() => {console.log('clicked');this.props.searchHandler(this.state.search)}} color={this.props.color} hover={darkerColor}>SEARCH</Buttonn>
                 {/* <Button handler={() => this.props.searchHandler(this.state.search) } color={this.props.color} classes={["button", "button--red"]}>SEARCH</Button> */}
             </SearchContainer>
         )
