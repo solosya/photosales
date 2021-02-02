@@ -209,7 +209,7 @@ class Gallery extends Component {
                             }
                         </MetaInfoContainer>
 
-                        {this.props.admin &&
+                        {this.props.admin && (this.props.networkId !== currentItem.networkId) &&
                             <NetworkFix onClick={() => this.props.fixNetwork(currentItem.guid)}>Fix network id ({this.props.networkId} - {currentItem.networkId})</NetworkFix>
                         }
                     </GalleryRight>
