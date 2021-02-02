@@ -6,7 +6,7 @@ import styled, {css}        from 'styled-components'
 import moment               from 'moment'
 
 //Components
-import Button               from '../button/button'
+// import Button               from '../button/button'
 
 import {HEX2RGB, Darken}    from '../../utils/color';
 //Styles
@@ -77,9 +77,6 @@ class Search extends Component {
     }
 
     keyPressed = (e) => {
-
-        console.log(this.props);
-        console.log(this.state);
         if (e.key === "Enter") {
             this.props.searchHandler(this.state.search)
         }
@@ -97,8 +94,7 @@ class Search extends Component {
             <SearchContainer data="searchcontainer">
                 <SearchInput onKeyPress={this.keyPressed} value={this.props.search} onChange={(e) => this.search(e.target.value)} type="search"  name="search" id="search" placeholder="Search" />
                 <SearchIcon />
-                <Buttonn onClick={() => {console.log('clicked');this.props.searchHandler(this.state.search)}} color={this.props.color} hover={darkerColor}>SEARCH</Buttonn>
-                {/* <Button handler={() => this.props.searchHandler(this.state.search) } color={this.props.color} classes={["button", "button--red"]}>SEARCH</Button> */}
+                <Buttonn onClick={() => this.props.searchHandler(this.state.search)} color={this.props.color} hover={darkerColor}>SEARCH</Buttonn>
             </SearchContainer>
         )
     }
@@ -144,7 +140,6 @@ const  SearchContainer = styled.div`
     display: flex;
     height:40px;
     margin-bottom:80px;
-    /* display:none; */
 `
 
 const SearchInput = styled.input`
