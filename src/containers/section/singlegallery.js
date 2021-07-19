@@ -54,7 +54,7 @@ class SingleGallery extends Component {
         
         }).catch((e) => {
             console.log(this.state);
-            // if (this.state.env === 'dev') {
+            if (this.state.env === 'dev') {
 
                 const photos = panels[0].feed[0].images.map((item) => {
                     const {favourite, cart} = this.props.checkPhotoStatus(item.id);
@@ -68,7 +68,7 @@ class SingleGallery extends Component {
                 });
                 const title = panels[0].feed[0].title;
                 this.setState({ photos, title });
-            // }
+            }
 
         });
     }
