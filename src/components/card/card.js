@@ -205,9 +205,9 @@ const Card = props =>  {
                                 }
                             </div>
                         }
-                        {/* <div className={authorStyles}>
+                        <div className={authorStyles}>
                             <div className={timeStyles}>{props.data.publishDate}</div>
-                        </div> */}
+                        </div>
                     </div>
 
 
