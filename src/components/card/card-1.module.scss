@@ -1,118 +1,103 @@
 @import "./card";
 
 @mixin card-1-base() {
-    // margin-left: -20px;
-    // margin-right: -20px;
-    margin-bottom:30px;
-    
-    .c-cards-view {
-        @include flex-direction(column, vertical);
-        background: $white;
+  // margin-left: -20px;
+  // margin-right: -20px;
+  margin-bottom: 30px;
 
+  .c-cards-view {
+    @include flex-direction(column, vertical);
+    background: $white;
 
-        &__container {
-            padding: 15px 20px 15px 20px;
-        }
-
-        &__category {
-            margin-bottom: 11px;
-        }
-
-        &__heading {
-            @include flex-height(53px);
-            @include font-size(20);
-            margin:0;
-        }
-        &__description {
-            display:none;
-        }
-
-        &__time {
-            margin-top: 13px;
-        }
-
-        &.video {
-            .c-cards-view__media .video-icon {
-                @include size(40px);
-            }
-        }
-
-        &.without-image {
-            .c-cards-view__container {
-                width: 100%;
-                margin-left: 0px;
-                padding: 0px 20px 0;
-            }
-
-            .c-cards-view__description {
-                margin-bottom: 15px;
-                display: block;
-                max-height: 90px;
-                overflow: hidden;
-            }
-        }
-
-
+    &__container {
+      padding: 15px 20px 15px 20px;
     }
+
+    &__category {
+      margin-bottom: 11px;
+    }
+
+    &__heading {
+      @include flex-height(53px);
+      @include font-size(20);
+      margin: 0;
+    }
+    &__description {
+      display: none;
+    }
+
+    &__time {
+      margin-top: 8px;
+    }
+
+    &.video {
+      .c-cards-view__media .video-icon {
+        @include size(40px);
+      }
+    }
+
+    &.without-image {
+      .c-cards-view__container {
+        width: 100%;
+        margin-left: 0px;
+        padding: 0px 20px 0;
+      }
+
+      .c-cards-view__description {
+        margin-bottom: 15px;
+        display: block;
+        max-height: 90px;
+        overflow: hidden;
+      }
+    }
+  }
 }
 
 .ps-card-1-mobile {
-    @media #{$mobile} {
-        @include card-1-base();
-
-    }
+  @media #{$mobile} {
+    @include card-1-base();
+  }
 }
 
-
 @mixin card-1-tablet-base {
-    @include card-1-base();
-    margin-left: 0;
-    margin-right: 0;
-    
-    .c-cards-view {
-        // height: 493px;
+  @include card-1-base();
+  margin-left: 0;
+  margin-right: 0;
 
-        &__media {
-            @include flex-height(228px);
+  .c-cards-view {
+    // height: 493px;
 
-            img {
-                height: 100%;
-            }
+    &__media {
+      @include flex-height(228px);
 
-        }
-
-        &__category {
-            margin-bottom: 9px;
-        }
-
-        &__heading {
-            @include flex-height(52px);
-            @include font-size(20);
-            line-height:1.36;
-        }
-
-        &__description {
-            display:none;
-        }
-
+      img {
+        height: 100%;
+      }
     }
 
+    &__category {
+      margin-bottom: 9px;
+    }
+
+    &__heading {
+      @include flex-height(52px);
+      @include font-size(20);
+      line-height: 1.36;
+    }
+
+    &__description {
+      display: none;
+    }
+  }
 }
 
 .ps-card-1-tablet {
-    @media #{$tablet} {
-        @include card-1-tablet-base();
-    }
-
+  @media #{$tablet} {
+    @include card-1-tablet-base();
+  }
 }
 .ps-card-1-desktop {
-
-    @media #{$desktop-up} {
-
-        @include card-1-tablet-base();
-    }
+  @media #{$desktop-up} {
+    @include card-1-tablet-base();
+  }
 }
-
-
-
-
